@@ -1,0 +1,1802 @@
+[
+    {
+      "id": "eko-hotels-and-suites-lagos",
+      "name": "Eko Hotels & Suites",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 13000,
+      "stars": 3,
+      "images": [
+        "/images/hotels/eko-hotels-and-suites/1.jpg",
+        "/images/hotels/eko-hotels-and-suites/2.jpg",
+        "/images/hotels/eko-hotels-and-suites/3.jpg",
+        "/images/hotels/eko-hotels-and-suites/4.jpg",
+        "/images/hotels/eko-hotels-and-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "the-wheatbaker-lagos",
+      "name": "The Wheatbaker",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 20700,
+      "stars": 3,
+      "images": [
+        "/images/hotels/the-wheatbaker/1.jpg",
+        "/images/hotels/the-wheatbaker/2.jpg",
+        "/images/hotels/the-wheatbaker/3.jpg",
+        "/images/hotels/the-wheatbaker/4.jpg",
+        "/images/hotels/the-wheatbaker/5.jpg"
+      ]
+    },
+    {
+      "id": "radisson-blu-anchorage-lagos",
+      "name": "Radisson Blu Anchorage",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 43300,
+      "stars": 3,
+      "images": [
+        "/images/hotels/radisson-blu-anchorage/1.jpg",
+        "/images/hotels/radisson-blu-anchorage/2.jpg",
+        "/images/hotels/radisson-blu-anchorage/3.jpg",
+        "/images/hotels/radisson-blu-anchorage/4.jpg",
+        "/images/hotels/radisson-blu-anchorage/5.jpg"
+      ]
+    },
+    {
+      "id": "four-points-by-sheraton-vi-lagos",
+      "name": "Four Points by Sheraton VI",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 44400,
+      "stars": 3,
+      "images": [
+        "/images/hotels/four-points-by-sheraton-vi/1.jpg",
+        "/images/hotels/four-points-by-sheraton-vi/2.jpg",
+        "/images/hotels/four-points-by-sheraton-vi/3.jpg",
+        "/images/hotels/four-points-by-sheraton-vi/4.jpg",
+        "/images/hotels/four-points-by-sheraton-vi/5.jpg"
+      ]
+    },
+    {
+      "id": "lagos-continental-hotel-lagos",
+      "name": "Lagos Continental Hotel",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 66300,
+      "stars": 3,
+      "images": [
+        "/images/hotels/lagos-continental-hotel/1.jpg",
+        "/images/hotels/lagos-continental-hotel/2.jpg",
+        "/images/hotels/lagos-continental-hotel/3.jpg",
+        "/images/hotels/lagos-continental-hotel/4.jpg",
+        "/images/hotels/lagos-continental-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "southern-sun-ikoyi-lagos",
+      "name": "Southern Sun Ikoyi",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 75600,
+      "stars": 3,
+      "images": [
+        "/images/hotels/southern-sun-ikoyi/1.jpg",
+        "/images/hotels/southern-sun-ikoyi/2.jpg",
+        "/images/hotels/southern-sun-ikoyi/3.jpg",
+        "/images/hotels/southern-sun-ikoyi/4.jpg",
+        "/images/hotels/southern-sun-ikoyi/5.jpg"
+      ]
+    },
+    {
+      "id": "lagos-marriott-hotel-ikeja-lagos",
+      "name": "Lagos Marriott Hotel Ikeja",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 82100,
+      "stars": 3,
+      "images": [
+        "/images/hotels/lagos-marriott-hotel-ikeja/1.jpg",
+        "/images/hotels/lagos-marriott-hotel-ikeja/2.jpg",
+        "/images/hotels/lagos-marriott-hotel-ikeja/3.jpg",
+        "/images/hotels/lagos-marriott-hotel-ikeja/4.jpg",
+        "/images/hotels/lagos-marriott-hotel-ikeja/5.jpg"
+      ]
+    },
+    {
+      "id": "protea-hotel-ikeja-lagos",
+      "name": "Protea Hotel Ikeja",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 103700,
+      "stars": 3,
+      "images": [
+        "/images/hotels/protea-hotel-ikeja/1.jpg",
+        "/images/hotels/protea-hotel-ikeja/2.jpg",
+        "/images/hotels/protea-hotel-ikeja/3.jpg",
+        "/images/hotels/protea-hotel-ikeja/4.jpg",
+        "/images/hotels/protea-hotel-ikeja/5.jpg"
+      ]
+    },
+    {
+      "id": "sheraton-lagos-hotel-lagos",
+      "name": "Sheraton Lagos Hotel",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 107000,
+      "stars": 3,
+      "images": [
+        "/images/hotels/sheraton-lagos-hotel/1.jpg",
+        "/images/hotels/sheraton-lagos-hotel/2.jpg",
+        "/images/hotels/sheraton-lagos-hotel/3.jpg",
+        "/images/hotels/sheraton-lagos-hotel/4.jpg",
+        "/images/hotels/sheraton-lagos-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "federal-palace-hotel-lagos",
+      "name": "Federal Palace Hotel",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 127600,
+      "stars": 4,
+      "images": [
+        "/images/hotels/federal-palace-hotel/1.jpg",
+        "/images/hotels/federal-palace-hotel/2.jpg",
+        "/images/hotels/federal-palace-hotel/3.jpg",
+        "/images/hotels/federal-palace-hotel/4.jpg",
+        "/images/hotels/federal-palace-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "the-george-ikoyi-lagos",
+      "name": "The George Ikoyi",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 132900,
+      "stars": 4,
+      "images": [
+        "/images/hotels/the-george-ikoyi/1.jpg",
+        "/images/hotels/the-george-ikoyi/2.jpg",
+        "/images/hotels/the-george-ikoyi/3.jpg",
+        "/images/hotels/the-george-ikoyi/4.jpg",
+        "/images/hotels/the-george-ikoyi/5.jpg"
+      ]
+    },
+    {
+      "id": "the-moorhouse-ikoyi-lagos",
+      "name": "The Moorhouse Ikoyi",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 146000,
+      "stars": 4,
+      "images": [
+        "/images/hotels/the-moorhouse-ikoyi/1.jpg",
+        "/images/hotels/the-moorhouse-ikoyi/2.jpg",
+        "/images/hotels/the-moorhouse-ikoyi/3.jpg",
+        "/images/hotels/the-moorhouse-ikoyi/4.jpg",
+        "/images/hotels/the-moorhouse-ikoyi/5.jpg"
+      ]
+    },
+    {
+      "id": "radisson-hotel-ikeja-lagos",
+      "name": "Radisson Hotel Ikeja",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 165400,
+      "stars": 4,
+      "images": [
+        "/images/hotels/radisson-hotel-ikeja/1.jpg",
+        "/images/hotels/radisson-hotel-ikeja/2.jpg",
+        "/images/hotels/radisson-hotel-ikeja/3.jpg",
+        "/images/hotels/radisson-hotel-ikeja/4.jpg",
+        "/images/hotels/radisson-hotel-ikeja/5.jpg"
+      ]
+    },
+    {
+      "id": "ibis-lagos-airport-lagos",
+      "name": "Ibis Lagos Airport",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 186100,
+      "stars": 4,
+      "images": [
+        "/images/hotels/ibis-lagos-airport/1.jpg",
+        "/images/hotels/ibis-lagos-airport/2.jpg",
+        "/images/hotels/ibis-lagos-airport/3.jpg",
+        "/images/hotels/ibis-lagos-airport/4.jpg",
+        "/images/hotels/ibis-lagos-airport/5.jpg"
+      ]
+    },
+    {
+      "id": "eko-signature-lagos",
+      "name": "Eko Signature",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 184600,
+      "stars": 4,
+      "images": [
+        "/images/hotels/eko-signature/1.jpg",
+        "/images/hotels/eko-signature/2.jpg",
+        "/images/hotels/eko-signature/3.jpg",
+        "/images/hotels/eko-signature/4.jpg",
+        "/images/hotels/eko-signature/5.jpg"
+      ]
+    },
+    {
+      "id": "the-blowfish-hotel-lagos",
+      "name": "The Blowfish Hotel",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 199300,
+      "stars": 4,
+      "images": [
+        "/images/hotels/the-blowfish-hotel/1.jpg",
+        "/images/hotels/the-blowfish-hotel/2.jpg",
+        "/images/hotels/the-blowfish-hotel/3.jpg",
+        "/images/hotels/the-blowfish-hotel/4.jpg",
+        "/images/hotels/the-blowfish-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "victoria-crown-plaza-lagos",
+      "name": "Victoria Crown Plaza",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 220000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/victoria-crown-plaza/1.jpg",
+        "/images/hotels/victoria-crown-plaza/2.jpg",
+        "/images/hotels/victoria-crown-plaza/3.jpg",
+        "/images/hotels/victoria-crown-plaza/4.jpg",
+        "/images/hotels/victoria-crown-plaza/5.jpg"
+      ]
+    },
+    {
+      "id": "four-seasons-lekki-lagos",
+      "name": "Four Seasons Lekki",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 239100,
+      "stars": 5,
+      "images": [
+        "/images/hotels/four-seasons-lekki/1.jpg",
+        "/images/hotels/four-seasons-lekki/2.jpg",
+        "/images/hotels/four-seasons-lekki/3.jpg",
+        "/images/hotels/four-seasons-lekki/4.jpg",
+        "/images/hotels/four-seasons-lekki/5.jpg"
+      ]
+    },
+    {
+      "id": "park-inn-by-radisson-ikeja-lagos",
+      "name": "Park Inn by Radisson Ikeja",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 244300,
+      "stars": 5,
+      "images": [
+        "/images/hotels/park-inn-by-radisson-ikeja/1.jpg",
+        "/images/hotels/park-inn-by-radisson-ikeja/2.jpg",
+        "/images/hotels/park-inn-by-radisson-ikeja/3.jpg",
+        "/images/hotels/park-inn-by-radisson-ikeja/4.jpg",
+        "/images/hotels/park-inn-by-radisson-ikeja/5.jpg"
+      ]
+    },
+    {
+      "id": "renaissance-gra-ikeja-lagos",
+      "name": "Renaissance GRA Ikeja",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 253400,
+      "stars": 5,
+      "images": [
+        "/images/hotels/renaissance-gra-ikeja/1.jpg",
+        "/images/hotels/renaissance-gra-ikeja/2.jpg",
+        "/images/hotels/renaissance-gra-ikeja/3.jpg",
+        "/images/hotels/renaissance-gra-ikeja/4.jpg",
+        "/images/hotels/renaissance-gra-ikeja/5.jpg"
+      ]
+    },
+    {
+      "id": "de-rembrandt-hotel-lagos",
+      "name": "De Rembrandt Hotel",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 277600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/de-rembrandt-hotel/1.jpg",
+        "/images/hotels/de-rembrandt-hotel/2.jpg",
+        "/images/hotels/de-rembrandt-hotel/3.jpg",
+        "/images/hotels/de-rembrandt-hotel/4.jpg",
+        "/images/hotels/de-rembrandt-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "amber-residence-ikeja-lagos",
+      "name": "Amber Residence Ikeja",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 271700,
+      "stars": 5,
+      "images": [
+        "/images/hotels/amber-residence-ikeja/1.jpg",
+        "/images/hotels/amber-residence-ikeja/2.jpg",
+        "/images/hotels/amber-residence-ikeja/3.jpg",
+        "/images/hotels/amber-residence-ikeja/4.jpg",
+        "/images/hotels/amber-residence-ikeja/5.jpg"
+      ]
+    },
+    {
+      "id": "bwc-hotel-victoria-island-lagos",
+      "name": "BWC Hotel Victoria Island",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 300600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/bwc-hotel-victoria-island/1.jpg",
+        "/images/hotels/bwc-hotel-victoria-island/2.jpg",
+        "/images/hotels/bwc-hotel-victoria-island/3.jpg",
+        "/images/hotels/bwc-hotel-victoria-island/4.jpg",
+        "/images/hotels/bwc-hotel-victoria-island/5.jpg"
+      ]
+    },
+    {
+      "id": "maison-fahrenheit-lagos",
+      "name": "Maison Fahrenheit",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 301900,
+      "stars": 5,
+      "images": [
+        "/images/hotels/maison-fahrenheit/1.jpg",
+        "/images/hotels/maison-fahrenheit/2.jpg",
+        "/images/hotels/maison-fahrenheit/3.jpg",
+        "/images/hotels/maison-fahrenheit/4.jpg",
+        "/images/hotels/maison-fahrenheit/5.jpg"
+      ]
+    },
+    {
+      "id": "epe-resort-and-spa-lagos",
+      "name": "Epe Resort & Spa",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 311600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/epe-resort-and-spa/1.jpg",
+        "/images/hotels/epe-resort-and-spa/2.jpg",
+        "/images/hotels/epe-resort-and-spa/3.jpg",
+        "/images/hotels/epe-resort-and-spa/4.jpg",
+        "/images/hotels/epe-resort-and-spa/5.jpg"
+      ]
+    },
+    {
+      "id": "lekkside-hotel-lagos",
+      "name": "LekkSide Hotel",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 323700,
+      "stars": 5,
+      "images": [
+        "/images/hotels/lekkside-hotel/1.jpg",
+        "/images/hotels/lekkside-hotel/2.jpg",
+        "/images/hotels/lekkside-hotel/3.jpg",
+        "/images/hotels/lekkside-hotel/4.jpg",
+        "/images/hotels/lekkside-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "citilodge-lekki-lagos",
+      "name": "Citilodge Lekki",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 340200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/citilodge-lekki/1.jpg",
+        "/images/hotels/citilodge-lekki/2.jpg",
+        "/images/hotels/citilodge-lekki/3.jpg",
+        "/images/hotels/citilodge-lekki/4.jpg",
+        "/images/hotels/citilodge-lekki/5.jpg"
+      ]
+    },
+    {
+      "id": "hotel-bon-voyage-lagos",
+      "name": "Hotel Bon Voyage",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 363000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/hotel-bon-voyage/1.jpg",
+        "/images/hotels/hotel-bon-voyage/2.jpg",
+        "/images/hotels/hotel-bon-voyage/3.jpg",
+        "/images/hotels/hotel-bon-voyage/4.jpg",
+        "/images/hotels/hotel-bon-voyage/5.jpg"
+      ]
+    },
+    {
+      "id": "oriental-hotel-lagos-lagos",
+      "name": "Oriental Hotel Lagos",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 363000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/oriental-hotel-lagos/1.jpg",
+        "/images/hotels/oriental-hotel-lagos/2.jpg",
+        "/images/hotels/oriental-hotel-lagos/3.jpg",
+        "/images/hotels/oriental-hotel-lagos/4.jpg",
+        "/images/hotels/oriental-hotel-lagos/5.jpg"
+      ]
+    },
+    {
+      "id": "topaz-hotel-lekki-lagos",
+      "name": "Topaz Hotel Lekki",
+      "city": "Lagos",
+      "type": "Hotel",
+      "basePriceNGN": 380000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/topaz-hotel-lekki/1.jpg",
+        "/images/hotels/topaz-hotel-lekki/2.jpg",
+        "/images/hotels/topaz-hotel-lekki/3.jpg",
+        "/images/hotels/topaz-hotel-lekki/4.jpg",
+        "/images/hotels/topaz-hotel-lekki/5.jpg"
+      ]
+    },
+    {
+      "id": "transcorp-hilton-abuja-abuja",
+      "name": "Transcorp Hilton Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 17800,
+      "stars": 3,
+      "images": [
+        "/images/hotels/transcorp-hilton-abuja/1.jpg",
+        "/images/hotels/transcorp-hilton-abuja/2.jpg",
+        "/images/hotels/transcorp-hilton-abuja/3.jpg",
+        "/images/hotels/transcorp-hilton-abuja/4.jpg",
+        "/images/hotels/transcorp-hilton-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "fraser-suites-abuja-abuja",
+      "name": "Fraser Suites Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 25100,
+      "stars": 3,
+      "images": [
+        "/images/hotels/fraser-suites-abuja/1.jpg",
+        "/images/hotels/fraser-suites-abuja/2.jpg",
+        "/images/hotels/fraser-suites-abuja/3.jpg",
+        "/images/hotels/fraser-suites-abuja/4.jpg",
+        "/images/hotels/fraser-suites-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "nordic-hotel-abuja-abuja",
+      "name": "Nordic Hotel Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 41300,
+      "stars": 3,
+      "images": [
+        "/images/hotels/nordic-hotel-abuja/1.jpg",
+        "/images/hotels/nordic-hotel-abuja/2.jpg",
+        "/images/hotels/nordic-hotel-abuja/3.jpg",
+        "/images/hotels/nordic-hotel-abuja/4.jpg",
+        "/images/hotels/nordic-hotel-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "summerset-continental-abuja",
+      "name": "Summerset Continental",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 44200,
+      "stars": 3,
+      "images": [
+        "/images/hotels/summerset-continental/1.jpg",
+        "/images/hotels/summerset-continental/2.jpg",
+        "/images/hotels/summerset-continental/3.jpg",
+        "/images/hotels/summerset-continental/4.jpg",
+        "/images/hotels/summerset-continental/5.jpg"
+      ]
+    },
+    {
+      "id": "bolton-white-hotels-abuja",
+      "name": "Bolton White Hotels",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 56800,
+      "stars": 3,
+      "images": [
+        "/images/hotels/bolton-white-hotels/1.jpg",
+        "/images/hotels/bolton-white-hotels/2.jpg",
+        "/images/hotels/bolton-white-hotels/3.jpg",
+        "/images/hotels/bolton-white-hotels/4.jpg",
+        "/images/hotels/bolton-white-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "hawthorn-suites-abuja",
+      "name": "Hawthorn Suites",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 72400,
+      "stars": 3,
+      "images": [
+        "/images/hotels/hawthorn-suites/1.jpg",
+        "/images/hotels/hawthorn-suites/2.jpg",
+        "/images/hotels/hawthorn-suites/3.jpg",
+        "/images/hotels/hawthorn-suites/4.jpg",
+        "/images/hotels/hawthorn-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "abuja-continental-hotel-abuja",
+      "name": "Abuja Continental Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 94500,
+      "stars": 3,
+      "images": [
+        "/images/hotels/abuja-continental-hotel/1.jpg",
+        "/images/hotels/abuja-continental-hotel/2.jpg",
+        "/images/hotels/abuja-continental-hotel/3.jpg",
+        "/images/hotels/abuja-continental-hotel/4.jpg",
+        "/images/hotels/abuja-continental-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "the-wells-carlton-abuja",
+      "name": "The Wells Carlton",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 102100,
+      "stars": 3,
+      "images": [
+        "/images/hotels/the-wells-carlton/1.jpg",
+        "/images/hotels/the-wells-carlton/2.jpg",
+        "/images/hotels/the-wells-carlton/3.jpg",
+        "/images/hotels/the-wells-carlton/4.jpg",
+        "/images/hotels/the-wells-carlton/5.jpg"
+      ]
+    },
+    {
+      "id": "the-envoy-hotel-abuja",
+      "name": "The Envoy Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 112500,
+      "stars": 3,
+      "images": [
+        "/images/hotels/the-envoy-hotel/1.jpg",
+        "/images/hotels/the-envoy-hotel/2.jpg",
+        "/images/hotels/the-envoy-hotel/3.jpg",
+        "/images/hotels/the-envoy-hotel/4.jpg",
+        "/images/hotels/the-envoy-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "3j-s-hotel-abuja",
+      "name": "3J's Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 130600,
+      "stars": 4,
+      "images": [
+        "/images/hotels/3j-s-hotel/1.jpg",
+        "/images/hotels/3j-s-hotel/2.jpg",
+        "/images/hotels/3j-s-hotel/3.jpg",
+        "/images/hotels/3j-s-hotel/4.jpg",
+        "/images/hotels/3j-s-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "bon-hotel-abuja-abuja",
+      "name": "Bon Hotel Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 140600,
+      "stars": 4,
+      "images": [
+        "/images/hotels/bon-hotel-abuja/1.jpg",
+        "/images/hotels/bon-hotel-abuja/2.jpg",
+        "/images/hotels/bon-hotel-abuja/3.jpg",
+        "/images/hotels/bon-hotel-abuja/4.jpg",
+        "/images/hotels/bon-hotel-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "grand-pela-hotel-and-suites-abuja",
+      "name": "Grand Pela Hotel & Suites",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 150200,
+      "stars": 4,
+      "images": [
+        "/images/hotels/grand-pela-hotel-and-suites/1.jpg",
+        "/images/hotels/grand-pela-hotel-and-suites/2.jpg",
+        "/images/hotels/grand-pela-hotel-and-suites/3.jpg",
+        "/images/hotels/grand-pela-hotel-and-suites/4.jpg",
+        "/images/hotels/grand-pela-hotel-and-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "nicon-luxury-abuja-abuja",
+      "name": "Nicon Luxury Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 172700,
+      "stars": 4,
+      "images": [
+        "/images/hotels/nicon-luxury-abuja/1.jpg",
+        "/images/hotels/nicon-luxury-abuja/2.jpg",
+        "/images/hotels/nicon-luxury-abuja/3.jpg",
+        "/images/hotels/nicon-luxury-abuja/4.jpg",
+        "/images/hotels/nicon-luxury-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "stonehedge-hotel-abuja",
+      "name": "Stonehedge Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 183500,
+      "stars": 4,
+      "images": [
+        "/images/hotels/stonehedge-hotel/1.jpg",
+        "/images/hotels/stonehedge-hotel/2.jpg",
+        "/images/hotels/stonehedge-hotel/3.jpg",
+        "/images/hotels/stonehedge-hotel/4.jpg",
+        "/images/hotels/stonehedge-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "sinclair-guest-house-abuja",
+      "name": "Sinclair Guest House",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 187100,
+      "stars": 4,
+      "images": [
+        "/images/hotels/sinclair-guest-house/1.jpg",
+        "/images/hotels/sinclair-guest-house/2.jpg",
+        "/images/hotels/sinclair-guest-house/3.jpg",
+        "/images/hotels/sinclair-guest-house/4.jpg",
+        "/images/hotels/sinclair-guest-house/5.jpg"
+      ]
+    },
+    {
+      "id": "reiz-continental-hotel-abuja",
+      "name": "Reiz Continental Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 206300,
+      "stars": 4,
+      "images": [
+        "/images/hotels/reiz-continental-hotel/1.jpg",
+        "/images/hotels/reiz-continental-hotel/2.jpg",
+        "/images/hotels/reiz-continental-hotel/3.jpg",
+        "/images/hotels/reiz-continental-hotel/4.jpg",
+        "/images/hotels/reiz-continental-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "pearl-continental-abuja-abuja",
+      "name": "Pearl Continental Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 218000,
+      "stars": 4,
+      "images": [
+        "/images/hotels/pearl-continental-abuja/1.jpg",
+        "/images/hotels/pearl-continental-abuja/2.jpg",
+        "/images/hotels/pearl-continental-abuja/3.jpg",
+        "/images/hotels/pearl-continental-abuja/4.jpg",
+        "/images/hotels/pearl-continental-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "statement-hotel-abuja",
+      "name": "Statement Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 237600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/statement-hotel/1.jpg",
+        "/images/hotels/statement-hotel/2.jpg",
+        "/images/hotels/statement-hotel/3.jpg",
+        "/images/hotels/statement-hotel/4.jpg",
+        "/images/hotels/statement-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "the-purpose-place-abuja",
+      "name": "The Purpose Place",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 247400,
+      "stars": 5,
+      "images": [
+        "/images/hotels/the-purpose-place/1.jpg",
+        "/images/hotels/the-purpose-place/2.jpg",
+        "/images/hotels/the-purpose-place/3.jpg",
+        "/images/hotels/the-purpose-place/4.jpg",
+        "/images/hotels/the-purpose-place/5.jpg"
+      ]
+    },
+    {
+      "id": "chelsea-hotel-abuja-abuja",
+      "name": "Chelsea Hotel Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 251200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/chelsea-hotel-abuja/1.jpg",
+        "/images/hotels/chelsea-hotel-abuja/2.jpg",
+        "/images/hotels/chelsea-hotel-abuja/3.jpg",
+        "/images/hotels/chelsea-hotel-abuja/4.jpg",
+        "/images/hotels/chelsea-hotel-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "sandralia-hotel-abuja",
+      "name": "Sandralia Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 277700,
+      "stars": 5,
+      "images": [
+        "/images/hotels/sandralia-hotel/1.jpg",
+        "/images/hotels/sandralia-hotel/2.jpg",
+        "/images/hotels/sandralia-hotel/3.jpg",
+        "/images/hotels/sandralia-hotel/4.jpg",
+        "/images/hotels/sandralia-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "capital-hub-hotel-abuja",
+      "name": "Capital Hub Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 273100,
+      "stars": 5,
+      "images": [
+        "/images/hotels/capital-hub-hotel/1.jpg",
+        "/images/hotels/capital-hub-hotel/2.jpg",
+        "/images/hotels/capital-hub-hotel/3.jpg",
+        "/images/hotels/capital-hub-hotel/4.jpg",
+        "/images/hotels/capital-hub-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "ms-marriott-apartments-abuja",
+      "name": "MS Marriott Apartments",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 291800,
+      "stars": 5,
+      "images": [
+        "/images/hotels/ms-marriott-apartments/1.jpg",
+        "/images/hotels/ms-marriott-apartments/2.jpg",
+        "/images/hotels/ms-marriott-apartments/3.jpg",
+        "/images/hotels/ms-marriott-apartments/4.jpg",
+        "/images/hotels/ms-marriott-apartments/5.jpg"
+      ]
+    },
+    {
+      "id": "valencia-hotels-abuja",
+      "name": "Valencia Hotels",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 311200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/valencia-hotels/1.jpg",
+        "/images/hotels/valencia-hotels/2.jpg",
+        "/images/hotels/valencia-hotels/3.jpg",
+        "/images/hotels/valencia-hotels/4.jpg",
+        "/images/hotels/valencia-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "venture-royale-hotel-abuja",
+      "name": "Venture Royale Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 311800,
+      "stars": 5,
+      "images": [
+        "/images/hotels/venture-royale-hotel/1.jpg",
+        "/images/hotels/venture-royale-hotel/2.jpg",
+        "/images/hotels/venture-royale-hotel/3.jpg",
+        "/images/hotels/venture-royale-hotel/4.jpg",
+        "/images/hotels/venture-royale-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "prosperia-hotel-abuja",
+      "name": "Prosperia Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 331200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/prosperia-hotel/1.jpg",
+        "/images/hotels/prosperia-hotel/2.jpg",
+        "/images/hotels/prosperia-hotel/3.jpg",
+        "/images/hotels/prosperia-hotel/4.jpg",
+        "/images/hotels/prosperia-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "residency-hotel-abuja",
+      "name": "Residency Hotel",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 334800,
+      "stars": 5,
+      "images": [
+        "/images/hotels/residency-hotel/1.jpg",
+        "/images/hotels/residency-hotel/2.jpg",
+        "/images/hotels/residency-hotel/3.jpg",
+        "/images/hotels/residency-hotel/4.jpg",
+        "/images/hotels/residency-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "ritman-hotel-abuja-abuja",
+      "name": "Ritman Hotel Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 360100,
+      "stars": 5,
+      "images": [
+        "/images/hotels/ritman-hotel-abuja/1.jpg",
+        "/images/hotels/ritman-hotel-abuja/2.jpg",
+        "/images/hotels/ritman-hotel-abuja/3.jpg",
+        "/images/hotels/ritman-hotel-abuja/4.jpg",
+        "/images/hotels/ritman-hotel-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "oxford-hotel-abuja-abuja",
+      "name": "Oxford Hotel Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 374600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/oxford-hotel-abuja/1.jpg",
+        "/images/hotels/oxford-hotel-abuja/2.jpg",
+        "/images/hotels/oxford-hotel-abuja/3.jpg",
+        "/images/hotels/oxford-hotel-abuja/4.jpg",
+        "/images/hotels/oxford-hotel-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "maple-hotel-abuja-abuja",
+      "name": "Maple Hotel Abuja",
+      "city": "Abuja",
+      "type": "Hotel",
+      "basePriceNGN": 380000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/maple-hotel-abuja/1.jpg",
+        "/images/hotels/maple-hotel-abuja/2.jpg",
+        "/images/hotels/maple-hotel-abuja/3.jpg",
+        "/images/hotels/maple-hotel-abuja/4.jpg",
+        "/images/hotels/maple-hotel-abuja/5.jpg"
+      ]
+    },
+    {
+      "id": "hotel-presidential-ph-portharcourt",
+      "name": "Hotel Presidential PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 22500,
+      "stars": 3,
+      "images": [
+        "/images/hotels/hotel-presidential-ph/1.jpg",
+        "/images/hotels/hotel-presidential-ph/2.jpg",
+        "/images/hotels/hotel-presidential-ph/3.jpg",
+        "/images/hotels/hotel-presidential-ph/4.jpg",
+        "/images/hotels/hotel-presidential-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "golden-tulip-port-harcourt-portharcourt",
+      "name": "Golden Tulip Port Harcourt",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 23900,
+      "stars": 3,
+      "images": [
+        "/images/hotels/golden-tulip-port-harcourt/1.jpg",
+        "/images/hotels/golden-tulip-port-harcourt/2.jpg",
+        "/images/hotels/golden-tulip-port-harcourt/3.jpg",
+        "/images/hotels/golden-tulip-port-harcourt/4.jpg",
+        "/images/hotels/golden-tulip-port-harcourt/5.jpg"
+      ]
+    },
+    {
+      "id": "novotel-port-harcourt-portharcourt",
+      "name": "Novotel Port Harcourt",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 44200,
+      "stars": 3,
+      "images": [
+        "/images/hotels/novotel-port-harcourt/1.jpg",
+        "/images/hotels/novotel-port-harcourt/2.jpg",
+        "/images/hotels/novotel-port-harcourt/3.jpg",
+        "/images/hotels/novotel-port-harcourt/4.jpg",
+        "/images/hotels/novotel-port-harcourt/5.jpg"
+      ]
+    },
+    {
+      "id": "swiss-international-mabisel-portharcourt",
+      "name": "Swiss International Mabisel",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 54900,
+      "stars": 3,
+      "images": [
+        "/images/hotels/swiss-international-mabisel/1.jpg",
+        "/images/hotels/swiss-international-mabisel/2.jpg",
+        "/images/hotels/swiss-international-mabisel/3.jpg",
+        "/images/hotels/swiss-international-mabisel/4.jpg",
+        "/images/hotels/swiss-international-mabisel/5.jpg"
+      ]
+    },
+    {
+      "id": "le-meridien-ogeyi-place-portharcourt",
+      "name": "Le Meridien Ogeyi Place",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 67200,
+      "stars": 3,
+      "images": [
+        "/images/hotels/le-meridien-ogeyi-place/1.jpg",
+        "/images/hotels/le-meridien-ogeyi-place/2.jpg",
+        "/images/hotels/le-meridien-ogeyi-place/3.jpg",
+        "/images/hotels/le-meridien-ogeyi-place/4.jpg",
+        "/images/hotels/le-meridien-ogeyi-place/5.jpg"
+      ]
+    },
+    {
+      "id": "genesis-hotels-gra-portharcourt",
+      "name": "Genesis Hotels GRA",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 77400,
+      "stars": 3,
+      "images": [
+        "/images/hotels/genesis-hotels-gra/1.jpg",
+        "/images/hotels/genesis-hotels-gra/2.jpg",
+        "/images/hotels/genesis-hotels-gra/3.jpg",
+        "/images/hotels/genesis-hotels-gra/4.jpg",
+        "/images/hotels/genesis-hotels-gra/5.jpg"
+      ]
+    },
+    {
+      "id": "claridon-hotels-portharcourt",
+      "name": "Claridon Hotels",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 97700,
+      "stars": 3,
+      "images": [
+        "/images/hotels/claridon-hotels/1.jpg",
+        "/images/hotels/claridon-hotels/2.jpg",
+        "/images/hotels/claridon-hotels/3.jpg",
+        "/images/hotels/claridon-hotels/4.jpg",
+        "/images/hotels/claridon-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "de-edge-hotel-ph-portharcourt",
+      "name": "De Edge Hotel PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 112500,
+      "stars": 3,
+      "images": [
+        "/images/hotels/de-edge-hotel-ph/1.jpg",
+        "/images/hotels/de-edge-hotel-ph/2.jpg",
+        "/images/hotels/de-edge-hotel-ph/3.jpg",
+        "/images/hotels/de-edge-hotel-ph/4.jpg",
+        "/images/hotels/de-edge-hotel-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "beverly-hills-hotel-ph-portharcourt",
+      "name": "Beverly Hills Hotel PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 115700,
+      "stars": 3,
+      "images": [
+        "/images/hotels/beverly-hills-hotel-ph/1.jpg",
+        "/images/hotels/beverly-hills-hotel-ph/2.jpg",
+        "/images/hotels/beverly-hills-hotel-ph/3.jpg",
+        "/images/hotels/beverly-hills-hotel-ph/4.jpg",
+        "/images/hotels/beverly-hills-hotel-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "elkan-terrace-portharcourt",
+      "name": "Elkan Terrace",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 132200,
+      "stars": 4,
+      "images": [
+        "/images/hotels/elkan-terrace/1.jpg",
+        "/images/hotels/elkan-terrace/2.jpg",
+        "/images/hotels/elkan-terrace/3.jpg",
+        "/images/hotels/elkan-terrace/4.jpg",
+        "/images/hotels/elkan-terrace/5.jpg"
+      ]
+    },
+    {
+      "id": "landmark-hotels-ph-portharcourt",
+      "name": "Landmark Hotels PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 132800,
+      "stars": 4,
+      "images": [
+        "/images/hotels/landmark-hotels-ph/1.jpg",
+        "/images/hotels/landmark-hotels-ph/2.jpg",
+        "/images/hotels/landmark-hotels-ph/3.jpg",
+        "/images/hotels/landmark-hotels-ph/4.jpg",
+        "/images/hotels/landmark-hotels-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "juhel-grand-hotel-portharcourt",
+      "name": "JuHel Grand Hotel",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 158200,
+      "stars": 4,
+      "images": [
+        "/images/hotels/juhel-grand-hotel/1.jpg",
+        "/images/hotels/juhel-grand-hotel/2.jpg",
+        "/images/hotels/juhel-grand-hotel/3.jpg",
+        "/images/hotels/juhel-grand-hotel/4.jpg",
+        "/images/hotels/juhel-grand-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "emerald-hotels-ph-portharcourt",
+      "name": "Emerald Hotels PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 169800,
+      "stars": 4,
+      "images": [
+        "/images/hotels/emerald-hotels-ph/1.jpg",
+        "/images/hotels/emerald-hotels-ph/2.jpg",
+        "/images/hotels/emerald-hotels-ph/3.jpg",
+        "/images/hotels/emerald-hotels-ph/4.jpg",
+        "/images/hotels/emerald-hotels-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "visa-karena-hotels-portharcourt",
+      "name": "Visa Karena Hotels",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 189400,
+      "stars": 4,
+      "images": [
+        "/images/hotels/visa-karena-hotels/1.jpg",
+        "/images/hotels/visa-karena-hotels/2.jpg",
+        "/images/hotels/visa-karena-hotels/3.jpg",
+        "/images/hotels/visa-karena-hotels/4.jpg",
+        "/images/hotels/visa-karena-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "sparklyn-hotels-portharcourt",
+      "name": "Sparklyn Hotels",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 198600,
+      "stars": 4,
+      "images": [
+        "/images/hotels/sparklyn-hotels/1.jpg",
+        "/images/hotels/sparklyn-hotels/2.jpg",
+        "/images/hotels/sparklyn-hotels/3.jpg",
+        "/images/hotels/sparklyn-hotels/4.jpg",
+        "/images/hotels/sparklyn-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "dannydoo-suites-portharcourt",
+      "name": "DannyDoo Suites",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 200500,
+      "stars": 4,
+      "images": [
+        "/images/hotels/dannydoo-suites/1.jpg",
+        "/images/hotels/dannydoo-suites/2.jpg",
+        "/images/hotels/dannydoo-suites/3.jpg",
+        "/images/hotels/dannydoo-suites/4.jpg",
+        "/images/hotels/dannydoo-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "oak-heaven-hotels-portharcourt",
+      "name": "Oak Heaven Hotels",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 215200,
+      "stars": 4,
+      "images": [
+        "/images/hotels/oak-heaven-hotels/1.jpg",
+        "/images/hotels/oak-heaven-hotels/2.jpg",
+        "/images/hotels/oak-heaven-hotels/3.jpg",
+        "/images/hotels/oak-heaven-hotels/4.jpg",
+        "/images/hotels/oak-heaven-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "royale-hotel-ph-portharcourt",
+      "name": "Royale Hotel PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 233500,
+      "stars": 5,
+      "images": [
+        "/images/hotels/royale-hotel-ph/1.jpg",
+        "/images/hotels/royale-hotel-ph/2.jpg",
+        "/images/hotels/royale-hotel-ph/3.jpg",
+        "/images/hotels/royale-hotel-ph/4.jpg",
+        "/images/hotels/royale-hotel-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "charrie-s-place-portharcourt",
+      "name": "Charrie's Place",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 233200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/charrie-s-place/1.jpg",
+        "/images/hotels/charrie-s-place/2.jpg",
+        "/images/hotels/charrie-s-place/3.jpg",
+        "/images/hotels/charrie-s-place/4.jpg",
+        "/images/hotels/charrie-s-place/5.jpg"
+      ]
+    },
+    {
+      "id": "swiss-spirit-hotel-ph-portharcourt",
+      "name": "Swiss Spirit Hotel PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 254700,
+      "stars": 5,
+      "images": [
+        "/images/hotels/swiss-spirit-hotel-ph/1.jpg",
+        "/images/hotels/swiss-spirit-hotel-ph/2.jpg",
+        "/images/hotels/swiss-spirit-hotel-ph/3.jpg",
+        "/images/hotels/swiss-spirit-hotel-ph/4.jpg",
+        "/images/hotels/swiss-spirit-hotel-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "ugboma-suites-portharcourt",
+      "name": "Ugboma Suites",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 261500,
+      "stars": 5,
+      "images": [
+        "/images/hotels/ugboma-suites/1.jpg",
+        "/images/hotels/ugboma-suites/2.jpg",
+        "/images/hotels/ugboma-suites/3.jpg",
+        "/images/hotels/ugboma-suites/4.jpg",
+        "/images/hotels/ugboma-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "silverbird-hotels-ph-portharcourt",
+      "name": "Silverbird Hotels PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 273100,
+      "stars": 5,
+      "images": [
+        "/images/hotels/silverbird-hotels-ph/1.jpg",
+        "/images/hotels/silverbird-hotels-ph/2.jpg",
+        "/images/hotels/silverbird-hotels-ph/3.jpg",
+        "/images/hotels/silverbird-hotels-ph/4.jpg",
+        "/images/hotels/silverbird-hotels-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "atlantis-suites-gra-portharcourt",
+      "name": "Atlantis Suites GRA",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 284600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/atlantis-suites-gra/1.jpg",
+        "/images/hotels/atlantis-suites-gra/2.jpg",
+        "/images/hotels/atlantis-suites-gra/3.jpg",
+        "/images/hotels/atlantis-suites-gra/4.jpg",
+        "/images/hotels/atlantis-suites-gra/5.jpg"
+      ]
+    },
+    {
+      "id": "de-confidence-hotel-portharcourt",
+      "name": "De Confidence Hotel",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 311400,
+      "stars": 5,
+      "images": [
+        "/images/hotels/de-confidence-hotel/1.jpg",
+        "/images/hotels/de-confidence-hotel/2.jpg",
+        "/images/hotels/de-confidence-hotel/3.jpg",
+        "/images/hotels/de-confidence-hotel/4.jpg",
+        "/images/hotels/de-confidence-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "olive-gate-hotel-portharcourt",
+      "name": "Olive Gate Hotel",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 311300,
+      "stars": 5,
+      "images": [
+        "/images/hotels/olive-gate-hotel/1.jpg",
+        "/images/hotels/olive-gate-hotel/2.jpg",
+        "/images/hotels/olive-gate-hotel/3.jpg",
+        "/images/hotels/olive-gate-hotel/4.jpg",
+        "/images/hotels/olive-gate-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "viontel-hotel-portharcourt",
+      "name": "Viontel Hotel",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 326300,
+      "stars": 5,
+      "images": [
+        "/images/hotels/viontel-hotel/1.jpg",
+        "/images/hotels/viontel-hotel/2.jpg",
+        "/images/hotels/viontel-hotel/3.jpg",
+        "/images/hotels/viontel-hotel/4.jpg",
+        "/images/hotels/viontel-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "gra-residency-portharcourt",
+      "name": "GRA Residency",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 341900,
+      "stars": 5,
+      "images": [
+        "/images/hotels/gra-residency/1.jpg",
+        "/images/hotels/gra-residency/2.jpg",
+        "/images/hotels/gra-residency/3.jpg",
+        "/images/hotels/gra-residency/4.jpg",
+        "/images/hotels/gra-residency/5.jpg"
+      ]
+    },
+    {
+      "id": "golden-tulip-oniru-ph-portharcourt",
+      "name": "Golden Tulip Oniru PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 364100,
+      "stars": 5,
+      "images": [
+        "/images/hotels/golden-tulip-oniru-ph/1.jpg",
+        "/images/hotels/golden-tulip-oniru-ph/2.jpg",
+        "/images/hotels/golden-tulip-oniru-ph/3.jpg",
+        "/images/hotels/golden-tulip-oniru-ph/4.jpg",
+        "/images/hotels/golden-tulip-oniru-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "golden-nugget-ph-portharcourt",
+      "name": "Golden Nugget PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 361000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/golden-nugget-ph/1.jpg",
+        "/images/hotels/golden-nugget-ph/2.jpg",
+        "/images/hotels/golden-nugget-ph/3.jpg",
+        "/images/hotels/golden-nugget-ph/4.jpg",
+        "/images/hotels/golden-nugget-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "gardenia-hotel-ph-portharcourt",
+      "name": "Gardenia Hotel PH",
+      "city": "Port Harcourt",
+      "type": "Hotel",
+      "basePriceNGN": 380000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/gardenia-hotel-ph/1.jpg",
+        "/images/hotels/gardenia-hotel-ph/2.jpg",
+        "/images/hotels/gardenia-hotel-ph/3.jpg",
+        "/images/hotels/gardenia-hotel-ph/4.jpg",
+        "/images/hotels/gardenia-hotel-ph/5.jpg"
+      ]
+    },
+    {
+      "id": "protea-hotel-owerri-owerri",
+      "name": "Protea Hotel Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 16000,
+      "stars": 3,
+      "images": [
+        "/images/hotels/protea-hotel-owerri/1.jpg",
+        "/images/hotels/protea-hotel-owerri/2.jpg",
+        "/images/hotels/protea-hotel-owerri/3.jpg",
+        "/images/hotels/protea-hotel-owerri/4.jpg",
+        "/images/hotels/protea-hotel-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "bon-hotel-nest-owerri-owerri",
+      "name": "BON Hotel Nest Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 35300,
+      "stars": 3,
+      "images": [
+        "/images/hotels/bon-hotel-nest-owerri/1.jpg",
+        "/images/hotels/bon-hotel-nest-owerri/2.jpg",
+        "/images/hotels/bon-hotel-nest-owerri/3.jpg",
+        "/images/hotels/bon-hotel-nest-owerri/4.jpg",
+        "/images/hotels/bon-hotel-nest-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "immaculate-royal-hotel-owerri",
+      "name": "Immaculate Royal Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 46700,
+      "stars": 3,
+      "images": [
+        "/images/hotels/immaculate-royal-hotel/1.jpg",
+        "/images/hotels/immaculate-royal-hotel/2.jpg",
+        "/images/hotels/immaculate-royal-hotel/3.jpg",
+        "/images/hotels/immaculate-royal-hotel/4.jpg",
+        "/images/hotels/immaculate-royal-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "rockview-owerri-owerri",
+      "name": "Rockview Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 60200,
+      "stars": 3,
+      "images": [
+        "/images/hotels/rockview-owerri/1.jpg",
+        "/images/hotels/rockview-owerri/2.jpg",
+        "/images/hotels/rockview-owerri/3.jpg",
+        "/images/hotels/rockview-owerri/4.jpg",
+        "/images/hotels/rockview-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "green-palm-hotels-owerri",
+      "name": "Green Palm Hotels",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 61200,
+      "stars": 3,
+      "images": [
+        "/images/hotels/green-palm-hotels/1.jpg",
+        "/images/hotels/green-palm-hotels/2.jpg",
+        "/images/hotels/green-palm-hotels/3.jpg",
+        "/images/hotels/green-palm-hotels/4.jpg",
+        "/images/hotels/green-palm-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "de-range-hotel-owerri",
+      "name": "De Range Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 76600,
+      "stars": 3,
+      "images": [
+        "/images/hotels/de-range-hotel/1.jpg",
+        "/images/hotels/de-range-hotel/2.jpg",
+        "/images/hotels/de-range-hotel/3.jpg",
+        "/images/hotels/de-range-hotel/4.jpg",
+        "/images/hotels/de-range-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "skyline-hotel-owerri-owerri",
+      "name": "Skyline Hotel Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 88100,
+      "stars": 3,
+      "images": [
+        "/images/hotels/skyline-hotel-owerri/1.jpg",
+        "/images/hotels/skyline-hotel-owerri/2.jpg",
+        "/images/hotels/skyline-hotel-owerri/3.jpg",
+        "/images/hotels/skyline-hotel-owerri/4.jpg",
+        "/images/hotels/skyline-hotel-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "mcdons-skye-hotel-owerri",
+      "name": "Mcdons Skye Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 111300,
+      "stars": 3,
+      "images": [
+        "/images/hotels/mcdons-skye-hotel/1.jpg",
+        "/images/hotels/mcdons-skye-hotel/2.jpg",
+        "/images/hotels/mcdons-skye-hotel/3.jpg",
+        "/images/hotels/mcdons-skye-hotel/4.jpg",
+        "/images/hotels/mcdons-skye-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "protea-select-owerri-owerri",
+      "name": "Protea Select Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 125400,
+      "stars": 4,
+      "images": [
+        "/images/hotels/protea-select-owerri/1.jpg",
+        "/images/hotels/protea-select-owerri/2.jpg",
+        "/images/hotels/protea-select-owerri/3.jpg",
+        "/images/hotels/protea-select-owerri/4.jpg",
+        "/images/hotels/protea-select-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "empire-hotels-owerri-owerri",
+      "name": "Empire Hotels Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 121900,
+      "stars": 4,
+      "images": [
+        "/images/hotels/empire-hotels-owerri/1.jpg",
+        "/images/hotels/empire-hotels-owerri/2.jpg",
+        "/images/hotels/empire-hotels-owerri/3.jpg",
+        "/images/hotels/empire-hotels-owerri/4.jpg",
+        "/images/hotels/empire-hotels-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "homeland-hotels-owerri",
+      "name": "Homeland Hotels",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 135100,
+      "stars": 4,
+      "images": [
+        "/images/hotels/homeland-hotels/1.jpg",
+        "/images/hotels/homeland-hotels/2.jpg",
+        "/images/hotels/homeland-hotels/3.jpg",
+        "/images/hotels/homeland-hotels/4.jpg",
+        "/images/hotels/homeland-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "samzen-hotel-owerri",
+      "name": "Samzen Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 148800,
+      "stars": 4,
+      "images": [
+        "/images/hotels/samzen-hotel/1.jpg",
+        "/images/hotels/samzen-hotel/2.jpg",
+        "/images/hotels/samzen-hotel/3.jpg",
+        "/images/hotels/samzen-hotel/4.jpg",
+        "/images/hotels/samzen-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "swiss-international-owerri-owerri",
+      "name": "Swiss International Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 161500,
+      "stars": 4,
+      "images": [
+        "/images/hotels/swiss-international-owerri/1.jpg",
+        "/images/hotels/swiss-international-owerri/2.jpg",
+        "/images/hotels/swiss-international-owerri/3.jpg",
+        "/images/hotels/swiss-international-owerri/4.jpg",
+        "/images/hotels/swiss-international-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "kelvic-suites-owerri",
+      "name": "Kelvic Suites",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 179200,
+      "stars": 4,
+      "images": [
+        "/images/hotels/kelvic-suites/1.jpg",
+        "/images/hotels/kelvic-suites/2.jpg",
+        "/images/hotels/kelvic-suites/3.jpg",
+        "/images/hotels/kelvic-suites/4.jpg",
+        "/images/hotels/kelvic-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "protea-plus-owerri-owerri",
+      "name": "Protea Plus Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 194000,
+      "stars": 4,
+      "images": [
+        "/images/hotels/protea-plus-owerri/1.jpg",
+        "/images/hotels/protea-plus-owerri/2.jpg",
+        "/images/hotels/protea-plus-owerri/3.jpg",
+        "/images/hotels/protea-plus-owerri/4.jpg",
+        "/images/hotels/protea-plus-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "de-moon-hotel-owerri",
+      "name": "De Moon Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 200100,
+      "stars": 4,
+      "images": [
+        "/images/hotels/de-moon-hotel/1.jpg",
+        "/images/hotels/de-moon-hotel/2.jpg",
+        "/images/hotels/de-moon-hotel/3.jpg",
+        "/images/hotels/de-moon-hotel/4.jpg",
+        "/images/hotels/de-moon-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "grace-court-hotels-owerri",
+      "name": "Grace Court Hotels",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 207600,
+      "stars": 4,
+      "images": [
+        "/images/hotels/grace-court-hotels/1.jpg",
+        "/images/hotels/grace-court-hotels/2.jpg",
+        "/images/hotels/grace-court-hotels/3.jpg",
+        "/images/hotels/grace-court-hotels/4.jpg",
+        "/images/hotels/grace-court-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "titanic-view-hotel-owerri",
+      "name": "Titanic View Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 228500,
+      "stars": 5,
+      "images": [
+        "/images/hotels/titanic-view-hotel/1.jpg",
+        "/images/hotels/titanic-view-hotel/2.jpg",
+        "/images/hotels/titanic-view-hotel/3.jpg",
+        "/images/hotels/titanic-view-hotel/4.jpg",
+        "/images/hotels/titanic-view-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "gold-crown-hotel-owerri",
+      "name": "Gold Crown Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 240200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/gold-crown-hotel/1.jpg",
+        "/images/hotels/gold-crown-hotel/2.jpg",
+        "/images/hotels/gold-crown-hotel/3.jpg",
+        "/images/hotels/gold-crown-hotel/4.jpg",
+        "/images/hotels/gold-crown-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "ambassador-suites-owerri",
+      "name": "Ambassador Suites",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 256800,
+      "stars": 5,
+      "images": [
+        "/images/hotels/ambassador-suites/1.jpg",
+        "/images/hotels/ambassador-suites/2.jpg",
+        "/images/hotels/ambassador-suites/3.jpg",
+        "/images/hotels/ambassador-suites/4.jpg",
+        "/images/hotels/ambassador-suites/5.jpg"
+      ]
+    },
+    {
+      "id": "moraino-hotel-owerri",
+      "name": "Moraino Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 277200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/moraino-hotel/1.jpg",
+        "/images/hotels/moraino-hotel/2.jpg",
+        "/images/hotels/moraino-hotel/3.jpg",
+        "/images/hotels/moraino-hotel/4.jpg",
+        "/images/hotels/moraino-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "disney-hotel-owerri-owerri",
+      "name": "Disney Hotel Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 284600,
+      "stars": 5,
+      "images": [
+        "/images/hotels/disney-hotel-owerri/1.jpg",
+        "/images/hotels/disney-hotel-owerri/2.jpg",
+        "/images/hotels/disney-hotel-owerri/3.jpg",
+        "/images/hotels/disney-hotel-owerri/4.jpg",
+        "/images/hotels/disney-hotel-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "akata-hotel-owerri",
+      "name": "Akata Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 293700,
+      "stars": 5,
+      "images": [
+        "/images/hotels/akata-hotel/1.jpg",
+        "/images/hotels/akata-hotel/2.jpg",
+        "/images/hotels/akata-hotel/3.jpg",
+        "/images/hotels/akata-hotel/4.jpg",
+        "/images/hotels/akata-hotel/5.jpg"
+      ]
+    },
+    {
+      "id": "oxygen-holiday-resort-owerri",
+      "name": "Oxygen Holiday Resort",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 308400,
+      "stars": 5,
+      "images": [
+        "/images/hotels/oxygen-holiday-resort/1.jpg",
+        "/images/hotels/oxygen-holiday-resort/2.jpg",
+        "/images/hotels/oxygen-holiday-resort/3.jpg",
+        "/images/hotels/oxygen-holiday-resort/4.jpg",
+        "/images/hotels/oxygen-holiday-resort/5.jpg"
+      ]
+    },
+    {
+      "id": "suncity-hotels-owerri-owerri",
+      "name": "Suncity Hotels Owerri",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 322200,
+      "stars": 5,
+      "images": [
+        "/images/hotels/suncity-hotels-owerri/1.jpg",
+        "/images/hotels/suncity-hotels-owerri/2.jpg",
+        "/images/hotels/suncity-hotels-owerri/3.jpg",
+        "/images/hotels/suncity-hotels-owerri/4.jpg",
+        "/images/hotels/suncity-hotels-owerri/5.jpg"
+      ]
+    },
+    {
+      "id": "full-moon-hotels-owerri",
+      "name": "Full Moon Hotels",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 322500,
+      "stars": 5,
+      "images": [
+        "/images/hotels/full-moon-hotels/1.jpg",
+        "/images/hotels/full-moon-hotels/2.jpg",
+        "/images/hotels/full-moon-hotels/3.jpg",
+        "/images/hotels/full-moon-hotels/4.jpg",
+        "/images/hotels/full-moon-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "rapha-hotels-owerri",
+      "name": "Rapha Hotels",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 352000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/rapha-hotels/1.jpg",
+        "/images/hotels/rapha-hotels/2.jpg",
+        "/images/hotels/rapha-hotels/3.jpg",
+        "/images/hotels/rapha-hotels/4.jpg",
+        "/images/hotels/rapha-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "royal-spring-palm-owerri",
+      "name": "Royal Spring Palm",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 362300,
+      "stars": 5,
+      "images": [
+        "/images/hotels/royal-spring-palm/1.jpg",
+        "/images/hotels/royal-spring-palm/2.jpg",
+        "/images/hotels/royal-spring-palm/3.jpg",
+        "/images/hotels/royal-spring-palm/4.jpg",
+        "/images/hotels/royal-spring-palm/5.jpg"
+      ]
+    },
+    {
+      "id": "city-global-hotels-owerri",
+      "name": "City Global Hotels",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 376800,
+      "stars": 5,
+      "images": [
+        "/images/hotels/city-global-hotels/1.jpg",
+        "/images/hotels/city-global-hotels/2.jpg",
+        "/images/hotels/city-global-hotels/3.jpg",
+        "/images/hotels/city-global-hotels/4.jpg",
+        "/images/hotels/city-global-hotels/5.jpg"
+      ]
+    },
+    {
+      "id": "new-concord-hotel-owerri",
+      "name": "New Concord Hotel",
+      "city": "Owerri",
+      "type": "Hotel",
+      "basePriceNGN": 380000,
+      "stars": 5,
+      "images": [
+        "/images/hotels/new-concord-hotel/1.jpg",
+        "/images/hotels/new-concord-hotel/2.jpg",
+        "/images/hotels/new-concord-hotel/3.jpg",
+        "/images/hotels/new-concord-hotel/4.jpg",
+        "/images/hotels/new-concord-hotel/5.jpg"
+      ]
+    }
+  ]

@@ -1,0 +1,4403 @@
+[
+  {
+    "id": "lagos-1",
+    "name": "Lagos Grand 1",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/lagos-1-exterior/800/500",
+      "https://picsum.photos/seed/lagos-1-lobby/800/500",
+      "https://picsum.photos/seed/lagos-1-pool/800/500",
+      "https://picsum.photos/seed/lagos-1-dining/800/500",
+      "https://picsum.photos/seed/lagos-1-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/lagos-1-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/lagos-1-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/lagos-1-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-2",
+    "name": "Lagos Grand 2",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-2-exterior/800/500",
+      "https://picsum.photos/seed/lagos-2-lobby/800/500",
+      "https://picsum.photos/seed/lagos-2-pool/800/500",
+      "https://picsum.photos/seed/lagos-2-dining/800/500",
+      "https://picsum.photos/seed/lagos-2-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/lagos-2-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/lagos-2-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/lagos-2-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-3",
+    "name": "Lagos Grand 3",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-3-exterior/800/500",
+      "https://picsum.photos/seed/lagos-3-lobby/800/500",
+      "https://picsum.photos/seed/lagos-3-pool/800/500",
+      "https://picsum.photos/seed/lagos-3-dining/800/500",
+      "https://picsum.photos/seed/lagos-3-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/lagos-3-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/lagos-3-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/lagos-3-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-4",
+    "name": "Lagos Grand 4",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-4-exterior/800/500",
+      "https://picsum.photos/seed/lagos-4-lobby/800/500",
+      "https://picsum.photos/seed/lagos-4-pool/800/500",
+      "https://picsum.photos/seed/lagos-4-dining/800/500",
+      "https://picsum.photos/seed/lagos-4-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/lagos-4-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/lagos-4-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/lagos-4-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-5",
+    "name": "Lagos Grand 5",
+    "city": "Lagos",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-5-exterior/800/500",
+      "https://picsum.photos/seed/lagos-5-lobby/800/500",
+      "https://picsum.photos/seed/lagos-5-pool/800/500",
+      "https://picsum.photos/seed/lagos-5-dining/800/500",
+      "https://picsum.photos/seed/lagos-5-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/lagos-5-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/lagos-5-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/lagos-5-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-6",
+    "name": "Lagos Grand 6",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-6-exterior/800/500",
+      "https://picsum.photos/seed/lagos-6-lobby/800/500",
+      "https://picsum.photos/seed/lagos-6-pool/800/500",
+      "https://picsum.photos/seed/lagos-6-dining/800/500",
+      "https://picsum.photos/seed/lagos-6-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/lagos-6-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/lagos-6-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/lagos-6-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-7",
+    "name": "Lagos Grand 7",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-7-exterior/800/500",
+      "https://picsum.photos/seed/lagos-7-lobby/800/500",
+      "https://picsum.photos/seed/lagos-7-pool/800/500",
+      "https://picsum.photos/seed/lagos-7-dining/800/500",
+      "https://picsum.photos/seed/lagos-7-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/lagos-7-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/lagos-7-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/lagos-7-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-8",
+    "name": "Lagos Grand 8",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-8-exterior/800/500",
+      "https://picsum.photos/seed/lagos-8-lobby/800/500",
+      "https://picsum.photos/seed/lagos-8-pool/800/500",
+      "https://picsum.photos/seed/lagos-8-dining/800/500",
+      "https://picsum.photos/seed/lagos-8-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/lagos-8-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/lagos-8-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/lagos-8-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-9",
+    "name": "Lagos Grand 9",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/lagos-9-exterior/800/500",
+      "https://picsum.photos/seed/lagos-9-lobby/800/500",
+      "https://picsum.photos/seed/lagos-9-pool/800/500",
+      "https://picsum.photos/seed/lagos-9-dining/800/500",
+      "https://picsum.photos/seed/lagos-9-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/lagos-9-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/lagos-9-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/lagos-9-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-10",
+    "name": "Lagos Grand 10",
+    "city": "Lagos",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-10-exterior/800/500",
+      "https://picsum.photos/seed/lagos-10-lobby/800/500",
+      "https://picsum.photos/seed/lagos-10-pool/800/500",
+      "https://picsum.photos/seed/lagos-10-dining/800/500",
+      "https://picsum.photos/seed/lagos-10-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/lagos-10-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/lagos-10-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/lagos-10-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-11",
+    "name": "Lagos Grand 11",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/lagos-11-exterior/800/500",
+      "https://picsum.photos/seed/lagos-11-lobby/800/500",
+      "https://picsum.photos/seed/lagos-11-pool/800/500",
+      "https://picsum.photos/seed/lagos-11-dining/800/500",
+      "https://picsum.photos/seed/lagos-11-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/lagos-11-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/lagos-11-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/lagos-11-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-12",
+    "name": "Lagos Grand 12",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/lagos-12-exterior/800/500",
+      "https://picsum.photos/seed/lagos-12-lobby/800/500",
+      "https://picsum.photos/seed/lagos-12-pool/800/500",
+      "https://picsum.photos/seed/lagos-12-dining/800/500",
+      "https://picsum.photos/seed/lagos-12-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/lagos-12-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/lagos-12-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/lagos-12-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-13",
+    "name": "Lagos Grand 13",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-13-exterior/800/500",
+      "https://picsum.photos/seed/lagos-13-lobby/800/500",
+      "https://picsum.photos/seed/lagos-13-pool/800/500",
+      "https://picsum.photos/seed/lagos-13-dining/800/500",
+      "https://picsum.photos/seed/lagos-13-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/lagos-13-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/lagos-13-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/lagos-13-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-14",
+    "name": "Lagos Grand 14",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-14-exterior/800/500",
+      "https://picsum.photos/seed/lagos-14-lobby/800/500",
+      "https://picsum.photos/seed/lagos-14-pool/800/500",
+      "https://picsum.photos/seed/lagos-14-dining/800/500",
+      "https://picsum.photos/seed/lagos-14-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/lagos-14-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/lagos-14-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/lagos-14-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-15",
+    "name": "Lagos Grand 15",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-15-exterior/800/500",
+      "https://picsum.photos/seed/lagos-15-lobby/800/500",
+      "https://picsum.photos/seed/lagos-15-pool/800/500",
+      "https://picsum.photos/seed/lagos-15-dining/800/500",
+      "https://picsum.photos/seed/lagos-15-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/lagos-15-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/lagos-15-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/lagos-15-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-16",
+    "name": "Lagos Grand 16",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-16-exterior/800/500",
+      "https://picsum.photos/seed/lagos-16-lobby/800/500",
+      "https://picsum.photos/seed/lagos-16-pool/800/500",
+      "https://picsum.photos/seed/lagos-16-dining/800/500",
+      "https://picsum.photos/seed/lagos-16-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/lagos-16-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/lagos-16-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/lagos-16-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-17",
+    "name": "Lagos Grand 17",
+    "city": "Lagos",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-17-exterior/800/500",
+      "https://picsum.photos/seed/lagos-17-lobby/800/500",
+      "https://picsum.photos/seed/lagos-17-pool/800/500",
+      "https://picsum.photos/seed/lagos-17-dining/800/500",
+      "https://picsum.photos/seed/lagos-17-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/lagos-17-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/lagos-17-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/lagos-17-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-18",
+    "name": "Lagos Grand 18",
+    "city": "Lagos",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-18-exterior/800/500",
+      "https://picsum.photos/seed/lagos-18-lobby/800/500",
+      "https://picsum.photos/seed/lagos-18-pool/800/500",
+      "https://picsum.photos/seed/lagos-18-dining/800/500",
+      "https://picsum.photos/seed/lagos-18-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/lagos-18-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/lagos-18-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/lagos-18-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-19",
+    "name": "Lagos Grand 19",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-19-exterior/800/500",
+      "https://picsum.photos/seed/lagos-19-lobby/800/500",
+      "https://picsum.photos/seed/lagos-19-pool/800/500",
+      "https://picsum.photos/seed/lagos-19-dining/800/500",
+      "https://picsum.photos/seed/lagos-19-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/lagos-19-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/lagos-19-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/lagos-19-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "lagos-20",
+    "name": "Lagos Grand 20",
+    "city": "Lagos",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/lagos-20-exterior/800/500",
+      "https://picsum.photos/seed/lagos-20-lobby/800/500",
+      "https://picsum.photos/seed/lagos-20-pool/800/500",
+      "https://picsum.photos/seed/lagos-20-dining/800/500",
+      "https://picsum.photos/seed/lagos-20-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/lagos-20-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/lagos-20-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/lagos-20-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-21",
+    "name": "Abuja Grand 1",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-21-exterior/800/500",
+      "https://picsum.photos/seed/abuja-21-lobby/800/500",
+      "https://picsum.photos/seed/abuja-21-pool/800/500",
+      "https://picsum.photos/seed/abuja-21-dining/800/500",
+      "https://picsum.photos/seed/abuja-21-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/abuja-21-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/abuja-21-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/abuja-21-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-22",
+    "name": "Abuja Grand 2",
+    "city": "Abuja",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-22-exterior/800/500",
+      "https://picsum.photos/seed/abuja-22-lobby/800/500",
+      "https://picsum.photos/seed/abuja-22-pool/800/500",
+      "https://picsum.photos/seed/abuja-22-dining/800/500",
+      "https://picsum.photos/seed/abuja-22-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/abuja-22-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/abuja-22-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/abuja-22-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-23",
+    "name": "Abuja Grand 3",
+    "city": "Abuja",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-23-exterior/800/500",
+      "https://picsum.photos/seed/abuja-23-lobby/800/500",
+      "https://picsum.photos/seed/abuja-23-pool/800/500",
+      "https://picsum.photos/seed/abuja-23-dining/800/500",
+      "https://picsum.photos/seed/abuja-23-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/abuja-23-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/abuja-23-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/abuja-23-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-24",
+    "name": "Abuja Grand 4",
+    "city": "Abuja",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-24-exterior/800/500",
+      "https://picsum.photos/seed/abuja-24-lobby/800/500",
+      "https://picsum.photos/seed/abuja-24-pool/800/500",
+      "https://picsum.photos/seed/abuja-24-dining/800/500",
+      "https://picsum.photos/seed/abuja-24-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/abuja-24-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/abuja-24-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-24-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-25",
+    "name": "Abuja Grand 5",
+    "city": "Abuja",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-25-exterior/800/500",
+      "https://picsum.photos/seed/abuja-25-lobby/800/500",
+      "https://picsum.photos/seed/abuja-25-pool/800/500",
+      "https://picsum.photos/seed/abuja-25-dining/800/500",
+      "https://picsum.photos/seed/abuja-25-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/abuja-25-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/abuja-25-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/abuja-25-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-26",
+    "name": "Abuja Grand 6",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-26-exterior/800/500",
+      "https://picsum.photos/seed/abuja-26-lobby/800/500",
+      "https://picsum.photos/seed/abuja-26-pool/800/500",
+      "https://picsum.photos/seed/abuja-26-dining/800/500",
+      "https://picsum.photos/seed/abuja-26-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-26-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/abuja-26-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/abuja-26-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-27",
+    "name": "Abuja Grand 7",
+    "city": "Abuja",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-27-exterior/800/500",
+      "https://picsum.photos/seed/abuja-27-lobby/800/500",
+      "https://picsum.photos/seed/abuja-27-pool/800/500",
+      "https://picsum.photos/seed/abuja-27-dining/800/500",
+      "https://picsum.photos/seed/abuja-27-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/abuja-27-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/abuja-27-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-27-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-28",
+    "name": "Abuja Grand 8",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-28-exterior/800/500",
+      "https://picsum.photos/seed/abuja-28-lobby/800/500",
+      "https://picsum.photos/seed/abuja-28-pool/800/500",
+      "https://picsum.photos/seed/abuja-28-dining/800/500",
+      "https://picsum.photos/seed/abuja-28-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/abuja-28-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/abuja-28-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-28-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-29",
+    "name": "Abuja Grand 9",
+    "city": "Abuja",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-29-exterior/800/500",
+      "https://picsum.photos/seed/abuja-29-lobby/800/500",
+      "https://picsum.photos/seed/abuja-29-pool/800/500",
+      "https://picsum.photos/seed/abuja-29-dining/800/500",
+      "https://picsum.photos/seed/abuja-29-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-29-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/abuja-29-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/abuja-29-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-30",
+    "name": "Abuja Grand 10",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-30-exterior/800/500",
+      "https://picsum.photos/seed/abuja-30-lobby/800/500",
+      "https://picsum.photos/seed/abuja-30-pool/800/500",
+      "https://picsum.photos/seed/abuja-30-dining/800/500",
+      "https://picsum.photos/seed/abuja-30-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/abuja-30-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/abuja-30-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/abuja-30-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-31",
+    "name": "Abuja Grand 11",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-31-exterior/800/500",
+      "https://picsum.photos/seed/abuja-31-lobby/800/500",
+      "https://picsum.photos/seed/abuja-31-pool/800/500",
+      "https://picsum.photos/seed/abuja-31-dining/800/500",
+      "https://picsum.photos/seed/abuja-31-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/abuja-31-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/abuja-31-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-31-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-32",
+    "name": "Abuja Grand 12",
+    "city": "Abuja",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-32-exterior/800/500",
+      "https://picsum.photos/seed/abuja-32-lobby/800/500",
+      "https://picsum.photos/seed/abuja-32-pool/800/500",
+      "https://picsum.photos/seed/abuja-32-dining/800/500",
+      "https://picsum.photos/seed/abuja-32-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/abuja-32-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/abuja-32-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/abuja-32-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-33",
+    "name": "Abuja Grand 13",
+    "city": "Abuja",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-33-exterior/800/500",
+      "https://picsum.photos/seed/abuja-33-lobby/800/500",
+      "https://picsum.photos/seed/abuja-33-pool/800/500",
+      "https://picsum.photos/seed/abuja-33-dining/800/500",
+      "https://picsum.photos/seed/abuja-33-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/abuja-33-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/abuja-33-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/abuja-33-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-34",
+    "name": "Abuja Grand 14",
+    "city": "Abuja",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-34-exterior/800/500",
+      "https://picsum.photos/seed/abuja-34-lobby/800/500",
+      "https://picsum.photos/seed/abuja-34-pool/800/500",
+      "https://picsum.photos/seed/abuja-34-dining/800/500",
+      "https://picsum.photos/seed/abuja-34-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/abuja-34-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/abuja-34-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/abuja-34-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-35",
+    "name": "Abuja Grand 15",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-35-exterior/800/500",
+      "https://picsum.photos/seed/abuja-35-lobby/800/500",
+      "https://picsum.photos/seed/abuja-35-pool/800/500",
+      "https://picsum.photos/seed/abuja-35-dining/800/500",
+      "https://picsum.photos/seed/abuja-35-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/abuja-35-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/abuja-35-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/abuja-35-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-36",
+    "name": "Abuja Grand 16",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 220000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-36-exterior/800/500",
+      "https://picsum.photos/seed/abuja-36-lobby/800/500",
+      "https://picsum.photos/seed/abuja-36-pool/800/500",
+      "https://picsum.photos/seed/abuja-36-dining/800/500",
+      "https://picsum.photos/seed/abuja-36-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 220000,
+        "image": "https://picsum.photos/seed/abuja-36-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 242000,
+        "image": "https://picsum.photos/seed/abuja-36-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 264000,
+        "image": "https://picsum.photos/seed/abuja-36-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-37",
+    "name": "Abuja Grand 17",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-37-exterior/800/500",
+      "https://picsum.photos/seed/abuja-37-lobby/800/500",
+      "https://picsum.photos/seed/abuja-37-pool/800/500",
+      "https://picsum.photos/seed/abuja-37-dining/800/500",
+      "https://picsum.photos/seed/abuja-37-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/abuja-37-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/abuja-37-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/abuja-37-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-38",
+    "name": "Abuja Grand 18",
+    "city": "Abuja",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/abuja-38-exterior/800/500",
+      "https://picsum.photos/seed/abuja-38-lobby/800/500",
+      "https://picsum.photos/seed/abuja-38-pool/800/500",
+      "https://picsum.photos/seed/abuja-38-dining/800/500",
+      "https://picsum.photos/seed/abuja-38-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/abuja-38-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/abuja-38-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/abuja-38-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-39",
+    "name": "Abuja Grand 19",
+    "city": "Abuja",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-39-exterior/800/500",
+      "https://picsum.photos/seed/abuja-39-lobby/800/500",
+      "https://picsum.photos/seed/abuja-39-pool/800/500",
+      "https://picsum.photos/seed/abuja-39-dining/800/500",
+      "https://picsum.photos/seed/abuja-39-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/abuja-39-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/abuja-39-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/abuja-39-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "abuja-40",
+    "name": "Abuja Grand 20",
+    "city": "Abuja",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/abuja-40-exterior/800/500",
+      "https://picsum.photos/seed/abuja-40-lobby/800/500",
+      "https://picsum.photos/seed/abuja-40-pool/800/500",
+      "https://picsum.photos/seed/abuja-40-dining/800/500",
+      "https://picsum.photos/seed/abuja-40-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/abuja-40-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/abuja-40-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/abuja-40-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-41",
+    "name": "Port Harcourt Grand 1",
+    "city": "Port Harcourt",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-41-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-41-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-41-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-41-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-41-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/portharcourt-41-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/portharcourt-41-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/portharcourt-41-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-42",
+    "name": "Port Harcourt Grand 2",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-42-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-42-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-42-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-42-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-42-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/portharcourt-42-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/portharcourt-42-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/portharcourt-42-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-43",
+    "name": "Port Harcourt Grand 3",
+    "city": "Port Harcourt",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-43-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-43-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-43-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-43-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-43-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/portharcourt-43-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/portharcourt-43-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/portharcourt-43-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-44",
+    "name": "Port Harcourt Grand 4",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-44-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-44-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-44-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-44-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-44-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/portharcourt-44-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/portharcourt-44-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/portharcourt-44-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-45",
+    "name": "Port Harcourt Grand 5",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-45-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-45-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-45-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-45-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-45-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/portharcourt-45-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/portharcourt-45-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/portharcourt-45-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-46",
+    "name": "Port Harcourt Grand 6",
+    "city": "Port Harcourt",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-46-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-46-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-46-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-46-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-46-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/portharcourt-46-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/portharcourt-46-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/portharcourt-46-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-47",
+    "name": "Port Harcourt Grand 7",
+    "city": "Port Harcourt",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-47-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-47-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-47-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-47-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-47-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/portharcourt-47-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/portharcourt-47-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/portharcourt-47-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-48",
+    "name": "Port Harcourt Grand 8",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-48-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-48-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-48-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-48-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-48-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/portharcourt-48-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/portharcourt-48-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/portharcourt-48-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-49",
+    "name": "Port Harcourt Grand 9",
+    "city": "Port Harcourt",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 180000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-49-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-49-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-49-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-49-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-49-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/portharcourt-49-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 198000,
+        "image": "https://picsum.photos/seed/portharcourt-49-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 216000,
+        "image": "https://picsum.photos/seed/portharcourt-49-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-50",
+    "name": "Port Harcourt Grand 10",
+    "city": "Port Harcourt",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-50-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-50-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-50-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-50-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-50-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/portharcourt-50-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/portharcourt-50-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/portharcourt-50-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-51",
+    "name": "Port Harcourt Grand 11",
+    "city": "Port Harcourt",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-51-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-51-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-51-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-51-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-51-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/portharcourt-51-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/portharcourt-51-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/portharcourt-51-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-52",
+    "name": "Port Harcourt Grand 12",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-52-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-52-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-52-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-52-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-52-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/portharcourt-52-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/portharcourt-52-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/portharcourt-52-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-53",
+    "name": "Port Harcourt Grand 13",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-53-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-53-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-53-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-53-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-53-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/portharcourt-53-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/portharcourt-53-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/portharcourt-53-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-54",
+    "name": "Port Harcourt Grand 14",
+    "city": "Port Harcourt",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 220000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-54-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-54-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-54-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-54-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-54-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 220000,
+        "image": "https://picsum.photos/seed/portharcourt-54-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 242000,
+        "image": "https://picsum.photos/seed/portharcourt-54-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 264000,
+        "image": "https://picsum.photos/seed/portharcourt-54-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-55",
+    "name": "Port Harcourt Grand 15",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-55-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-55-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-55-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-55-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-55-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/portharcourt-55-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/portharcourt-55-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/portharcourt-55-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-56",
+    "name": "Port Harcourt Grand 16",
+    "city": "Port Harcourt",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-56-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-56-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-56-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-56-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-56-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/portharcourt-56-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/portharcourt-56-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/portharcourt-56-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-57",
+    "name": "Port Harcourt Grand 17",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-57-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-57-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-57-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-57-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-57-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/portharcourt-57-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/portharcourt-57-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/portharcourt-57-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-58",
+    "name": "Port Harcourt Grand 18",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-58-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-58-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-58-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-58-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-58-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/portharcourt-58-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/portharcourt-58-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/portharcourt-58-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-59",
+    "name": "Port Harcourt Grand 19",
+    "city": "Port Harcourt",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-59-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-59-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-59-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-59-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-59-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/portharcourt-59-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/portharcourt-59-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/portharcourt-59-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "portharcourt-60",
+    "name": "Port Harcourt Grand 20",
+    "city": "Port Harcourt",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/portharcourt-60-exterior/800/500",
+      "https://picsum.photos/seed/portharcourt-60-lobby/800/500",
+      "https://picsum.photos/seed/portharcourt-60-pool/800/500",
+      "https://picsum.photos/seed/portharcourt-60-dining/800/500",
+      "https://picsum.photos/seed/portharcourt-60-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/portharcourt-60-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/portharcourt-60-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/portharcourt-60-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-61",
+    "name": "Owerri Grand 1",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-61-exterior/800/500",
+      "https://picsum.photos/seed/owerri-61-lobby/800/500",
+      "https://picsum.photos/seed/owerri-61-pool/800/500",
+      "https://picsum.photos/seed/owerri-61-dining/800/500",
+      "https://picsum.photos/seed/owerri-61-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/owerri-61-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/owerri-61-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/owerri-61-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-62",
+    "name": "Owerri Grand 2",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-62-exterior/800/500",
+      "https://picsum.photos/seed/owerri-62-lobby/800/500",
+      "https://picsum.photos/seed/owerri-62-pool/800/500",
+      "https://picsum.photos/seed/owerri-62-dining/800/500",
+      "https://picsum.photos/seed/owerri-62-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/owerri-62-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/owerri-62-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/owerri-62-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-63",
+    "name": "Owerri Grand 3",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-63-exterior/800/500",
+      "https://picsum.photos/seed/owerri-63-lobby/800/500",
+      "https://picsum.photos/seed/owerri-63-pool/800/500",
+      "https://picsum.photos/seed/owerri-63-dining/800/500",
+      "https://picsum.photos/seed/owerri-63-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/owerri-63-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/owerri-63-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/owerri-63-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-64",
+    "name": "Owerri Grand 4",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-64-exterior/800/500",
+      "https://picsum.photos/seed/owerri-64-lobby/800/500",
+      "https://picsum.photos/seed/owerri-64-pool/800/500",
+      "https://picsum.photos/seed/owerri-64-dining/800/500",
+      "https://picsum.photos/seed/owerri-64-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/owerri-64-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/owerri-64-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/owerri-64-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-65",
+    "name": "Owerri Grand 5",
+    "city": "Owerri",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-65-exterior/800/500",
+      "https://picsum.photos/seed/owerri-65-lobby/800/500",
+      "https://picsum.photos/seed/owerri-65-pool/800/500",
+      "https://picsum.photos/seed/owerri-65-dining/800/500",
+      "https://picsum.photos/seed/owerri-65-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/owerri-65-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/owerri-65-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/owerri-65-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-66",
+    "name": "Owerri Grand 6",
+    "city": "Owerri",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-66-exterior/800/500",
+      "https://picsum.photos/seed/owerri-66-lobby/800/500",
+      "https://picsum.photos/seed/owerri-66-pool/800/500",
+      "https://picsum.photos/seed/owerri-66-dining/800/500",
+      "https://picsum.photos/seed/owerri-66-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/owerri-66-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/owerri-66-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/owerri-66-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-67",
+    "name": "Owerri Grand 7",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-67-exterior/800/500",
+      "https://picsum.photos/seed/owerri-67-lobby/800/500",
+      "https://picsum.photos/seed/owerri-67-pool/800/500",
+      "https://picsum.photos/seed/owerri-67-dining/800/500",
+      "https://picsum.photos/seed/owerri-67-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/owerri-67-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/owerri-67-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/owerri-67-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-68",
+    "name": "Owerri Grand 8",
+    "city": "Owerri",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-68-exterior/800/500",
+      "https://picsum.photos/seed/owerri-68-lobby/800/500",
+      "https://picsum.photos/seed/owerri-68-pool/800/500",
+      "https://picsum.photos/seed/owerri-68-dining/800/500",
+      "https://picsum.photos/seed/owerri-68-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/owerri-68-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/owerri-68-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/owerri-68-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-69",
+    "name": "Owerri Grand 9",
+    "city": "Owerri",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 80000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-69-exterior/800/500",
+      "https://picsum.photos/seed/owerri-69-lobby/800/500",
+      "https://picsum.photos/seed/owerri-69-pool/800/500",
+      "https://picsum.photos/seed/owerri-69-dining/800/500",
+      "https://picsum.photos/seed/owerri-69-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 80000,
+        "image": "https://picsum.photos/seed/owerri-69-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 88000,
+        "image": "https://picsum.photos/seed/owerri-69-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 96000,
+        "image": "https://picsum.photos/seed/owerri-69-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-70",
+    "name": "Owerri Grand 10",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-70-exterior/800/500",
+      "https://picsum.photos/seed/owerri-70-lobby/800/500",
+      "https://picsum.photos/seed/owerri-70-pool/800/500",
+      "https://picsum.photos/seed/owerri-70-dining/800/500",
+      "https://picsum.photos/seed/owerri-70-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/owerri-70-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/owerri-70-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/owerri-70-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-71",
+    "name": "Owerri Grand 11",
+    "city": "Owerri",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 65000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-71-exterior/800/500",
+      "https://picsum.photos/seed/owerri-71-lobby/800/500",
+      "https://picsum.photos/seed/owerri-71-pool/800/500",
+      "https://picsum.photos/seed/owerri-71-dining/800/500",
+      "https://picsum.photos/seed/owerri-71-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 65000,
+        "image": "https://picsum.photos/seed/owerri-71-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 71500,
+        "image": "https://picsum.photos/seed/owerri-71-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 78000,
+        "image": "https://picsum.photos/seed/owerri-71-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-72",
+    "name": "Owerri Grand 12",
+    "city": "Owerri",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 95000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-72-exterior/800/500",
+      "https://picsum.photos/seed/owerri-72-lobby/800/500",
+      "https://picsum.photos/seed/owerri-72-pool/800/500",
+      "https://picsum.photos/seed/owerri-72-dining/800/500",
+      "https://picsum.photos/seed/owerri-72-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 95000,
+        "image": "https://picsum.photos/seed/owerri-72-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 104500,
+        "image": "https://picsum.photos/seed/owerri-72-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 114000,
+        "image": "https://picsum.photos/seed/owerri-72-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-73",
+    "name": "Owerri Grand 13",
+    "city": "Owerri",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Apartment",
+    "images": [
+      "https://picsum.photos/seed/owerri-73-exterior/800/500",
+      "https://picsum.photos/seed/owerri-73-lobby/800/500",
+      "https://picsum.photos/seed/owerri-73-pool/800/500",
+      "https://picsum.photos/seed/owerri-73-dining/800/500",
+      "https://picsum.photos/seed/owerri-73-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/owerri-73-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/owerri-73-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/owerri-73-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-74",
+    "name": "Owerri Grand 14",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym",
+      "restaurant"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-74-exterior/800/500",
+      "https://picsum.photos/seed/owerri-74-lobby/800/500",
+      "https://picsum.photos/seed/owerri-74-pool/800/500",
+      "https://picsum.photos/seed/owerri-74-dining/800/500",
+      "https://picsum.photos/seed/owerri-74-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/owerri-74-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/owerri-74-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/owerri-74-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-75",
+    "name": "Owerri Grand 15",
+    "city": "Owerri",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-75-exterior/800/500",
+      "https://picsum.photos/seed/owerri-75-lobby/800/500",
+      "https://picsum.photos/seed/owerri-75-pool/800/500",
+      "https://picsum.photos/seed/owerri-75-dining/800/500",
+      "https://picsum.photos/seed/owerri-75-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/owerri-75-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/owerri-75-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/owerri-75-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-76",
+    "name": "Owerri Grand 16",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-76-exterior/800/500",
+      "https://picsum.photos/seed/owerri-76-lobby/800/500",
+      "https://picsum.photos/seed/owerri-76-pool/800/500",
+      "https://picsum.photos/seed/owerri-76-dining/800/500",
+      "https://picsum.photos/seed/owerri-76-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/owerri-76-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/owerri-76-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/owerri-76-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-77",
+    "name": "Owerri Grand 17",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac"
+    ],
+    "basePriceNGN": 120000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-77-exterior/800/500",
+      "https://picsum.photos/seed/owerri-77-lobby/800/500",
+      "https://picsum.photos/seed/owerri-77-pool/800/500",
+      "https://picsum.photos/seed/owerri-77-dining/800/500",
+      "https://picsum.photos/seed/owerri-77-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 120000,
+        "image": "https://picsum.photos/seed/owerri-77-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 132000,
+        "image": "https://picsum.photos/seed/owerri-77-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 144000,
+        "image": "https://picsum.photos/seed/owerri-77-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-78",
+    "name": "Owerri Grand 18",
+    "city": "Owerri",
+    "stars": 3,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-78-exterior/800/500",
+      "https://picsum.photos/seed/owerri-78-lobby/800/500",
+      "https://picsum.photos/seed/owerri-78-pool/800/500",
+      "https://picsum.photos/seed/owerri-78-dining/800/500",
+      "https://picsum.photos/seed/owerri-78-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/owerri-78-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/owerri-78-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/owerri-78-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-79",
+    "name": "Owerri Grand 19",
+    "city": "Owerri",
+    "stars": 5,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 250000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-79-exterior/800/500",
+      "https://picsum.photos/seed/owerri-79-lobby/800/500",
+      "https://picsum.photos/seed/owerri-79-pool/800/500",
+      "https://picsum.photos/seed/owerri-79-dining/800/500",
+      "https://picsum.photos/seed/owerri-79-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 250000,
+        "image": "https://picsum.photos/seed/owerri-79-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 275000,
+        "image": "https://picsum.photos/seed/owerri-79-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 300000,
+        "image": "https://picsum.photos/seed/owerri-79-twin/800/500"
+      }
+    ]
+  },
+  {
+    "id": "owerri-80",
+    "name": "Owerri Grand 20",
+    "city": "Owerri",
+    "stars": 4,
+    "amenities": [
+      "wifi",
+      "pool",
+      "ac",
+      "gym"
+    ],
+    "basePriceNGN": 150000,
+    "type": "Hotel",
+    "images": [
+      "https://picsum.photos/seed/owerri-80-exterior/800/500",
+      "https://picsum.photos/seed/owerri-80-lobby/800/500",
+      "https://picsum.photos/seed/owerri-80-pool/800/500",
+      "https://picsum.photos/seed/owerri-80-dining/800/500",
+      "https://picsum.photos/seed/owerri-80-room/800/500"
+    ],
+    "rooms": [
+      {
+        "name": "Deluxe King",
+        "features": [
+          "TV",
+          "Big sofa",
+          "City view",
+          "AC"
+        ],
+        "priceNGN": 150000,
+        "image": "https://picsum.photos/seed/owerri-80-deluxe/800/500"
+      },
+      {
+        "name": "Executive Suite",
+        "features": [
+          "Living area",
+          "2 TVs",
+          "Sofa set",
+          "Work desk"
+        ],
+        "priceNGN": 165000,
+        "image": "https://picsum.photos/seed/owerri-80-exec/800/500"
+      },
+      {
+        "name": "Standard Twin",
+        "features": [
+          "2 beds",
+          "TV",
+          "AC"
+        ],
+        "priceNGN": 180000,
+        "image": "https://picsum.photos/seed/owerri-80-twin/800/500"
+      }
+    ]
+  }
+]

@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- existing utilities --- */
+.container { @apply mx-auto max-w-6xl px-4; }
+.card { @apply bg-white rounded-xl shadow-soft border border-gray-100; }
+.btn { @apply inline-flex items-center justify-center rounded-md px-4 h-11 font-medium; }
+.btn-primary { @apply btn bg-brand-green text-white hover:bg-brand-dark transition; }
+.btn-ghost { @apply btn bg-white border border-gray-200 hover:bg-gray-50; }
+.input, .select { @apply h-11 rounded-md border border-gray-300 px-3 w-full bg-white; }
+.badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-50 text-brand-green; }
+.grid-cards { @apply grid sm:grid-cols-2 lg:grid-cols-3 gap-5; }
+.tabs { @apply inline-flex items-center rounded-lg bg-gray-100 p-1; }
+.tab { @apply px-3 h-9 inline-flex items-center rounded-md text-sm; }
+.tab-active { @apply bg-white text-brand-green border border-gray-200; }
+.star { color:#fbbf24; }
+
+/* --- compact Booking.com–style search block --- */
+.search-card { @apply bg-white border border-gray-200 rounded-xl p-3 md:p-4; }
+.search-row { @apply flex flex-wrap items-end gap-2 md:gap-3; }
+
+.field { @apply flex flex-col gap-1.5; }
+.field .label { @apply text-xs text-gray-600; }
+
+.dates { @apply flex items-center gap-2; }
+.dash { @apply text-gray-400; }
+
+.travellers { @apply flex gap-2; }
+.sm-num { @apply w-20; } /* ~80px */
+
+.toggle { @apply flex gap-1.5; }
+.chip { @apply h-10 px-3 border border-gray-300 rounded-full text-sm bg-white; }
+.chip.active { @apply border-brand-green/30 bg-emerald-50; }
+
+.btn-wrap { @apply flex; }
+
+/* make Search button always visible on small screens */
+@media (max-width: 768px){
+  .btn-wrap .btn-primary { @apply w-full; }
+}

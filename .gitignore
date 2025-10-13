@@ -1,0 +1,30 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.log
+
+# Env / OS
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
+
+# Tests / reports
+playwright-report/
+test-results/
+
+# Misc
+*.local
+# media
+public/images/
+*.jpg
+*.jpeg
+*.png
+*.webp

@@ -1,0 +1,10 @@
+{
+    "default": 0.15,
+    "overrides": {
+      "eko-hotels-lagos": 0.18,
+      "protea-owerri": 0.12,
+      "transcorp-hilton-abuja": 0.20,
+      "hotel-presidential-ph": 0.10
+    }
+  }
+  

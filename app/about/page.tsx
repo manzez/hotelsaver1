@@ -1,0 +1,1 @@
+export default function About(){return(<div className='py-10'><h1 className='text-2xl font-bold mb-2'>About HotelSaver.ng</h1><p>We seek to find customers the best price for hotels and help hotels fill empty rooms.</p></div>)}

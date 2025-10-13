@@ -1,0 +1,2162 @@
+[
+  {
+    "id": "svc-lagos-massage",
+    "city": "Lagos",
+    "category": "Massage",
+    "title": "Relaxation & deep-tissue massage (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality massage services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.76,
+    "reviews": 93,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 116695,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 175042,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaMa1/800/500",
+      "https://picsum.photos/seed/LaMa1b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-hair",
+    "city": "Lagos",
+    "category": "Hair",
+    "title": "Pro hair styling on-demand (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality hair services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.85,
+    "reviews": 116,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 43471,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 65206,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaHa2/800/500",
+      "https://picsum.photos/seed/LaHa2b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-nails",
+    "city": "Lagos",
+    "category": "Nails",
+    "title": "Manicure & pedicure at home (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality nails services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.69,
+    "reviews": 13,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 218790,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 328185,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaNa3/800/500",
+      "https://picsum.photos/seed/LaNa3b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-makeup",
+    "city": "Lagos",
+    "category": "Makeup",
+    "title": "Event makeup artist (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality makeup services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.62,
+    "reviews": 16,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 155195,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 232792,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaMa4/800/500",
+      "https://picsum.photos/seed/LaMa4b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-cleaning",
+    "city": "Lagos",
+    "category": "Cleaning",
+    "title": "Home & office cleaners (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality cleaning services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.81,
+    "reviews": 71,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 247439,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 371158,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaCl5/800/500",
+      "https://picsum.photos/seed/LaCl5b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-security",
+    "city": "Lagos",
+    "category": "Security",
+    "title": "Private security personnel (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality security services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 88,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 146185,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 219277,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaSe6/800/500",
+      "https://picsum.photos/seed/LaSe6b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-dry-cleaning",
+    "city": "Lagos",
+    "category": "Dry Cleaning",
+    "title": "Dry cleaning pickup & delivery (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality dry cleaning services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.8,
+    "reviews": 109,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 160827,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 241240,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaDr7/800/500",
+      "https://picsum.photos/seed/LaDr7b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-chef",
+    "city": "Lagos",
+    "category": "Chef",
+    "title": "Private chef at your home (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality chef services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.89,
+    "reviews": 94,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 117011,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 175516,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaCh8/800/500",
+      "https://picsum.photos/seed/LaCh8b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-photography",
+    "city": "Lagos",
+    "category": "Photography",
+    "title": "Event & portrait photographer (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality photography services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 39,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 194111,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 291166,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaPh9/800/500",
+      "https://picsum.photos/seed/LaPh9b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-training",
+    "city": "Lagos",
+    "category": "Training",
+    "title": "Personal fitness training (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality training services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.97,
+    "reviews": 106,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 222955,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 334432,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaTr10/800/500",
+      "https://picsum.photos/seed/LaTr10b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-spa",
+    "city": "Lagos",
+    "category": "Spa",
+    "title": "Mobile spa treatments (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality spa services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.82,
+    "reviews": 116,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 154774,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 232161,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaSp11/800/500",
+      "https://picsum.photos/seed/LaSp11b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-catering",
+    "city": "Lagos",
+    "category": "Catering",
+    "title": "Event catering service (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality catering services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.8,
+    "reviews": 93,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 66089,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 99133,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaCa12/800/500",
+      "https://picsum.photos/seed/LaCa12b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-translation",
+    "city": "Lagos",
+    "category": "Translation",
+    "title": "Professional translator (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality translation services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 31,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 185279,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 277918,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaTr13/800/500",
+      "https://picsum.photos/seed/LaTr13b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-braiding",
+    "city": "Lagos",
+    "category": "Braiding",
+    "title": "Braids & cornrows (same day) (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality braiding services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.92,
+    "reviews": 118,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 19422,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 29133,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaBr14/800/500",
+      "https://picsum.photos/seed/LaBr14b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-livestock",
+    "city": "Lagos",
+    "category": "Livestock",
+    "title": "Whole cow or goat suppliers (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality livestock services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.63,
+    "reviews": 89,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 106286,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 159429,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaLi15/800/500",
+      "https://picsum.photos/seed/LaLi15b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-pet-grooming",
+    "city": "Lagos",
+    "category": "Pet grooming",
+    "title": "Mobile pet grooming (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality pet grooming services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.82,
+    "reviews": 98,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 183546,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 275319,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaPe16/800/500",
+      "https://picsum.photos/seed/LaPe16b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-laundry",
+    "city": "Lagos",
+    "category": "Laundry",
+    "title": "Laundry & ironing service (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality laundry services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.84,
+    "reviews": 59,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 190873,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 286309,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaLa17/800/500",
+      "https://picsum.photos/seed/LaLa17b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-car-hire",
+    "city": "Lagos",
+    "category": "Car hire",
+    "title": "Driver & car hire (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality car hire services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 5.0,
+    "reviews": 43,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 136897,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 205345,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaCa18/800/500",
+      "https://picsum.photos/seed/LaCa18b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-guide",
+    "city": "Lagos",
+    "category": "Guide",
+    "title": "Local city guide (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality guide services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.67,
+    "reviews": 69,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 93593,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 140389,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaGu19/800/500",
+      "https://picsum.photos/seed/LaGu19b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-lagos-babysitting",
+    "city": "Lagos",
+    "category": "Babysitting",
+    "title": "Trusted babysitters (Lagos)",
+    "provider": "Verified Pro",
+    "summary": "Quality babysitting services in Lagos. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.72,
+    "reviews": 96,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 234330,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 351495,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/LaBa20/800/500",
+      "https://picsum.photos/seed/LaBa20b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-massage",
+    "city": "Abuja",
+    "category": "Massage",
+    "title": "Relaxation & deep-tissue massage (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality massage services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.63,
+    "reviews": 18,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 112161,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 168241,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbMa21/800/500",
+      "https://picsum.photos/seed/AbMa21b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-hair",
+    "city": "Abuja",
+    "category": "Hair",
+    "title": "Pro hair styling on-demand (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality hair services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.8,
+    "reviews": 8,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 210127,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 315190,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbHa22/800/500",
+      "https://picsum.photos/seed/AbHa22b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-nails",
+    "city": "Abuja",
+    "category": "Nails",
+    "title": "Manicure & pedicure at home (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality nails services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.62,
+    "reviews": 19,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 131951,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 197926,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbNa23/800/500",
+      "https://picsum.photos/seed/AbNa23b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-makeup",
+    "city": "Abuja",
+    "category": "Makeup",
+    "title": "Event makeup artist (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality makeup services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.69,
+    "reviews": 65,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 59926,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 89889,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbMa24/800/500",
+      "https://picsum.photos/seed/AbMa24b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-cleaning",
+    "city": "Abuja",
+    "category": "Cleaning",
+    "title": "Home & office cleaners (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality cleaning services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.73,
+    "reviews": 120,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 210520,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 315780,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbCl25/800/500",
+      "https://picsum.photos/seed/AbCl25b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-security",
+    "city": "Abuja",
+    "category": "Security",
+    "title": "Private security personnel (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality security services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.99,
+    "reviews": 11,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 159702,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 239553,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbSe26/800/500",
+      "https://picsum.photos/seed/AbSe26b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-dry-cleaning",
+    "city": "Abuja",
+    "category": "Dry Cleaning",
+    "title": "Dry cleaning pickup & delivery (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality dry cleaning services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.61,
+    "reviews": 68,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 26618,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 39927,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbDr27/800/500",
+      "https://picsum.photos/seed/AbDr27b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-chef",
+    "city": "Abuja",
+    "category": "Chef",
+    "title": "Private chef at your home (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality chef services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.75,
+    "reviews": 33,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 45220,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 67830,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbCh28/800/500",
+      "https://picsum.photos/seed/AbCh28b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-photography",
+    "city": "Abuja",
+    "category": "Photography",
+    "title": "Event & portrait photographer (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality photography services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.9,
+    "reviews": 103,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 168097,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 252145,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbPh29/800/500",
+      "https://picsum.photos/seed/AbPh29b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-training",
+    "city": "Abuja",
+    "category": "Training",
+    "title": "Personal fitness training (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality training services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.91,
+    "reviews": 44,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 159744,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 239616,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbTr30/800/500",
+      "https://picsum.photos/seed/AbTr30b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-spa",
+    "city": "Abuja",
+    "category": "Spa",
+    "title": "Mobile spa treatments (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality spa services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.97,
+    "reviews": 70,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 80921,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 121381,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbSp31/800/500",
+      "https://picsum.photos/seed/AbSp31b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-catering",
+    "city": "Abuja",
+    "category": "Catering",
+    "title": "Event catering service (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality catering services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.7,
+    "reviews": 50,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 208351,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 312526,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbCa32/800/500",
+      "https://picsum.photos/seed/AbCa32b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-translation",
+    "city": "Abuja",
+    "category": "Translation",
+    "title": "Professional translator (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality translation services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.94,
+    "reviews": 62,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 78501,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 117751,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbTr33/800/500",
+      "https://picsum.photos/seed/AbTr33b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-braiding",
+    "city": "Abuja",
+    "category": "Braiding",
+    "title": "Braids & cornrows (same day) (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality braiding services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.94,
+    "reviews": 32,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 18794,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 28191,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbBr34/800/500",
+      "https://picsum.photos/seed/AbBr34b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-livestock",
+    "city": "Abuja",
+    "category": "Livestock",
+    "title": "Whole cow or goat suppliers (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality livestock services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.82,
+    "reviews": 47,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 191071,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 286606,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbLi35/800/500",
+      "https://picsum.photos/seed/AbLi35b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-pet-grooming",
+    "city": "Abuja",
+    "category": "Pet grooming",
+    "title": "Mobile pet grooming (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality pet grooming services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 74,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 211411,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 317116,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbPe36/800/500",
+      "https://picsum.photos/seed/AbPe36b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-laundry",
+    "city": "Abuja",
+    "category": "Laundry",
+    "title": "Laundry & ironing service (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality laundry services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 97,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 202588,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 303882,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbLa37/800/500",
+      "https://picsum.photos/seed/AbLa37b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-car-hire",
+    "city": "Abuja",
+    "category": "Car hire",
+    "title": "Driver & car hire (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality car hire services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.84,
+    "reviews": 58,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 249322,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 373983,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbCa38/800/500",
+      "https://picsum.photos/seed/AbCa38b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-guide",
+    "city": "Abuja",
+    "category": "Guide",
+    "title": "Local city guide (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality guide services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.93,
+    "reviews": 57,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 233597,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 350395,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbGu39/800/500",
+      "https://picsum.photos/seed/AbGu39b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-abuja-babysitting",
+    "city": "Abuja",
+    "category": "Babysitting",
+    "title": "Trusted babysitters (Abuja)",
+    "provider": "Verified Pro",
+    "summary": "Quality babysitting services in Abuja. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.95,
+    "reviews": 60,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 16115,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 24172,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/AbBa40/800/500",
+      "https://picsum.photos/seed/AbBa40b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-massage",
+    "city": "Port Harcourt",
+    "category": "Massage",
+    "title": "Relaxation & deep-tissue massage (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality massage services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.67,
+    "reviews": 25,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 129218,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 193827,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoMa41/800/500",
+      "https://picsum.photos/seed/PoMa41b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-hair",
+    "city": "Port Harcourt",
+    "category": "Hair",
+    "title": "Pro hair styling on-demand (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality hair services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.97,
+    "reviews": 34,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 182619,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 273928,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoHa42/800/500",
+      "https://picsum.photos/seed/PoHa42b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-nails",
+    "city": "Port Harcourt",
+    "category": "Nails",
+    "title": "Manicure & pedicure at home (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality nails services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.72,
+    "reviews": 66,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 151122,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 226683,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoNa43/800/500",
+      "https://picsum.photos/seed/PoNa43b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-makeup",
+    "city": "Port Harcourt",
+    "category": "Makeup",
+    "title": "Event makeup artist (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality makeup services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.67,
+    "reviews": 34,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 96265,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 144397,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoMa44/800/500",
+      "https://picsum.photos/seed/PoMa44b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-cleaning",
+    "city": "Port Harcourt",
+    "category": "Cleaning",
+    "title": "Home & office cleaners (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality cleaning services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.97,
+    "reviews": 91,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 188705,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 283057,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoCl45/800/500",
+      "https://picsum.photos/seed/PoCl45b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-security",
+    "city": "Port Harcourt",
+    "category": "Security",
+    "title": "Private security personnel (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality security services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.62,
+    "reviews": 9,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 169002,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 253503,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoSe46/800/500",
+      "https://picsum.photos/seed/PoSe46b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-dry-cleaning",
+    "city": "Port Harcourt",
+    "category": "Dry Cleaning",
+    "title": "Dry cleaning pickup & delivery (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality dry cleaning services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.66,
+    "reviews": 81,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 72471,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 108706,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoDr47/800/500",
+      "https://picsum.photos/seed/PoDr47b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-chef",
+    "city": "Port Harcourt",
+    "category": "Chef",
+    "title": "Private chef at your home (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality chef services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.73,
+    "reviews": 25,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 158861,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 238291,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoCh48/800/500",
+      "https://picsum.photos/seed/PoCh48b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-photography",
+    "city": "Port Harcourt",
+    "category": "Photography",
+    "title": "Event & portrait photographer (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality photography services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.62,
+    "reviews": 99,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 169834,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 254751,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoPh49/800/500",
+      "https://picsum.photos/seed/PoPh49b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-training",
+    "city": "Port Harcourt",
+    "category": "Training",
+    "title": "Personal fitness training (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality training services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.9,
+    "reviews": 42,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 115432,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 173148,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoTr50/800/500",
+      "https://picsum.photos/seed/PoTr50b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-spa",
+    "city": "Port Harcourt",
+    "category": "Spa",
+    "title": "Mobile spa treatments (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality spa services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.97,
+    "reviews": 21,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 122954,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 184431,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoSp51/800/500",
+      "https://picsum.photos/seed/PoSp51b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-catering",
+    "city": "Port Harcourt",
+    "category": "Catering",
+    "title": "Event catering service (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality catering services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.99,
+    "reviews": 109,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 162814,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 244221,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoCa52/800/500",
+      "https://picsum.photos/seed/PoCa52b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-translation",
+    "city": "Port Harcourt",
+    "category": "Translation",
+    "title": "Professional translator (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality translation services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.82,
+    "reviews": 96,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 195551,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 293326,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoTr53/800/500",
+      "https://picsum.photos/seed/PoTr53b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-braiding",
+    "city": "Port Harcourt",
+    "category": "Braiding",
+    "title": "Braids & cornrows (same day) (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality braiding services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.64,
+    "reviews": 66,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 24939,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 37408,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoBr54/800/500",
+      "https://picsum.photos/seed/PoBr54b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-livestock",
+    "city": "Port Harcourt",
+    "category": "Livestock",
+    "title": "Whole cow or goat suppliers (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality livestock services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.8,
+    "reviews": 60,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 154453,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 231679,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoLi55/800/500",
+      "https://picsum.photos/seed/PoLi55b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-pet-grooming",
+    "city": "Port Harcourt",
+    "category": "Pet grooming",
+    "title": "Mobile pet grooming (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality pet grooming services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.83,
+    "reviews": 24,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 122013,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 183019,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoPe56/800/500",
+      "https://picsum.photos/seed/PoPe56b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-laundry",
+    "city": "Port Harcourt",
+    "category": "Laundry",
+    "title": "Laundry & ironing service (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality laundry services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.62,
+    "reviews": 60,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 183049,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 274573,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoLa57/800/500",
+      "https://picsum.photos/seed/PoLa57b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-car-hire",
+    "city": "Port Harcourt",
+    "category": "Car hire",
+    "title": "Driver & car hire (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality car hire services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.68,
+    "reviews": 32,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 169108,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 253662,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoCa58/800/500",
+      "https://picsum.photos/seed/PoCa58b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-guide",
+    "city": "Port Harcourt",
+    "category": "Guide",
+    "title": "Local city guide (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality guide services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.82,
+    "reviews": 35,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 169555,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 254332,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoGu59/800/500",
+      "https://picsum.photos/seed/PoGu59b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-portharcourt-babysitting",
+    "city": "Port Harcourt",
+    "category": "Babysitting",
+    "title": "Trusted babysitters (Port Harcourt)",
+    "provider": "Verified Pro",
+    "summary": "Quality babysitting services in Port Harcourt. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.72,
+    "reviews": 91,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 178091,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 267136,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/PoBa60/800/500",
+      "https://picsum.photos/seed/PoBa60b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-massage",
+    "city": "Owerri",
+    "category": "Massage",
+    "title": "Relaxation & deep-tissue massage (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality massage services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.91,
+    "reviews": 10,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 180339,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 270508,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwMa61/800/500",
+      "https://picsum.photos/seed/OwMa61b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-hair",
+    "city": "Owerri",
+    "category": "Hair",
+    "title": "Pro hair styling on-demand (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality hair services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.85,
+    "reviews": 105,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 65254,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 97881,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwHa62/800/500",
+      "https://picsum.photos/seed/OwHa62b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-nails",
+    "city": "Owerri",
+    "category": "Nails",
+    "title": "Manicure & pedicure at home (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality nails services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.64,
+    "reviews": 118,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 94031,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 141046,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwNa63/800/500",
+      "https://picsum.photos/seed/OwNa63b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-makeup",
+    "city": "Owerri",
+    "category": "Makeup",
+    "title": "Event makeup artist (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality makeup services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.72,
+    "reviews": 8,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 225092,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 337638,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwMa64/800/500",
+      "https://picsum.photos/seed/OwMa64b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-cleaning",
+    "city": "Owerri",
+    "category": "Cleaning",
+    "title": "Home & office cleaners (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality cleaning services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 57,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 243740,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 365610,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwCl65/800/500",
+      "https://picsum.photos/seed/OwCl65b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-security",
+    "city": "Owerri",
+    "category": "Security",
+    "title": "Private security personnel (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality security services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.9,
+    "reviews": 63,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 43365,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 65047,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwSe66/800/500",
+      "https://picsum.photos/seed/OwSe66b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-dry-cleaning",
+    "city": "Owerri",
+    "category": "Dry Cleaning",
+    "title": "Dry cleaning pickup & delivery (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality dry cleaning services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 52,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 244947,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 367420,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwDr67/800/500",
+      "https://picsum.photos/seed/OwDr67b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-chef",
+    "city": "Owerri",
+    "category": "Chef",
+    "title": "Private chef at your home (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality chef services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.8,
+    "reviews": 26,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 192608,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 288912,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwCh68/800/500",
+      "https://picsum.photos/seed/OwCh68b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-photography",
+    "city": "Owerri",
+    "category": "Photography",
+    "title": "Event & portrait photographer (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality photography services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.73,
+    "reviews": 22,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 84711,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 127066,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwPh69/800/500",
+      "https://picsum.photos/seed/OwPh69b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-training",
+    "city": "Owerri",
+    "category": "Training",
+    "title": "Personal fitness training (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality training services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.74,
+    "reviews": 110,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 69071,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 103606,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwTr70/800/500",
+      "https://picsum.photos/seed/OwTr70b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-spa",
+    "city": "Owerri",
+    "category": "Spa",
+    "title": "Mobile spa treatments (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality spa services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.92,
+    "reviews": 74,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 231342,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 347013,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwSp71/800/500",
+      "https://picsum.photos/seed/OwSp71b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-catering",
+    "city": "Owerri",
+    "category": "Catering",
+    "title": "Event catering service (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality catering services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.83,
+    "reviews": 77,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 50894,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 76341,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwCa72/800/500",
+      "https://picsum.photos/seed/OwCa72b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-translation",
+    "city": "Owerri",
+    "category": "Translation",
+    "title": "Professional translator (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality translation services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.62,
+    "reviews": 103,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 248755,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 373132,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwTr73/800/500",
+      "https://picsum.photos/seed/OwTr73b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-braiding",
+    "city": "Owerri",
+    "category": "Braiding",
+    "title": "Braids & cornrows (same day) (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality braiding services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.86,
+    "reviews": 82,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 123064,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 184596,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwBr74/800/500",
+      "https://picsum.photos/seed/OwBr74b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-livestock",
+    "city": "Owerri",
+    "category": "Livestock",
+    "title": "Whole cow or goat suppliers (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality livestock services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.95,
+    "reviews": 19,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 54117,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 81175,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwLi75/800/500",
+      "https://picsum.photos/seed/OwLi75b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-pet-grooming",
+    "city": "Owerri",
+    "category": "Pet grooming",
+    "title": "Mobile pet grooming (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality pet grooming services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.84,
+    "reviews": 39,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 125664,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 188496,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwPe76/800/500",
+      "https://picsum.photos/seed/OwPe76b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-laundry",
+    "city": "Owerri",
+    "category": "Laundry",
+    "title": "Laundry & ironing service (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality laundry services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.99,
+    "reviews": 76,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 33982,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 50973,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwLa77/800/500",
+      "https://picsum.photos/seed/OwLa77b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-car-hire",
+    "city": "Owerri",
+    "category": "Car hire",
+    "title": "Driver & car hire (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality car hire services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.87,
+    "reviews": 120,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 81844,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 122766,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwCa78/800/500",
+      "https://picsum.photos/seed/OwCa78b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-guide",
+    "city": "Owerri",
+    "category": "Guide",
+    "title": "Local city guide (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality guide services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.7,
+    "reviews": 83,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 204438,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 306657,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwGu79/800/500",
+      "https://picsum.photos/seed/OwGu79b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  },
+  {
+    "id": "svc-owerri-babysitting",
+    "city": "Owerri",
+    "category": "Babysitting",
+    "title": "Trusted babysitters (Owerri)",
+    "provider": "Verified Pro",
+    "summary": "Quality babysitting services in Owerri. Trusted, vetted providers with 5\u2605 reviews.",
+    "rating": 4.78,
+    "reviews": 71,
+    "prices": [
+      {
+        "name": "Standard",
+        "amountNGN": 94933,
+        "duration": "1h"
+      },
+      {
+        "name": "Premium",
+        "amountNGN": 142399,
+        "duration": "2h"
+      }
+    ],
+    "images": [
+      "https://picsum.photos/seed/OwBa80/800/500",
+      "https://picsum.photos/seed/OwBa80b/800/500"
+    ],
+    "cancellation": "Free cancellation up to 24h before."
+  }
+]
