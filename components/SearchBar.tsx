@@ -18,22 +18,36 @@ const budgets = [
 export default function SearchBar() {
   const router = useRouter()
   const [city, setCity] = useState('')
-  const [dateRange, setDateRange] = useState({ startDate: null, endDate: null })
+  const [dateRange, setDateRange] = useState<{ startDate: string | Date | null, endDate: string | Date | null }>({ startDate: null, endDate: null })
   const [adults, setAdults] = useState(2)
   const [children, setChildren] = useState(0)
   const [rooms, setRooms] = useState(1)
   const [budgetKey, setBudgetKey] = useState('u80')
+  const [stayType, setStayType] = useState<'any' | 'hotel' | 'apartment'>('any')
+
+  const handleDateChange = (newValue: { startDate?: string | Date | null, endDate?: string | Date | null } | null) => {
+    if (!newValue) {
+      setDateRange({ startDate: null, endDate: null })
+      return
+    }
+
+    setDateRange({
+      startDate: newValue.startDate ?? null,
+      endDate: newValue.endDate ?? null
+    })
+  }
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     const q = new URLSearchParams({
       city,
-      checkIn: dateRange.startDate ?? '',
-      checkOut: dateRange.endDate ?? '',
+      checkIn: dateRange.startDate ? String(dateRange.startDate) : '',
+      checkOut: dateRange.endDate ? String(dateRange.endDate) : '',
       adults: String(adults),
       children: String(children),
       rooms: String(rooms),
-      budget: budgetKey
+      budget: budgetKey,
+      stayType
     })
     router.push(`/search?${q.toString()}`)
   }
@@ -55,17 +69,15 @@ export default function SearchBar() {
         {/* Date picker */}
         <div className="md:w-60">
           <Datepicker
-  useRange={true}
-  asSingle={false}
-  value={dateRange}
-  onChange={(newValue: any) => {
-    if (newValue?.startDate && newValue?.endDate) setDateRange(newValue)
-  }}
-  displayFormat="ddd DD MMM"
-  primaryColor="green"
-  inputClassName="input"
-  placeholder="Thu 16 Oct – Fri 17 Oct"
-/>
+            useRange
+            asSingle={false}
+            value={dateRange.startDate || dateRange.endDate ? dateRange : null}
+            onChange={handleDateChange}
+            displayFormat="ddd DD MMM"
+            primaryColor="green"
+            inputClassName="input"
+            placeholder="Thu 16 Oct – Fri 17 Oct"
+          />
 
         </div>
 
@@ -108,9 +120,24 @@ export default function SearchBar() {
 
       {/* Move Hotel/Apartments toggle BELOW the row */}
       <div className="flex justify-center gap-2 mt-3">
-        <button type="button" className="tab bg-gray-100 hover:bg-gray-200">Any</button>
-        <button type="button" className="tab bg-gray-100 hover:bg-gray-200">Hotels</button>
-        <button type="button" className="tab bg-gray-100 hover:bg-gray-200">Apartments</button>
+        {[
+          { key: 'any', label: 'Any' },
+          { key: 'hotel', label: 'Hotels' },
+          { key: 'apartment', label: 'Apartments' }
+        ].map(option => (
+          <button
+            key={option.key}
+            type="button"
+            onClick={() => setStayType(option.key as typeof stayType)}
+            className={`tab ${
+              stayType === option.key
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-100 hover:bg-gray-200'
+            }`}
+          >
+            {option.label}
+          </button>
+        ))}
       </div>
     </form>
   )
