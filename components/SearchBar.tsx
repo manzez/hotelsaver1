@@ -53,7 +53,7 @@ export default function SearchBar() {
         <div className="md:w-60 dates flex items-center gap-2">
           <DatePicker
             selected={startDate}
-            onChange={(date: Date) => setStartDate(date)}
+            onChange={(date: Date | null) => setStartDate(date)}
             selectsStart
             startDate={startDate}
             endDate={endDate}
@@ -64,7 +64,7 @@ export default function SearchBar() {
           <span className="dash">–</span>
           <DatePicker
             selected={endDate}
-            onChange={(date: Date) => setEndDate(date)}
+            onChange={(date: Date | null) => setEndDate(date)}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
