@@ -23,7 +23,7 @@ export default function ServiceDetail({params}:{params:{id:string}}){
       <h1 className="text-2xl font-bold">{s.title}</h1>
       <div className="text-sm mt-1"><span className="text-amber-400">{"★".repeat(Math.round(s.rating||5))}</span><span className="text-gray-300">{"☆".repeat(5-Math.round(s.rating||5))}</span> <span className="text-gray-500">({s.reviews} reviews)</span></div>
       <div className="mt-3 grid md:grid-cols-2 gap-3">
-        {s.images.slice(0,2).map((src,i)=>(<img key={i} src={src} alt={`${s.title}-${i}`} className="h-48 w-full object-cover rounded-md" />))}
+        {s.images.slice(0,2).map((src: string,i: number)=>(<img key={i} src={src} alt={`${s.title}-${i}`} className="h-48 w-full object-cover rounded-md" />))}
       </div>
       <p className="mt-3 text-gray-700">{s.summary}</p>
 

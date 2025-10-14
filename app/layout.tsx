@@ -1,8 +1,9 @@
 
 import './globals.css'
 import Link from 'next/link'
-import { Inter } from 'next/font/google'
-const inter = Inter({subsets:['latin']})
+// Temporarily disabled Google Fonts due to network restrictions in build environment
+// import { Inter } from 'next/font/google'
+// const inter = Inter({subsets:['latin']})
 
 export const metadata={
   title:'HotelSaver.ng — Save on Hotels & Services',
@@ -11,7 +12,7 @@ export const metadata={
 
 export default function RootLayout({children}:{children:React.ReactNode}){
   return(
-    <html lang='en' className={inter.className}>
+    <html lang='en' style={{fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'}}>
       <body className='min-h-screen bg-white text-gray-900'>
         <header className='sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100'>
           <div className='container h-16 flex items-center gap-6'>
