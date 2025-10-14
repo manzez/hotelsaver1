@@ -1,9 +1,9 @@
+
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
-// Single source of truth for statuses (no enum needed)
 const NEG_STATUS = {
   PENDING: 'pending',
   OFFER: 'offer',
@@ -21,11 +21,12 @@ export default function NegotiatePage() {
   const [negStatus, setNegStatus] = useState<NegStatus>(NEG_STATUS.PENDING)
   const [base, setBase] = useState<number | null>(null)
   const [price, setPrice] = useState<number | null>(null)
-  const [expiresAt, setExpiresAt] = useState<number | null>(null) // epoch ms
-  const [remaining, setRemaining] = useState<number>(0)           // ms
+  const [expiresAt, setExpiresAt] = useState<number | null>(null)
+  const [remaining, setRemaining] = useState<number>(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // Start negotiation
+  const isExpired = (status: NegStatus) => status === NEG_STATUS.EXPIRED
+
   useEffect(() => {
     let cancelled = false
     ;(async () => {
@@ -41,7 +42,6 @@ export default function NegotiatePage() {
       if (data.status === 'discount') {
         setBase(Number(data.baseTotal))
         setPrice(Number(data.discountedTotal))
-        // 5 minutes to accept
         setExpiresAt(Date.now() + 5 * 60 * 1000)
         setNegStatus(NEG_STATUS.OFFER)
       } else {
@@ -51,7 +51,6 @@ export default function NegotiatePage() {
     return () => { cancelled = true }
   }, [propertyId])
 
-  // Countdown to expiry
   useEffect(() => {
     if (!expiresAt) return
     if (timerRef.current) clearInterval(timerRef.current)
@@ -102,13 +101,13 @@ export default function NegotiatePage() {
             Offer expires in <b>{mmss}</b>
           </div>
           <button
-            disabled={negStatus === NEG_STATUS.EXPIRED}
+            disabled={isExpired(negStatus)}
             onClick={() => router.push(`/book?propertyId=${propertyId}&price=${price}`)}
-            className={`btn-primary mt-4 ${negStatus === NEG_STATUS.EXPIRED ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`btn-primary mt-4 ${isExpired(negStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             Accept & Continue
           </button>
-          {negStatus === NEG_STATUS.EXPIRED && (
+          {isExpired(negStatus) && (
             <div className="mt-2 text-red-600 text-sm">
               Offer expired. Try negotiating again.
             </div>
