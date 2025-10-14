@@ -1,54 +1,70 @@
-import { NextRequest, NextResponse } from 'next/server'
-import HOTELS_RAW from '@/lib/hotels.json'
+// app/api/negotiate/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import HOTELS_RAW from '@/lib/hotels.json';
+import { getDiscountFor } from '@/lib/discounts';
 
-// Optional: a tiny type, or use your shared type if you have it.
 type Hotel = {
-  id: string
-  name: string
-  city: string
-  type: 'Hotel' | 'Apartment'
-  basePriceNGN: number
-}
+  id: string;
+  name: string;
+  city: string;
+  type?: string;
+  basePriceNGN?: number;
+  price?: number;
+  [k: string]: unknown;
+};
 
-const HOTELS = HOTELS_RAW as Hotel[]
-
-// Default 15% with optional per-hotel overrides
-const OVERRIDES: Record<string, number> = {
-  // 'eko-hotels-lagos': 0.18,
-  // 'protea-owerri': 0.12
-}
-const DEFAULT_RATE = 0.15
-const getRate = (id: string) => (OVERRIDES[id] ?? DEFAULT_RATE)
+const HOTELS = HOTELS_RAW as Hotel[];
 
 export async function POST(req: NextRequest) {
   try {
-    const { propertyId } = await req.json()
+    const { propertyId } = await req.json();
+
     if (!propertyId || typeof propertyId !== 'string') {
-      return NextResponse.json({ status: 'no-offer', reason: 'invalid-propertyId' }, { status: 400 })
+      return NextResponse.json(
+        { status: 'no-offer', reason: 'invalid-propertyId' },
+        { status: 400 }
+      );
     }
 
-    const property = HOTELS.find(h => h.id === propertyId)
+    const property = HOTELS.find(h => h.id === propertyId);
     if (!property) {
-      return NextResponse.json({ status: 'no-offer', reason: 'property-not-found' }, { status: 404 })
+      return NextResponse.json(
+        { status: 'no-offer', reason: 'not-found' },
+        { status: 404 }
+      );
     }
 
-    const rate = getRate(propertyId)
-    if (!(rate > 0)) {
-      return NextResponse.json({ status: 'no-offer', reason: 'discount-disabled' })
+    // Pull base price (supports both shapes)
+    const base =
+      typeof property.basePriceNGN === 'number'
+        ? property.basePriceNGN
+        : typeof property.price === 'number'
+        ? property.price
+        : 0;
+
+    if (base <= 0) {
+      return NextResponse.json({ status: 'no-offer', reason: 'no-base-price' });
     }
 
-    const baseTotal = property.basePriceNGN
-    const discountedTotal = Math.max(0, Math.round(baseTotal * (1 - rate)))
+    // Get discount (default 15% unless overridden)
+    const discount = getDiscountFor(propertyId); // 0..1
+    if (discount <= 0) {
+      return NextResponse.json({ status: 'no-offer', reason: 'no-discount' });
+    }
+
+    const discounted = Math.round(base * (1 - discount));
 
     return NextResponse.json({
       status: 'discount',
-      baseTotal,
-      discountedTotal,
-      savings: baseTotal - discountedTotal,
-      discountRate: rate,
+      baseTotal: base,
+      discountedTotal: discounted,
+      savings: base - discounted,
+      discountRate: discount,
+      // Optional: give client a server-side expiry (also keep your client countdown)
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
       property: { id: property.id, name: property.name, city: property.city }
-    })
-  } catch {
-    return NextResponse.json({ status: 'no-offer', reason: 'bad-request' }, { status: 400 })
+    });
+  } catch (err) {
+    return NextResponse.json({ status: 'no-offer', reason: 'bad-request' }, { status: 400 });
   }
 }
