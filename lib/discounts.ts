@@ -1,47 +1,59 @@
-// lib/discounts.ts
-// Default 15% for every property, with optional per-property overrides.
-// Put overrides in lib/discounts.json as { "<id>": 0.20, ... }
+// lib/discounts.ts - FIXED WITH PROPER TYPING
+import discountsData from './discounts.json';
 
-import overridesRaw from './discounts.json';
+// Define the type for your discounts data
+interface DiscountsData {
+  default: number;
+  overrides: Record<string, number>;
+}
 
-type DiscountOverrides = Record<string, number>;
-const OVERRIDES = (overridesRaw ?? {}) as DiscountOverrides;
+// Type the imported data
+const discounts = discountsData as DiscountsData;
 
-// 15% site-wide default
-export const DEFAULT_DISCOUNT = 0.15;
+// Fallback if anything goes wrong
+const DEFAULT_DISCOUNT = 0.15;
 
-/**
- * Returns a discount rate between 0 and 1 (0% to 100%).
- * @param propertyId - The unique identifier for the property
- * @returns Discount rate where 0 = no discount, 0.15 = 15% discount
- */
 export function getDiscountFor(propertyId: string): number {
-  // Check if propertyId is valid
-  if (!propertyId || typeof propertyId !== 'string') {
+  try {
+    // Check if propertyId is valid
+    if (!propertyId || typeof propertyId !== 'string') {
+      return DEFAULT_DISCOUNT;
+    }
+
+    // Use the default from config
+    const defaultDiscount = typeof discounts.default === 'number' ? discounts.default : DEFAULT_DISCOUNT;
+
+    // Check if this property has a specific override
+    if (discounts.overrides && propertyId in discounts.overrides) {
+      const override = discounts.overrides[propertyId];
+      if (typeof override === 'number' && override >= 0 && override <= 1) {
+        return override;
+      }
+    }
+    
+    return defaultDiscount;
+  } catch (error) {
+    // If anything goes wrong, return the default
+    console.error('Error in getDiscountFor:', error);
     return DEFAULT_DISCOUNT;
   }
-
-  if (propertyId in OVERRIDES) {
-    const override = OVERRIDES[propertyId];
-    // Ensure the override is a valid number between 0 and 1
-    return typeof override === 'number' && override >= 0 && override <= 1 
-      ? override 
-      : DEFAULT_DISCOUNT;
-  }
-  
-  return DEFAULT_DISCOUNT;
 }
 
-/**
- * Get all property IDs that have discount overrides
- */
 export function getPropertiesWithOverrides(): string[] {
-  return Object.keys(OVERRIDES);
+  try {
+    if (discounts.overrides && typeof discounts.overrides === 'object') {
+      return Object.keys(discounts.overrides);
+    }
+    return [];
+  } catch (error) {
+    return [];
+  }
 }
 
-/**
- * Check if a property has a custom discount override
- */
 export function hasDiscountOverride(propertyId: string): boolean {
-  return propertyId in OVERRIDES;
+  try {
+    return !!(discounts.overrides && propertyId in discounts.overrides);
+  } catch (error) {
+    return false;
+  }
 }
