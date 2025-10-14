@@ -1,407 +1,1802 @@
 [
   {
-    "id": "protea-hotel-owerri",
+    "id": "protea-hotel-owerri-owerri",
     "name": "Protea Hotel Owerri",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 95000,
+    "basePriceNGN": 92000,
     "stars": 4,
     "images": [
-      "https://images.unsplash.com/photo-1551776235-dde6d4829808",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
-      "https://images.unsplash.com/photo-1551776230-5d724d3f0c6b",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1501117716987-c8e2a9ce9f23"
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
     ]
   },
   {
-    "id": "bon-hotel-nest-owerri",
+    "id": "bon-hotel-nest-owerri-owerri",
     "name": "BON Hotel Nest Owerri",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 120000,
+    "basePriceNGN": 112000,
     "stars": 4,
     "images": [
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
-      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
-      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
     ]
   },
   {
-    "id": "immaculate-royal-hotel",
+    "id": "immaculate-royal-hotel-owerri",
     "name": "Immaculate Royal Hotel",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 70000,
+    "basePriceNGN": 98000,
     "stars": 3,
     "images": [
-      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
       "https://images.unsplash.com/photo-1507138451611-3001135909b3",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
     ]
   },
   {
-    "id": "rockview-hotel-owerri",
+    "id": "rockview-hotel-owerri-owerri",
     "name": "Rockview Hotel Owerri",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 79000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "green-palm-hotels-owerri",
+    "name": "Green Palm Hotels",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 80000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "de-range-hotel-owerri",
+    "name": "De Range Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 81000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "skyline-hotel-owerri-owerri",
+    "name": "Skyline Hotel Owerri",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 101000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "mcdons-skye-hotel-owerri",
+    "name": "Mcdons Skye Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 107000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "empire-hotels-owerri-owerri",
+    "name": "Empire Hotels Owerri",
     "city": "Owerri",
     "type": "Hotel",
     "basePriceNGN": 88000,
     "stars": 3,
     "images": [
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
-      "https://images.unsplash.com/photo-1501117716987-c8e2a9ce9f23",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
-    ]
-  },
-  {
-    "id": "green-palm-hotels",
-    "name": "Green Palm Hotels",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 62000,
-    "stars": 3,
-    "images": [
-      "https://images.unsplash.com/photo-1578898887932-70b5e6e87c5e",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
       "https://images.unsplash.com/photo-1560185008-b033106afc83",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427"
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
     ]
   },
   {
-    "id": "de-range-hotel",
-    "name": "De Range Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 76000,
-    "stars": 3,
-    "images": [
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1578898887932-70b5e6e87c5e",
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
-      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
-    ]
-  },
-  {
-    "id": "skyline-hotel-owerri",
-    "name": "Skyline Hotel Owerri",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 90000,
-    "stars": 3,
-    "images": [
-      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427"
-    ]
-  },
-  {
-    "id": "mcdons-skye-hotel",
-    "name": "Mcdons Skye Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 115000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1551776230-5d724d3f0c6b",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
-    ]
-  },
-  {
-    "id": "empire-hotels-owerri",
-    "name": "Empire Hotels Owerri",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 125000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1540518614846-7eded433c457",
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
-    ]
-  },
-  {
-    "id": "homeland-hotels",
+    "id": "homeland-hotels-owerri",
     "name": "Homeland Hotels",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 138000,
-    "stars": 4,
+    "basePriceNGN": 88000,
+    "stars": 3,
     "images": [
-      "https://images.unsplash.com/photo-1552566626-52f8b828add9",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427"
-    ]
-  },
-  {
-    "id": "samzen-hotel",
-    "name": "Samzen Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 150000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
-      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
       "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
       "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035"
-    ]
-  },
-  {
-    "id": "swiss-international-owerri",
-    "name": "Swiss International Owerri",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 165000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1552566626-52f8b828add9",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
-    ]
-  },
-  {
-    "id": "kelvic-suites",
-    "name": "Kelvic Suites",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 178000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb",
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
-    ]
-  },
-  {
-    "id": "de-moon-hotel",
-    "name": "De Moon Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 200000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
-      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
-    ]
-  },
-  {
-    "id": "grace-court-hotels",
-    "name": "Grace Court Hotels",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 210000,
-    "stars": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1560185008-b033106afc83",
-      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
-      "https://images.unsplash.com/photo-1578898887932-70b5e6e87c5e",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
-    ]
-  },
-  {
-    "id": "titanic-view-hotel",
-    "name": "Titanic View Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 228000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035"
-    ]
-  },
-  {
-    "id": "gold-crown-hotel",
-    "name": "Gold Crown Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 240000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
-    ]
-  },
-  {
-    "id": "ambassador-suites",
-    "name": "Ambassador Suites",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 256000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1551776235-dde6d4829808",
-      "https://images.unsplash.com/photo-1560185008-b033106afc83",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
-    ]
-  },
-  {
-    "id": "moraino-hotel",
-    "name": "Moraino Hotel",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 275000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c",
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
-      "https://images.unsplash.com/photo-1551776230-5d724d3f0c6b",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
-    ]
-  },
-  {
-    "id": "disney-hotel-owerri",
-    "name": "Disney Hotel Owerri",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 285000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1560185008-b033106afc83",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
-    ]
-  },
-  {
-    "id": "oxygen-holiday-resort",
-    "name": "Oxygen Holiday Resort",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 308000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1578898887932-70b5e6e87c5e",
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1551776230-5d724d3f0c6b"
-    ]
-  },
-  {
-    "id": "suncity-hotels-owerri",
-    "name": "Suncity Hotels Owerri",
-    "city": "Owerri",
-    "type": "Hotel",
-    "basePriceNGN": 322000,
-    "stars": 5,
-    "images": [
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
       "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
     ]
   },
   {
-    "id": "full-moon-hotels",
-    "name": "Full Moon Hotels",
+    "id": "samzen-hotel-owerri",
+    "name": "Samzen Hotel",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 325000,
-    "stars": 5,
+    "basePriceNGN": 101000,
+    "stars": 3,
     "images": [
-      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
-      "https://images.unsplash.com/photo-1560185008-b033106afc83",
-      "https://images.unsplash.com/photo-1578898887932-70b5e6e87c5e",
-      "https://images.unsplash.com/photo-1551776230-5d724d3f0c6b",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb"
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
     ]
   },
   {
-    "id": "rapha-hotels",
-    "name": "Rapha Hotels",
+    "id": "swiss-international-beland-hotel-owerri",
+    "name": "Swiss International Beland Hotel",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 352000,
-    "stars": 5,
+    "basePriceNGN": 75000,
+    "stars": 4,
     "images": [
-      "https://images.unsplash.com/photo-1552566626-52f8b828add9",
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "kelvic-suites-owerri",
+    "name": "Kelvic Suites",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 106000,
+    "stars": 3,
+    "images": [
       "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
       "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
     ]
   },
   {
-    "id": "royal-spring-palm",
-    "name": "Royal Spring Palm",
+    "id": "de-moon-hotel-owerri",
+    "name": "De Moon Hotel",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 362000,
-    "stars": 5,
+    "basePriceNGN": 91000,
+    "stars": 3,
     "images": [
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1551776235-dde6d4829808",
-      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
-      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb"
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
     ]
   },
   {
-    "id": "city-global-hotels",
+    "id": "grace-court-hotels-owerri",
+    "name": "Grace Court Hotels",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 93000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "titanic-view-hotel-owerri",
+    "name": "Titanic View Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 99000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "gold-crown-hotel-owerri",
+    "name": "Gold Crown Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 106000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "ambassador-suites-owerri",
+    "name": "Ambassador Suites",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 73000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "moraino-hotel-owerri",
+    "name": "Moraino Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 86000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "disney-hotel-owerri-owerri",
+    "name": "Disney Hotel Owerri",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 83000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "oxygen-holiday-resort-owerri",
+    "name": "Oxygen Holiday Resort",
+    "city": "Owerri",
+    "type": "Resort",
+    "basePriceNGN": 107000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "suncity-hotels-owerri-owerri",
+    "name": "Suncity Hotels Owerri",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 100000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "full-moon-hotels-owerri",
+    "name": "Full Moon Hotels",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 81000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "rapha-hotels-owerri",
+    "name": "Rapha Hotels",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 104000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "royal-spring-palm-owerri",
+    "name": "Royal Spring Palm",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 102000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "city-global-hotels-owerri",
     "name": "City Global Hotels",
     "city": "Owerri",
     "type": "Hotel",
-    "basePriceNGN": 377000,
+    "basePriceNGN": 84000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "new-concord-hotel-owerri",
+    "name": "New Concord Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 108000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "radisson-suites-owerri-owerri",
+    "name": "Radisson Suites Owerri",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 109000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "villa-garden-hotel-owerri",
+    "name": "Villa Garden Hotel",
+    "city": "Owerri",
+    "type": "Apartment",
+    "basePriceNGN": 81000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "boulevard-owerri-hotel-owerri",
+    "name": "Boulevard Owerri Hotel",
+    "city": "Owerri",
+    "type": "Hotel",
+    "basePriceNGN": 114000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "eko-hotel-and-suites-lagos",
+    "name": "Eko Hotel and Suites",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 137000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "the-lagos-continental-hotel-lagos",
+    "name": "The Lagos Continental Hotel",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 175000,
     "stars": 5,
     "images": [
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "radisson-blu-anchorage-hotel-lagos-lagos",
+    "name": "Radisson Blu Anchorage Hotel, Lagos",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 209000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "lagos-marriott-hotel-ikeja-lagos",
+    "name": "Lagos Marriott Hotel Ikeja",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 149000,
+    "stars": 5,
+    "images": [
       "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "sheraton-lagos-hotel-lagos",
+    "name": "Sheraton Lagos Hotel",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 215000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "the-wheatbaker-lagos",
+    "name": "The Wheatbaker",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 184000,
+    "stars": 5,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "four-points-by-sheraton-lagos-lagos",
+    "name": "Four Points by Sheraton Lagos",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 166000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "lagos-oriental-hotel-lagos",
+    "name": "Lagos Oriental Hotel",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 157000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "federal-palace-hotel-and-casino-lagos",
+    "name": "Federal Palace Hotel and Casino",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 186000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "protea-hotel-ikeja-lagos",
+    "name": "Protea Hotel Ikeja",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 203000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "ibis-lagos-airport-lagos",
+    "name": "Ibis Lagos Airport",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 173000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "ibis-lagos-ikeja-lagos",
+    "name": "Ibis Lagos Ikeja",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 152000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "southern-sun-ikoyi-lagos",
+    "name": "Southern Sun Ikoyi",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 200000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "the-george-lagos-lagos",
+    "name": "The George Lagos",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 154000,
+    "stars": 5,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "renaissance-lagos-ikeja-lagos",
+    "name": "Renaissance Lagos Ikeja",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 136000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "park-inn-by-radisson-serviced-apartments-victoria-island-lagos",
+    "name": "Park Inn by Radisson Serviced Apartments Victoria Island",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 174000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "beni-apartments-lagos",
+    "name": "Beni Apartments",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 194000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "carlton-gate-hotel-apartments-lagos",
+    "name": "Carlton Gate Hotel & Apartments",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 142000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "shortlet-apartments-lekki-lagos",
+    "name": "Shortlet Apartments Lekki",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 152000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "oniru-luxury-apartments-lagos",
+    "name": "Oniru Luxury Apartments",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 196000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "victoria-island-waterfront-apartments-lagos",
+    "name": "Victoria Island Waterfront Apartments",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 137000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "eko-pearl-towers-apartments-lagos",
+    "name": "Eko Pearl Towers Apartments",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 204000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "lekki-conservation-resort-lagos",
+    "name": "Lekki Conservation Resort",
+    "city": "Lagos",
+    "type": "Resort",
+    "basePriceNGN": 189000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "jara-beach-resort-lagos",
+    "name": "Jara Beach Resort",
+    "city": "Lagos",
+    "type": "Resort",
+    "basePriceNGN": 189000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "la-campagne-tropicana-beach-resort-lagos",
+    "name": "La Campagne Tropicana Beach Resort",
+    "city": "Lagos",
+    "type": "Resort",
+    "basePriceNGN": 194000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "inagbe-grand-resorts-leisure-lagos",
+    "name": "Inagbe Grand Resorts & Leisure",
+    "city": "Lagos",
+    "type": "Resort",
+    "basePriceNGN": 192000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "lakowe-lakes-golf-country-estate-lagos",
+    "name": "Lakowe Lakes Golf & Country Estate",
+    "city": "Lagos",
+    "type": "Resort",
+    "basePriceNGN": 215000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "sapphire-apartments-lekki-lagos",
+    "name": "Sapphire Apartments Lekki",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 168000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "shoregate-hotel-lagos",
+    "name": "Shoregate Hotel",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 211000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "citiheight-hotel-lagos",
+    "name": "CitiHeight Hotel",
+    "city": "Lagos",
+    "type": "Hotel",
+    "basePriceNGN": 211000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "transcorp-hilton-abuja-abuja",
+    "name": "Transcorp Hilton Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 188000,
+    "stars": 5,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "abuja-continental-hotel-abuja",
+    "name": "Abuja Continental Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 197000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "fraser-suites-abuja-abuja",
+    "name": "Fraser Suites Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 200000,
+    "stars": 5,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "nordic-hotel-abuja-abuja",
+    "name": "Nordic Hotel Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 193000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "the-envoy-hotel-abuja-abuja",
+    "name": "The Envoy Hotel Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 184000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "bolton-white-hotel-abuja",
+    "name": "Bolton White Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 153000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "grand-cubana-hotels-abuja",
+    "name": "Grand Cubana Hotels",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 149000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "chelsea-hotel-abuja-abuja",
+    "name": "Chelsea Hotel Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 146000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "summerset-continental-hotel-maitama-abuja",
+    "name": "Summerset Continental Hotel Maitama",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 199000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "the-wells-carlton-hotel-and-apartments-abuja",
+    "name": "The Wells Carlton Hotel and Apartments",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 192000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "hawthorn-suites-by-wyndham-abuja-abuja",
+    "name": "Hawthorn Suites by Wyndham Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 172000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "bon-hotel-elvis-abuja",
+    "name": "BON Hotel Elvis",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 150000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "bon-hotel-asokoro-residence-abuja",
+    "name": "BON Hotel Asokoro Residence",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 156000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "iris-hotel-abuja-abuja",
+    "name": "Iris Hotel Abuja",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 191000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "corinthia-villa-hotel-suites-abuja",
+    "name": "Corinthia Villa Hotel & Suites",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 194000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
       "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
       "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
     ]
   },
   {
-    "id": "new-concord-hotel",
-    "name": "New Concord Hotel",
-    "city": "Owerri",
+    "id": "oxford-hotels-abuja-abuja",
+    "name": "Oxford Hotels Abuja",
+    "city": "Abuja",
     "type": "Hotel",
-    "basePriceNGN": 380000,
-    "stars": 5,
+    "basePriceNGN": 135000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "grand-pela-hotel-suites-abuja",
+    "name": "Grand Pela Hotel & Suites",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 139000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "stonehedge-hotel-abuja",
+    "name": "Stonehedge Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 172000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "sinclair-guest-house-abuja",
+    "name": "Sinclair Guest House",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 176000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "3js-hotel-abuja",
+    "name": "3J's Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 195000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "transcorp-apartments-abuja-abuja",
+    "name": "Transcorp Apartments Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 188000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "the-nordic-villa-abuja",
+    "name": "The Nordic Villa",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 168000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "venus-apartments-abuja-abuja",
+    "name": "Venus Apartments Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 131000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "priscapac-apartments-abuja-abuja",
+    "name": "Priscapac Apartments Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 195000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "serob-legacy-hotels-abuja",
+    "name": "Serob Legacy Hotels",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 152000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "stanzel-grand-resort-abuja",
+    "name": "Stanzel Grand Resort",
+    "city": "Abuja",
+    "type": "Resort",
+    "basePriceNGN": 129000,
+    "stars": 3,
     "images": [
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "top-rank-hotels-galaxy-utako-abuja",
+    "name": "Top Rank Hotels Galaxy, Utako",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 161000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "ajuji-greenwich-hotel-abuja",
+    "name": "Ajuji Greenwich Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 184000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
       "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
-      "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "the-blake-hotel-abuja",
+    "name": "The Blake Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 199000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "the-weavers-hotel-abuja",
+    "name": "The Weavers Hotel",
+    "city": "Abuja",
+    "type": "Hotel",
+    "basePriceNGN": 163000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "hotel-presidential-port-harcourt-port-harcourt",
+    "name": "Hotel Presidential Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 146000,
+    "stars": 5,
+    "images": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "golden-tulip-port-harcourt-hotel-port-harcourt",
+    "name": "Golden Tulip Port Harcourt Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 120000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "le-meridien-ogeyi-place-port-harcourt",
+    "name": "Le Meridien Ogeyi Place",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 135000,
+    "stars": 5,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "swiss-international-mabisel-port-harcourt",
+    "name": "Swiss International Mabisel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 142000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "denami-hotel-port-harcourt",
+    "name": "Denami Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 138000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "dmatel-hotel-and-resort-ph-port-harcourt",
+    "name": "Dmatel Hotel and Resort PH",
+    "city": "Port Harcourt",
+    "type": "Resort",
+    "basePriceNGN": 132000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "landmark-hotel-port-harcourt-port-harcourt",
+    "name": "Landmark Hotel Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 104000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "lakewood-hotel-port-harcourt-port-harcourt",
+    "name": "Lakewood Hotel Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 129000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "beverly-hills-hotel-ph-port-harcourt",
+    "name": "Beverly Hills Hotel PH",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 144000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "sweet-spirit-hotel-suites-danag-port-harcourt",
+    "name": "Sweet Spirit Hotel & Suites Danag",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 140000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "novotel-port-harcourt-npa-port-harcourt",
+    "name": "Novotel Port Harcourt (NPA)",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 155000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "visa-karena-hotels-port-harcourt",
+    "name": "Visa Karena Hotels",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 106000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83"
+    ]
+  },
+  {
+    "id": "olive-gate-hotel-port-harcourt",
+    "name": "Olive Gate Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 146000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "js-signature-hotel-port-harcourt",
+    "name": "J's Signature Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 149000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "de-edge-hotel-port-harcourt-port-harcourt",
+    "name": "De Edge Hotel Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 134000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "grace-garden-hotel-ph-port-harcourt",
+    "name": "Grace Garden Hotel PH",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 120000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56"
+    ]
+  },
+  {
+    "id": "royal-choice-inn-ph-port-harcourt",
+    "name": "Royal Choice Inn PH",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 123000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "best-premier-hotel-ph-port-harcourt",
+    "name": "Best Premier Hotel PH",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 141000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "oak-haven-hotel-suites-port-harcourt",
+    "name": "Oak Haven Hotel & Suites",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 137000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "lucian-exclusive-hotel-port-harcourt",
+    "name": "Lucian Exclusive Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 143000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3"
+    ]
+  },
+  {
+    "id": "genesis-hotels-port-harcourt-port-harcourt",
+    "name": "Genesis Hotels Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 155000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
       "https://images.unsplash.com/photo-1559599189-95f32f16b150",
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+    ]
+  },
+  {
+    "id": "leadwort-hotel-port-harcourt",
+    "name": "Leadwort Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 141000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "nibers-luxury-apartments-ph-port-harcourt",
+    "name": "Nibers Luxury Apartments PH",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 150000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "villa-toscana-luxe-ph-port-harcourt",
+    "name": "Villa Toscana Luxe PH",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 117000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150"
+    ]
+  },
+  {
+    "id": "emrosy-hotels-port-harcourt",
+    "name": "Emrosy Hotels",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 147000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4"
+    ]
+  },
+  {
+    "id": "echelon-heights-hotel-port-harcourt",
+    "name": "Echelon Heights Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 102000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"
+    ]
+  },
+  {
+    "id": "chancellor-court-hotel-port-harcourt",
+    "name": "Chancellor Court Hotel",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 134000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9"
+    ]
+  },
+  {
+    "id": "acion-hotels-port-harcourt",
+    "name": "Acion Hotels",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 136000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb"
+    ]
+  },
+  {
+    "id": "roxelana-hotels-port-harcourt",
+    "name": "Roxelana Hotels",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 159000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1559599189-95f32f16b150",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1562790351-d273a961e0e4",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
+    ]
+  },
+  {
+    "id": "georgian-suites-port-harcourt",
+    "name": "Georgian Suites",
+    "city": "Port Harcourt",
+    "type": "Hotel",
+    "basePriceNGN": 121000,
+    "stars": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1560185008-b033106afc83",
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5a9",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d56",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4"
     ]
   }
 ]
