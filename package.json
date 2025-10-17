@@ -7,14 +7,15 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "14.2.5",
+    "next": "^14.2.33",
+    "openai": "^6.4.0",
     "react": "18.2.0",
     "react-datepicker": "^8.7.0",
     "react-dom": "18.2.0",
     "react-tailwindcss-datepicker": "^1.7.3"
   },
   "devDependencies": {
-    "@types/node": "24.7.2",
+    "@types/node": "^24.7.2",
     "@types/react": "19.2.2",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",

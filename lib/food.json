@@ -1,0 +1,102 @@
+{
+  "food": [
+    {
+      "id": "jollof-rice-chicken",
+      "name": "Jollof Rice & Chicken",
+      "image": "/images/food/ng/jollof-rice-chicken.jpg",
+      "alt": "Smoky Nigerian jollof rice with fried chicken, plantains and salad",
+      "tags": ["rice", "party", "mains", "salad-on-side"]
+    },
+    {
+      "id": "fried-rice-assorted-meats",
+      "name": "Fried Rice & Assorted Meats",
+      "image": "/images/food/ng/fried-rice-assorted-meats.jpg",
+      "alt": "Nigerian fried rice with grilled chicken, gizzard and fresh salad",
+      "tags": ["rice", "grilled", "mains", "salad-on-side"]
+    },
+    {
+      "id": "pounded-yam-egusi",
+      "name": "Pounded Yam & Egusi",
+      "image": "/images/food/ng/pounded-yam-egusi.jpg",
+      "alt": "Pounded yam with rich egusi soup served on a clean white plate",
+      "tags": ["swallow", "soup", "mains"]
+    },
+    {
+      "id": "efo-riro",
+      "name": "Efo Riro (Spinach Stew)",
+      "image": "/images/food/ng/efo-riro.jpg",
+      "alt": "Efo riro with assorted meats, served with a fresh side salad",
+      "tags": ["soup", "greens", "mains", "salad-on-side"]
+    },
+    {
+      "id": "pepper-soup-goat",
+      "name": "Goat Meat Pepper Soup",
+      "image": "/images/food/ng/pepper-soup.jpg",
+      "alt": "Hot Nigerian goat meat pepper soup in a bowl with herbs",
+      "tags": ["soup", "spicy", "starter"]
+    },
+    {
+      "id": "suya-skewers",
+      "name": "Suya Skewers",
+      "image": "/images/food/ng/suya.jpg",
+      "alt": "Beef suya skewers with onions, tomatoes and cabbage on a platter",
+      "tags": ["grilled", "skewers", "street-food"]
+    },
+    {
+      "id": "assorted-meat-platter",
+      "name": "Grilled & Fried Meat Platter",
+      "image": "/images/food/ng/grilled-fried-meat-platter.jpg",
+      "alt": "Platter of grilled and fried meats with dips and salad garnish",
+      "tags": ["grilled", "fried", "sharing", "salad-on-side"]
+    },
+    {
+      "id": "meat-pie",
+      "name": "Meat Pie",
+      "image": "/images/food/ng/meat-pie.jpg",
+      "alt": "Golden Nigerian meat pies on a plate ready to eat",
+      "tags": ["pastry", "snack", "baked"]
+    },
+    {
+      "id": "puff-puff",
+      "name": "Puff Puff",
+      "image": "/images/food/ng/puff-puff.jpg",
+      "alt": "Fresh puff puff balls dusted lightly with sugar",
+      "tags": ["snack", "sweet", "fried"]
+    },
+    {
+      "id": "moi-moi",
+      "name": "Moi Moi",
+      "image": "/images/food/ng/moi-moi.jpg",
+      "alt": "Moi moi served neatly with salad and sliced eggs",
+      "tags": ["beans", "steamed", "mains", "salad-on-side"]
+    },
+    {
+      "id": "akara",
+      "name": "Akara (Bean Cakes)",
+      "image": "/images/food/ng/akara.jpg",
+      "alt": "Crispy akara balls served with pepper sauce",
+      "tags": ["beans", "snack", "fried"]
+    },
+    {
+      "id": "ofada-ayamase",
+      "name": "Ofada Rice & Ayamase",
+      "image": "/images/food/ng/ofada-ayamase.jpg",
+      "alt": "Ofada rice with green pepper ayamase stew and plantains",
+      "tags": ["rice", "stew", "mains"]
+    },
+    {
+      "id": "okro-soup",
+      "name": "Okro Soup",
+      "image": "/images/food/ng/okro-soup.jpg",
+      "alt": "Okro soup with seafood and beef, served hot",
+      "tags": ["soup", "seafood", "mains"]
+    },
+    {
+      "id": "salad-bowl",
+      "name": "Party Salad Bowl",
+      "image": "/images/food/ng/salad-bowl.jpg",
+      "alt": "Fresh Nigerian party salad bowl with coleslaw and veggies",
+      "tags": ["salad", "side"]
+    }
+  ]
+}

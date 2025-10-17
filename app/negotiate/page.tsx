@@ -3,10 +3,13 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const NEG_STATUS = {
   PENDING: 'pending',
-  OFFER: 'offer',
+  NEGOTIATING: 'negotiating', 
+  SUCCESS: 'success',
+  NO_DEALS: 'no-deals',
   NO_OFFER: 'no-offer',
   EXPIRED: 'expired',
 } as const
@@ -21,16 +24,48 @@ export default function NegotiatePage() {
   const [negStatus, setNegStatus] = useState<NegStatus>(NEG_STATUS.PENDING)
   const [base, setBase] = useState<number | null>(null)
   const [price, setPrice] = useState<number | null>(null)
+  const [message, setMessage] = useState<string>('')
+  const [property, setProperty] = useState<any>(null)
   const [expiresAt, setExpiresAt] = useState<number | null>(null)
   const [remaining, setRemaining] = useState<number>(0)
+  const [negotiationProgress, setNegotiationProgress] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const isExpired = (status: NegStatus) => status === NEG_STATUS.EXPIRED
 
   useEffect(() => {
     let cancelled = false
+    
+    // Start negotiation process
+    setNegStatus(NEG_STATUS.NEGOTIATING)
+    setMessage('🔄 Connecting to hotel representative...')
+    
+    // Simulate negotiation progress
+    let progress = 0
+    progressRef.current = setInterval(() => {
+      progress += Math.random() * 15 + 5 // Random progress 5-20%
+      if (progress >= 100) {
+        progress = 100
+        if (progressRef.current) {
+          clearInterval(progressRef.current)
+          progressRef.current = null
+        }
+      }
+      setNegotiationProgress(Math.min(100, progress))
+      
+      if (progress < 30) {
+        setMessage('📞 Speaking to hotel representative...')
+      } else if (progress < 60) {
+        setMessage('💬 Negotiating best price for you...')
+      } else if (progress < 90) {
+        setMessage('🤝 Finalizing your special deal...')
+      } else {
+        setMessage('✅ Great news! Deal secured!')
+      }
+    }, 300)
+
     ;(async () => {
-      setNegStatus(NEG_STATUS.PENDING)
       const res = await fetch('/api/negotiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,16 +74,36 @@ export default function NegotiatePage() {
       const data = await res.json()
       if (cancelled) return
 
-      if (data.status === 'discount') {
+      // Clear progress interval
+      if (progressRef.current) {
+        clearInterval(progressRef.current)
+        progressRef.current = null
+      }
+
+      if (data.status === 'success') {
         setBase(Number(data.baseTotal))
         setPrice(Number(data.discountedTotal))
+        setMessage(data.message)
+        setProperty(data.property)
         setExpiresAt(Date.now() + 5 * 60 * 1000)
-        setNegStatus(NEG_STATUS.OFFER)
+        setNegStatus(NEG_STATUS.SUCCESS)
+      } else if (data.status === 'no-deals') {
+        setMessage(data.message)
+        setProperty(data.property)
+        setNegStatus(NEG_STATUS.NO_DEALS)
       } else {
         setNegStatus(NEG_STATUS.NO_OFFER)
+        setMessage('Sorry, no discount available for this hotel today. Please try again tomorrow or explore other properties.')
       }
     })()
-    return () => { cancelled = true }
+    
+    return () => { 
+      cancelled = true
+      if (progressRef.current) {
+        clearInterval(progressRef.current)
+        progressRef.current = null
+      }
+    }
   }, [propertyId])
 
   useEffect(() => {
@@ -77,49 +132,162 @@ export default function NegotiatePage() {
   }, [remaining])
 
   return (
-    <div className="py-10 grid gap-4 max-w-xl">
-      {negStatus === NEG_STATUS.PENDING && (
-        <div className="card p-4">
-          <b>Waiting for response from hotel, please wait…</b>
-          <p className="text-sm text-gray-600 mt-1">Up to 7 seconds.</p>
+    <div className="container py-10">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Live Negotiation</h1>
+          <p className="text-gray-600 mt-2">We're working directly with the hotel to get you the best deal</p>
         </div>
-      )}
 
-      {negStatus === NEG_STATUS.OFFER && (
-        <div className="card p-5">
-          <div className="text-sm text-gray-600">Negotiated offer</div>
-          <div className="mt-1 text-2xl font-extrabold text-brand-green">
-            ₦{price?.toLocaleString()}
-          </div>
-          <div className="mt-1 text-sm">
-            <span className="line-through text-gray-400">₦{base?.toLocaleString()}</span>
-            <span className="ml-2 text-gray-700">
-              You save ₦{(((base ?? 0) - (price ?? 0)) as number).toLocaleString()}
-            </span>
-          </div>
-          <div className="mt-2 text-sm text-gray-600">
-            Offer expires in <b>{mmss}</b>
-          </div>
-          <button
-            disabled={isExpired(negStatus)}
-            onClick={() => router.push(`/book?propertyId=${propertyId}&price=${price}`)}
-            className={`btn-primary mt-4 ${isExpired(negStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            Accept & Continue
-          </button>
-          {isExpired(negStatus) && (
-            <div className="mt-2 text-red-600 text-sm">
-              Offer expired. Try negotiating again.
+        {/* Negotiation in progress */}
+        {negStatus === NEG_STATUS.NEGOTIATING && (
+          <div className="space-y-6">
+            <div className="card p-6 text-center">
+              <div className="animate-spin w-12 h-12 border-4 border-brand-green border-t-transparent rounded-full mx-auto mb-4"></div>
+              <div className="text-xl font-semibold text-gray-900 mb-2">{message}</div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+                <div 
+                  className="bg-brand-green h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${negotiationProgress}%` }}
+                ></div>
+              </div>
+              <p className="text-sm text-gray-600">Hang tight! This may take up to 7 seconds...</p>
             </div>
-          )}
-        </div>
-      )}
 
-      {negStatus === NEG_STATUS.NO_OFFER && (
-        <div className="card p-4">
-          <p>No offer available right now. Try again or pick another property.</p>
-        </div>
-      )}
+            {/* Promotional content while waiting */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="card p-4 border-l-4 border-orange-500">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">🍽️</span>
+                  <h3 className="font-semibold text-gray-900">Great Restaurants</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  While we negotiate, explore amazing local restaurants with discounted rates!
+                </p>
+                <Link href="/food" className="text-orange-600 text-sm font-medium hover:text-orange-700">
+                  Browse Restaurants →
+                </Link>
+              </div>
+
+              <div className="card p-4 border-l-4 border-pink-500">
+                <div className="flex items-center mb-2">
+                  <span className="text-2xl mr-2">💅</span>
+                  <h3 className="font-semibold text-gray-900">Beauty Treatments</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Book spa services, hair styling, and nail treatments at special prices!
+                </p>
+                <Link href="/services" className="text-pink-600 text-sm font-medium hover:text-pink-700">
+                  View Services →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Success - Deal secured */}
+        {negStatus === NEG_STATUS.SUCCESS && (
+          <div className="card p-6">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🎉</span>
+              </div>
+              <h2 className="text-2xl font-bold text-brand-green mb-2">Negotiation Successful!</h2>
+              <p className="text-gray-600">{message}</p>
+            </div>
+            
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-700">Original Price:</span>
+                <span className="line-through text-gray-500">₦{base?.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-700">Your Negotiated Price:</span>
+                <span className="text-2xl font-bold text-brand-green">₦{price?.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-gray-700">You Save:</span>
+                <span className="text-xl font-bold text-red-600">₦{(((base ?? 0) - (price ?? 0)) as number).toLocaleString()}</span>
+              </div>
+              
+              <div className="border-t border-green-200 pt-3">
+                <h4 className="font-semibold text-gray-900 mb-2">🎁 Bonus Inclusions:</h4>
+                <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    FREE Car Wash
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    Complimentary Gifts
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <div className="text-center text-sm text-gray-600">
+                ⏰ This exclusive offer expires in <span className="font-bold text-red-600">{mmss}</span>
+              </div>
+              <button
+                disabled={isExpired(negStatus)}
+                onClick={() => router.push(`/book?propertyId=${propertyId}&price=${price}`)}
+                className={`btn-primary w-full ${isExpired(negStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                {isExpired(negStatus) ? 'Offer Expired' : '🔒 Book This Deal Now'}
+              </button>
+              {isExpired(negStatus) && (
+                <div className="text-center text-red-600 text-sm">
+                  This offer has expired. Please try negotiating again.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* No deals available (Abuja) */}
+        {negStatus === NEG_STATUS.NO_DEALS && (
+          <div className="card p-6 text-center">
+            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">😔</span>
+            </div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">No Deals Available</h2>
+            <p className="text-gray-600 mb-4">{message}</p>
+            <button
+              onClick={() => router.push('/search')}
+              className="btn-ghost"
+            >
+              Search Other Cities
+            </button>
+          </div>
+        )}
+
+        {/* No offer available */}
+        {negStatus === NEG_STATUS.NO_OFFER && (
+          <div className="card p-6 text-center">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🤷‍♂️</span>
+            </div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Sorry, No Discount Available for this Hotel Today</h2>
+            <p className="text-gray-600 mb-4">{message}</p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => window.location.reload()}
+                className="btn-ghost"
+              >
+                Try Again
+              </button>
+              <button
+                onClick={() => router.push('/search')}
+                className="btn-primary"
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
