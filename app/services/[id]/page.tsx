@@ -2,6 +2,8 @@
 'use client'
 import { useState } from 'react'
 import { SERVICES } from '@/lib/data'
+import Link from 'next/link'
+import SafeImage from '@/components/SafeImage'
 
 export default function ServiceDetail({params}:{params:{id:string}}){
   const s = SERVICES.find(x=>x.id===params.id)
@@ -23,7 +25,23 @@ export default function ServiceDetail({params}:{params:{id:string}}){
       <h1 className="text-2xl font-bold">{s.title}</h1>
       <div className="text-sm mt-1"><span className="text-amber-400">{"★".repeat(Math.round(s.rating||5))}</span><span className="text-gray-300">{"☆".repeat(5-Math.round(s.rating||5))}</span> <span className="text-gray-500">({s.reviews} reviews)</span></div>
       <div className="mt-3 grid md:grid-cols-2 gap-3">
-        {s.images.slice(0,2).map((src: string, i: number)=>(<img key={i} src={src} alt={`${s.title}-${i}`} className="h-48 w-full object-cover rounded-md" />))}
+        {s.images.slice(0,2).map((src: string, i: number) => {
+          const fallbackImages = [
+            'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&auto=format&q=80',
+            'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&auto=format&q=80'
+          ];
+          
+          return (
+            <SafeImage 
+              key={i} 
+              src={src} 
+              alt={`${s.title}-${i}`} 
+              className="h-48 w-full object-cover rounded-md" 
+              fallbackSrc={fallbackImages[i] || fallbackImages[0]}
+              loading="lazy"
+            />
+          )
+        })}
       </div>
       <p className="mt-3 text-gray-700">{s.summary}</p>
 

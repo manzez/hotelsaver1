@@ -17,11 +17,8 @@ export function getDiscountFor(propertyId: string): number {
   try {
     // Check if propertyId is valid
     if (!propertyId || typeof propertyId !== 'string') {
-      return DEFAULT_DISCOUNT;
+      return 0;
     }
-
-    // Use the default from config
-    const defaultDiscount = typeof discounts.default === 'number' ? discounts.default : DEFAULT_DISCOUNT;
 
     // Check if this property has a specific override
     if (discounts.overrides && propertyId in discounts.overrides) {
@@ -31,11 +28,13 @@ export function getDiscountFor(propertyId: string): number {
       }
     }
     
+    // Use the default from config for properties without specific overrides
+    const defaultDiscount = typeof discounts.default === 'number' ? discounts.default : DEFAULT_DISCOUNT;
     return defaultDiscount;
   } catch (error) {
-    // If anything goes wrong, return the default
+    // If anything goes wrong, return no discount
     console.error('Error in getDiscountFor:', error);
-    return DEFAULT_DISCOUNT;
+    return 0;
   }
 }
 

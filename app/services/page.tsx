@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import CategoryTabs from '@/components/CategoryTabs'
+import SafeImage from '@/components/SafeImage'
 
 const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri']
 
@@ -111,10 +112,12 @@ export default function Services() {
       <div className="grid-cards mt-6">
         {list.map(s => (
           <div key={s.id} className="card overflow-hidden">
-            <img
-              src={s.images?.[0]}
+            <SafeImage
+              src={s.images?.[0] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&auto=format&q=80'}
               alt={s.title}
               className="h-48 w-full object-cover"
+              fallbackSrc="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&auto=format&q=80"
+              loading="lazy"
             />
             <div className="p-4">
               <div className="flex items-start justify-between gap-3">

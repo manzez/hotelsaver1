@@ -1,9 +1,9 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import './datepicker.css'
+import "react-datepicker/dist/react-datepicker.css"
 
 const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri']
 const budgets = [
@@ -15,6 +15,8 @@ const budgets = [
 
 export default function SearchBar() {
   const router = useRouter()
+  
+  // Form state
   const [city, setCity] = useState('')
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
@@ -23,248 +25,419 @@ export default function SearchBar() {
   const [rooms, setRooms] = useState(1)
   const [budgetKey, setBudgetKey] = useState('u80')
   const [stayType, setStayType] = useState<'any' | 'hotel' | 'apartment'>('any')
+
+  // UI state
   const [showGuestPicker, setShowGuestPicker] = useState(false)
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
+  
+  // Android date picker handling
+  const [isAndroid, setIsAndroid] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [useNativeDatePicker, setUseNativeDatePicker] = useState(false)
+  const [datePickerFailCount, setDatePickerFailCount] = useState(0)
+  
+  // Refs
   const guestPickerRef = useRef<HTMLDivElement>(null)
+  const datePickerTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Close dropdown when clicking outside
+    // Device detection and initialization
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const detectDevice = () => {
+      const userAgent = navigator.userAgent.toLowerCase()
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent)
+      const isAndroidDevice = /android/i.test(userAgent)
+      
+      setIsMobile(isMobileDevice)
+      setIsAndroid(isAndroidDevice)
+      
+      // Default to native date picker for ALL mobile devices
+      setUseNativeDatePicker(isMobileDevice)
+      
+      // Add device class to body for CSS targeting
+      if (isAndroidDevice && isMobileDevice) {
+        document.body.classList.add('is-android-mobile')
+      }
+      
+      // Short delay to ensure proper rendering
+      setTimeout(() => {
+        setIsInitialized(true)
+      }, 100)
+    }
+
+    detectDevice()
+  }, [])
+
+  // Click outside handler for guest picker
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
       if (guestPickerRef.current && !guestPickerRef.current.contains(event.target as Node)) {
         setShowGuestPicker(false)
       }
     }
 
     document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  // Cleanup timer on unmount
+  useEffect(() => {
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      if (datePickerTimeoutRef.current) {
+        clearTimeout(datePickerTimeoutRef.current)
+        datePickerTimeoutRef.current = null
+      }
     }
   }, [])
 
-  const handleSearch = (e: React.FormEvent) => {
+  const guestSummary = `${adults} adult${adults !== 1 ? 's' : ''}${children > 0 ? `, ${children} child${children !== 1 ? 'ren' : ''}` : ''}, ${rooms} room${rooms !== 1 ? 's' : ''}`
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!city) {
+      alert('Please select a city')
+      return
+    }
+
     const q = new URLSearchParams({
       city,
-      checkIn: startDate?.toISOString() || '',
-      checkOut: endDate?.toISOString() || '',
+      checkIn: startDate ? startDate.toISOString().split('T')[0] : '',
+      checkOut: endDate ? endDate.toISOString().split('T')[0] : '',
       adults: String(adults),
       children: String(children),
       rooms: String(rooms),
       budget: budgetKey,
       stayType
     })
+
     router.push(`/search?${q.toString()}`)
   }
 
-  const guestSummary = `${adults} adult${adults !== 1 ? 's' : ''}${children > 0 ? `, ${children} child${children !== 1 ? 'ren' : ''}` : ''}, ${rooms} room${rooms !== 1 ? 's' : ''}`
-
-  return (
-    <form onSubmit={handleSearch} className="card p-4 md:p-6">
-      {/* Main Search Row */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-start md:items-center">
-        {/* City Select - Fixed visibility */}
-        <div className="w-full md:w-56">
-          <label className="block text-xs font-medium text-gray-700 mb-1">Destination</label>
-          <select 
-            className="input w-full text-gray-900" 
-            value={city} 
-            onChange={e => setCity(e.target.value)}
-          >
-            <option value="" className="text-gray-500">Where are you going?</option>
-            {cities.map(c => (
-              <option key={c} value={c} className="text-gray-900">{c}</option>
-            ))}
-          </select>
+  const renderDatePicker = () => {
+    if (!isInitialized) {
+      return (
+        <div className="w-full h-12 pl-4 pr-10 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium flex items-center">
+          <span className="text-gray-500">Loading...</span>
         </div>
+      )
+    }
 
-        {/* Date Pickers - Enhanced with continuous range selection */}
-        <div className="w-full md:w-72">
-          <label className="block text-xs font-medium text-gray-700 mb-1">Dates</label>
-          <div className="relative">
-            <DatePicker
-              selected={startDate}
-              onChange={(dates) => {
-                const [start, end] = dates as [Date | null, Date | null];
-                setStartDate(start);
-                setEndDate(end);
-                
-                // Only close when both dates are selected
-                if (start && end) {
-                  setIsDatePickerOpen(false);
+    if (useNativeDatePicker && isMobile) {
+      return (
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <input
+              type="date"
+              value={startDate ? startDate.toISOString().split('T')[0] : ''}
+              onChange={(e) => {
+                const date = e.target.value ? new Date(e.target.value) : null
+                setStartDate(date)
+                if (!endDate && date) {
+                  const nextDay = new Date(date)
+                  nextDay.setDate(nextDay.getDate() + 1)
+                  setEndDate(nextDay)
                 }
               }}
-              startDate={startDate}
-              endDate={endDate}
-              selectsRange
-              shouldCloseOnSelect={false}
-              open={isDatePickerOpen}
-              onClickOutside={() => setIsDatePickerOpen(false)}
-              onFocus={() => setIsDatePickerOpen(true)}
-              placeholderText="Select check-in and check-out dates"
-              className="input w-full text-sm cursor-pointer pr-10"
-              dateFormat="EEE dd MMM"
-              monthsShown={2}
-              showPopperArrow={false}
-              popperClassName="date-picker-popper"
-              calendarClassName="range-calendar"
-              minDate={new Date()}
+              min={new Date().toISOString().split('T')[0]}
+              className="flex-1 h-12 px-3 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-green/20 focus:outline-none"
+              placeholder="Check-in"
             />
-            {/* Calendar icon */}
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+            <input
+              type="date"
+              value={endDate ? endDate.toISOString().split('T')[0] : ''}
+              onChange={(e) => {
+                const date = e.target.value ? new Date(e.target.value) : null
+                setEndDate(date)
+              }}
+              min={startDate ? new Date(startDate.getTime() + 24*60*60*1000).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
+              className="flex-1 h-12 px-3 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-green/20 focus:outline-none"
+              placeholder="Check-out"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={() => setUseNativeDatePicker(false)}
+            className="text-xs text-brand-green hover:text-brand-dark transition-colors"
+          >
+            Switch to calendar picker
+          </button>
+        </div>
+      )
+    }
+
+    // Custom DatePicker with mobile overlay
+    return (
+      <div className="relative w-full overflow-hidden">
+        {/* Mobile touch overlay - only when not using native */}
+        {isMobile && !useNativeDatePicker && (
+          <div
+            className="absolute inset-0 z-10 bg-transparent cursor-pointer"
+            onTouchStart={(e) => {
+              e.preventDefault()
+              setIsDatePickerOpen(true)
+              setShowGuestPicker(false)
+              
+              if (isAndroid) {
+                datePickerTimeoutRef.current = setTimeout(() => {
+                  if (!document.querySelector('.react-datepicker')) {
+                    setDatePickerFailCount(prev => prev + 1)
+                    if (datePickerFailCount >= 1) {
+                      setUseNativeDatePicker(true)
+                    }
+                  }
+                }, 1000)
+              }
+            }}
+            onClick={(e) => {
+              e.preventDefault()
+              setIsDatePickerOpen(true)
+              setShowGuestPicker(false)
+            }}
+          />
+        )}
+
+        <DatePicker
+          selected={startDate}
+          onChange={(dates) => {
+            const [start, end] = dates as [Date | null, Date | null]
+            setStartDate(start)
+            setEndDate(end)
+            
+            if (start && end) {
+              setTimeout(() => {
+                setIsDatePickerOpen(false)
+              }, 300)
+            }
+          }}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline={false}
+          open={isDatePickerOpen}
+          onClickOutside={() => {
+            if (isDatePickerOpen) {
+              setIsDatePickerOpen(false)
+              if (datePickerTimeoutRef.current) {
+                clearTimeout(datePickerTimeoutRef.current)
+                datePickerTimeoutRef.current = null
+              }
+            }
+          }}
+          onFocus={() => {
+            if (!isMobile) {
+              setIsDatePickerOpen(true)
+              setShowGuestPicker(false)
+            }
+          }}
+          placeholderText="Add dates"
+          className="w-full h-12 pl-4 pr-10 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium cursor-pointer focus:bg-white focus:ring-2 focus:ring-brand-green/20 focus:outline-none transition-all touch-manipulation"
+          autoComplete="off"
+          dateFormat="MMM dd"
+          monthsShown={isMobile ? 1 : 2}
+          showPopperArrow={false}
+          popperClassName="date-picker-popper android-date-picker"
+          calendarClassName="range-calendar"
+          minDate={new Date()}
+          filterDate={(date) => date >= new Date()}
+          portalId="date-picker-portal"
+          withPortal={isMobile}
+          popperPlacement="bottom"
+          preventOpenOnFocus={isMobile}
+          readOnly={isMobile}
+          disabledKeyboardNavigation={isMobile}
+        />
+
+        {/* Calendar icon */}
+        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 002 2z" />
+          </svg>
+        </div>
+
+        {/* Switch to native option for mobile devices */}
+        {isMobile && !useNativeDatePicker && (
+          <button
+            type="button"
+            onClick={() => setUseNativeDatePicker(true)}
+            className="absolute -bottom-6 left-0 text-xs text-brand-green hover:text-brand-dark transition-colors"
+          >
+            Having issues? Try simple date picker
+          </button>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="w-full bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Destination */}
+          <div>
+            <div className="relative">
+              <select 
+                className="w-full h-12 pl-4 pr-4 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:ring-2 focus:ring-brand-green/20 focus:outline-none transition-all cursor-pointer" 
+                value={city} 
+                onChange={e => setCity(e.target.value)}
+              >
+                <option value="">Select City</option>
+                {cities.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
-            {/* Status indicator */}
-            {startDate && !endDate && (
-              <div className="absolute -bottom-5 left-0 text-xs text-green-600 font-medium">
-                ✓ Check-in selected, now pick check-out date
+          </div>
+
+          {/* Check-in & Check-out */}
+          <div className="relative z-10">
+            <div className="relative z-10">
+              {renderDatePicker()}
+            </div>
+          </div>
+
+          {/* Guests */}
+          <div className="relative" ref={guestPickerRef}>
+            <button
+              type="button"
+              onClick={() => setShowGuestPicker(!showGuestPicker)}
+              className="w-full h-12 pl-4 pr-10 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-100 focus:bg-white focus:ring-2 focus:ring-brand-green/20 focus:outline-none transition-all"
+            >
+              <span>{guestSummary}</span>
+              <svg className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {showGuestPicker && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-40 p-6 min-w-[320px]">
+                <div className="space-y-6">
+                  {/* Adults */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-semibold text-gray-900">Adults</div>
+                      <div className="text-sm text-gray-500">Age 13+</div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setAdults(Math.max(1, adults - 1))}
+                        className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-semibold text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        disabled={adults <= 1}
+                      >
+                        −
+                      </button>
+                      <span className="w-8 text-center font-bold text-lg text-gray-900">{adults}</span>
+                      <button
+                        type="button"
+                        onClick={() => setAdults(adults + 1)}
+                        className="w-10 h-10 rounded-full bg-brand-green hover:bg-brand-dark text-white flex items-center justify-center font-semibold transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Children */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-semibold text-gray-900">Children</div>
+                      <div className="text-sm text-gray-500">Ages 0-12</div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setChildren(Math.max(0, children - 1))}
+                        className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-semibold text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        disabled={children <= 0}
+                      >
+                        −
+                      </button>
+                      <span className="w-8 text-center font-bold text-lg text-gray-900">{children}</span>
+                      <button
+                        type="button"
+                        onClick={() => setChildren(children + 1)}
+                        className="w-10 h-10 rounded-full bg-brand-green hover:bg-brand-dark text-white flex items-center justify-center font-semibold transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Rooms */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-semibold text-gray-900">Rooms</div>
+                      <div className="text-sm text-gray-500">Separate rooms</div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setRooms(Math.max(1, rooms - 1))}
+                        className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-semibold text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        disabled={rooms <= 1}
+                      >
+                        −
+                      </button>
+                      <span className="w-8 text-center font-bold text-lg text-gray-900">{rooms}</span>
+                      <button
+                        type="button"
+                        onClick={() => setRooms(rooms + 1)}
+                        className="w-10 h-10 rounded-full bg-brand-green hover:bg-brand-dark text-white flex items-center justify-center font-semibold transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowGuestPicker(false)}
+                    className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl font-semibold transition-colors"
+                  >
+                    Done
+                  </button>
+                </div>
               </div>
             )}
           </div>
-        </div>
 
-        {/* Guest Picker - Fixed alignment and layout */}
-        <div className="w-full md:w-60 relative" ref={guestPickerRef}>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Guests & Rooms</label>
-          <button
-            type="button"
-            onClick={() => setShowGuestPicker(!showGuestPicker)}
-            className="input w-full flex items-center justify-between text-left hover:bg-gray-50"
-          >
-            <span className="text-gray-700 text-sm">{guestSummary}</span>
-            <svg className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-
-          {showGuestPicker && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] p-4 min-w-[280px]">
-              <div className="space-y-4">
-                {/* Adults */}
-                <div className="flex items-center justify-between py-2">
-                  <div className="flex-1">
-                    <div className="font-medium text-sm text-gray-900">Adults</div>
-                    <div className="text-xs text-gray-500">Age 13+</div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setAdults(Math.max(1, adults - 1))}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled={adults <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="w-8 text-center font-medium text-gray-900">{adults}</span>
-                    <button
-                      type="button"
-                      onClick={() => setAdults(adults + 1)}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                {/* Children */}
-                <div className="flex items-center justify-between py-2 border-t border-gray-100">
-                  <div className="flex-1">
-                    <div className="font-medium text-sm text-gray-900">Children</div>
-                    <div className="text-xs text-gray-500">Ages 0-12</div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setChildren(Math.max(0, children - 1))}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled={children <= 0}
-                    >
-                      −
-                    </button>
-                    <span className="w-8 text-center font-medium text-gray-900">{children}</span>
-                    <button
-                      type="button"
-                      onClick={() => setChildren(children + 1)}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                {/* Rooms */}
-                <div className="flex items-center justify-between py-2 border-t border-gray-100">
-                  <div className="flex-1">
-                    <div className="font-medium text-sm text-gray-900">Rooms</div>
-                    <div className="text-xs text-gray-500">Separate rooms</div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setRooms(Math.max(1, rooms - 1))}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled={rooms <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="w-8 text-center font-medium text-gray-900">{rooms}</span>
-                    <button
-                      type="button"
-                      onClick={() => setRooms(rooms + 1)}
-                      className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setShowGuestPicker(false)}
-                  className="w-full btn-primary text-sm py-3 mt-4"
-                >
-                  Done
-                </button>
+          {/* Budget */}
+          <div>
+            <div className="relative">
+              <select 
+                className="w-full h-12 pl-4 pr-4 bg-gray-50 border-0 rounded-xl text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:ring-2 focus:ring-brand-green/20 focus:outline-none transition-all cursor-pointer" 
+                value={budgetKey} 
+                onChange={e => setBudgetKey(e.target.value)}
+              >
+                {budgets.map(b => (
+                  <option key={b.key} value={b.key}>{b.label}</option>
+                ))}
+              </select>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </div>
             </div>
-          )}
+          </div>
         </div>
 
-        {/* Budget Select */}
-        <select 
-          className="select w-full md:w-48" 
-          value={budgetKey} 
-          onChange={e => setBudgetKey(e.target.value)}
-        >
-          {budgets.map(b => (
-            <option key={b.key} value={b.key}>{b.label}</option>
-          ))}
-        </select>
-
         {/* Search Button */}
-        <button type="submit" className="btn-primary w-full md:w-32 py-3">
-          Search
-        </button>
-      </div>
-
-      {/* Stay Type Tabs */}
-      <div className="flex justify-center gap-2 mt-4 flex-wrap">
-        {['any', 'hotel', 'apartment'].map(option => (
-          <button
-            key={option}
-            type="button"
-            onClick={() => setStayType(option as typeof stayType)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              stayType === option 
-                ? 'bg-green-600 text-white shadow-sm' 
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+        <div className="flex flex-col sm:flex-row gap-4 items-center">
+          <button 
+            type="submit" 
+            className="w-full sm:flex-1 bg-gradient-to-r from-brand-green to-emerald-600 hover:from-brand-dark hover:to-emerald-700 text-white py-4 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-3"
           >
-            {option.charAt(0).toUpperCase() + option.slice(1)}
+            Negotiate Hotels
           </button>
-        ))}
-      </div>
-    </form>
+        </div>
+      </form>
+    </div>
   )
 }

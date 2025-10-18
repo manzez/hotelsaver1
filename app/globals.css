@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Full screen width override */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.w-screen {
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+}
+
 /* --- existing utilities --- */
 .container { @apply mx-auto max-w-6xl px-4; }
 .card { @apply bg-white rounded-xl shadow-soft border border-gray-100; }
@@ -94,4 +106,50 @@
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
+}
+
+/* Dramatic Page Load Animations */
+@keyframes zoomOut {
+  0% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+  0% { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.zoom-out-animation {
+  animation: zoomOut 2s ease-out forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+.fade-in-up-delayed {
+  animation: fadeInUp 1s ease-out 1s forwards;
+  opacity: 0;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 4s ease infinite;
 }

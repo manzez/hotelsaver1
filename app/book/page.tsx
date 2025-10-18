@@ -1,7 +1,7 @@
 
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { HOTELS } from '@/lib/data'
 
 // Hotel addresses mapping (would ideally be in the hotels data)
@@ -28,7 +28,7 @@ const HOTEL_ADDRESSES: Record<string, { address: string; landmarks: string; phon
   }
 }
 
-export default function BookPage(){
+function BookPageContent(){
   const sp = useSearchParams()
   const propertyId = sp.get('propertyId') || ''
   const price = sp.get('price') || ''
@@ -334,5 +334,13 @@ export default function BookPage(){
         </form>
       </div>
     </div>
+  )
+}
+
+export default function BookPage() {
+  return (
+    <Suspense fallback={<div className="container py-10"><div className="max-w-xl mx-auto"><div className="card p-6 text-center">Loading...</div></div></div>}>
+      <BookPageContent />
+    </Suspense>
   )
 }

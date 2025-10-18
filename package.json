@@ -4,7 +4,24 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint",
+    "test": "cd tests && npx playwright test",
+    "test:install": "cd tests && npx playwright install",
+    "test:headed": "cd tests && npx playwright test --headed",
+    "test:debug": "cd tests && npx playwright test --debug",
+    "test:search": "cd tests && npx playwright test e2e/01-search-flow.spec.ts",
+    "test:booking": "cd tests && npx playwright test e2e/02-negotiation-flow.spec.ts e2e/03-booking-flow.spec.ts",
+    "test:api": "cd tests/api && npm test",
+    "test:api:watch": "cd tests/api && npm run test:watch",
+    "test:mobile": "cd tests && npx playwright test --project='Mobile Chrome'",
+    "test:report": "cd tests && npx playwright show-report",
+    "test:ui": "cd tests && npx playwright test --ui",
+    "test:all": "npm run test:api && npm run test",
+    "report": "cd tests && node quick-report.js",
+    "report:full": "cd tests && node generate-report.js",
+    "test:report:generate": "npm run report",
+    "test:with:report": "npm run test:api && npm run report"
   },
   "dependencies": {
     "next": "^14.2.33",
@@ -15,11 +32,17 @@
     "react-tailwindcss-datepicker": "^1.7.3"
   },
   "devDependencies": {
-    "@types/node": "^24.7.2",
+    "@playwright/test": "^1.56.1",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.8.1",
     "@types/react": "19.2.2",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.12.2",
+    "chai": "^6.2.0",
+    "mocha": "^11.7.4",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.10",
-    "typescript": "^5.6.2"
+    "typescript": "^5.9.3"
   }
 }

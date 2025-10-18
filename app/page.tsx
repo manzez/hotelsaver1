@@ -1,4 +1,3 @@
-// app/page.tsx
 import SearchBar from '@/components/SearchBar'
 import CategoryTabs from '@/components/CategoryTabs'
 import Link from 'next/link'
@@ -6,258 +5,295 @@ import { HOTELS } from '@/lib/data'
 import { getDiscountFor } from '@/lib/discounts'
 
 export default function Home() {
-  // Get featured hotels for display
-  const featuredHotels = HOTELS.slice(0, 6)
+  const featuredHotels = HOTELS.slice(0, 16) // Increased from 8 to 16
+  const featuredApartments = HOTELS.filter(h => h.type === 'Apartment').slice(0, 8)
+  
+  // Sample data for vehicles and services (you can replace with real data)
+  const vehicles = [
+    {
+      id: 'toyota-hiace-lagos',
+      name: 'Toyota HiAce Bus',
+      type: 'Coach',
+      capacity: '14 passengers',
+      pricePerDay: 45000,
+      city: 'Lagos',
+      image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400&h=300&fit=crop'
+    },
+    {
+      id: 'mercedes-sprinter-abuja',
+      name: 'Mercedes Sprinter',
+      type: 'Van',
+      capacity: '12 passengers',
+      pricePerDay: 55000,
+      city: 'Abuja',
+      image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop'
+    },
+    {
+      id: 'toyota-camry-lagos',
+      name: 'Toyota Camry',
+      type: 'Car',
+      capacity: '4 passengers',
+      pricePerDay: 25000,
+      city: 'Lagos',
+      image: 'https://images.unsplash.com/photo-1549924231-f129b911e442?w=400&h=300&fit=crop'
+    },
+    {
+      id: 'lexus-suv-abuja',
+      name: 'Lexus RX 350',
+      type: 'SUV',
+      capacity: '7 passengers',
+      pricePerDay: 65000,
+      city: 'Abuja',
+      image: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=400&h=300&fit=crop'
+    }
+  ]
+
+  const featuredServices = [
+    {
+      id: 'hair-styling-lagos',
+      name: 'Professional Hair Styling',
+      category: 'Hair',
+      price: 15000,
+      city: 'Lagos',
+      image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&h=300&fit=crop',
+      provider: 'Beauty Pro Studio'
+    },
+    {
+      id: 'massage-therapy-abuja',
+      name: 'Relaxation Massage',
+      category: 'Massage',
+      price: 25000,
+      city: 'Abuja',
+      image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop',
+      provider: 'Wellness Center'
+    },
+    {
+      id: 'catering-service-lagos',
+      name: 'Event Catering',
+      category: 'Catering',
+      price: 75000,
+      city: 'Lagos',
+      image: 'https://images.unsplash.com/photo-1555244162-803834f70033?w=400&h=300&fit=crop',
+      provider: 'Premium Caterers'
+    },
+    {
+      id: 'cleaning-service-port-harcourt',
+      name: 'Home Cleaning',
+      category: 'Cleaning',
+      price: 12000,
+      city: 'Port Harcourt',
+      image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
+      provider: 'Clean Pro Services'
+    }
+  ]
 
   return (
-    <div className="py-8">
-      <div className="flex items-center justify-between">
-        <CategoryTabs active="hotels" />
-        <div className="text-sm text-gray-600">Luxury stays across Nigeria 🇳🇬</div>
-      </div>
+    <div className="min-h-screen relative overflow-hidden w-screen">
+      {/* Full-Screen Hero with Zoom Animation */}
+      <section className="relative h-screen w-screen">
+        {/* Animated Background Image */}
+        <div className="absolute inset-0 zoom-out-animation w-screen">
+          <img 
+            src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            alt="Luxury hotel"
+            className="w-screen h-full object-cover"
+          />
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/50 w-screen"></div>
+        </div>
 
-      {/* Hero Section - Enhanced */}
-      <section className="mt-4 relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-50 via-emerald-50 to-brand-green/10 card border-0">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
-        <div className="relative p-6 md:p-10">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight">
-              Save up to <span className="text-brand-green">15%</span> on Nigerian Hotels 
-            </h1>
-            <p className="mt-4 text-lg text-gray-700">
-              🏨 Instant negotiation • ⚡ Real-time offers • 🇳🇬 Lagos, Abuja, Port Harcourt & Owerri
-            </p>
-            <div className="mt-8">
-              <SearchBar />
-            </div>
+        {/* Navigation - Floating */}
+        <div className="absolute top-0 left-0 right-0 z-50 px-6 py-6">
+          <div className="flex items-center justify-center">
+            <CategoryTabs active="hotels" />
+          </div>
+        </div>
+
+        {/* Hero Content - Much Higher Up */}
+        <div className="absolute inset-0 flex flex-col items-center text-center z-40 px-6 pt-32">
+          {/* Minimal Text */}
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-12 tracking-tight fade-in-up">
+            NEGOTIATE YOUR<br />
+            HOTEL STAY
+          </h1>
+          
+          {/* Search Bar - Full Width Across Page */}
+          <div className="w-full max-w-6xl fade-in-up-delayed">
+            <SearchBar />
           </div>
         </div>
       </section>
 
-      {/* Featured Hotels Section */}
-      <section className="mt-16">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900">Featured Hotels</h2>
-            <p className="text-gray-600 mt-1">Premium accommodations across Nigeria</p>
-          </div>
-          <Link href="/search" className="btn-primary">
-            View All Hotels
-          </Link>
-        </div>
+      {/* Featured Hotels - Increased Count */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">Featured Hotels</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {featuredHotels.map(h => {
+              const discount = getDiscountFor(h.id)
+              const hasNegotiation = discount > 0
+              const discountedPrice = hasNegotiation ? Math.round(h.basePriceNGN * (1 - discount)) : h.basePriceNGN
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredHotels.map((hotel) => {
-            const discount = getDiscountFor(hotel.id)
-            const canNegotiate = discount > 0
-            const discountedPrice = canNegotiate ? Math.round((hotel.basePriceNGN || 0) * (1 - discount)) : (hotel.basePriceNGN || 0)
-            const savings = (hotel.basePriceNGN || 0) - discountedPrice
-            
-            return (
-              <Link 
-                key={hotel.id} 
-                href={`/hotel/${hotel.id}`}
-                className="card overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
-              >
-                <div className="relative">
-                  <img
-                    src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800'}
-                    alt={hotel.name}
-                    className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium">
-                    {'⭐'.repeat(hotel.stars)}
-                  </div>
-                  {canNegotiate ? (
-                    <div className="absolute top-3 right-3 bg-brand-green text-white px-3 py-1 rounded-full text-sm font-bold">
-                      Save {Math.round(discount * 100)}%
-                    </div>
-                  ) : (
-                    <div className="absolute top-3 right-3 bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Fixed Price
-                    </div>
-                  )}
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-lg text-gray-900">{hotel.name}</h3>
-                  <p className="text-gray-600 text-sm mt-1">📍 {hotel.city}</p>
-                  <div className="flex items-center justify-between mt-4">
-                    <div>
-                      <span className={`text-2xl font-bold ${canNegotiate ? 'text-brand-green' : 'text-gray-900'}`}>
+              return (
+                <Link key={h.id} href={`/hotel/${h.id}`} className="group">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <img 
+                      src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400'} 
+                      alt={h.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-bold text-gray-900 mb-1">{h.name}</h3>
+                      <p className="text-gray-600 text-sm mb-2">{h.city}</p>
+                      <div className="text-lg font-bold text-brand-green">
                         ₦{discountedPrice.toLocaleString()}
-                      </span>
-                      {canNegotiate && (
-                        <div className="text-sm text-gray-500">
-                          <span className="line-through">₦{(hotel.basePriceNGN || 0).toLocaleString()}</span>
-                          <span className="text-red-600 font-medium ml-1">-{Math.round(discount * 100)}%</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs text-gray-500">per night</div>
-                      <div className="mt-1">
-                        {canNegotiate ? (
-                          <Link
-                            href={`/negotiate?propertyId=${hotel.id}`}
-                            className="inline-block text-sm px-3 py-1 bg-brand-green text-white rounded hover:bg-brand-dark transition-colors"
-                          >
-                            🔥 Negotiate
-                          </Link>
-                        ) : (
-                          <button
-                            disabled
-                            className="text-sm px-3 py-1 bg-gray-300 text-gray-500 rounded cursor-not-allowed"
-                          >
-                            Fixed Price
-                          </button>
-                        )}
                       </div>
+                      <div className="text-xs text-gray-500">per night</div>
                     </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/search" className="bg-brand-green text-white px-8 py-3 rounded-lg font-medium hover:bg-brand-dark transition-colors">
+              View All Hotels
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Secure Popular Apartments */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-4">Secure Popular Apartments</h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Discover comfortable and secure apartment rentals across Nigeria's major cities with our verified hosts
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredApartments.map(apartment => {
+              const discount = getDiscountFor(apartment.id)
+              const hasNegotiation = discount > 0
+              const discountedPrice = hasNegotiation ? Math.round(apartment.basePriceNGN * (1 - discount)) : apartment.basePriceNGN
+
+              return (
+                <Link key={apartment.id} href={`/hotel/${apartment.id}`} className="group">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <img 
+                      src={apartment.images?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'} 
+                      alt={apartment.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
+                          Apartment
+                        </span>
+                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium">
+                          Verified
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-gray-900 mb-1">{apartment.name}</h3>
+                      <p className="text-gray-600 text-sm mb-2">{apartment.city}</p>
+                      <div className="text-lg font-bold text-brand-green">
+                        ₦{discountedPrice.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-500">per night</div>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/search?stayType=apartment" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+              View All Apartments
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Hire Vehicles and Coaches */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-4">Hire Vehicles and Coaches</h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Rent reliable vehicles for your transportation needs across Nigeria
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {vehicles.map(vehicle => (
+              <div key={vehicle.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
+                <img 
+                  src={vehicle.image} 
+                  alt={vehicle.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full font-medium">
+                      {vehicle.type}
+                    </span>
+                    <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">
+                      {vehicle.capacity}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-1">{vehicle.name}</h3>
+                  <p className="text-gray-600 text-sm mb-2">{vehicle.city}</p>
+                  <div className="text-lg font-bold text-brand-green">
+                    ₦{vehicle.pricePerDay.toLocaleString()}
+                  </div>
+                  <div className="text-xs text-gray-500">per day</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/vehicles" className="bg-orange-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-orange-700 transition-colors">
+              View All Vehicles
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-4">Local Services</h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Book trusted local services for all your needs across Nigerian cities
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredServices.map(service => (
+              <Link key={service.id} href={`/services/${service.id}`} className="group">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
+                  <img 
+                    src={service.image} 
+                    alt={service.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">
+                        {service.category}
+                      </span>
+                    </div>
+                    <h3 className="font-bold text-gray-900 mb-1">{service.name}</h3>
+                    <p className="text-gray-600 text-sm mb-1">{service.provider}</p>
+                    <p className="text-gray-500 text-xs mb-2">{service.city}</p>
+                    <div className="text-lg font-bold text-brand-green">
+                      ₦{service.price.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-500">starting price</div>
                   </div>
                 </div>
               </Link>
-            )
-          })}
-        </div>
-      </section>
-
-      {/* Food Section (Nigeria) */}
-      <section className="mt-12">
-        <div className="flex items-end justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold">Best Food and Restaurants</h2>
-            <p className="text-sm text-gray-600">
-              Try: <i>&quot;I want fresh pounded yam with egusi soup&quot;</i>
-            </p>
+            ))}
           </div>
-          <Link href="/food" className="btn-ghost">Browse all restaurants</Link>
-        </div>
-
-        {/* Grid with Nigerian dishes */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
-          {/* Large featured image */}
-          <div className="md:col-span-8 card overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <img
-              src="https://images.unsplash.com/photo-1586201375761-83865001e26c?w=800&h=600&fit=crop&auto=format&q=80"
-              alt="Nigerian Jollof Rice with Chicken"
-              className="h-64 w-full object-cover"
-            />
-            <div className="p-4">
-              <h3 className="font-semibold text-lg">Jollof Rice &amp; Chicken</h3>
-              <p className="text-sm text-gray-600 mt-1">Smoky party jollof with fried chicken and plantains</p>
-            </div>
+          <div className="text-center mt-8">
+            <Link href="/services" className="bg-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors">
+              View All Services
+            </Link>
           </div>
-
-          {/* Right column (two medium cards) */}
-          <div className="md:col-span-4 grid grid-rows-2 gap-4">
-            <div className="card overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <img
-                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=800&h=600&fit=crop&auto=format&q=80"
-                alt="Pounded Yam and Egusi Soup"
-                className="h-32 w-full object-cover"
-              />
-              <div className="p-3">
-                <h3 className="font-semibold">Pounded Yam &amp; Egusi</h3>
-              </div>
-            </div>
-            <div className="card overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                            <img
-                src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=800&h=600&fit=crop&auto=format&q=80"
-                alt="Nigerian Suya"
-                className="h-32 w-full object-cover"
-              />
-              <div className="p-3">
-                <h3 className="font-semibold">Suya</h3>
-              </div>
-            </div>
-          </div>
-
-          {/* Two wide cards beneath */}
-          <div className="md:col-span-6 card overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <img
-              src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&h=600&fit=crop&auto=format&q=80"
-              alt="Goat Meat Pepper Soup"
-              className="h-48 w-full object-cover"
-            />
-            <div className="p-4">
-              <h3 className="font-semibold">Goat Meat Pepper Soup</h3>
-              <p className="text-sm text-gray-600 mt-1">Spicy, comforting broth with local spices</p>
-            </div>
-          </div>
-
-          <div className="md:col-span-6 card overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <img
-              src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&h=600&fit=crop&auto=format&q=80"
-              alt="Ofada Rice with Ayamase Stew"
-              className="h-48 w-full object-cover"
-            />
-            <div className="p-4">
-              <h3 className="font-semibold">Ofada Rice &amp; Ayamase</h3>
-              <p className="text-sm text-gray-600 mt-1">Ofada rice served with green pepper stew</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Optional extra Nigerian snacks (show on wide screens via /food page if you prefer) */}
-        {/* Examples you can use later:
-            /images/food/ng/moi-moi.jpg (Moi Moi)
-            /images/food/ng/akara.jpg (Akara)
-            /images/food/ng/puff-puff.jpg (Puff-Puff)
-            /images/food/ng/efo-riro.jpg (Efo Riro)
-            /images/food/ng/okro-soup.jpg (Okro Soup)
-        */}
-      </section>
-
-      {/* Hair & Beauty */}
-      <section className="mt-12">
-        <div className="flex items-end justify-between">
-          <div>
-            <h2 className="text-2xl font-bold">Hair and Beauty</h2>
-            <p className="text-sm text-gray-600">Try: <i>&quot;I need my hair braided urgently&quot;</i></p>
-          </div>
-          <Link href="/services?category=beauty" className="btn-ghost">Browse beauty services</Link>
-        </div>
-        <div className="grid-cards mt-4">
-          {[
-            {title:'Professional Braiding',img:'https://images.unsplash.com/photo-1595475883362-5d6c3616a9a1?w=800&auto=format&fit=crop',desc:'Expert braiding styles for black hair'},
-            {title:'Nail Art & Care',img:'https://images.unsplash.com/photo-1607778835362-8b8c3c4b5c1a?w=800&auto=format&fit=crop',desc:'Beautiful nail designs and treatments'},
-            {title:'Eyelash Extensions',img:'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=800&auto=format&fit=crop',desc:'Luxurious lash extensions for black women'},
-            {title:'Hair Extensions',img:'https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&auto=format&fit=crop',desc:'Premium hair extensions and styling'}
-          ].map((s,i)=>(
-            <div className="card overflow-hidden hover:shadow-lg transition-shadow" key={i}>
-              <img src={s.img} className="h-44 w-full object-cover" alt={s.title}/>
-              <div className="p-4">
-                <div className="font-semibold">{s.title}</div>
-                <p className="text-sm text-gray-600 mt-1">{s.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Original Services */}
-      <section className="mt-12">
-        <div className="flex items-end justify-between">
-          <div>
-            <h2 className="text-2xl font-bold">Explore Local Services</h2>
-            <p className="text-sm text-gray-600">Various services available in your area</p>
-          </div>
-          <Link href="/services" className="btn-ghost">Browse all services</Link>
-        </div>
-        <div className="grid-cards mt-4">
-          {[
-            {title:'Massage therapists',img:'https://picsum.photos/seed/svc1/800/500',desc:'Relaxation & deep-tissue at your location'},
-            {title:'Hair & makeup',img:'https://picsum.photos/seed/svc2/800/500',desc:'Braids, styling, nails & more'},
-            {title:'Cleaning services',img:'https://picsum.photos/seed/svc3/800/500',desc:'Home & office cleaners on-demand'}
-          ].map((s,i)=>(
-            <div className="card overflow-hidden hover:shadow-lg transition-shadow" key={i}>
-              <img src={s.img} className="h-44 w-full object-cover" alt={s.title}/>
-              <div className="p-4">
-                <div className="font-semibold">{s.title}</div>
-                <p className="text-sm text-gray-600 mt-1">{s.desc}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
     </div>

@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -16,7 +16,7 @@ const NEG_STATUS = {
 
 type NegStatus = typeof NEG_STATUS[keyof typeof NEG_STATUS]
 
-export default function NegotiatePage() {
+function NegotiatePageContent() {
   const sp = useSearchParams()
   const router = useRouter()
   const propertyId = sp.get('propertyId') || ''
@@ -39,7 +39,7 @@ export default function NegotiatePage() {
     
     // Start negotiation process
     setNegStatus(NEG_STATUS.NEGOTIATING)
-    setMessage('🔄 Connecting to hotel representative...')
+    setMessage('🔄 Connecting to hotel representative... Thank you for your patience while we secure the best deal for you!')
     
     // Simulate negotiation progress
     let progress = 0
@@ -54,16 +54,18 @@ export default function NegotiatePage() {
       }
       setNegotiationProgress(Math.min(100, progress))
       
-      if (progress < 30) {
-        setMessage('📞 Speaking to hotel representative...')
-      } else if (progress < 60) {
-        setMessage('💬 Negotiating best price for you...')
-      } else if (progress < 90) {
-        setMessage('🤝 Finalizing your special deal...')
+      if (progress < 25) {
+        setMessage('📞 Contacting hotel representative... We appreciate your patience!')
+      } else if (progress < 50) {
+        setMessage('💬 Negotiating the best possible price for you... Almost there!')
+      } else if (progress < 75) {
+        setMessage('🤝 Working hard to finalize your exclusive deal... Just a moment more!')
+      } else if (progress < 95) {
+        setMessage('✨ Securing your special discount... Thank you for waiting!')
       } else {
-        setMessage('✅ Great news! Deal secured!')
+        setMessage('🎉 Excellent news! We\'ve secured an amazing deal for you!')
       }
-    }, 300)
+    }, 400) // Slightly slower for better UX
 
     ;(async () => {
       const res = await fetch('/api/negotiate', {
@@ -198,6 +200,15 @@ export default function NegotiatePage() {
             </div>
             
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+              <div className="text-center mb-3">
+                <div className="text-sm font-medium text-gray-700">
+                  {property?.name && `Hotel: ${property.name}`}
+                </div>
+                <div className="text-xs text-gray-500">
+                  {property?.city && `Location: ${property.city}`}
+                </div>
+              </div>
+              
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-700">Original Price:</span>
                 <span className="line-through text-gray-500">₦{base?.toLocaleString()}</span>
@@ -232,7 +243,13 @@ export default function NegotiatePage() {
               </div>
               <button
                 disabled={isExpired(negStatus)}
-                onClick={() => router.push(`/book?propertyId=${propertyId}&price=${price}`)}
+                onClick={() => {
+                  // Scroll to top before navigation
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  setTimeout(() => {
+                    router.push(`/book?propertyId=${propertyId}&price=${price}`)
+                  }, 100)
+                }}
                 className={`btn-primary w-full ${isExpired(negStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {isExpired(negStatus) ? 'Offer Expired' : '🔒 Book This Deal Now'}
@@ -255,7 +272,10 @@ export default function NegotiatePage() {
             <h2 className="text-xl font-bold text-gray-900 mb-2">No Deals Available</h2>
             <p className="text-gray-600 mb-4">{message}</p>
             <button
-              onClick={() => router.push('/search')}
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+                setTimeout(() => router.push('/search'), 100)
+              }}
               className="btn-ghost"
             >
               Search Other Cities
@@ -273,13 +293,19 @@ export default function NegotiatePage() {
             <p className="text-gray-600 mb-4">{message}</p>
             <div className="flex gap-3 justify-center">
               <button
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  setTimeout(() => window.location.reload(), 100)
+                }}
                 className="btn-ghost"
               >
                 Try Again
               </button>
               <button
-                onClick={() => router.push('/search')}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  setTimeout(() => router.push('/search'), 100)
+                }}
                 className="btn-primary"
               >
                 Continue Shopping
@@ -290,4 +316,12 @@ export default function NegotiatePage() {
       </div>
     </div>
   )
+}
+
+export default function NegotiatePage() {
+  return (
+    <Suspense fallback={<div className="py-10 text-center">Loading negotiation...</div>}>
+      <NegotiatePageContent />
+    </Suspense>
+  );
 }

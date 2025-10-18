@@ -28,3 +28,4 @@ public/images/
 *.jpeg
 *.png
 *.webp
+.vercel

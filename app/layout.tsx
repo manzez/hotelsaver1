@@ -17,6 +17,7 @@ export default function RootLayout({children}:{children:React.ReactNode}){
       <body className='min-h-screen bg-gray-50 text-gray-900'>
         <ClientLayout>{children}</ClientLayout>
         <Chatbot />
+        <div id="date-picker-portal" style={{ position: 'fixed', zIndex: 999999 }}></div>
       </body>
     </html>
   )

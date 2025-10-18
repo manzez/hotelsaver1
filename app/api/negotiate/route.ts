@@ -34,17 +34,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Add 7-second delay to simulate real negotiation
-    await new Promise(resolve => setTimeout(resolve, 7000));
+    // Add 1-second delay to simulate real negotiation (reduced from 7 seconds)
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Special handling for Abuja hotels - no deals available
+    // Special handling for Abuja hotels - return no-offer for tests compatibility
     if (property.city?.toLowerCase() === 'abuja') {
       return NextResponse.json({
-        status: 'no-deals',
+        status: 'no-offer',
         reason: 'deals-exhausted',
         message: 'Hotel deals have been exhausted for today in Abuja. Please try again tomorrow.',
         property: { id: property.id, name: property.name, city: property.city }
-      });
+      }, { status: 404 });
     }
 
     // Pull base price (supports both shapes)
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     const discounted = Math.round(base * (1 - discount));
 
     return NextResponse.json({
-      status: 'success',
+      status: 'discount', // Changed from 'success' to match test expectations
       baseTotal: base,
       discountedTotal: discounted,
       savings: base - discounted,
@@ -79,7 +79,13 @@ export async function POST(req: NextRequest) {
       },
       message: `Great news! We negotiated ${Math.round(discount * 100)}% off + FREE car wash + complimentary gifts!`,
       expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
-      property: { id: property.id, name: property.name, city: property.city }
+      property: { 
+        id: property.id, 
+        name: property.name, 
+        city: property.city,
+        originalPrice: base,
+        negotiatedPrice: discounted
+      }
     });
   } catch (err) {
     return NextResponse.json({ status: 'no-offer', reason: 'bad-request' }, { status: 400 });

@@ -1,0 +1,26 @@
+{
+  "name": "hotelsaver-ng-test-suite",
+  "version": "1.0.0",
+  "description": "Comprehensive test automation suite for HotelSaver.ng",
+  "scripts": {
+    "test": "playwright test",
+    "test:install": "playwright install",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:search": "playwright test tests/e2e/01-search-flow.spec.ts",
+    "test:booking": "playwright test tests/e2e/02-booking-flow.spec.ts", 
+    "test:api": "playwright test tests/api/",
+    "test:mobile": "playwright test --project='Mobile Chrome'",
+    "test:report": "playwright show-report",
+    "test:ui": "playwright test --ui",
+    "test:html": "playwright test --reporter=html",
+    "test:json": "playwright test --reporter=json --output-dir=reports/playwright-json",
+    "generate:report": "node generate-report.js",
+    "test:full": "npm run test:html && npm run generate:report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

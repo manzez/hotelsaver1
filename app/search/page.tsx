@@ -1,6 +1,7 @@
 import { HOTELS } from '@/lib/data'
 import { getDiscountFor } from '@/lib/discounts'
 import Link from 'next/link'
+import SafeImage from '@/components/SafeImage'
 
 const TAX_RATE = 0.075 // 7.5% VAT (adjust if you need)
 
@@ -13,18 +14,24 @@ function priceRange(key:string){
 
 function nightsBetween(checkIn?:string|null, checkOut?:string|null){
   if(!checkIn || !checkOut) return 0
-  const ci = new Date(checkIn)
-  const co = new Date(checkOut)
-  if(isNaN(+ci) || isNaN(+co)) return 0
-  const ms = co.getTime() - ci.getTime()
-  const n = Math.max(0, Math.round(ms / (1000*60*60*24)))
-  return n
+  
+  // Parse dates as local dates (YYYY-MM-DD format)
+  const checkInDate = new Date(checkIn + 'T00:00:00')
+  const checkOutDate = new Date(checkOut + 'T00:00:00')
+  
+  if(isNaN(+checkInDate) || isNaN(+checkOutDate)) return 0
+  
+  // Calculate difference in days
+  const timeDiff = checkOutDate.getTime() - checkInDate.getTime()
+  const daysDiff = Math.round(timeDiff / (1000 * 60 * 60 * 24))
+  
+  return Math.max(0, daysDiff)
 }
 
 function filterHotels(params:URLSearchParams){
   const city=params.get('city')||''
   const rooms=params.get('rooms')||''
-  const budget=params.get('budget')||'u80'
+  const budget=params.get('budget')||'200p'
   const stayType=params.get('stayType')||'any'
   const [mn,mx]=priceRange(budget)
   let list=HOTELS.filter(h=>!city||h.city===city)
@@ -47,12 +54,6 @@ export default function SearchPage({searchParams}:{searchParams:Record<string,st
       <div className="flex items-end justify-between">
         <div>
           <h2 className="text-2xl font-bold">Stays in {params.get('city')||'Nigeria'}</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            {checkIn && checkOut
-              ? <>Dates: <b>{checkIn}</b> → <b>{checkOut}</b> • {nights} {nights===1?'night':'nights'}</>
-              : <>Choose dates for totals</>
-            }
-          </p>
         </div>
       </div>
 
@@ -73,14 +74,17 @@ export default function SearchPage({searchParams}:{searchParams:Record<string,st
             const discountedPrice = discount > 0 ? Math.round(base * (1 - discount)) : base
             const savings = base - discountedPrice
             const canNegotiate = discount > 0
+            const hasHighDiscount = discount >= 0.20 // 20% or more gets fire emoji
             
             return (
               <div key={h.id} className="card overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
                 <div className="relative">
-                  <img 
+                  <SafeImage 
                     src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800'} 
                     alt={h.name} 
                     className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
+                    loading="lazy"
                   />
                   <div className="absolute top-3 left-3 flex gap-2">
                     <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium">
@@ -165,15 +169,15 @@ export default function SearchPage({searchParams}:{searchParams:Record<string,st
                           href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`}
                           className="flex-1 text-center py-2 bg-brand-green text-white rounded-lg text-sm font-medium hover:bg-brand-dark transition-colors"
                         >
-                          🔥 Negotiate Now
+                          {hasHighDiscount ? '🔥 ' : ''}Negotiate Now
                         </Link>
                       ) : (
-                        <button
-                          disabled
-                          className="flex-1 text-center py-2 bg-gray-300 text-gray-500 rounded-lg text-sm font-medium cursor-not-allowed"
+                        <Link
+                          href={`/book?propertyId=${h.id}&price=${discountedPrice}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`}
+                          className="flex-1 text-center py-2 bg-gray-700 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
                         >
-                          Fixed Price
-                        </button>
+                          Book Now
+                        </Link>
                       )}
                     </div>
                   </div>
