@@ -1,7 +1,10 @@
 import { HOTELS } from '@/lib/data'
-import { getDiscountFor } from '@/lib/discounts'
+import { getDiscountFor, getDiscountInfo, DiscountTier } from '@/lib/discounts'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
+import HotelCardSkeleton from '@/components/HotelCardSkeleton'
+import SearchBar from '@/components/SearchBar'
+import { Suspense } from 'react'
 
 const TAX_RATE = 0.075 // 7.5% VAT (adjust if you need)
 
@@ -30,15 +33,151 @@ function nightsBetween(checkIn?:string|null, checkOut?:string|null){
 
 function filterHotels(params:URLSearchParams){
   const city=params.get('city')||''
+  const hotelQuery=params.get('hotelQuery')||''
   const rooms=params.get('rooms')||''
-  const budget=params.get('budget')||'200p'
+  const budget=params.get('budget')||''
   const stayType=params.get('stayType')||'any'
-  const [mn,mx]=priceRange(budget)
-  let list=HOTELS.filter(h=>!city||h.city===city)
+  
+  // Only apply price filtering if budget is explicitly set
+  const [mn,mx] = budget ? priceRange(budget) : [0, 99999999]
+  
+  let list = HOTELS
+  
+  // Filter by city if specified
+  if (city) {
+    list = list.filter(h => h.city === city)
+  }
+  
+  // Filter by hotel name if specified
+  if (hotelQuery) {
+    list = list.filter(h => 
+      h.name.toLowerCase().includes(hotelQuery.toLowerCase())
+    )
+  }
+  
+  // Filter by stay type
   if(stayType==='hotel') list=list.filter(h=>h.type==='Hotel')
   if(stayType==='apartment') list=list.filter(h=>h.type==='Apartment')
+  
+  // Filter by price range
   list=list.filter(h=>h.basePriceNGN>=mn && h.basePriceNGN<=mx)
+  
   return list
+}
+
+function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
+  params: URLSearchParams
+  hotels: any[]
+  nights: number
+  checkIn: string | null
+  checkOut: string | null
+}) {
+  if (hotels.length === 0) {
+    const hotelQuery = params.get('hotelQuery')
+    const city = params.get('city')
+    
+    return (
+      <div className="card p-8 mt-6 text-center">
+        <h3 className="text-lg font-semibold">No results found</h3>
+        <p className="text-gray-600 mt-1">
+          {hotelQuery 
+            ? `No hotels found matching "${hotelQuery}". Try a different hotel name or search by city.`
+            : 'Try a different city or budget range.'
+          }
+        </p>
+        <Link href="/" className="btn-ghost mt-4">Back to Home</Link>
+      </div>
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
+      {hotels.map(h => {
+        const base = h.basePriceNGN
+        const subtotal = nights > 0 ? base * nights : base
+        const tax = nights > 0 ? Math.round(subtotal * TAX_RATE) : 0
+        const discount = getDiscountFor(h.id)
+        const canNegotiate = discount > 0
+        const displayPrice = base
+        
+        return (
+          <div key={h.id} className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-1 flex flex-col">
+            {/* Fixed height image container */}
+            <div className="relative h-48 flex-shrink-0">
+              <SafeImage 
+                src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800'} 
+                alt={h.name} 
+                className="w-full h-full object-cover"
+                fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
+                loading="lazy"
+              />
+              <div className="absolute top-3 left-3">
+                <div className="bg-white/95 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-medium shadow-sm">
+                  {'⭐'.repeat(h.stars)} {h.stars}.0
+                </div>
+              </div>
+            </div>
+            
+            {/* Fixed layout content area */}
+            <div className="p-4 flex flex-col flex-grow">
+              {/* Hotel info - fixed height */}
+              <div className="flex-grow">
+                <h3 className="font-bold text-gray-900 mb-2 text-sm leading-tight h-10 line-clamp-2">{h.name}</h3>
+                <p className="text-gray-600 text-xs mb-3 h-4">📍 {h.city} • {h.type}</p>
+
+                {/* Pricing Section - fixed layout to prevent jumping */}
+                <div className="mb-4">
+                  <div className="flex items-baseline justify-between mb-1">
+                    <span className="text-lg font-bold text-gray-900">
+                      ₦{displayPrice.toLocaleString()}
+                    </span>
+                    <span className="text-xs text-gray-600">per night</span>
+                  </div>
+
+                  {/* Fixed height for nights calculation to prevent layout shift */}
+                  <div className="h-12">
+                    {nights > 0 && (
+                      <div className="mt-2 p-2 bg-gray-50 rounded-md text-xs">
+                        <div className="text-gray-700 font-medium">
+                          {nights} {nights===1?'night':'nights'}: ₦{(displayPrice * nights + tax).toLocaleString()}
+                        </div>
+                        <div className="text-gray-600">incl. ₦{tax.toLocaleString()} tax</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Fixed button area */}
+              <div className="flex gap-2 mt-auto">
+                <Link 
+                  href={`/hotel/${h.id}`} 
+                  className="flex-1 text-center py-2.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                >
+                  View Details
+                </Link>
+                {canNegotiate ? (
+                  <Link
+                    href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`}
+                    className="flex-1 text-center py-2.5 bg-brand-green text-white rounded-md text-xs font-medium hover:bg-brand-dark transition-colors duration-200"
+                  >
+                    Negotiate Price
+                  </Link>
+                ) : (
+                  <Link
+                    href={`/book?propertyId=${h.id}&price=${displayPrice}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`}
+                    className="flex-1 text-center py-2.5 bg-gray-700 text-white rounded-md text-xs font-medium hover:bg-gray-800 transition-colors duration-200"
+                  >
+                    Book Now
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function SearchPage({searchParams}:{searchParams:Record<string,string>}){
@@ -50,143 +189,64 @@ export default function SearchPage({searchParams}:{searchParams:Record<string,st
   const nights = nightsBetween(checkIn, checkOut)
 
   return (
-    <div className="py-8">
-      <div className="flex items-end justify-between">
+    <div className="container mx-auto px-4 py-8 min-h-screen">
+      {/* Search Bar for filtering */}
+      <div className="mb-8">
+        <SearchBar 
+          defaultCity={params.get('city') || ''}
+          defaultHotelQuery={params.get('hotelQuery') || ''}
+          defaultCheckIn={checkIn || ''}
+          defaultCheckOut={checkOut || ''}
+          defaultAdults={Number(params.get('adults')) || 2}
+          defaultChildren={Number(params.get('children')) || 0}
+          defaultRooms={Number(params.get('rooms')) || 1}
+          defaultBudget={params.get('budget') || 'u80'}
+          defaultStayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment') || 'any'}
+        />
+      </div>
+
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold">Stays in {params.get('city')||'Nigeria'}</h2>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+            {(() => {
+              const city = params.get('city')
+              const hotelQuery = params.get('hotelQuery')
+              const stayType = params.get('stayType')
+              
+              if (hotelQuery) {
+                return `Hotels matching "${hotelQuery}"`
+              } else if (city && stayType === 'apartment') {
+                return `Apartments in ${city}`
+              } else if (city && stayType === 'hotel') {
+                return `Hotels in ${city}`
+              } else if (city) {
+                return `Stays in ${city}`
+              } else if (stayType === 'apartment') {
+                return 'All Apartments'
+              } else if (stayType === 'hotel') {
+                return 'All Hotels'
+              }
+              return 'All Hotels'
+            })()}
+          </h1>
+          <p className="text-gray-600 mt-1">
+            {hotels.length} {hotels.length === 1 ? 'property' : 'properties'} found
+            {params.get('hotelQuery') && params.get('city') && (
+              <span> in {params.get('city')}</span>
+            )}
+          </p>
         </div>
       </div>
 
-      {hotels.length===0 ? (
-        <div className="card p-8 mt-6 text-center">
-          <h3 className="text-lg font-semibold">No results found</h3>
-          <p className="text-gray-600 mt-1">Try a different city or budget mode.</p>
-          <Link href="/" className="btn-ghost mt-4">Back to Home</Link>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {hotels.map(h=>{
-            const base = h.basePriceNGN
-            const subtotal = nights>0 ? base * nights : base
-            const tax = nights>0 ? Math.round(subtotal * TAX_RATE) : 0
-            const total = nights>0 ? subtotal + tax : base
-            const discount = getDiscountFor(h.id)
-            const discountedPrice = discount > 0 ? Math.round(base * (1 - discount)) : base
-            const savings = base - discountedPrice
-            const canNegotiate = discount > 0
-            const hasHighDiscount = discount >= 0.20 // 20% or more gets fire emoji
-            
-            return (
-              <div key={h.id} className="card overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-                <div className="relative">
-                  <SafeImage 
-                    src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800'} 
-                    alt={h.name} 
-                    className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium">
-                      {'⭐'.repeat(h.stars)} {h.stars}.0
-                    </div>
-                  </div>
-                  {canNegotiate && (
-                    <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                      Save ₦{savings.toLocaleString()}
-                    </div>
-                  )}
-                  {!canNegotiate && (
-                    <div className="absolute top-3 right-3 bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Fixed Price
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
-                
-                <div className="p-5">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg text-gray-900 mb-1">{h.name}</h3>
-                      <p className="text-gray-600 text-sm flex items-center gap-1">
-                        📍 {h.city} • {h.type}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Pricing Section */}
-                  <div className="border-t border-gray-100 pt-4">
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <div className="flex items-baseline gap-2">
-                          <span className={`text-2xl font-bold ${canNegotiate ? 'text-brand-green' : 'text-gray-900'}`}>
-                            ₦{discountedPrice.toLocaleString()}
-                          </span>
-                          {canNegotiate && (
-                            <span className="text-sm text-gray-500 line-through">
-                              ₦{base.toLocaleString()}
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {canNegotiate ? `per night • ${Math.round(discount * 100)}% off` : 'per night • Fixed price'}
-                        </div>
-                      </div>
-                      {canNegotiate && (
-                        <div className="text-right">
-                          <div className="text-xs text-green-600 font-medium">💰 You save</div>
-                          <div className="text-sm font-bold text-green-600">₦{savings.toLocaleString()}</div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Nights + totals */}
-                    {nights > 0 && (
-                      <div className="mt-3 p-3 bg-green-50 rounded-lg">
-                        <div className="text-sm text-gray-700">
-                          <strong>{nights} {nights===1?'night':'nights'}</strong> total:
-                        </div>
-                        <div className="flex items-center justify-between mt-1">
-                          <span className="text-lg font-bold text-brand-green">
-                            ₦{(discountedPrice * nights + tax).toLocaleString()}
-                          </span>
-                          <span className="text-xs text-gray-600">
-                            incl. ₦{tax.toLocaleString()} tax
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="mt-4 flex gap-2">
-                      <Link 
-                        href={`/hotel/${h.id}`} 
-                        className="flex-1 text-center py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                      >
-                        View Details
-                      </Link>
-                      {canNegotiate ? (
-                        <Link
-                          href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`}
-                          className="flex-1 text-center py-2 bg-brand-green text-white rounded-lg text-sm font-medium hover:bg-brand-dark transition-colors"
-                        >
-                          {hasHighDiscount ? '🔥 ' : ''}Negotiate Now
-                        </Link>
-                      ) : (
-                        <Link
-                          href={`/book?propertyId=${h.id}&price=${discountedPrice}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`}
-                          className="flex-1 text-center py-2 bg-gray-700 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
-                        >
-                          Book Now
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      )}
+      <Suspense fallback={<HotelCardSkeleton count={8} />}>
+        <SearchResults 
+          params={params}
+          hotels={hotels}
+          nights={nights}
+          checkIn={checkIn}
+          checkOut={checkOut}
+        />
+      </Suspense>
     </div>
   )
 }

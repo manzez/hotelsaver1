@@ -1,5 +1,17 @@
 'use client'
 
+import { SessionProvider } from 'next-auth/react'
+import { ReactNode } from 'react'
+
+interface AuthProviderProps {
+  children: ReactNode
+}
+
+export default function AuthProvider({ children }: AuthProviderProps) {
+  return <SessionProvider>{children}</SessionProvider>
+}
+
+// Keep the old auth context for backward compatibility if needed
 import { useState, createContext, useContext, useEffect } from 'react'
 
 interface User {
@@ -18,7 +30,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function LegacyAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -124,7 +136,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function useAuth() {
+export function useLegacyAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider')

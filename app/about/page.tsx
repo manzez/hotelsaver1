@@ -222,7 +222,7 @@ export default function About() {
           <div className="mt-8 pt-8 border-t border-gray-200">
             <p className="text-gray-600">
               Questions? We'd love to hear from you. 
-              <a href="/contact" className="text-brand-green hover:text-brand-dark font-medium ml-1">Get in touch</a>
+              <a href="https://wa.me/2347077775545" target="_blank" className="text-brand-green hover:text-brand-dark font-medium ml-1">Contact Customer Support</a>
             </p>
           </div>
         </div>

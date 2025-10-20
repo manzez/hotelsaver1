@@ -82,7 +82,7 @@ function NegotiatePageContent() {
         progressRef.current = null
       }
 
-      if (data.status === 'success') {
+      if (data.status === 'discount' || data.status === 'success') {
         setBase(Number(data.baseTotal))
         setPrice(Number(data.discountedTotal))
         setMessage(data.message)
@@ -134,7 +134,7 @@ function NegotiatePageContent() {
   }, [remaining])
 
   return (
-    <div className="container py-10">
+    <div className="container py-10 pt-24">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -247,12 +247,23 @@ function NegotiatePageContent() {
                   // Scroll to top before navigation
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                   setTimeout(() => {
-                    router.push(`/book?propertyId=${propertyId}&price=${price}`)
+                    // Redirect to payment page with all booking details
+                    const paymentParams = new URLSearchParams({
+                      propertyId,
+                      price: String(price),
+                      originalPrice: String(base),
+                      checkIn: sp.get('checkIn') || '',
+                      checkOut: sp.get('checkOut') || '',
+                      adults: sp.get('adults') || '2',
+                      children: sp.get('children') || '0',
+                      rooms: sp.get('rooms') || '1'
+                    })
+                    router.push(`/payment?${paymentParams.toString()}`)
                   }, 100)
                 }}
                 className={`btn-primary w-full ${isExpired(negStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {isExpired(negStatus) ? 'Offer Expired' : '🔒 Book This Deal Now'}
+                {isExpired(negStatus) ? 'Offer Expired' : '💳 Proceed to Payment'}
               </button>
               {isExpired(negStatus) && (
                 <div className="text-center text-red-600 text-sm">

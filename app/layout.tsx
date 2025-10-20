@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import Chatbot from '@/components/Chatbot'
 import ClientLayout from '@/components/ClientLayout'
+import AuthProvider from '@/components/AuthProvider'
+
 const inter = Inter({subsets:['latin']})
 
 export const metadata={
@@ -15,9 +17,11 @@ export default function RootLayout({children}:{children:React.ReactNode}){
   return(
     <html lang='en' className={inter.className}>
       <body className='min-h-screen bg-gray-50 text-gray-900'>
-        <ClientLayout>{children}</ClientLayout>
-        <Chatbot />
-        <div id="date-picker-portal" style={{ position: 'fixed', zIndex: 999999 }}></div>
+        <AuthProvider>
+          <ClientLayout>{children}</ClientLayout>
+          <Chatbot />
+          <div id="date-picker-portal" style={{ position: 'fixed', zIndex: 999999 }}></div>
+        </AuthProvider>
       </body>
     </html>
   )

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "redirects": [
+    {
+      "source": "/hotels",
+      "destination": "/search",
+      "permanent": true
+    }
+  ]
+}

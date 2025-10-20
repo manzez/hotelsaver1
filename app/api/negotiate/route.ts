@@ -1,6 +1,6 @@
 // app/api/negotiate/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import HOTELS_RAW from '@/lib/hotels.json';
+import { HOTELS } from '@/lib/data';
 import { getDiscountFor } from '@/lib/discounts';
 
 type Hotel = {
@@ -13,7 +13,7 @@ type Hotel = {
   [k: string]: unknown;
 };
 
-const HOTELS = HOTELS_RAW as Hotel[];
+// HOTELS is imported from @/lib/data
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,16 +37,6 @@ export async function POST(req: NextRequest) {
     // Add 1-second delay to simulate real negotiation (reduced from 7 seconds)
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Special handling for Abuja hotels - return no-offer for tests compatibility
-    if (property.city?.toLowerCase() === 'abuja') {
-      return NextResponse.json({
-        status: 'no-offer',
-        reason: 'deals-exhausted',
-        message: 'Hotel deals have been exhausted for today in Abuja. Please try again tomorrow.',
-        property: { id: property.id, name: property.name, city: property.city }
-      }, { status: 404 });
-    }
-
     // Pull base price (supports both shapes)
     const base =
       typeof property.basePriceNGN === 'number'
@@ -59,10 +49,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: 'no-offer', reason: 'no-base-price' });
     }
 
-    // Get discount (default 15% unless overridden)
+    // Get discount (0 means no negotiate option available)
     const discount = getDiscountFor(propertyId); // 0..1
     if (discount <= 0) {
-      return NextResponse.json({ status: 'no-offer', reason: 'no-discount' });
+      return NextResponse.json({ 
+        status: 'no-offer', 
+        reason: 'no-discount',
+        message: 'This hotel has fixed pricing with no negotiation available.',
+        property: { id: property.id, name: property.name, city: property.city }
+      }, { status: 404 });
     }
 
     const discounted = Math.round(base * (1 - discount));

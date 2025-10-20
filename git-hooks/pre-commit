@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Git pre-commit hook for regression testing
+# Place this in .git/hooks/pre-commit and make executable
+
+echo "🧪 Running pre-commit regression tests..."
+
+# Run API tests (fast validation)
+npm run test:api
+API_RESULT=$?
+
+if [ $API_RESULT -ne 0 ]; then
+    echo "❌ API tests failed. Commit aborted."
+    echo "Fix the issues and try again."
+    exit 1
+fi
+
+echo "✅ Pre-commit tests passed!"
+exit 0

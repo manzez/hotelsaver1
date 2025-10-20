@@ -2,68 +2,35 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { AuthProvider, useAuth } from './AuthProvider'
-import LoginModal from './LoginModal'
+import UserMenu from './UserMenu'
 
 function Header() {
-  const { user, logout } = useAuth()
-  const [showLogin, setShowLogin] = useState(false)
-
   return (
-    <>
-      <header className='sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm'>
-        <div className='container h-16 flex items-center gap-6'>
-          <Link href='/' className='flex items-center gap-2 text-2xl font-bold text-brand-green tracking-tight hover:text-brand-dark transition-colors'>
-            <div className='w-8 h-8 bg-brand-green rounded-lg flex items-center justify-center text-white font-bold text-sm'>
-              H
+    <header className='sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm'>
+      <div className='container h-16 flex items-center gap-6'>
+        <Link href='/' className='flex items-center gap-2 text-2xl font-bold text-brand-green tracking-tight hover:text-brand-dark transition-colors'>
+          <div className='w-8 h-8 bg-brand-green rounded-lg flex items-center justify-center text-white font-bold text-sm'>
+            H
+          </div>
+          <span>HotelSaver.ng</span>
+        </Link>
+          <nav className='ml-auto flex items-center gap-5 text-sm'>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-5">
+              <Link href='/how-it-works' className='hover:text-brand-green transition-colors'>How It Works</Link>
+              <Link href='/partner' className='hover:text-brand-green transition-colors'>Partner With Us</Link>
+              <a href='https://wa.me/2347077775545' target='_blank' className='hover:text-brand-green transition-colors'>Customer Support</a>
+              <Link href='/about' className='hover:text-brand-green transition-colors'>About</Link>
             </div>
-            <span>HotelSaver.ng</span>
-          </Link>
-            <nav className='ml-auto flex items-center gap-5 text-sm'>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-5">
-                <Link href='/#how' className='hover:text-brand-green transition-colors'>How It Works</Link>
-                <Link href='/partner' className='hover:text-brand-green transition-colors'>Partner With Us</Link>
-                <a href='https://wa.me/2347077775545' target='_blank' className='hover:text-brand-green transition-colors'>Customer Support</a>
-                <Link href='/about' className='hover:text-brand-green transition-colors'>About</Link>
-                <Link href='/contact' className='hover:text-brand-green transition-colors'>Contact</Link>
-              </div>
-              
-            {user ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 bg-brand-green/10 px-3 py-1 rounded-full">
-                  <div className="w-6 h-6 bg-brand-green text-white rounded-full flex items-center justify-center text-xs font-bold">
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="text-sm font-medium text-brand-green">{user.name}</span>
-                </div>
-                <button
-                  onClick={logout}
-                  className="text-sm text-gray-600 hover:text-red-600 transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setShowLogin(true)}
-                className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-dark transition-colors"
-              >
-                Sign In
-              </button>
-            )}
-          </nav>
-        </div>
-      </header>
-      
-      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
-    </>
+            
+            <UserMenu />
+        </nav>
+      </div>
+    </header>
   )
 }
 
 function MobileBottomNav() {
-  const { user } = useAuth()
-  const [showLogin, setShowLogin] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
 
   return (
@@ -78,30 +45,21 @@ function MobileBottomNav() {
             <span>Home</span>
           </Link>
           
-          {user ? (
-            <button className="flex flex-col items-center justify-center py-2 text-xs text-gray-600 hover:text-brand-green transition-colors">
-              <div className="w-5 h-5 mb-1 bg-brand-green text-white rounded-full flex items-center justify-center text-xs font-bold">
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-              <span>Account</span>
-            </button>
-          ) : (
-            <button 
-              onClick={() => setShowLogin(true)}
-              className="flex flex-col items-center justify-center py-2 text-xs text-gray-600 hover:text-brand-green transition-colors"
-            >
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span>Login</span>
-            </button>
-          )}
+          <Link 
+            href="/auth/signin" 
+            className="flex flex-col items-center justify-center py-2 text-xs text-gray-600 hover:text-brand-green transition-colors"
+          >
+            <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>Account</span>
+          </Link>
           
           <button className="flex flex-col items-center justify-center py-2 text-xs text-gray-600 hover:text-brand-green transition-colors">
             <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l-2.5-5M17 17a2 2 0 11-4 0 2 2 0 014 0zM9 17a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <span>Basket</span>
+            <span>Bookings</span>
           </button>
           
           <button 
@@ -136,17 +94,6 @@ function MobileBottomNav() {
             </div>
             
             <div className="space-y-4">
-              <Link 
-                href="/contact" 
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
-                onClick={() => setShowMenu(false)}
-              >
-                <svg className="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <span className="font-medium text-gray-900">Contact Us</span>
-              </Link>
-              
               <Link 
                 href="/reviews" 
                 className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
@@ -195,18 +142,17 @@ function MobileBottomNav() {
           </div>
         </div>
       )}
-      
-      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
     </>
   )
 }
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
+    <>
       <Header />
       <main className='container pb-20 md:pb-0'>{children}</main>
       <MobileBottomNav />
+      
       <footer className='mt-16 bg-white border-t border-gray-200'>
         <div className='container py-8'>
           {/* Main Footer Content */}
@@ -219,7 +165,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 <li><Link href='/about' className='text-gray-600 hover:text-brand-green transition-colors'>About</Link></li>
                 <li><Link href='/careers' className='text-gray-600 hover:text-brand-green transition-colors'>Careers</Link></li>
                 <li><Link href='/partner' className='text-gray-600 hover:text-brand-green transition-colors'>Partners</Link></li>
-                <li><Link href='/contact' className='text-gray-600 hover:text-brand-green transition-colors'>Contact</Link></li>
               </ul>
             </div>
 
@@ -310,6 +255,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           </div>
         </div>
       </footer>
-    </AuthProvider>
+    </>
   )
 }

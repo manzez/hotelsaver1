@@ -2,16 +2,24 @@
 .react-datepicker-wrapper {
   width: 100%;
   position: relative;
+  overflow: hidden !important;
 }
 
 /* Fix for elements sticking out */
 .react-datepicker-wrapper {
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 
 .react-datepicker__input-container {
   position: relative !important;
   overflow: hidden !important;
+}
+
+/* Ensure input container clips all content */
+.react-datepicker__input-container input {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 
 /* Improve touch interaction on mobile */

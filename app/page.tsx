@@ -2,11 +2,24 @@ import SearchBar from '@/components/SearchBar'
 import CategoryTabs from '@/components/CategoryTabs'
 import Link from 'next/link'
 import { HOTELS } from '@/lib/data'
-import { getDiscountFor } from '@/lib/discounts'
+import { getDiscountFor, getDiscountInfo, DiscountTier } from '@/lib/discounts'
 
 export default function Home() {
-  const featuredHotels = HOTELS.slice(0, 16) // Increased from 8 to 16
-  const featuredApartments = HOTELS.filter(h => h.type === 'Apartment').slice(0, 8)
+  // Get hotels from each city to ensure variety
+  const lagosHotels = HOTELS.filter(h => h.city === 'Lagos' && h.type === 'Hotel').slice(0, 2)
+  const abujaHotels = HOTELS.filter(h => h.city === 'Abuja' && h.type === 'Hotel').slice(0, 2)
+  const portHarcourtHotels = HOTELS.filter(h => h.city === 'Port Harcourt' && h.type === 'Hotel').slice(0, 2)
+  const owerriHotels = HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Hotel').slice(0, 2)
+  
+  const featuredHotels = [...lagosHotels, ...abujaHotels, ...portHarcourtHotels, ...owerriHotels]
+  
+  // Get apartments from different cities for variety
+  const lagosApartments = HOTELS.filter(h => h.city === 'Lagos' && h.type === 'Apartment').slice(0, 1)
+  const abujaApartments = HOTELS.filter(h => h.city === 'Abuja' && h.type === 'Apartment').slice(0, 1)
+  const portHarcourtApartments = HOTELS.filter(h => h.city === 'Port Harcourt' && h.type === 'Apartment').slice(0, 1)
+  const owerriApartments = HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Apartment').slice(0, 1)
+  
+  const featuredApartments = [...lagosApartments, ...abujaApartments, ...portHarcourtApartments, ...owerriApartments].filter(Boolean).slice(0, 4)
   
   // Sample data for vehicles and services (you can replace with real data)
   const vehicles = [
@@ -113,8 +126,8 @@ export default function Home() {
         <div className="absolute inset-0 flex flex-col items-center text-center z-40 px-6 pt-32">
           {/* Minimal Text */}
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-12 tracking-tight fade-in-up">
-            NEGOTIATE YOUR<br />
-            HOTEL STAY
+            SAVE UP TO 50% ON<br />
+            HOTELS IN NIGERIA
           </h1>
           
           {/* Search Bar - Full Width Across Page */}
@@ -124,34 +137,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Hotels - Increased Count */}
+      {/* Featured Hotels - First 8 Only */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">Featured Hotels</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredHotels.map(h => {
               const discount = getDiscountFor(h.id)
               const hasNegotiation = discount > 0
-              const discountedPrice = hasNegotiation ? Math.round(h.basePriceNGN * (1 - discount)) : h.basePriceNGN
+              // Show only base price - discount is revealed only after negotiate button is clicked
+              const displayPrice = h.basePriceNGN
 
               return (
-                <Link key={h.id} href={`/hotel/${h.id}`} className="group">
+                <div key={h.id} className="group">
                   <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <img 
-                      src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400'} 
-                      alt={h.name}
-                      className="w-full h-48 object-cover"
-                    />
+                    <Link href={`/hotel/${h.id}`}>
+                      <img 
+                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400'} 
+                        alt={h.name}
+                        className="w-full h-48 object-cover"
+                      />
+                    </Link>
                     <div className="p-4">
-                      <h3 className="font-bold text-gray-900 mb-1">{h.name}</h3>
-                      <p className="text-gray-600 text-sm mb-2">{h.city}</p>
-                      <div className="text-lg font-bold text-brand-green">
-                        ₦{discountedPrice.toLocaleString()}
-                      </div>
-                      <div className="text-xs text-gray-500">per night</div>
+                      <Link href={`/hotel/${h.id}`}>
+                        <h3 className="font-bold text-gray-900 mb-1 hover:text-brand-green transition-colors">{h.name}</h3>
+                        <p className="text-gray-600 text-sm mb-2">{h.city} • {h.stars}⭐</p>
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="text-lg font-bold text-gray-900">
+                            ₦{displayPrice.toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500 mb-3">per night</div>
+                      </Link>
+                      
+                      {hasNegotiation ? (
+                        <Link 
+                          href={`/negotiate?propertyId=${h.id}`}
+                          className="w-full bg-brand-green text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-brand-dark transition-colors text-center block"
+                        >
+                          Negotiate Price
+                        </Link>
+                      ) : (
+                        <Link 
+                          href={`/hotel/${h.id}`}
+                          className="w-full bg-gray-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors text-center block"
+                        >
+                          Book Now
+                        </Link>
+                      )}
                     </div>
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>
@@ -170,43 +206,72 @@ export default function Home() {
           <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
             Discover comfortable and secure apartment rentals across Nigeria's major cities with our verified hosts
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredApartments.map(apartment => {
+          {/* Horizontal layout with varied sizes */}
+          <div className="flex gap-6 overflow-x-auto pb-4">
+            {featuredApartments.map((apartment, index) => {
               const discount = getDiscountFor(apartment.id)
               const hasNegotiation = discount > 0
-              const discountedPrice = hasNegotiation ? Math.round(apartment.basePriceNGN * (1 - discount)) : apartment.basePriceNGN
+              // Show only base price - discount is revealed only after negotiate button is clicked
+              const displayPrice = apartment.basePriceNGN
+              
+              // Different widths for variety: first one is large, others vary
+              const widthClass = index === 0 ? 'w-96' : index === 1 ? 'w-80' : 'w-72'
 
               return (
-                <Link key={apartment.id} href={`/hotel/${apartment.id}`} className="group">
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <img 
-                      src={apartment.images?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'} 
-                      alt={apartment.name}
-                      className="w-full h-48 object-cover"
-                    />
+                <div key={apartment.id} className={`group flex-shrink-0 ${widthClass}`}>
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full">
+                    <Link href={`/hotel/${apartment.id}`}>
+                      <div className="relative h-48">
+                        <img 
+                          src={apartment.images?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'} 
+                          alt={apartment.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-3 left-3 flex gap-2">
+                          <span className="bg-blue-100/90 text-blue-800 text-xs px-2 py-1 rounded-full font-medium backdrop-blur-sm">
+                            Apartment
+                          </span>
+                          <span className="bg-green-100/90 text-green-800 text-xs px-2 py-1 rounded-full font-medium backdrop-blur-sm">
+                            Verified
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
                     <div className="p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
-                          Apartment
-                        </span>
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium">
-                          Verified
-                        </span>
-                      </div>
-                      <h3 className="font-bold text-gray-900 mb-1">{apartment.name}</h3>
-                      <p className="text-gray-600 text-sm mb-2">{apartment.city}</p>
-                      <div className="text-lg font-bold text-brand-green">
-                        ₦{discountedPrice.toLocaleString()}
-                      </div>
-                      <div className="text-xs text-gray-500">per night</div>
+                      <Link href={`/hotel/${apartment.id}`}>
+                        <h3 className="font-bold text-gray-900 mb-1 line-clamp-1 hover:text-brand-green transition-colors">{apartment.name}</h3>
+                        <p className="text-gray-600 text-sm mb-2">{apartment.city} • {apartment.stars}⭐</p>
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="text-lg font-bold text-gray-900">
+                            ₦{displayPrice.toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500 mb-3">per night</div>
+                      </Link>
+                      
+                      {hasNegotiation ? (
+                        <Link 
+                          href={`/negotiate?propertyId=${apartment.id}`}
+                          className="w-full bg-brand-green text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-brand-dark transition-colors text-center block"
+                        >
+                          Negotiate Price
+                        </Link>
+                      ) : (
+                        <Link 
+                          href={`/hotel/${apartment.id}`}
+                          className="w-full bg-gray-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors text-center block"
+                        >
+                          Book Now
+                        </Link>
+                      )}
                     </div>
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>
           <div className="text-center mt-8">
-            <Link href="/search?stayType=apartment" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+            <Link href="/search?stayType=apartment" className="bg-brand-green text-white px-8 py-3 rounded-lg font-medium hover:bg-brand-dark transition-colors">
               View All Apartments
             </Link>
           </div>
