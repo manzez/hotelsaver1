@@ -78,6 +78,8 @@ npm install
 # 3. Start developing
 npm run dev
 # Visit: http://localhost:3000
+---
+
 
 # 4. Run tests to understand the codebase
 npm run test
