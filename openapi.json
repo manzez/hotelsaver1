@@ -1,0 +1,770 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "HotelSaver.ng API",
+    "description": "API for hotel booking, negotiation, and administration in Nigeria",
+    "version": "1.0.0",
+    "contact": {
+      "name": "HotelSaver.ng Support",
+      "url": "https://hotelsaver.ng/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "API Base Path"
+    }
+  ],
+  "paths": {
+    "/negotiate": {
+      "post": {
+        "summary": "Negotiate hotel discount",
+        "description": "Request a discounted price for a specific hotel property",
+        "tags": ["Public", "Hotels"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NegotiateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Negotiation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/NegotiateSuccessResponse"},
+                    {"$ref": "#/components/schemas/NegotiateFailureResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/book": {
+      "post": {
+        "summary": "Create hotel booking",
+        "description": "Book a hotel with contact details",
+        "tags": ["Public", "Bookings"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Booking confirmed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/services/search": {
+      "get": {
+        "summary": "Search local services",
+        "description": "Find services by city and query term",
+        "tags": ["Public", "Services"],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Filter by city",
+            "schema": {
+              "type": "string",
+              "enum": ["Lagos", "Abuja", "Port Harcourt", "Owerri"]
+            }
+          },
+          {
+            "name": "query",
+            "in": "query", 
+            "description": "Search term for service title or category",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/book": {
+      "post": {
+        "summary": "Book a service",
+        "description": "Create a service booking",
+        "tags": ["Public", "Services"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceBookingRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Service booked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBookingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/partner": {
+      "post": {
+        "summary": "Submit partnership application",
+        "description": "Apply to become a business partner",
+        "tags": ["Public", "Partnership"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartnershipRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application submitted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericSuccess"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/hotels": {
+      "get": {
+        "summary": "List hotels (Admin)",
+        "description": "Get hotels with search and filtering",
+        "tags": ["Admin", "Hotels"],
+        "security": [{"AdminAuth": []}],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search by name or ID",
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Filter by city",
+            "schema": {
+              "type": "string",
+              "enum": ["Lagos", "Abuja", "Port Harcourt", "Owerri"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max results (default: 200, max: 500)",
+            "schema": {"type": "integer", "minimum": 1, "maximum": 500}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hotel list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminHotelListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/hotels/create": {
+      "post": {
+        "summary": "Create hotel (Admin)",
+        "description": "Add a new hotel to the database",
+        "tags": ["Admin", "Hotels"],
+        "security": [{"AdminAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHotelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hotel created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHotelResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/admin/hotels/update": {
+      "post": {
+        "summary": "Update hotel prices (Admin)",
+        "description": "Bulk update hotel prices with preview option",
+        "tags": ["Admin", "Hotels"],
+        "security": [{"AdminAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHotelsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateHotelsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/availability/import": {
+      "post": {
+        "summary": "Import availability (Admin)",
+        "description": "Upload CSV file with daily room availability",
+        "tags": ["Admin", "Availability"],
+        "security": [{"AdminAuth": []}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "CSV file with columns: slug,date,roomsAvailable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Import results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvailabilityImportResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/admin/metrics": {
+      "get": {
+        "summary": "Get platform metrics (Admin)",
+        "description": "Comprehensive KPIs and statistics",
+        "tags": ["Admin", "Analytics"],
+        "security": [{"AdminAuth": []}],
+        "responses": {
+          "200": {
+            "description": "Platform metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AdminAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-admin-key"
+      }
+    },
+    "schemas": {
+      "NegotiateRequest": {
+        "type": "object",
+        "required": ["propertyId"],
+        "properties": {
+          "propertyId": {
+            "type": "string",
+            "description": "Hotel ID from search results"
+          }
+        }
+      },
+      "NegotiateSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string", "enum": ["discount"]},
+          "baseTotal": {"type": "number"},
+          "discountedTotal": {"type": "number"},
+          "savings": {"type": "number"},
+          "discountRate": {"type": "number", "minimum": 0, "maximum": 1},
+          "extras": {
+            "type": "object",
+            "properties": {
+              "carWash": {"type": "boolean"},
+              "complimentaryGifts": {"type": "boolean"}
+            }
+          },
+          "message": {"type": "string"},
+          "expiresAt": {"type": "string", "format": "date-time"},
+          "property": {
+            "$ref": "#/components/schemas/NegotiatedProperty"
+          }
+        }
+      },
+      "NegotiateFailureResponse": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string", "enum": ["no-offer"]},
+          "reason": {"type": "string"},
+          "message": {"type": "string"},
+          "property": {
+            "$ref": "#/components/schemas/BasicProperty"
+          }
+        }
+      },
+      "NegotiatedProperty": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "city": {"type": "string"},
+          "originalPrice": {"type": "number"},
+          "negotiatedPrice": {"type": "number"}
+        }
+      },
+      "BasicProperty": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "city": {"type": "string"}
+        }
+      },
+      "BookingRequest": {
+        "type": "object",
+        "required": ["propertyId", "rooms", "adults", "checkIn", "checkOut", "contact"],
+        "properties": {
+          "propertyId": {"type": "string"},
+          "negotiationToken": {"type": "string"},
+          "rooms": {"type": "integer", "minimum": 1},
+          "adults": {"type": "integer", "minimum": 1},
+          "children": {"type": "integer", "minimum": 0},
+          "checkIn": {"type": "string", "format": "date"},
+          "checkOut": {"type": "string", "format": "date"},
+          "contact": {
+            "$ref": "#/components/schemas/ContactInfo"
+          }
+        }
+      },
+      "ContactInfo": {
+        "type": "object",
+        "required": ["name", "email"],
+        "properties": {
+          "name": {"type": "string"},
+          "email": {"type": "string", "format": "email"},
+          "phone": {"type": "string"}
+        }
+      },
+      "BookingResponse": {
+        "type": "object",
+        "properties": {
+          "bookingId": {"type": "string"},
+          "status": {"type": "string", "enum": ["confirmed"]}
+        }
+      },
+      "ServiceSearchResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Service"
+            }
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "title": {"type": "string"},
+          "category": {"type": "string"},
+          "city": {"type": "string"},
+          "provider": {"type": "string"},
+          "amountNGN": {"type": "number"},
+          "rating": {"type": "number"}
+        }
+      },
+      "ServiceBookingRequest": {
+        "type": "object",
+        "properties": {
+          "serviceId": {"type": "string"},
+          "date": {"type": "string", "format": "date"},
+          "time": {"type": "string"},
+          "people": {"type": "integer", "minimum": 1},
+          "contact": {
+            "$ref": "#/components/schemas/ContactInfo"
+          }
+        }
+      },
+      "ServiceBookingResponse": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string", "enum": ["confirmed"]},
+          "reference": {"type": "string"},
+          "data": {"type": "object"}
+        }
+      },
+      "PartnershipRequest": {
+        "type": "object",
+        "properties": {
+          "businessName": {"type": "string"},
+          "contactName": {"type": "string"},
+          "email": {"type": "string", "format": "email"},
+          "phone": {"type": "string"},
+          "businessType": {"type": "string", "enum": ["hotel", "service", "other"]},
+          "description": {"type": "string"}
+        }
+      },
+      "AdminHotelListResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {"type": "boolean"},
+          "total": {"type": "integer"},
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hotel"
+            }
+          }
+        }
+      },
+      "Hotel": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "slug": {"type": "string"},
+          "name": {"type": "string"},
+          "city": {"type": "string", "enum": ["Lagos", "Abuja", "Port Harcourt", "Owerri"]},
+          "type": {"type": "string", "enum": ["Hotel", "Apartment"]},
+          "stars": {"type": "integer", "minimum": 1, "maximum": 5},
+          "basePriceNGN": {"type": "number"},
+          "images": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      },
+      "CreateHotelRequest": {
+        "type": "object",
+        "required": ["name", "city", "type", "shelfPriceNGN"],
+        "properties": {
+          "name": {"type": "string"},
+          "city": {"type": "string", "enum": ["Lagos", "Abuja", "Port Harcourt", "Owerri"]},
+          "type": {"type": "string", "enum": ["Hotel", "Apartment"]},
+          "stars": {"type": "integer", "minimum": 1, "maximum": 5},
+          "shelfPriceNGN": {"type": "number", "minimum": 1},
+          "negotiationEnabled": {"type": "boolean", "default": true},
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {"type": "string", "format": "uri"},
+                "sortOrder": {"type": "integer", "default": 0}
+              }
+            }
+          }
+        }
+      },
+      "CreateHotelResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {"type": "boolean"},
+          "hotel": {
+            "allOf": [
+              {"$ref": "#/components/schemas/Hotel"},
+              {
+                "type": "object",
+                "properties": {
+                  "createdAt": {"type": "string", "format": "date-time"}
+                }
+              }
+            ]
+          }
+        }
+      },
+      "UpdateHotelsRequest": {
+        "type": "object",
+        "required": ["updates"],
+        "properties": {
+          "updates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "basePriceNGN"],
+              "properties": {
+                "id": {"type": "string"},
+                "basePriceNGN": {"type": "number"}
+              }
+            }
+          },
+          "apply": {"type": "boolean", "default": false}
+        }
+      },
+      "UpdateHotelsResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {"type": "boolean"},
+          "invalidPrices": {"type": "array", "items": {"type": "string"}},
+          "missingIds": {"type": "array", "items": {"type": "string"}},
+          "preview": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "currentPrice": {"type": "number"},
+                "newPrice": {"type": "number"},
+                "change": {"type": "number"}
+              }
+            }
+          },
+          "applied": {"type": "boolean"}
+        }
+      },
+      "AvailabilityImportResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {"type": "boolean"},
+          "message": {"type": "string"},
+          "results": {
+            "type": "object",
+            "properties": {
+              "imported": {"type": "integer"},
+              "updated": {"type": "integer"},
+              "errors": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      },
+      "MetricsResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {"type": "boolean"},
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "totalHotels": {"type": "integer"},
+              "negotiableHotels": {"type": "integer"},
+              "negotiablePercentage": {"type": "number"},
+              "totalBookings": {"type": "integer"},
+              "totalRevenue": {"type": "number"},
+              "avgBookingValue": {"type": "number"},
+              "topCities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "city": {"type": "string"},
+                    "count": {"type": "integer"}
+                  }
+                }
+              },
+              "recentBookings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "string"},
+                    "hotel": {"type": "string"},
+                    "amount": {"type": "number"},
+                    "date": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GenericSuccess": {
+        "type": "object",
+        "properties": {
+          "ok": {"type": "boolean"}
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {"type": "string"},
+          "ok": {"type": "boolean", "enum": [false]}
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid or missing admin key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Public",
+      "description": "Public endpoints - no authentication required"
+    },
+    {
+      "name": "Hotels",
+      "description": "Hotel-related operations"
+    },
+    {
+      "name": "Bookings",
+      "description": "Booking operations"
+    },
+    {
+      "name": "Services",
+      "description": "Local services"
+    },
+    {
+      "name": "Partnership",
+      "description": "Business partnerships"
+    },
+    {
+      "name": "Admin",
+      "description": "Admin endpoints - requires x-admin-key header"
+    },
+    {
+      "name": "Availability",
+      "description": "Room availability management"
+    },
+    {
+      "name": "Analytics",
+      "description": "Metrics and analytics"
+    }
+  ]
+}

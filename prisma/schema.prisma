@@ -1,0 +1,237 @@
+// Prisma schema for HotelSaver.ng
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum City {
+  Lagos
+  Abuja
+  PortHarcourt
+  Owerri
+}
+
+enum HotelType {
+  Hotel
+  Apartment
+}
+
+enum PriceSource {
+  SHELF
+  DISCOUNT
+  NEGOTIATED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  INITIATED
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Hotel {
+  id               String      @id @default(cuid())
+  slug             String      @unique
+  name             String
+  city             City
+  type             HotelType
+  stars            Int
+  active           Boolean     @default(true)
+  // Pricing
+  shelfPriceNGN    Int         // regular shelf price
+  discountPriceNGN Int?        // optional fixed discount shelf
+  discountRatePct  Int?        // optional discount rate (0..100)
+  negotiationEnabled Boolean   @default(true)
+  negotiationMinPct Int?       // e.g., 5 means 5%
+  negotiationMaxPct Int?       // e.g., 40 means 40%
+
+  images           HotelImage[]
+  availability     Availability[]
+  bookings         Booking[]
+  negotiations     Negotiation[]
+
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model HotelImage {
+  id       String  @id @default(cuid())
+  hotelId  String
+  url      String
+  sortOrder Int     @default(0)
+
+  hotel    Hotel   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+model Availability {
+  id             String   @id @default(cuid())
+  hotelId        String
+  date           DateTime // date-only (treat time as 00:00)
+  roomsAvailable Int
+
+  hotel          Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@unique([hotelId, date])
+}
+
+model Negotiation {
+  id           String   @id @default(cuid())
+  hotelId      String
+  discountPct  Int?     // 0..100
+  priceNGN     Int      // negotiated price offered
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  hotel        Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+model Booking {
+  id           String       @id @default(cuid())
+  hotelId      String
+  checkIn      DateTime
+  checkOut     DateTime
+  rooms        Int          @default(1)
+  adults       Int          @default(1)
+  children     Int          @default(0)
+  priceNGN     Int
+  priceSource  PriceSource
+  taxNGN       Int          @default(0)
+  totalNGN     Int
+  status       BookingStatus @default(PENDING)
+  contactEmail String?
+  contactPhone String?
+  createdAt    DateTime     @default(now())
+
+  hotel        Hotel        @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  payments     Payment[]
+}
+
+model Payment {
+  id         String        @id @default(cuid())
+  bookingId  String
+  provider   String        // e.g., Paystack
+  amountNGN  Int
+  currency   String        @default("NGN")
+  status     PaymentStatus @default(INITIATED)
+  reference  String?       @unique
+  paidAt     DateTime?
+  raw        Json?
+
+  booking    Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+// Lightweight standalone payment intent used for flows that don't persist a Booking yet
+model PaymentIntent {
+  id          String        @id @default(cuid())
+  provider    String        // e.g., Paystack
+  amountNGN   Int
+  currency    String        @default("NGN")
+  email       String
+  reference   String?       @unique
+  status      PaymentStatus @default(INITIATED)
+  propertyId  String?
+  context     Json?
+  paidAt      DateTime?
+  raw         Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+// === SERVICE AVAILABILITY MODELS ===
+
+enum ServiceCategory {
+  Hair
+  Nails
+  Massage
+  Cleaning
+  Security
+  Catering
+  Chef
+  CarHire
+  Guide
+  Photography
+  Livestock
+  Braiding
+  DryFoodsAndPackaging
+  DryCleaningAndWashServices
+  FurnitureRentals
+  SoundAndLightRentals
+  EntertainmentServices
+  EventTransportation
+}
+
+enum ServiceType {
+  HIRE      // Limited quantity items (chairs, canopy)
+  SERVICE   // Unlimited capacity services (massage, photography)
+}
+
+model Service {
+  id               String          @id @default(cuid())
+  title            String
+  category         ServiceCategory
+  type             ServiceType     @default(SERVICE)
+  city             City
+  provider         String
+  description      String?
+  amountNGN        Int
+  rating           Float           @default(4.5)
+  images           String[]        // JSON array of image URLs
+  active           Boolean         @default(true)
+  
+  // Hire-specific fields
+  quantityTotal    Int?            // Total units available (for HIRE type)
+  quantityUnit     String?         // "tables", "chairs", "canopies"
+  hireDurationHrs  Int?            // Standard hire duration
+  
+  availability     ServiceAvailability[]
+  bookings         ServiceBooking[]
+  
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+model ServiceAvailability {
+  id               String   @id @default(cuid())
+  serviceId        String
+  date             DateTime // date-only (treat time as 00:00)
+  quantityAvailable Int     // Available units for this date
+  
+  service          Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  @@unique([serviceId, date])
+}
+
+model ServiceBooking {
+  id               String       @id @default(cuid())
+  serviceId        String
+  eventDate        DateTime
+  eventTime        String?      // "Morning", "Afternoon", "Evening"
+  quantity         Int          @default(1)
+  durationHrs      Int?         // For hire services
+  priceNGN         Int
+  totalNGN         Int
+  status           BookingStatus @default(PENDING)
+  
+  // Contact information
+  customerName     String
+  customerEmail    String
+  customerPhone    String
+  eventLocation    String?
+  specialRequests  String?
+  
+  service          Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}

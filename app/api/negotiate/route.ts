@@ -1,6 +1,6 @@
 // app/api/negotiate/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { HOTELS } from '@/lib/data';
+import { getHotelById } from '@/lib/hotels-source';
 import { getDiscountFor } from '@/lib/discounts';
 
 type Hotel = {
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const property = HOTELS.find(h => h.id === propertyId);
+    const property = await getHotelById(propertyId);
     if (!property) {
       return NextResponse.json(
         { status: 'no-offer', reason: 'not-found' },
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
         status: 'no-offer', 
         reason: 'no-discount',
         message: 'This hotel has fixed pricing with no negotiation available.',
-        property: { id: property.id, name: property.name, city: property.city }
+    property: { id: property.id, name: property.name, city: property.city }
       }, { status: 404 });
     }
 

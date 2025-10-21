@@ -19,6 +19,8 @@ coverage/
 # Tests / reports
 playwright-report/
 test-results/
+tests/reports/
+tests/reports/**
 
 # Misc
 *.local

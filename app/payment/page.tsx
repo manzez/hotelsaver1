@@ -1,10 +1,22 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, Suspense, useMemo } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { HOTELS } from '@/lib/data'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
+
+function naira(n: number) {
+  return `₦${Math.round(n).toLocaleString()}`
+}
+function nightsBetween(checkIn?: string | null, checkOut?: string | null) {
+  if (!checkIn || !checkOut) return 0
+  const ci = new Date(checkIn)
+  const co = new Date(checkOut)
+  if (isNaN(+ci) || isNaN(+co)) return 0
+  const ms = co.getTime() - ci.getTime()
+  return Math.max(0, Math.round(ms / (1000 * 60 * 60 * 24)))
+}
 
 function PaymentPageContent() {
   const searchParams = useSearchParams()
@@ -22,20 +34,21 @@ function PaymentPageContent() {
   // Get booking details from URL params
   const propertyId = searchParams.get('propertyId') || ''
   const negotiatedPrice = Number(searchParams.get('price')) || 0
-  const originalPrice = Number(searchParams.get('originalPrice')) || 0
+  const hotel = HOTELS.find(h => h.id === propertyId)
+  const originalPriceParam = Number(searchParams.get('originalPrice')) || 0
+  const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
   const checkIn = searchParams.get('checkIn') || ''
   const checkOut = searchParams.get('checkOut') || ''
   const adults = searchParams.get('adults') || '2'
   const children = searchParams.get('children') || '0'
   const rooms = searchParams.get('rooms') || '1'
 
-  const hotel = HOTELS.find(h => h.id === propertyId)
   const savings = originalPrice - negotiatedPrice
 
   // Calculate nights and total
-  const nights = checkIn && checkOut ? Math.max(1, Math.round((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24))) : 1
+  const nights = useMemo(() => (nightsBetween(checkIn, checkOut) || 1), [checkIn, checkOut])
   const subtotal = negotiatedPrice * nights
-  const tax = Math.round(subtotal * 0.075) // 7.5% VAT
+  const tax = nights > 1 ? Math.round(subtotal * 0.075) : 0 // VAT only for multi-night
   const total = subtotal + tax
 
   const paymentMethods = [
@@ -127,30 +140,34 @@ function PaymentPageContent() {
         
         // Redirect to confirmation page
         router.push(`/confirmation?bookingId=${booking.bookingId}&paymentMethod=pay-at-hotel`)
-      } else {
-        // For online payments, redirect to payment processor
-        // This would integrate with actual payment gateways
-        const paymentData = {
-          amount: total,
-          email: customerInfo.email,
+      } else if (selectedPayment === 'paystack') {
+        // Initialize Paystack transaction via server
+        const context = {
           propertyId,
-          bookingDetails: {
-            hotel: hotel.name,
-            checkIn,
-            checkOut,
-            guests: `${adults} adults${children !== '0' ? `, ${children} children` : ''}`,
-            rooms
-          }
+          price: String(negotiatedPrice),
+          originalPrice: String(originalPrice),
+          checkIn,
+          checkOut,
+          adults: String(adults),
+          children: String(children),
+          rooms: String(rooms),
+          // you can include more fields if needed
         }
-
-        // Redirect to payment processor (placeholder)
-        alert(`Redirecting to ${selectedPayment} for payment of ₦${total.toLocaleString()}...`)
-        
-        // In real implementation, you would redirect to:
-        // - Paystack: https://checkout.paystack.com/
-        // - Flutterwave: https://checkout.flutterwave.com/
-        // - etc.
-        
+        const initRes = await fetch('/api/paystack/initialize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: total, email: customerInfo.email, context })
+        })
+        const initData = await initRes.json()
+        if (!initRes.ok || !initData?.authorization_url) {
+          alert(initData?.error || 'Unable to initialize Paystack')
+          return
+        }
+        // Redirect to Paystack checkout
+        window.location.href = initData.authorization_url
+      } else {
+        // Placeholder for other providers
+        alert(`Redirecting to ${selectedPayment} for payment of ${naira(total)}...`)
         router.push(`/confirmation?bookingId=BK${Date.now()}&paymentMethod=${selectedPayment}`)
       }
     } catch (error) {
@@ -222,27 +239,27 @@ function PaymentPageContent() {
                 <div className="space-y-2 text-sm border-t border-gray-200 pt-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Original price:</span>
-                    <span className="line-through text-gray-500">₦{originalPrice.toLocaleString()}</span>
+                    <span className="line-through text-gray-500">{naira(originalPrice)}</span>
                   </div>
                   <div className="flex justify-between text-green-600">
                     <span>Negotiated price:</span>
-                    <span className="font-medium">₦{negotiatedPrice.toLocaleString()}</span>
+                    <span className="font-medium">{naira(negotiatedPrice)}</span>
                   </div>
                   <div className="flex justify-between text-green-600">
                     <span>You saved:</span>
-                    <span className="font-bold">₦{savings.toLocaleString()}</span>
+                    <span className="font-bold">{naira(savings)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal ({nights} nights):</span>
-                    <span>₦{subtotal.toLocaleString()}</span>
+                    <span>{naira(subtotal)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">VAT (7.5%):</span>
-                    <span>₦{tax.toLocaleString()}</span>
+                    <span>{naira(tax)}</span>
                   </div>
                   <div className="flex justify-between text-lg font-bold text-gray-900 border-t border-gray-200 pt-2">
                     <span>Total:</span>
-                    <span>₦{total.toLocaleString()}</span>
+                    <span>{naira(total)}</span>
                   </div>
                 </div>
               </div>
@@ -257,8 +274,9 @@ function PaymentPageContent() {
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Contact Information</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                      <label htmlFor="pay-name" className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                       <input
+                        id="pay-name"
                         type="text"
                         className="input"
                         value={customerInfo.name}
@@ -268,8 +286,9 @@ function PaymentPageContent() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                      <label htmlFor="pay-email" className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
                       <input
+                        id="pay-email"
                         type="email"
                         className="input"
                         value={customerInfo.email}
@@ -279,8 +298,9 @@ function PaymentPageContent() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                      <label htmlFor="pay-phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
                       <input
+                        id="pay-phone"
                         type="tel"
                         className="input"
                         value={customerInfo.phone}
@@ -290,8 +310,9 @@ function PaymentPageContent() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                      <label htmlFor="pay-address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
                       <input
+                        id="pay-address"
                         type="text"
                         className="input"
                         value={customerInfo.address}

@@ -1,5 +1,6 @@
 // app/api/admin/hotels/route.ts
 import { NextRequest, NextResponse } from 'next/server'
+import { listHotels } from '@/lib/hotels-source'
 import { HOTELS } from '@/lib/data'
 
 function authorize(req: NextRequest): NextResponse | null {
@@ -11,6 +12,11 @@ function authorize(req: NextRequest): NextResponse | null {
   return null
 }
 
+function isDbEnabled() {
+  const src = (process.env.DATA_SOURCE || 'json').toLowerCase()
+  return src === 'db'
+}
+
 export async function GET(req: NextRequest) {
   const auth = authorize(req)
   if (auth) return auth
@@ -20,6 +26,36 @@ export async function GET(req: NextRequest) {
   const city = searchParams.get('city') || ''
   const limit = Math.min(500, Math.max(1, Number(searchParams.get('limit') || '200')))
 
+  if (isDbEnabled()) {
+    try {
+      // Use DB-backed source when enabled
+      const hotels = await listHotels({ city, limit })
+      
+      // Apply search query filter
+      const filtered = hotels.filter(h => {
+        const name = String(h.name || '').toLowerCase()
+        const id = String(h.id || '').toLowerCase()
+        return !q || name.includes(q) || id.includes(q)
+      })
+
+      const results = filtered.map(h => ({
+        id: h.id,
+        name: h.name,
+        city: h.city,
+        stars: h.stars || 4,
+        type: h.type || 'Hotel',
+        basePriceNGN: h.basePriceNGN || h.price || 0,
+        images: h.images || [],
+      }))
+
+      return NextResponse.json({ ok: true, total: results.length, results })
+    } catch (error) {
+      // Fall back to JSON on DB error
+      console.error('Admin hotels DB error, falling back to JSON:', error)
+    }
+  }
+
+  // JSON fallback (original logic)
   const list = HOTELS.filter((h: any) => {
     const name = String(h.name || '').toLowerCase()
     const id = String(h.id || '').toLowerCase()

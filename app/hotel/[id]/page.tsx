@@ -1,5 +1,4 @@
-
-import { HOTELS } from '@/lib/data'
+import { getHotelById } from '@/lib/hotels-source'
 import Link from 'next/link'
 import { getDiscountFor } from '@/lib/discounts'
 import SafeImage from '@/components/SafeImage'
@@ -28,8 +27,8 @@ const hotelDetails: { [key: string]: { description: string; amenities: string[];
   }
 }
 
-export default function HotelDetail({params}:{params:{id:string}}){
-  const h = HOTELS.find(x => x.id === params.id)
+export default async function HotelDetail({params}:{params:{id:string}}){
+  const h = await getHotelById(params.id)
   if (!h) return (
     <div className="container mx-auto px-4 py-20 text-center">
       <h1 className="text-2xl font-bold text-gray-900 mb-4">Hotel Not Found</h1>
@@ -41,8 +40,10 @@ export default function HotelDetail({params}:{params:{id:string}}){
   const details = hotelDetails[h.id] || hotelDetails["default"]
   const discount = getDiscountFor(h.id)
   const canNegotiate = discount > 0
-  const discountedPrice = canNegotiate ? Math.round(h.basePriceNGN * (1 - discount)) : h.basePriceNGN
-  const savings = h.basePriceNGN - discountedPrice
+  const base = typeof h.basePriceNGN === 'number' ? h.basePriceNGN : (typeof h.price === 'number' ? h.price! : 0)
+  const discountedPrice = canNegotiate ? Math.round(base * (1 - discount)) : base
+  const savings = base - discountedPrice
+  const stars = typeof (h as any).stars === 'number' ? (h as any).stars : 4
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,8 +54,8 @@ export default function HotelDetail({params}:{params:{id:string}}){
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{h.name}</h1>
               <div className="flex items-center gap-4 mb-2">
-                <div className="text-amber-400 text-lg">{"★".repeat(h.stars)}{"☆".repeat(5-h.stars)}</div>
-                <span className="text-gray-600">{h.stars}-star {h.type}</span>
+                <div className="text-amber-400 text-lg">{"★".repeat(stars)}{"☆".repeat(5-stars)}</div>
+                <span className="text-gray-600">{stars}-star {h.type}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -68,9 +69,9 @@ export default function HotelDetail({params}:{params:{id:string}}){
                 <span className={`text-2xl font-bold ${canNegotiate ? 'text-brand-green' : 'text-gray-900'}`}>
                   ₦{discountedPrice.toLocaleString()}
                 </span>
-                {canNegotiate && (
+                {canNegotiate && base > 0 && (
                   <span className="text-lg text-gray-500 line-through">
-                    ₦{h.basePriceNGN.toLocaleString()}
+                    ₦{base.toLocaleString()}
                   </span>
                 )}
               </div>
@@ -102,7 +103,7 @@ export default function HotelDetail({params}:{params:{id:string}}){
         {/* Image Gallery */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
           <div className="grid md:grid-cols-3 gap-1">
-            {h.images.slice(0, 5).map((src: string, i: number) => {
+            {(h.images||[]).slice(0, 5).map((src: string, i: number) => {
               const fallbackImages = [
                 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80',
                 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format&q=80',
@@ -172,11 +173,11 @@ export default function HotelDetail({params}:{params:{id:string}}){
                   <span className={`text-2xl font-bold ${canNegotiate ? 'text-brand-green' : 'text-gray-900'}`}>
                     ₦{discountedPrice.toLocaleString()}
                   </span>
-                  {canNegotiate && (
-                    <span className="text-lg text-gray-500 line-through">
-                      ₦{h.basePriceNGN.toLocaleString()}
-                    </span>
-                  )}
+                  {canNegotiate && base > 0 && (
+                  <span className="text-lg text-gray-500 line-through">
+                    ₦{base.toLocaleString()}
+                  </span>
+                )}
                 </div>
                 <div className="text-sm text-gray-600">per night</div>
                 {canNegotiate && (
@@ -202,10 +203,10 @@ export default function HotelDetail({params}:{params:{id:string}}){
                   <div className="text-center">
                     <div className="text-xs text-gray-500 mb-1">Or book at regular price</div>
                     <Link 
-                      href={`/book?propertyId=${h.id}&price=${h.basePriceNGN}`}
+                      href={`/book?propertyId=${h.id}&price=${base}`}
                       className="text-sm text-gray-600 hover:text-gray-900 underline"
                     >
-                      Book for ₦{h.basePriceNGN.toLocaleString()}
+                      Book for ₦{base.toLocaleString()}
                     </Link>
                   </div>
                 )}
@@ -236,7 +237,7 @@ export default function HotelDetail({params}:{params:{id:string}}){
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Star rating:</span>
-                  <span className="font-medium">{h.stars} stars</span>
+                  <span className="font-medium">{stars} stars</span>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { HOTELS } from '@/lib/data'
+import { listHotels } from '@/lib/hotels-source'
 import { getDiscountFor, getDiscountInfo, DiscountTier } from '@/lib/discounts'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
@@ -31,37 +31,21 @@ function nightsBetween(checkIn?:string|null, checkOut?:string|null){
   return Math.max(0, daysDiff)
 }
 
-function filterHotels(params:URLSearchParams){
+async function fetchHotels(params:URLSearchParams){
   const city=params.get('city')||''
   const hotelQuery=params.get('hotelQuery')||''
-  const rooms=params.get('rooms')||''
   const budget=params.get('budget')||''
-  const stayType=params.get('stayType')||'any'
-  
-  // Only apply price filtering if budget is explicitly set
-  const [mn,mx] = budget ? priceRange(budget) : [0, 99999999]
-  
-  let list = HOTELS
-  
-  // Filter by city if specified
-  if (city) {
-    list = list.filter(h => h.city === city)
-  }
-  
-  // Filter by hotel name if specified
+  const stayType=(params.get('stayType') as 'any'|'hotel'|'apartment')||'any'
+
+  // Base list from source (DB or JSON)
+  let list = await listHotels({ city, budgetKey: budget || undefined, stayType })
+
+  // Filter by hotel name if specified (client-side match to preserve behavior)
   if (hotelQuery) {
-    list = list.filter(h => 
-      h.name.toLowerCase().includes(hotelQuery.toLowerCase())
-    )
+    const q = hotelQuery.toLowerCase()
+    list = list.filter(h => h.name.toLowerCase().includes(q))
   }
-  
-  // Filter by stay type
-  if(stayType==='hotel') list=list.filter(h=>h.type==='Hotel')
-  if(stayType==='apartment') list=list.filter(h=>h.type==='Apartment')
-  
-  // Filter by price range
-  list=list.filter(h=>h.basePriceNGN>=mn && h.basePriceNGN<=mx)
-  
+
   return list
 }
 
@@ -180,9 +164,9 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
   )
 }
 
-export default function SearchPage({searchParams}:{searchParams:Record<string,string>}){
+export default async function SearchPage({searchParams}:{searchParams:Record<string,string>}){
   const params=new URLSearchParams(searchParams as any)
-  const hotels=filterHotels(params)
+  const hotels=await fetchHotels(params)
 
   const checkIn = params.get('checkIn')
   const checkOut = params.get('checkOut')

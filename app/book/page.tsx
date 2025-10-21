@@ -1,10 +1,10 @@
-
 'use client'
-import { useSearchParams } from 'next/navigation'
-import { useState, useEffect, Suspense } from 'react'
+
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useMemo, useState } from 'react'
 import { HOTELS } from '@/lib/data'
 
-// Hotel addresses mapping (would ideally be in the hotels data)
+// Hotel addresses mapping (ideally part of hotel data)
 const HOTEL_ADDRESSES: Record<string, { address: string; landmarks: string; phone: string }> = {
   'eko-hotels-and-suites-lagos': {
     address: '1415 Adetokunbo Ademola Street, Victoria Island, Lagos',
@@ -28,223 +28,226 @@ const HOTEL_ADDRESSES: Record<string, { address: string; landmarks: string; phon
   }
 }
 
-function BookPageContent(){
+function naira(n: number) {
+  return `₦${Math.round(n).toLocaleString()}`
+}
+
+function nightsBetween(checkIn?: string | null, checkOut?: string | null) {
+  if (!checkIn || !checkOut) return 0
+  const ci = new Date(checkIn)
+  const co = new Date(checkOut)
+  if (isNaN(+ci) || isNaN(+co)) return 0
+  const ms = co.getTime() - ci.getTime()
+  return Math.max(0, Math.round(ms / (1000 * 60 * 60 * 24)))
+}
+
+function BookPageContent() {
+  const router = useRouter()
   const sp = useSearchParams()
   const propertyId = sp.get('propertyId') || ''
-  const price = sp.get('price') || ''
-  const [form, setForm] = useState({name:'',phone:'',email:'',eta:''})
+  const priceParam = sp.get('price') || ''
+  const checkIn = sp.get('checkIn')
+  const checkOut = sp.get('checkOut')
+  const adultsParam = sp.get('adults')
+  const childrenParam = sp.get('children')
+  const roomsParam = sp.get('rooms')
+
+  const price = Number(priceParam) || 0
+  const adults = Math.max(1, Number(adultsParam || '2') || 2)
+  const children = Math.max(0, Number(childrenParam || '0') || 0)
+  const rooms = Math.max(1, Number(roomsParam || '1') || 1)
+
+  const hotel = useMemo(() => HOTELS.find(h => h.id === propertyId), [propertyId])
+  const hotelInfo = HOTEL_ADDRESSES[propertyId] || { address: '', landmarks: '', phone: '' }
+  const originalPrice = typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : price
+
+  const directionsUrl = useMemo(() => {
+    const q = [hotel?.name, hotelInfo.address].filter(Boolean).join(' ')
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
+  }, [hotel?.name, hotelInfo.address])
+
+  const [form, setForm] = useState({ name: '', phone: '', email: '', eta: '' })
+  const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
-  const [bookingId, setBookingId] = useState('')
-  const [hotel, setHotel] = useState<any>(null)
 
-  useEffect(() => {
-    const foundHotel = HOTELS.find(h => h.id === propertyId)
-    if (foundHotel) {
-      setHotel(foundHotel)
-    }
-  }, [propertyId])
+  const nights = useMemo(() => nightsBetween(checkIn, checkOut) || 2, [checkIn, checkOut])
+  const subtotal = price * nights
+  const vat = nights > 1 ? Math.round(subtotal * 0.075) : 0
+  const total = subtotal + vat
 
-  async function submit(e: React.FormEvent){
-    e.preventDefault()
-    const res = await fetch('/api/book', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        propertyId,
-        negotiationToken: 'demo',
-        rooms: 1,
-        adults: 2,
-        children: 0,
-        checkIn: '',
-        checkOut: '',
-        contact: form
-      })
-    })
-    const data = await res.json()
-    if (res.ok) {
-      setBookingId(data.bookingId || 'BK' + Date.now())
-      setDone(true)
+  function shareByWhatsApp() {
+    const text = `Booking confirmed at ${hotel?.name || 'Hotel'} for ${naira(price)}. Check-in: ${new Date().toLocaleDateString('en-NG')}.`
+    if (typeof window !== 'undefined') {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
     }
   }
 
-  const hotelInfo = HOTEL_ADDRESSES[propertyId] || {
-    address: `${hotel?.city || 'Nigeria'}`,
-    landmarks: `Located in ${hotel?.city || 'Nigeria'}`,
-    phone: '+234 1 234 5678'
+  function shareByEmail() {
+    const subject = `Booking Confirmation — ${hotel?.name || 'Hotel'}`
+    const body = [
+      `Hotel: ${hotel?.name || 'N/A'}`,
+      `City: ${hotel?.city || 'N/A'}`,
+      `Total: ${naira(total)}`,
+      `Address: ${hotelInfo.address}`
+    ].join('\n')
+    if (typeof window !== 'undefined') {
+      window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    }
   }
 
-  const directionsUrl = `https://www.google.com/maps/search/${encodeURIComponent(hotel?.name + ' ' + hotel?.city)}`
-  
-  const bookingDetails = {
-    bookingId,
-    hotelName: hotel?.name || 'Hotel',
-    address: hotelInfo.address,
-    phone: hotelInfo.phone,
-    customerName: form.name,
-    customerPhone: form.phone,
-    customerEmail: form.email,
-    arrivalTime: form.eta,
-    price: price ? `₦${Number(price).toLocaleString()}` : 'N/A',
-    bookingDate: new Date().toLocaleDateString('en-NG', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    })
-  }
-
-  const shareText = `🏨 Hotel Booking Confirmed!\n\nBooking ID: ${bookingDetails.bookingId}\nHotel: ${bookingDetails.hotelName}\nAddress: ${bookingDetails.address}\nPrice: ${bookingDetails.price}\nGuest: ${bookingDetails.customerName}\n\nBooked via HotelSaver.ng`
-
-  const copyToClipboard = async () => {
+  async function copyToClipboard() {
+    const text = `${hotel?.name || 'Hotel'} — ${naira(total)}\n${hotelInfo.address}`
     try {
-      await navigator.clipboard.writeText(shareText)
-      alert('Booking details copied to clipboard!')
-    } catch (err) {
-      console.error('Failed to copy: ', err)
+      await navigator.clipboard.writeText(text)
+    } catch {
+      // no-op
     }
   }
 
-  const shareByEmail = () => {
-    const subject = encodeURIComponent(`Hotel Booking Confirmation - ${bookingDetails.bookingId}`)
-    const body = encodeURIComponent(shareText)
-    window.open(`mailto:?subject=${subject}&body=${body}`)
-  }
-
-  const shareByWhatsApp = () => {
-    const text = encodeURIComponent(shareText)
-    window.open(`https://wa.me/?text=${text}`)
+  async function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!form.name || !form.phone || !form.email) return
+    setSubmitting(true)
+    try {
+      const payload = {
+        propertyId,
+        price,
+        rooms,
+        adults,
+        children,
+        checkIn,
+        checkOut,
+        contact: form,
+      }
+      const resp = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const data = await resp.json().catch(() => ({} as any))
+      const bookingId = (data as any)?.bookingId || `BK${Date.now()}`
+      const q = new URLSearchParams({
+        propertyId,
+        price: String(price),
+        bookingId,
+        originalPrice: String(originalPrice),
+        checkIn: checkIn || '',
+        checkOut: checkOut || '',
+        adults: String(adults),
+        children: String(children),
+        rooms: String(rooms),
+      })
+      router.push(`/payment?${q.toString()}`)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (done && hotel) {
     return (
-      <div className="container py-10">
+      <div className="container py-12">
         <div className="max-w-2xl mx-auto">
-          {/* Success Header */}
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl">✅</span>
+          <div className="flex flex-col items-center mb-10">
+            <div className="w-24 h-24 bg-brand-green/10 rounded-full flex items-center justify-center mb-4 shadow-lg">
+              <span className="text-5xl text-brand-green">✔️</span>
             </div>
-            <h1 className="text-3xl font-bold text-green-600 mb-2">Booking Confirmed!</h1>
-            <p className="text-gray-600">Your reservation has been successfully processed</p>
+            <h1 className="text-4xl font-extrabold text-brand-green mb-2 tracking-tight">Booking Confirmed!</h1>
+            <p className="text-lg text-gray-700">Your reservation is secured. Welcome to {hotel.name}!</p>
           </div>
 
-          {/* Booking Details Card */}
-          <div className="card p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">Booking Details</h2>
-              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                ID: {bookingId}
-              </span>
-            </div>
-
-            {/* Hotel Image and Info */}
-            <div className="flex gap-4 mb-6">
-              <div className="flex-shrink-0">
-                <img
-                  src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300'}
-                  alt={hotel.name}
-                  className="w-24 h-24 object-cover rounded-lg"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{hotel.name}</h3>
-                <p className="text-sm text-gray-600 mb-2">
-                  {'⭐'.repeat(hotel.stars)} {hotel.stars}-Star {hotel.type}
-                </p>
+          <div className="card p-8 mb-8 border-2 border-brand-green/20 shadow-soft">
+            <div className="flex items-center gap-5 mb-6">
+              <img
+                src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300'}
+                alt={hotel.name}
+                className="w-28 h-28 object-cover rounded-xl border border-gray-200 shadow"
+              />
+              <div>
+                <h2 className="text-2xl font-bold text-brand-green mb-1">{hotel.name}</h2>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-yellow-500 text-lg">{'★'.repeat(hotel.stars)}</span>
+                  <span className="text-gray-600 font-medium">{hotel.stars}-Star {hotel.type}</span>
+                </div>
+                <span className="badge bg-green-50 text-brand-green mb-1">{hotel.city}</span>
                 <p className="text-sm text-gray-700">{hotelInfo.address}</p>
-                <p className="text-sm text-gray-500 mt-1">{hotelInfo.landmarks}</p>
+                <p className="text-xs text-gray-500">{hotelInfo.landmarks}</p>
               </div>
             </div>
 
-            {/* Guest Information */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <span className="text-gray-600">Check-in:</span>
+                <span className="ml-2 font-semibold">{new Date().toLocaleDateString('en-NG')}</span>
+              </div>
+              <div>
+                <span className="text-gray-600">Nights:</span>
+                <span className="ml-2 font-semibold">{nights}</span>
+              </div>
+              <div>
+                <span className="text-gray-600">Guests:</span>
+                <span className="ml-2 font-semibold">2 adults</span>
+              </div>
+              <div>
+                <span className="text-gray-600">Rooms:</span>
+                <span className="ml-2 font-semibold">1</span>
+              </div>
+            </div>
+
             <div className="border-t border-gray-200 pt-4 mb-4">
-              <h4 className="font-semibold text-gray-900 mb-3">Guest Information</h4>
-              <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-600">Name:</span>
-                  <span className="ml-2 font-medium">{form.name}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600">Phone:</span>
-                  <span className="ml-2 font-medium">{form.phone}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600">Email:</span>
-                  <span className="ml-2 font-medium">{form.email}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600">Arrival:</span>
-                  <span className="ml-2 font-medium">{form.eta || 'TBD'}</span>
-                </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Original price:</span>
+                <span className="font-semibold text-gray-700">{naira(hotel.basePriceNGN ?? price)}</span>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Negotiated price:</span>
+                <span className="font-semibold text-brand-green">{naira(price)}</span>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">You saved:</span>
+                <span className="font-semibold text-green-600">{naira(Math.max(0, (hotel.basePriceNGN ?? price) - price))}</span>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Subtotal ({nights} nights):</span>
+                <span className="font-semibold">{naira(subtotal)}</span>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">VAT (7.5%):</span>
+                <span className="font-semibold">{naira(vat)}</span>
+              </div>
+              <div className="flex justify-between items-center text-lg font-bold mt-2">
+                <span className="text-brand-green">Total:</span>
+                <span className="text-brand-green">{naira(total)}</span>
               </div>
             </div>
+          </div>
 
-            {/* Pricing */}
-            {price && (
-              <div className="border-t border-gray-200 pt-4 mb-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Price:</span>
-                  <span className="text-2xl font-bold text-brand-green">₦{Number(price).toLocaleString()}</span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="card p-6">
+              <h3 className="font-bold text-gray-900 mb-4">📤 Share Booking</h3>
+              <div className="flex gap-3">
+                <button onClick={shareByWhatsApp} className="btn-primary flex-1">
+                  {`${String.fromCodePoint(0x1F4F1)} WhatsApp`}
+                </button>
+                <button onClick={shareByEmail} className="btn-primary flex-1 bg-blue-500 hover:bg-blue-600">
+                  {`${String.fromCodePoint(0x1F4E7)} Email`}
+                </button>
+                <button onClick={copyToClipboard} className="btn-primary flex-1 bg-gray-500 hover:bg-gray-600">
+                  {`${String.fromCodePoint(0x1F4CB)} Copy`}
+                </button>
               </div>
-            )}
-
-            {/* Contact Information */}
-            <div className="border-t border-gray-200 pt-4">
-              <h4 className="font-semibold text-gray-900 mb-2">Hotel Contact</h4>
-              <p className="text-sm text-gray-600 mb-1">
-                📞 {hotelInfo.phone}
-              </p>
-              <p className="text-sm text-gray-600">
-                📧 We've emailed you and admin@hotelsaver.ng with confirmation details
-              </p>
+            </div>
+            <div className="card p-6">
+              <h3 className="font-bold text-gray-900 mb-3">📍 Directions</h3>
+              <p className="text-sm text-gray-600 mb-2">{hotelInfo.address}</p>
+              <p className="text-sm text-gray-500 mb-2">Near: {hotelInfo.landmarks}</p>
+              <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center">
+                🗺️ Get Directions
+              </a>
             </div>
           </div>
 
-          {/* Directions */}
-          <div className="card p-6 mb-6">
-            <h3 className="font-bold text-gray-900 mb-3">📍 Directions</h3>
-            <p className="text-sm text-gray-600 mb-4">{hotelInfo.address}</p>
-            <p className="text-sm text-gray-500 mb-4">Near: {hotelInfo.landmarks}</p>
-            <a
-              href={directionsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center"
-            >
-              🗺️ Get Directions
-            </a>
-          </div>
-
-          {/* Sharing Options */}
-          <div className="card p-6">
-            <h3 className="font-bold text-gray-900 mb-4">📤 Share Booking Details</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button
-                onClick={shareByWhatsApp}
-                className="flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
-              >
-                📱 WhatsApp
-              </button>
-              <button
-                onClick={shareByEmail}
-                className="flex items-center justify-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-              >
-                📧 Email
-              </button>
-              <button
-                onClick={copyToClipboard}
-                className="flex items-center justify-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
-              >
-                📋 Copy
-              </button>
-            </div>
-          </div>
-
-          {/* Back to Home */}
           <div className="text-center mt-8">
-            <a href="/" className="btn-ghost">
-              ← Back to Home
-            </a>
+            <a href="/" className="btn-ghost text-lg font-medium">← Back to Home</a>
           </div>
         </div>
       </div>
@@ -255,7 +258,7 @@ function BookPageContent(){
     <div className="container py-10">
       <div className="max-w-xl mx-auto">
         <h2 className="text-2xl font-bold mb-6">Complete Your Booking</h2>
-        
+
         {hotel && (
           <div className="card p-4 mb-6">
             <div className="flex gap-3">
@@ -267,8 +270,8 @@ function BookPageContent(){
               <div>
                 <h3 className="font-bold text-gray-900">{hotel.name}</h3>
                 <p className="text-sm text-gray-600">{hotel.city} • {'⭐'.repeat(hotel.stars)}</p>
-                {price && (
-                  <p className="text-lg font-bold text-brand-green">₦{Number(price).toLocaleString()}</p>
+                {price > 0 && (
+                  <p className="text-lg font-bold text-brand-green">{naira(price)}</p>
                 )}
               </div>
             </div>
@@ -277,55 +280,56 @@ function BookPageContent(){
 
         <form onSubmit={submit} className="card p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-            <input 
-              className="input" 
-              placeholder="Enter your full name" 
-              value={form.name} 
-              onChange={e => setForm({...form, name: e.target.value})}
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+            <input
+              id="name"
+              className="input"
+              placeholder="Enter your full name"
+              value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })}
               required
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number (WhatsApp) *</label>
-            <input 
-              className="input" 
-              placeholder="e.g. +234 801 234 5678" 
-              value={form.phone} 
-              onChange={e => setForm({...form, phone: e.target.value})}
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-            <input 
-              type="email" 
-              className="input" 
-              placeholder="your.email@example.com" 
-              value={form.email} 
-              onChange={e => setForm({...form, email: e.target.value})}
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Expected Arrival Time</label>
-            <input 
-              className="input" 
-              placeholder="e.g. 2:00 PM or 14:00" 
-              value={form.eta} 
-              onChange={e => setForm({...form, eta: e.target.value})}
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="btn-primary w-full"
-            disabled={!form.name || !form.phone || !form.email}
-          >
-            🔒 Confirm Booking
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number (WhatsApp) *</label>
+            <input
+              id="phone"
+              className="input"
+              placeholder="e.g. +234 801 234 5678"
+              value={form.phone}
+              onChange={e => setForm({ ...form, phone: e.target.value })}
+              required
+            />
+          </div>
+
+        
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+            <input
+              id="email"
+              type="email"
+              className="input"
+              placeholder="your.email@example.com"
+              value={form.email}
+              onChange={e => setForm({ ...form, email: e.target.value })}
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="eta" className="block text-sm font-medium text-gray-700 mb-2">Expected Arrival Time</label>
+            <input
+              id="eta"
+              className="input"
+              placeholder="e.g. 2:00 PM or 14:00"
+              value={form.eta}
+              onChange={e => setForm({ ...form, eta: e.target.value })}
+            />
+          </div>
+
+          <button type="submit" className="btn-primary w-full" disabled={submitting || !form.name || !form.phone || !form.email}>
+            {submitting ? 'Processing…' : '🔒 Confirm Booking'}
           </button>
 
           <p className="text-xs text-gray-500 text-center">

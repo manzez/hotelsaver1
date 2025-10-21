@@ -416,7 +416,41 @@ npm run build
 npm start
 ```
 
-### 🚀 CI/CD Development Workflow
+### �️ Database (Postgres + Prisma)
+
+The app now includes a Postgres schema via Prisma for hotels, images, availability, negotiations, bookings, and payments. JSON files continue to power read paths, but DB endpoints are available for admin operations and future migration.
+
+Quick setup:
+
+1) Create .env
+- Copy .env.example to .env
+- Set DATABASE_URL to your Postgres instance
+
+2) Install Prisma deps (if not already)
+- npm install
+
+3) Generate client and run migrations
+- npm run prisma:generate
+- npm run db:migrate  # for local dev
+- or npm run db:deploy # in hosted environments
+
+4) Seed hotels from lib.hotels.json
+- npm run db:seed
+
+5) Explore data
+- npm run db:studio
+
+Notes:
+- Cities map to enum: Lagos, Abuja, PortHarcourt, Owerri
+- Shelf price is populated from basePriceNGN/price in lib.hotels.json
+- Admin create endpoint (secured): POST /api/admin/hotels/create with x-admin-key
+- See prisma/schema.prisma for full model (Hotel, HotelImage, Availability, Negotiation, Booking, Payment)
+
+Data source flag:
+- Set DATA_SOURCE=db in your environment to make search and negotiate read from Postgres.
+- Default is DATA_SOURCE=json. When DATA_SOURCE=db is set but DB is unavailable, code falls back to JSON seamlessly.
+
+### �🚀 CI/CD Development Workflow
 
 ```bash
 # Before pushing code, run regression tests
@@ -442,11 +476,69 @@ git push origin main      # Triggers automatic deployment
 
 ---
 
-## 📞 Support & Contact
+## � API Documentation
+
+HotelSaver.ng provides comprehensive RESTful APIs for hotel booking, negotiation, and administration.
+
+### 🔗 Quick Links
+
+- **📖 Full API Guide**: [`API_DOCUMENTATION.md`](./API_DOCUMENTATION.md) - Complete endpoint documentation
+- **🔧 OpenAPI Spec**: `/api/openapi` - Machine-readable API specification  
+- **💻 Interactive Docs**: `/docs/api` - Swagger UI with live testing
+
+### 🚀 Key API Endpoints
+
+#### **Public APIs** (No Authentication)
+- `POST /api/negotiate` - Get discounted hotel prices
+- `POST /api/book` - Create hotel bookings
+- `GET /api/services/search` - Find local services
+- `POST /api/services/book` - Book services
+
+#### **Admin APIs** (Requires `x-admin-key` header)
+- `GET /api/admin/hotels` - List and search hotels
+- `POST /api/admin/hotels/create` - Add new hotels
+- `POST /api/admin/availability/import` - Upload availability CSV
+- `GET /api/admin/metrics` - Platform analytics
+
+### 📋 API Documentation Features
+
+Our API documentation includes:
+
+- **Complete Request/Response Examples** - See exactly what data to send and expect
+- **Authentication Guide** - How to use admin endpoints with API keys
+- **Error Handling** - All possible error codes and responses
+- **Data Models** - TypeScript interfaces for all API objects
+- **Business Logic** - Nigerian VAT, currency formatting, discount calculations
+- **cURL Examples** - Ready-to-use command line examples
+
+### 🔧 Testing APIs
+
+```bash
+# Test negotiation endpoint
+curl -X POST https://your-domain.com/api/negotiate \
+  -H "Content-Type: application/json" \
+  -d '{"propertyId": "transcorp-hilton-abuja-abuja"}'
+
+# Access admin metrics (requires admin key)
+curl -H "x-admin-key: your-admin-key" \
+  https://your-domain.com/api/admin/metrics
+```
+
+### 📊 OpenAPI Integration
+
+The OpenAPI specification at `/api/openapi` provides:
+- Machine-readable API documentation
+- Schema validation for all endpoints
+- Integration with API documentation tools
+- Support for code generation in multiple languages
+
+---
+
+## �📞 Support & Contact
 
 - **Customer Support**: https://wa.me/2347077775545
 - **Email**: [Contact form on website]
-- **Documentation**: This README and inline code comments
+- **Documentation**: This README, API docs, and inline code comments
 
 ---
 

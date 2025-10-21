@@ -2,7 +2,20 @@
 
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useMemo, useState, Suspense } from 'react'
+import { HOTELS } from '@/lib/data'
+
+function naira(n: number) {
+  return `₦${Math.round(n).toLocaleString()}`
+}
+function nightsBetween(checkIn?: string | null, checkOut?: string | null) {
+  if (!checkIn || !checkOut) return 0
+  const ci = new Date(checkIn)
+  const co = new Date(checkOut)
+  if (isNaN(+ci) || isNaN(+co)) return 0
+  const ms = co.getTime() - ci.getTime()
+  return Math.max(0, Math.round(ms / (1000 * 60 * 60 * 24)))
+}
 
 function ConfirmationPageContent() {
   const searchParams = useSearchParams()
@@ -10,6 +23,22 @@ function ConfirmationPageContent() {
   
   const bookingId = searchParams.get('bookingId') || ''
   const paymentMethod = searchParams.get('paymentMethod') || ''
+  const propertyId = searchParams.get('propertyId') || ''
+  const negotiatedPrice = Number(searchParams.get('price')) || 0
+  const originalPriceParam = Number(searchParams.get('originalPrice')) || 0
+  const checkIn = searchParams.get('checkIn')
+  const checkOut = searchParams.get('checkOut')
+  const adults = searchParams.get('adults') || '2'
+  const children = searchParams.get('children') || '0'
+  const rooms = searchParams.get('rooms') || '1'
+
+  const hotel = useMemo(() => HOTELS.find(h => h.id === propertyId), [propertyId])
+  const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
+  const nights = useMemo(() => (nightsBetween(checkIn, checkOut) || 1), [checkIn, checkOut])
+  const subtotal = negotiatedPrice * nights
+  const tax = nights > 1 ? Math.round(subtotal * 0.075) : 0
+  const total = subtotal + tax
+  const savings = Math.max(0, originalPrice - negotiatedPrice)
 
   useEffect(() => {
     // Simulate sending confirmation email
@@ -67,6 +96,36 @@ function ConfirmationPageContent() {
                       {paymentMethod === 'pay-at-hotel' ? 'Reserved' : 'Paid & Confirmed'}
                     </span>
                   </div>
+                  {hotel && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Hotel:</span>
+                      <span className="font-medium">{hotel.name}</span>
+                    </div>
+                  )}
+                  {checkIn && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Check-in:</span>
+                      <span className="font-medium">{checkIn}</span>
+                    </div>
+                  )}
+                  {checkOut && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Check-out:</span>
+                      <span className="font-medium">{checkOut}</span>
+                    </div>
+                  )}
+                  {(adults || children) && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Guests:</span>
+                      <span className="font-medium">{adults} adults{children !== '0' ? `, ${children} children` : ''}</span>
+                    </div>
+                  )}
+                  {rooms && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Rooms:</span>
+                      <span className="font-medium">{rooms}</span>
+                    </div>
+                  )}
                 </div>
               </div>
               
@@ -103,6 +162,39 @@ function ConfirmationPageContent() {
                 </div>
               </div>
             </div>
+
+            {/* Price Summary (if context present) */}
+            {(negotiatedPrice > 0) && (
+              <div className="mt-6 border-t pt-6 text-left">
+                <h3 className="font-semibold text-gray-900 mb-2">Price Summary</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Original price:</span>
+                    <span className="line-through text-gray-500">{naira(originalPrice)}</span>
+                  </div>
+                  <div className="flex justify-between text-green-600">
+                    <span>Negotiated price:</span>
+                    <span className="font-medium">{naira(negotiatedPrice)}</span>
+                  </div>
+                  <div className="flex justify-between text-green-600">
+                    <span>You saved:</span>
+                    <span className="font-bold">{naira(savings)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Subtotal ({nights} nights):</span>
+                    <span>{naira(subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">VAT (7.5%):</span>
+                    <span>{naira(tax)}</span>
+                  </div>
+                  <div className="flex justify-between text-lg font-bold text-gray-900 border-t border-gray-200 pt-2">
+                    <span>Total:</span>
+                    <span>{naira(total)}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Important Information */}

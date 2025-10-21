@@ -83,12 +83,16 @@ function NegotiatePageContent() {
       }
 
       if (data.status === 'discount' || data.status === 'success') {
-        setBase(Number(data.baseTotal))
-        setPrice(Number(data.discountedTotal))
-        setMessage(data.message)
-        setProperty(data.property)
-        setExpiresAt(Date.now() + 5 * 60 * 1000)
-        setNegStatus(NEG_STATUS.SUCCESS)
+        setMessage('🎉 Excellent news! We\'ve secured an amazing deal for you! Confirming your price...')
+        setNegotiationProgress(100)
+        setTimeout(() => {
+          setBase(Number(data.baseTotal))
+          setPrice(Number(data.discountedTotal))
+          setMessage(data.message)
+          setProperty(data.property)
+          setExpiresAt(Date.now() + 5 * 60 * 1000)
+          setNegStatus(NEG_STATUS.SUCCESS)
+        }, 7000)
       } else if (data.status === 'no-deals') {
         setMessage(data.message)
         setProperty(data.property)

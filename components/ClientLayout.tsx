@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import UserMenu from './UserMenu'
+import CartButton from './CartButton'
 
 function Header() {
   return (
@@ -18,11 +19,13 @@ function Header() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-5">
               <Link href='/how-it-works' className='hover:text-brand-green transition-colors'>How It Works</Link>
+              <Link href='/packages' className='hover:text-brand-green transition-colors'>Event Packages</Link>
               <Link href='/partner' className='hover:text-brand-green transition-colors'>Partner With Us</Link>
               <a href='https://wa.me/2347077775545' target='_blank' className='hover:text-brand-green transition-colors'>Customer Support</a>
               <Link href='/about' className='hover:text-brand-green transition-colors'>About</Link>
             </div>
             
+            <CartButton />
             <UserMenu />
         </nav>
       </div>
@@ -94,6 +97,17 @@ function MobileBottomNav() {
             </div>
             
             <div className="space-y-4">
+              <Link 
+                href="/packages" 
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                onClick={() => setShowMenu(false)}
+              >
+                <svg className="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                <span className="font-medium text-gray-900">Event Packages</span>
+              </Link>
+              
               <Link 
                 href="/reviews" 
                 className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"

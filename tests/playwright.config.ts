@@ -1,5 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const reporters: any[] = [
+  ['html', { outputFolder: 'reports/playwright-html', open: 'never' }],
+  ['json', { outputFile: 'reports/playwright-results.json' }],
+  ['junit', { outputFile: 'reports/test-results.xml' }],
+  ['list'],
+]
+
+// Enable Allure only if explicitly requested and plugin is installed
+if (process.env.PW_ALLURE === '1') {
+  reporters.push(['allure-playwright', { outputFolder: 'reports/allure-results' }])
+}
+
 export default defineConfig({
   testDir: './',
   timeout: 30000,
@@ -7,13 +19,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['html', { outputFolder: 'reports/playwright-html', open: 'never' }],
-    ['json', { outputFile: 'reports/playwright-results.json' }],
-    ['junit', { outputFile: 'reports/test-results.xml' }],
-    ['list'],
-    ['allure-playwright', { outputFolder: 'reports/allure-results' }]
-  ],
+  reporter: reporters,
   use: {
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
     trace: 'on-first-retry',
@@ -52,7 +58,7 @@ export default defineConfig({
   testIgnore: ['**/api/**'],
 
   webServer: {
-    command: 'npm run dev',
+    command: 'npm run dev --prefix ..',
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
