@@ -2,6 +2,7 @@
 import './globals.css'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
+import type { Metadata } from 'next'
 // import Chatbot from '@/components/Chatbot'
 // import AIChatbot from '@/components/AIChatbot'
 import ClientLayout from '@/components/ClientLayout'
@@ -10,9 +11,29 @@ import { CartProvider } from '@/lib/cart-context'
 
 const inter = Inter({subsets:['latin']})
 
-export const metadata={
-  title:'HotelSaver.ng — Save on Hotels & Services',
-  description:'Negotiate hotel prices & book local services across Nigeria.'
+const base = process.env.NEXT_PUBLIC_BASE_URL
+
+export const metadata: Metadata = {
+  metadataBase: base ? new URL(base) : undefined,
+  title: {
+    default: 'HotelSaver.ng — Save on Hotels & Services',
+    template: '%s · HotelSaver.ng'
+  },
+  description: 'Negotiate hotel prices & book local services across Nigeria.',
+  keywords: ['hotels', 'Nigeria', 'Lagos', 'Abuja', 'Port Harcourt', 'Owerri', 'booking', 'negotiation', 'discount'],
+  openGraph: {
+    title: 'HotelSaver.ng — Save on Hotels & Services',
+    description: 'Negotiate hotel prices & book local services across Nigeria.',
+    url: base || undefined,
+    siteName: 'HotelSaver.ng',
+    type: 'website',
+    locale: 'en_NG',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HotelSaver.ng — Save on Hotels & Services',
+    description: 'Negotiate hotel prices & book local services across Nigeria.',
+  },
 }
 
 export default function RootLayout({children}:{children:React.ReactNode}){
