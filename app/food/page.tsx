@@ -1,6 +1,7 @@
 "use client";
 import CategoryTabs from '@/components/CategoryTabs'
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri', 'All Cities']
 
@@ -69,9 +70,17 @@ const restaurants = [
   }
 ]
 
-export default function FoodPage() {
+function FoodInner() {
+  const sp = useSearchParams()
   const [selectedCity, setSelectedCity] = useState('All Cities')
   const [searchQuery, setSearchQuery] = useState('')
+
+  useEffect(() => {
+    const urlCity = sp.get('city')
+    if (urlCity && cities.includes(urlCity)) {
+      setSelectedCity(urlCity)
+    }
+  }, [sp])
 
   const filteredRestaurants = restaurants.filter(restaurant => {
     const matchesCity = selectedCity === 'All Cities' || restaurant.city === selectedCity
@@ -88,8 +97,10 @@ export default function FoodPage() {
           <div className="text-sm text-gray-600">Best restaurants across Nigeria</div>
         </div>
 
+        
+
         {/* Enhanced Header with Dropdown and Search */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+  <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
           <h1 className="text-3xl font-bold mb-2 text-gray-900">Best Food & Restaurants</h1>
           <p className="text-gray-600 mb-6">Discover amazing local restaurants and food spots</p>
           
@@ -214,5 +225,13 @@ export default function FoodPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function FoodPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-4 py-8">Loading…</div>}>
+      <FoodInner />
+    </Suspense>
   )
 }

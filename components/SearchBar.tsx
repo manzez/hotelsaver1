@@ -2,9 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import DatePicker from 'react-datepicker'
+import dynamic from 'next/dynamic'
+// Lazy-load the DatePicker to avoid heavy JS on initial paint
+const DatePicker = dynamic<any>(() => import('react-datepicker'), { ssr: false })
 import "react-datepicker/dist/react-datepicker.css"
-import { HOTELS } from '@/lib/data'
+// Scoped custom styles for green range link and mobile popover behavior
+import "./datepicker.css"
 
 const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri']
 const budgets = [
@@ -24,6 +27,9 @@ interface SearchBarProps {
   defaultRooms?: number
   defaultBudget?: string
   defaultStayType?: 'any' | 'hotel' | 'apartment'
+  submitLabel?: string
+  onBeforeSubmit?: () => void
+  showBrandSplashOnSubmit?: boolean
 }
 
 interface SearchResult {
@@ -32,6 +38,13 @@ interface SearchResult {
   label: string
   hotelId?: string
   city?: string
+}
+
+// Minimal Hotel type for client-side search index
+interface HotelIdx {
+  id: string
+  name: string
+  city: string
 }
 
 export default function SearchBar({
@@ -43,9 +56,36 @@ export default function SearchBar({
   defaultChildren = 0,
   defaultRooms = 1,
   defaultBudget = 'u80',
-  defaultStayType = 'any'
+  defaultStayType = 'any',
+  submitLabel = 'Update Results',
+  onBeforeSubmit,
+  showBrandSplashOnSubmit = false
 }: SearchBarProps = {}) {
   const router = useRouter()
+  
+  // Date helpers (local timezone safe)
+  const startOfDay = (d: Date) => {
+    const x = new Date(d)
+    x.setHours(0, 0, 0, 0)
+    return x
+  }
+  const addDays = (d: Date, days: number) => {
+    const x = new Date(d)
+    x.setDate(x.getDate() + days)
+    return x
+  }
+  const toLocalInput = (d: Date) => {
+    const y = d.getFullYear()
+    const m = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${y}-${m}-${day}`
+  }
+  const parseLocalInput = (val: string): Date | null => {
+    if (!val) return null
+    const [y, m, d] = val.split('-').map(Number)
+    if (!y || !m || !d) return null
+    return new Date(y, (m - 1), d)
+  }
   
   // Form state - initialize with props or defaults
   const [city, setCity] = useState(defaultCity)
@@ -68,6 +108,12 @@ export default function SearchBar({
   const [isInitialized, setIsInitialized] = useState(false)
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
+  const [datePrompted, setDatePrompted] = useState(false)
+  const [selectedHotelId, setSelectedHotelId] = useState<string | null>(null)
+  const [destinationSelected, setDestinationSelected] = useState(false)
+  // Lazy client-side hotel index (loaded on first focus/type)
+  const [hotelsIndex, setHotelsIndex] = useState<HotelIdx[] | null>(null)
+  const [loadingHotels, setLoadingHotels] = useState(false)
   
   // Android date picker handling
   const [isAndroid, setIsAndroid] = useState(false)
@@ -79,6 +125,10 @@ export default function SearchBar({
   const guestPickerRef = useRef<HTMLDivElement>(null)
   const datePickerTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const searchInputRef = useRef<HTMLDivElement>(null)
+  const nativeStartRef = useRef<HTMLInputElement | null>(null)
+  const nativeEndRef = useRef<HTMLInputElement | null>(null)
+  const hasPrefetchedHotelsRef = useRef(false)
+  const searchDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Device detection and initialization
   useEffect(() => {
@@ -87,11 +137,12 @@ export default function SearchBar({
       const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent)
       const isAndroidDevice = /android/i.test(userAgent)
       
-      setIsMobile(isMobileDevice)
-      setIsAndroid(isAndroidDevice)
+  setIsMobile(isMobileDevice)
+  setIsAndroid(isAndroidDevice)
       
-      // Default to native date picker for ALL mobile devices
-      setUseNativeDatePicker(isMobileDevice)
+  // Use the same calendar (range picker) on mobile by default
+  // We still keep a fallback to native if the popup fails on Android.
+  setUseNativeDatePicker(false)
       
       // Add device class to body for CSS targeting
       if (isAndroidDevice && isMobileDevice) {
@@ -119,6 +170,16 @@ export default function SearchBar({
         }
       }
       
+      // Initialize default dates: today -> tomorrow if not provided
+      if (!defaultCheckIn && !defaultCheckOut) {
+        if (!startDate || !endDate) {
+          const today = startOfDay(new Date())
+          const tomorrow = addDays(today, 1)
+          setStartDate(today)
+          setEndDate(tomorrow)
+        }
+      }
+
       // Short delay to ensure proper rendering
       setTimeout(() => {
         setIsInitialized(true)
@@ -153,70 +214,127 @@ export default function SearchBar({
     }
   }, [])
 
+  // Lazy-load hotels data on first need to reduce initial JS bundle
+  const loadHotels = async () => {
+    if (hasPrefetchedHotelsRef.current || hotelsIndex || loadingHotels) return
+    try {
+      setLoadingHotels(true)
+      // Import only the hotels JSON to avoid pulling extra data/code
+      const mod: any = await import('../lib.hotels.json')
+      const list: any[] = (mod && mod.default) ? (mod.default as any[]) : Array.isArray(mod) ? (mod as any[]) : []
+      const idx: HotelIdx[] = list.map((h: any) => ({ id: String(h.id), name: String(h.name), city: String(h.city) }))
+      setHotelsIndex(idx)
+      hasPrefetchedHotelsRef.current = true
+    } catch (e) {
+      // fail silently; city search will still work
+      console.warn('Could not prefetch hotels index:', e)
+    } finally {
+      setLoadingHotels(false)
+    }
+  }
+
   const guestSummary = `${adults} adult${adults !== 1 ? 's' : ''}${children > 0 ? `, ${children} child${children !== 1 ? 'ren' : ''}` : ''}, ${rooms} room${rooms !== 1 ? 's' : ''}`
+
+  // Helper: ensure default dates and open date picker UI
+  const ensureDefaultDatesAndOpen = () => {
+    // Always make sure we have today -> tomorrow defaults
+    if (!startDate || !endDate) {
+      const today = startOfDay(new Date())
+      const tomorrow = addDays(today, 1)
+      setStartDate(today)
+      setEndDate(tomorrow)
+    }
+
+    // Open appropriate date UI
+    if (useNativeDatePicker && isMobile) {
+      // Try to focus the native start input (may be ignored by some browsers)
+      requestAnimationFrame(() => {
+        nativeStartRef.current?.focus()
+        nativeStartRef.current?.showPicker?.()
+      })
+    } else {
+      setIsDatePickerOpen(true)
+      setShowGuestPicker(false)
+    }
+  }
 
   // Search functionality
   const handleSearchInput = (query: string) => {
     setSearchQuery(query)
-    
-    if (query.length < 1) {
+    setDestinationSelected(false)
+    // Clear previous debounce
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current)
+      searchDebounceRef.current = null
+    }
+    // For very short queries, clear results and optionally prefetch
+    if (query.length < 2) {
       setSearchResults([])
       setShowSearchResults(false)
+      setDatePrompted(false)
+      if (query.length === 1) {
+        if (typeof (window as any).requestIdleCallback === 'function') {
+          ;(window as any).requestIdleCallback(() => { loadHotels() })
+        } else {
+          setTimeout(() => { loadHotels() }, 0)
+        }
+      }
       return
     }
 
-    const results: SearchResult[] = []
-    
-    // Add matching cities
-    cities.forEach(cityName => {
-      if (cityName.toLowerCase().includes(query.toLowerCase())) {
-        results.push({
-          type: 'city',
-          value: cityName,
-          label: `${cityName} (City)`,
-          city: cityName
-        })
+    // Debounce actual search work
+    searchDebounceRef.current = setTimeout(() => {
+      const results: SearchResult[] = []
+      // Add matching cities
+      const qLower = query.toLowerCase()
+      for (const cityName of cities) {
+        if (cityName.toLowerCase().includes(qLower)) {
+          results.push({ type: 'city', value: cityName, label: `${cityName} (City)`, city: cityName })
+        }
       }
-    })
-
-    // Add matching hotels (limit to 8 for performance)
-    const hotelMatches = HOTELS.filter(hotel => 
-      hotel.name.toLowerCase().includes(query.toLowerCase())
-    ).slice(0, 8)
-    
-    hotelMatches.forEach(hotel => {
-      results.push({
-        type: 'hotel',
-        value: hotel.name,
-        label: `${hotel.name} - ${hotel.city}`,
-        hotelId: hotel.id,
-        city: hotel.city
-      })
-    })
-
-    setSearchResults(results)
-    setShowSearchResults(results.length > 0)
+      // Add matching hotels (limit 8) if index available
+      if (hotelsIndex && hotelsIndex.length) {
+        let count = 0
+        for (let i = 0; i < hotelsIndex.length && count < 8; i++) {
+          const h = hotelsIndex[i]
+          if (h.name.toLowerCase().includes(qLower)) {
+            results.push({ type: 'hotel', value: h.name, label: `${h.name} - ${h.city}`, hotelId: h.id, city: h.city })
+            count++
+          }
+        }
+      } else {
+        // Trigger background load so next keystroke has data
+        loadHotels()
+      }
+      setSearchResults(results)
+      setShowSearchResults(results.length > 0)
+    }, 150)
   }
 
   const handleSearchSelect = (result: SearchResult) => {
     if (result.type === 'city') {
       setCity(result.value)
       setSearchQuery(result.value)
+      setDestinationSelected(true)
+      // Prompt dates upon selecting a city
+      ensureDefaultDatesAndOpen()
     } else if (result.type === 'hotel' && result.hotelId) {
-      // For hotel selection, navigate directly to the hotel
-      router.push(`/hotel/${result.hotelId}`)
-      return
+      // For hotel selection, open the date picker instead of navigating immediately
+      setSelectedHotelId(result.hotelId)
+      setSearchQuery(result.value)
+      setCity(result.city || '')
+      setDestinationSelected(true)
+      ensureDefaultDatesAndOpen()
     }
     setShowSearchResults(false)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
+  // Build URL and navigate with current form state
+  const navigateToResults = () => {
     // Determine search type and value
     let searchCity = city
     let hotelQuery = ''
-    
+
     // If search query doesn't match any city, treat it as hotel search
     if (searchQuery && !cities.some(c => c.toLowerCase() === searchQuery.toLowerCase())) {
       hotelQuery = searchQuery
@@ -259,11 +377,77 @@ export default function SearchBar({
     router.push(`/search?${q.toString()}`)
   }
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    try { onBeforeSubmit && onBeforeSubmit() } catch {}
+    try {
+      if (showBrandSplashOnSubmit) {
+      // Show big green H overlay with sweeping light for ~1 second
+      const overlay = document.createElement('div')
+      overlay.setAttribute('id', 'search-overlay-h')
+      overlay.setAttribute('aria-hidden', 'true')
+      overlay.style.position = 'fixed'
+      overlay.style.inset = '0'
+      overlay.style.background = 'rgba(255,255,255,0.9)'
+      overlay.style.display = 'flex'
+      overlay.style.alignItems = 'center'
+      overlay.style.justifyContent = 'center'
+      overlay.style.zIndex = '99999'
+      overlay.style.backdropFilter = 'blur(1px)'
+
+      const style = document.createElement('style')
+      style.textContent = `
+        @keyframes hSweep {
+          0% { transform: translateX(-120%); opacity: 0.4; }
+          10% { opacity: 0.8; }
+          100% { transform: translateX(120%); opacity: 0.4; }
+        }
+      `
+
+      const container = document.createElement('div')
+      container.style.position = 'relative'
+      container.style.display = 'inline-block'
+
+      const letter = document.createElement('div')
+      letter.textContent = 'H'
+      letter.style.fontSize = '22rem'
+      letter.style.fontWeight = '900'
+      letter.style.lineHeight = '1'
+      letter.style.color = '#009739' // brand green
+      letter.style.textShadow = '0 8px 24px rgba(0,0,0,0.06)'
+
+      const sweep = document.createElement('div')
+      sweep.style.position = 'absolute'
+      sweep.style.top = '0'
+      sweep.style.left = '0'
+      sweep.style.height = '100%'
+      sweep.style.width = '45%'
+      sweep.style.background = 'linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 45%, rgba(255,255,255,0) 100%)'
+      sweep.style.filter = 'blur(1px)'
+      sweep.style.mixBlendMode = 'screen'
+      sweep.style.animation = 'hSweep 1s ease-out forwards'
+
+      container.appendChild(letter)
+      container.appendChild(sweep)
+      overlay.appendChild(container)
+      document.body.appendChild(style)
+      document.body.appendChild(overlay)
+
+      setTimeout(() => {
+        overlay.remove()
+        style.remove()
+      }, 1000)
+      }
+    } catch {}
+    navigateToResults()
+  }
+
   const renderDatePicker = () => {
     if (!isInitialized) {
+      // Render a neutral placeholder to avoid implying a stuck loading state
       return (
         <div className="w-full h-12 pl-4 pr-10 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium flex items-center">
-          <span className="text-gray-500">Loading...</span>
+          <span className="text-gray-500">Select dates</span>
         </div>
       )
     }
@@ -271,32 +455,33 @@ export default function SearchBar({
     if (useNativeDatePicker && isMobile) {
       return (
         <div className="space-y-2">
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-0 sm:gap-2 w-full items-stretch">
             <input
               type="date"
-              value={startDate ? startDate.toISOString().split('T')[0] : ''}
+              ref={nativeStartRef}
+              value={startDate ? toLocalInput(startDate) : ''}
               onChange={(e) => {
-                const date = e.target.value ? new Date(e.target.value) : null
+                const date = parseLocalInput(e.target.value)
                 setStartDate(date)
                 if (!endDate && date) {
-                  const nextDay = new Date(date)
-                  nextDay.setDate(nextDay.getDate() + 1)
+                  const nextDay = addDays(startOfDay(date), 1)
                   setEndDate(nextDay)
                 }
               }}
-              min={new Date().toISOString().split('T')[0]}
-              className="flex-1 h-12 px-3 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none"
+              min={toLocalInput(startOfDay(new Date()))}
+              className="w-full min-w-0 box-border h-12 px-3 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none"
               placeholder="Check-in"
             />
             <input
               type="date"
-              value={endDate ? endDate.toISOString().split('T')[0] : ''}
+              ref={nativeEndRef}
+              value={endDate ? toLocalInput(endDate) : ''}
               onChange={(e) => {
-                const date = e.target.value ? new Date(e.target.value) : null
+                const date = parseLocalInput(e.target.value)
                 setEndDate(date)
               }}
-              min={startDate ? new Date(startDate.getTime() + 24*60*60*1000).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
-              className="flex-1 h-12 px-3 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none"
+              min={startDate ? toLocalInput(addDays(startOfDay(startDate), 1)) : toLocalInput(startOfDay(new Date()))}
+              className="w-full min-w-0 box-border h-12 px-3 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none"
               placeholder="Check-out"
             />
           </div>
@@ -312,6 +497,38 @@ export default function SearchBar({
     }
 
     // Custom DatePicker with mobile overlay
+    // Add a footer "Done" button via custom CalendarContainer
+    const CalendarContainer = ({ className, children }: { className?: string, children: React.ReactNode }) => {
+      return (
+        <div className={className}>
+          {children}
+          <div className="px-3 pb-3 pt-2 border-t border-gray-100 bg-white">
+            <button
+              type="button"
+              className="w-full btn-primary rounded-lg h-11"
+              onClick={() => {
+                // If only start selected, default end to next day
+                if (startDate && !endDate) {
+                  const nextDay = new Date(startDate)
+                  nextDay.setDate(nextDay.getDate() + 1)
+                  setEndDate(nextDay)
+                }
+                // Ensure defaults exist
+                if (!startDate || !endDate) {
+                  const today = startOfDay(new Date())
+                  const tomorrow = addDays(today, 1)
+                  setStartDate(today)
+                  setEndDate(tomorrow)
+                }
+                setIsDatePickerOpen(false)
+              }}
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="relative w-full overflow-hidden rounded-xl">
         {/* Mobile touch overlay - only when not using native */}
@@ -320,22 +537,25 @@ export default function SearchBar({
             className="absolute inset-0 z-10 bg-transparent cursor-pointer"
             onTouchStart={(e) => {
               e.preventDefault()
+              if (!destinationSelected) return
               setIsDatePickerOpen(true)
               setShowGuestPicker(false)
               
               if (isAndroid) {
                 datePickerTimeoutRef.current = setTimeout(() => {
                   if (!document.querySelector('.react-datepicker')) {
-                    setDatePickerFailCount(prev => prev + 1)
-                    if (datePickerFailCount >= 1) {
-                      setUseNativeDatePicker(true)
-                    }
+                    setDatePickerFailCount(prev => {
+                      const next = prev + 1
+                      if (next >= 1) setUseNativeDatePicker(true)
+                      return next
+                    })
                   }
                 }, 1000)
               }
             }}
             onClick={(e) => {
               e.preventDefault()
+              if (!destinationSelected) return
               setIsDatePickerOpen(true)
               setShowGuestPicker(false)
             }}
@@ -344,16 +564,10 @@ export default function SearchBar({
 
         <DatePicker
           selected={startDate}
-          onChange={(dates) => {
-            const [start, end] = dates as [Date | null, Date | null]
+          onChange={(dates: [Date | null, Date | null] | null) => {
+            const [start, end] = (dates || [null, null]) as [Date | null, Date | null]
             setStartDate(start)
             setEndDate(end)
-            
-            if (start && end) {
-              setTimeout(() => {
-                setIsDatePickerOpen(false)
-              }, 300)
-            }
           }}
           startDate={startDate}
           endDate={endDate}
@@ -370,27 +584,28 @@ export default function SearchBar({
             }
           }}
           onFocus={() => {
-            if (!isMobile) {
+            if (!isMobile && destinationSelected) {
               setIsDatePickerOpen(true)
               setShowGuestPicker(false)
             }
           }}
           placeholderText="Add dates"
-          className="w-full h-12 pl-4 pr-12 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium cursor-pointer focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none transition-all touch-manipulation overflow-hidden"
+          className="w-full h-12 pl-4 pr-10 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium cursor-pointer focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none transition-all touch-manipulation overflow-hidden"
           autoComplete="off"
           dateFormat="MMM dd"
-          monthsShown={isMobile ? 1 : 2}
+          monthsShown={1}
           showPopperArrow={false}
           popperClassName="date-picker-popper android-date-picker"
           calendarClassName="range-calendar"
-          minDate={new Date()}
-          filterDate={(date) => date >= new Date()}
+          minDate={startOfDay(new Date())}
+          filterDate={(date: Date) => startOfDay(date) >= startOfDay(new Date())}
           portalId="date-picker-portal"
           withPortal={isMobile}
           popperPlacement="bottom"
           preventOpenOnFocus={isMobile}
           readOnly={isMobile}
           disabledKeyboardNavigation={isMobile}
+          calendarContainer={CalendarContainer as any}
         />
 
         {/* Calendar icon */}
@@ -415,9 +630,10 @@ export default function SearchBar({
   }
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-lg border-2 border-brand-green/20 p-6 mb-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <>
+    <div className="w-full bg-white rounded-2xl shadow-lg border-2 border-brand-green/20 p-4 md:p-6 mb-2 md:mb-6">
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-0 sm:gap-4">
           {/* Destination Search */}
           <div className="relative" ref={searchInputRef}>
             <input
@@ -425,6 +641,14 @@ export default function SearchBar({
               value={searchQuery}
               onChange={(e) => handleSearchInput(e.target.value)}
               onFocus={() => {
+                // Prefetch hotels list on first focus to improve perceived speed
+                if (!hasPrefetchedHotelsRef.current) {
+                  if (typeof (window as any).requestIdleCallback === 'function') {
+                    ;(window as any).requestIdleCallback(() => { loadHotels() })
+                  } else {
+                    setTimeout(() => { loadHotels() }, 0)
+                  }
+                }
                 if (searchResults.length > 0) {
                   setShowSearchResults(true)
                 }
@@ -616,6 +840,7 @@ export default function SearchBar({
                 className="w-full h-12 pl-4 pr-4 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green focus:outline-none transition-all cursor-pointer" 
                 value={budgetKey} 
                 onChange={e => setBudgetKey(e.target.value)}
+                aria-label="Budget"
               >
                 {budgets.map(b => (
                   <option key={b.key} value={b.key}>{b.label}</option>
@@ -636,10 +861,11 @@ export default function SearchBar({
             type="submit" 
             className="w-full sm:flex-1 bg-gradient-to-r from-brand-green to-emerald-600 hover:from-brand-dark hover:to-emerald-700 text-white py-4 px-8 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-3"
           >
-            {defaultCity ? 'Update Search' : 'Negotiate Hotels'}
+            {submitLabel}
           </button>
         </div>
       </form>
     </div>
+    </>
   )
 }

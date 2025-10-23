@@ -1,0 +1,32 @@
+{
+  "protea-hotel-owerri-owerri": [
+    "wifi",
+    "room_service",
+    "gym",
+    "restaurant",
+    "airport_shuttle",
+    "car_park",
+    "security",
+    "non_smoking",
+    "family_rooms"
+  ],
+  "bon-hotel-nest-owerri-owerri": [
+    "swimming_pool",
+    "spa",
+    "restaurant",
+    "bar",
+    "conference_room",
+    "gym",
+    "car_park",
+    "security",
+    "wifi"
+  ],
+  "immaculate-royal-hotel-owerri": [
+    "wifi",
+    "restaurant",
+    "room_service",
+    "car_park",
+    "security",
+    "non_smoking"
+  ]
+}

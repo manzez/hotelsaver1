@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Full screen width override */
 body {
   margin: 0;
@@ -19,6 +20,7 @@ body {
 .card { @apply bg-white rounded-xl shadow-soft border border-gray-100; }
 .btn { @apply inline-flex items-center justify-center rounded-md px-4 h-11 font-medium; }
 .btn-primary { @apply btn bg-brand-green text-white hover:bg-brand-dark transition; }
+.btn-accent { @apply btn bg-blue-600 text-white hover:bg-blue-700 transition; }
 .btn-ghost { @apply btn bg-white border border-gray-200 hover:bg-gray-50; }
 .input, .select { @apply h-11 rounded-md border border-gray-300 px-3 w-full bg-white; }
 .badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-50 text-brand-green; }
@@ -42,8 +44,19 @@ body {
 .sm-num { @apply w-20; } /* ~80px */
 
 .toggle { @apply flex gap-1.5; }
-.chip { @apply h-10 px-3 border-2 border-brand-green/30 rounded-full text-sm bg-white; }
+.chip { @apply h-10 px-3 border-2 border-brand-green/30 rounded-full text-sm bg-white; text-decoration: none; }
 .chip.active { @apply border-brand-green bg-emerald-50; }
+/* Ensure chip links never show underlines in any state */
+a.chip, a.chip:link, a.chip:visited, a.chip:hover, a.chip:focus { text-decoration: none !important; }
+
+/* Hide horizontal scrollbar while keeping scroll */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar { /* Chrome, Safari and Opera */
+  display: none;
+}
 
 /* Enhanced search form inputs */
 .search-input {
@@ -71,6 +84,7 @@ body {
 /* make Search button always visible on small screens */
 @media (max-width: 768px){
   .btn-wrap .btn-primary { @apply w-full; }
+  .btn-wrap .btn-accent { @apply w-full; }
   /* Card hover micro-interaction (optional) */
 .card {
   transition: transform .2s ease, box-shadow .2s ease;

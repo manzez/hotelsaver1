@@ -3390,7 +3390,7 @@
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&h=600&fit=crop&auto=format&q=80",
       "https://images.unsplash.com/photo-1562790351-d273a961e0e4?w=800&h=600&fit=crop&auto=format&q=80"
     ],
-    "address": "Plot H-1 Fullmoon Avenue, by Akanchawa Road,Housing Area \u201cC, New Owerri, Owerri 460721, Nigeria",
+    "address": "Plot H-1 Fullmoon Avenue, by Akanchawa Road,Housing Area “C, New Owerri, Owerri 460721, Nigeria",
     "phone": "234 903 886 9936",
     "email": "reservations@fullmoon-hotels.com",
     "website": "https://www.fullmoon-hotels.com/"
@@ -3924,7 +3924,7 @@
     ],
     "address": "PLOT 1/2 TONY OKWUNALU AVENUE, OFF EMENIKE CLOSE, behind ASSUMPTA CATHEDRAL, New Owerri, Owerri 460281, Imo, Nigeria",
     "phone": "234 806 139 9441",
-    "email": "reservations@bluelineapartment.com\u200b",
+    "email": "reservations@bluelineapartment.com​",
     "website": "https://bluelineapartment.com/"
   },
   {
@@ -4093,7 +4093,7 @@
       "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop&auto=format&q=80",
       "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop&auto=format&q=80"
     ],
-    "address": "Plot 90/91, 43 Old \u2018D\u2019 Layout, Port Harcourt Rd, New Owerri, Owerri 460281, Imo, Nigeria",
+    "address": "Plot 90/91, 43 Old ‘D’ Layout, Port Harcourt Rd, New Owerri, Owerri 460281, Imo, Nigeria",
     "phone": "234 902 556 6242",
     "email": "",
     "website": ""
@@ -4420,5 +4420,650 @@
     "phone": "234 803 985 2473",
     "email": "",
     "website": ""
+  },
+  {
+    "id": "apt-lagos-9",
+    "name": "City Apartment 9 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 169000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-10",
+    "name": "City Apartment 10 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 170000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-11",
+    "name": "City Apartment 11 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 171000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-12",
+    "name": "City Apartment 12 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 172000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-13",
+    "name": "City Apartment 13 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 173000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-14",
+    "name": "City Apartment 14 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 174000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-15",
+    "name": "City Apartment 15 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 175000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-16",
+    "name": "City Apartment 16 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 176000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-17",
+    "name": "City Apartment 17 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 177000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-18",
+    "name": "City Apartment 18 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 178000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-19",
+    "name": "City Apartment 19 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 179000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-lagos-20",
+    "name": "City Apartment 20 · Lagos",
+    "city": "Lagos",
+    "type": "Apartment",
+    "basePriceNGN": 180000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-8",
+    "name": "City Apartment 8 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 148000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-9",
+    "name": "City Apartment 9 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 149000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-10",
+    "name": "City Apartment 10 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 150000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-11",
+    "name": "City Apartment 11 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 151000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-12",
+    "name": "City Apartment 12 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 152000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-13",
+    "name": "City Apartment 13 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 153000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-14",
+    "name": "City Apartment 14 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 154000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-15",
+    "name": "City Apartment 15 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 155000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-16",
+    "name": "City Apartment 16 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 156000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-17",
+    "name": "City Apartment 17 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 157000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-18",
+    "name": "City Apartment 18 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 158000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-19",
+    "name": "City Apartment 19 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 159000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-abuja-20",
+    "name": "City Apartment 20 · Abuja",
+    "city": "Abuja",
+    "type": "Apartment",
+    "basePriceNGN": 160000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-3",
+    "name": "City Apartment 3 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 123000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-4",
+    "name": "City Apartment 4 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 124000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-5",
+    "name": "City Apartment 5 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 125000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-6",
+    "name": "City Apartment 6 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 126000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-7",
+    "name": "City Apartment 7 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 127000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-8",
+    "name": "City Apartment 8 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 128000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-9",
+    "name": "City Apartment 9 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 129000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-10",
+    "name": "City Apartment 10 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 130000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-11",
+    "name": "City Apartment 11 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 131000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-12",
+    "name": "City Apartment 12 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 132000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-13",
+    "name": "City Apartment 13 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 133000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-14",
+    "name": "City Apartment 14 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 134000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-15",
+    "name": "City Apartment 15 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 135000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-16",
+    "name": "City Apartment 16 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 136000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-17",
+    "name": "City Apartment 17 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 137000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-18",
+    "name": "City Apartment 18 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 138000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-19",
+    "name": "City Apartment 19 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 139000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
+  },
+  {
+    "id": "apt-port-harcourt-20",
+    "name": "City Apartment 20 · Port Harcourt",
+    "city": "Port Harcourt",
+    "type": "Apartment",
+    "basePriceNGN": 140000,
+    "stars": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507138451611-3001135909b3?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1560185008-b033106afc83?w=800&h=600&fit=crop&auto=format&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop&auto=format&q=80"
+    ]
   }
 ]

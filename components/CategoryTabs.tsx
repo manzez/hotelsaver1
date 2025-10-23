@@ -1,31 +1,40 @@
-'use client'
+"use client"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const tabs = [
+const defaultTabs = [
   { key: 'hotels', label: 'Hotels', href: '/' },
   { key: 'services', label: 'Services', href: '/services' },
   { key: 'food', label: 'Food', href: '/food' }
 ]
 
-export default function CategoryTabs({ active }: { active: string }) {
+type Hrefs = Partial<{ hotels: string; services: string; food: string }>
+
+export default function CategoryTabs({ active, hrefs }: { active: string; hrefs?: Hrefs }) {
   const pathname = usePathname()
+  const tabs = defaultTabs.map(t => ({
+    ...t,
+    href: hrefs && hrefs[t.key as keyof Hrefs] ? (hrefs[t.key as keyof Hrefs] as string) : t.href
+  }))
   
   return (
-    <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
-      {tabs.map(tab => (
-        <Link
-          key={tab.key}
-          href={tab.href}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-            active === tab.key || pathname === tab.href
-              ? 'bg-white text-green-600 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          {tab.label}
-        </Link>
-      ))}
+    <div className="inline-flex items-center rounded-full bg-emerald-50 p-1 border border-emerald-200">
+      {tabs.map(tab => {
+        const isActive = active === tab.key || pathname === tab.href
+        return (
+          <Link
+            key={tab.key}
+            href={tab.href}
+            className={`no-underline px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+              isActive
+                ? 'bg-brand-green text-white shadow'
+                : 'text-emerald-700 hover:text-emerald-900 hover:bg-white'
+            }`}
+          >
+            {tab.label}
+          </Link>
+        )
+      })}
     </div>
   )
 }

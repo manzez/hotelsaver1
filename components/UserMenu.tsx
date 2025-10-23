@@ -7,6 +7,7 @@ import Link from 'next/link'
 export default function UserMenu() {
   const { data: session, status } = useSession()
   const [isOpen, setIsOpen] = useState(false)
+  const [loadingTooLong, setLoadingTooLong] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -20,7 +21,28 @@ export default function UserMenu() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  // Prevent indefinite spinner if session stays in "loading" too long (e.g., missing providers or dev misconfig)
+  useEffect(() => {
+    if (status === 'loading') {
+      const t = setTimeout(() => setLoadingTooLong(true), 1200)
+      return () => clearTimeout(t)
+    } else {
+      setLoadingTooLong(false)
+    }
+  }, [status])
+
   if (status === 'loading') {
+    // After ~1.2s, show Sign In to keep UI responsive instead of spinning forever
+    if (loadingTooLong) {
+      return (
+        <button
+          onClick={() => signIn()}
+          className="text-gray-600 hover:text-brand-green transition-colors font-medium"
+        >
+          Sign In
+        </button>
+      )
+    }
     return (
       <div className="w-8 h-8 border-2 border-brand-green border-t-transparent rounded-full animate-spin" />
     )

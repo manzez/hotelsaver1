@@ -1,6 +1,7 @@
 import SearchBar from '@/components/SearchBar'
 import CategoryTabs from '@/components/CategoryTabs'
 import Link from 'next/link'
+import SafeImage from '@/components/SafeImage'
 import { HOTELS } from '@/lib/data'
 import { getDiscountFor, getDiscountInfo, DiscountTier } from '@/lib/discounts'
 
@@ -102,7 +103,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden w-screen">
-      {/* Full-Screen Hero with Zoom Animation */}
+      {/* Hero with Zoom Animation (visible on all viewports) */}
       <section className="relative h-screen w-screen">
         {/* Animated Background Image */}
         <div className="absolute inset-0 zoom-out-animation w-screen">
@@ -116,23 +117,23 @@ export default function Home() {
         </div>
 
         {/* Navigation - Floating */}
-        <div className="absolute top-0 left-0 right-0 z-50 px-6 py-6">
+        <div className="absolute top-0 left-0 right-0 z-50 px-4 py-3 md:px-6 md:py-6">
           <div className="flex items-center justify-center">
             <CategoryTabs active="hotels" />
           </div>
         </div>
 
         {/* Hero Content - Much Higher Up */}
-        <div className="absolute inset-0 flex flex-col items-center text-center z-40 px-6 pt-32">
+        <div className="absolute inset-0 flex flex-col items-center text-center z-40 px-4 md:px-6 pt-20 md:pt-32">
           {/* Minimal Text */}
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-12 tracking-tight fade-in-up">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 md:mb-12 tracking-tight fade-in-up">
             SAVE UP TO 50% ON<br />
             HOTELS IN NIGERIA
           </h1>
           
           {/* Search Bar - Full Width Across Page */}
           <div className="w-full max-w-6xl fade-in-up-delayed">
-            <SearchBar />
+            <SearchBar submitLabel="Search" showBrandSplashOnSubmit />
           </div>
         </div>
       </section>
@@ -152,10 +153,11 @@ export default function Home() {
                 <div key={h.id} className="group">
                   <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
                     <Link href={`/hotel/${h.id}`}>
-                      <img 
-                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400'} 
+                      <SafeImage
+                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80'}
                         alt={h.name}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-48"
+                        fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
                       />
                     </Link>
                     <div className="p-4">
@@ -222,10 +224,11 @@ export default function Home() {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full">
                     <Link href={`/hotel/${apartment.id}`}>
                       <div className="relative h-48">
-                        <img 
-                          src={apartment.images?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400'} 
+                        <SafeImage
+                          src={apartment.images?.[0] || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop&auto=format&q=80'}
                           alt={apartment.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full"
+                          fallbackSrc="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop&auto=format&q=80"
                         />
                         <div className="absolute top-3 left-3 flex gap-2">
                           <span className="bg-blue-100/90 text-blue-800 text-xs px-2 py-1 rounded-full font-medium backdrop-blur-sm">

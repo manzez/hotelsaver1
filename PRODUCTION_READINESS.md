@@ -177,7 +177,7 @@
 
 ## 💡 **IMMEDIATE ACTION ITEMS**
 
-1. **Set up production database** - Move away from JSON files
+1. **Set up production database** - Move away from JSON files (see Appendix below)
 2. **Configure email service** - For booking confirmations
 3. **Implement payment gateway** - Essential for revenue
 4. **Add security headers** - Critical for user safety
@@ -186,3 +186,88 @@
 **Estimated Time to Production: 4-6 weeks**
 
 The application has solid core functionality but needs infrastructure and business operations components to be production-ready.
+
+---
+
+## 📦 Appendix: Production Database Setup Guide (PostgreSQL + Prisma)
+
+Follow these steps to move from JSON-only to a production Postgres database, aligned with our current Prisma schema (`prisma/schema.prisma`).
+
+### 1) Provision a Managed Postgres
+
+Recommended options (pick one):
+- Neon (serverless Postgres with pooling)
+- Supabase (managed Postgres + auth/storage extras)
+- Railway or Render (simple managed Postgres)
+- AWS RDS (enterprise option)
+
+Create a new database and copy the connection string (e.g., `postgres://user:pass@host:port/db`).
+
+### 2) Configure Vercel Environment
+
+In your Vercel project:
+- Add Environment Variable `DATABASE_URL` = your Postgres connection string
+- Add `PAYSTACK_SECRET_KEY` (already required for payments)
+- Redeploy so server functions read new env vars
+
+Notes:
+- Prisma Client generation is handled via `postinstall` during build
+- For serverless, prefer providers with connection pooling enabled (Neon’s pooled connection string)
+
+### 3) Apply Prisma Migrations to Production
+
+From your local machine (safer and repeatable), run migrations against the production DB:
+
+```bash
+# Use the production DATABASE_URL temporarily in your shell
+export DATABASE_URL="postgres://user:pass@host:port/db"
+
+# Create initial migration from current schema if needed (one-time)
+# npx prisma migrate dev --name init
+
+# Apply all migrations to production
+npx prisma migrate deploy
+
+# Verify connection and inspect data
+npx prisma studio
+```
+
+Alternatively (CI/CD):
+- Add a deploy step that runs `prisma migrate deploy` with `DATABASE_URL` injected
+- Avoid interactive commands in serverless build steps
+
+### 4) Switch Read/Write Paths Incrementally
+
+Short-term plan:
+- Keep hotels/services read paths on JSON (existing behavior)
+- Use DB for payments (PaymentIntent) immediately (already supported)
+
+Medium-term plan:
+- Introduce admin tools to manage hotels/services, populate DB from JSON
+- Flip read paths to DB when data is verified
+
+Toggle for DB-backed reads:
+- Set `DATA_SOURCE=db` in environment to enable DB reads for hotels and services (falls back to JSON if DB unavailable)
+
+### 5) Backups and Access
+
+- Enable automated daily backups (provider setting)
+- Restrict database user to least privilege
+- Maintain a separate read-replica if analytics load increases
+
+### 6) Connection Management (Serverless)
+
+- Prefer a pooled connection string (Neon/Supabase) to avoid connection exhaustion
+- If using plain Postgres, consider a PgBouncer layer
+- Keep Prisma Client as a singleton per lambda to reuse connections
+
+### 7) Health Check
+
+Smoke-test the production DB after deploy:
+- Create a test PaymentIntent via the payment flow (sandbox)
+- Confirm a row appears in `PaymentIntent` with status INITIATED/PAID
+- Check logs for any connection or timeout issues
+
+### Reference
+- Schema: `prisma/schema.prisma`
+- Docs: `docs/ARCHITECTURE.md`, `docs/PAYMENT_SETUP.md`

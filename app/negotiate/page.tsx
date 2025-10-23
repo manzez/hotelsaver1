@@ -31,41 +31,67 @@ function NegotiatePageContent() {
   const [negotiationProgress, setNegotiationProgress] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const startAtRef = useRef<number>(Date.now())
+  const excellentNewsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const specialDealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const statusRef = useRef<NegStatus>(NEG_STATUS.PENDING)
 
   const isExpired = (status: NegStatus) => status === NEG_STATUS.EXPIRED
+
+  // Keep a live ref of status for timeout guards
+  useEffect(() => { statusRef.current = negStatus }, [negStatus])
 
   useEffect(() => {
     let cancelled = false
     
-    // Start negotiation process
+    // Mark start time and start negotiation process
+    startAtRef.current = Date.now()
     setNegStatus(NEG_STATUS.NEGOTIATING)
-    setMessage('🔄 Connecting to hotel representative... Thank you for your patience while we secure the best deal for you!')
-    
-    // Simulate negotiation progress
-    let progress = 0
+    const phaseMessages = [
+      '📞 Contacting hotel representative... We appreciate your patience!',
+      '💬 Negotiating the best possible price for you... Almost there!',
+      '🤝 Working hard to finalize your exclusive deal... Just a moment more!',
+      '✨ Securing your special discount... Thank you for waiting!'
+    ]
+    let msgIdx = 0
+    setMessage(phaseMessages[msgIdx])
+
+    // Simulate negotiation progress/messages, advancing every 1 second
     progressRef.current = setInterval(() => {
-      progress += Math.random() * 15 + 5 // Random progress 5-20%
-      if (progress >= 100) {
-        progress = 100
-        if (progressRef.current) {
-          clearInterval(progressRef.current)
-          progressRef.current = null
-        }
+      msgIdx = Math.min(phaseMessages.length - 1, msgIdx + 1)
+      setMessage(phaseMessages[msgIdx])
+      setNegotiationProgress(prev => Math.min(99, prev + Math.ceil(100 / phaseMessages.length)))
+    }, 1000)
+
+    // Schedule the early neutral success message at 4.5s and the "Excellent news" at 6s from start
+    if (excellentNewsTimeoutRef.current) {
+      clearTimeout(excellentNewsTimeoutRef.current)
+      excellentNewsTimeoutRef.current = null
+    }
+    if (specialDealTimeoutRef.current) {
+      clearTimeout(specialDealTimeoutRef.current)
+      specialDealTimeoutRef.current = null
+    }
+    const fourHalfSecFromStart = startAtRef.current + 4.5 * 1000
+    const sixSecFromStart = startAtRef.current + 6 * 1000
+    const delayForSpecialDeal = Math.max(0, fourHalfSecFromStart - Date.now())
+    const delayForExcellent = Math.max(0, sixSecFromStart - Date.now())
+
+    // Show neutral "secured a special deal" at 4.5s (but never before)
+    specialDealTimeoutRef.current = setTimeout(() => {
+      // Only show during negotiation/success (avoid after expiry/no-offer)
+      if (statusRef.current === NEG_STATUS.NEGOTIATING || statusRef.current === NEG_STATUS.SUCCESS) {
+        setMessage('✅ We\'ve secured a special deal. Confirming your price...')
       }
-      setNegotiationProgress(Math.min(100, progress))
-      
-      if (progress < 25) {
-        setMessage('📞 Contacting hotel representative... We appreciate your patience!')
-      } else if (progress < 50) {
-        setMessage('💬 Negotiating the best possible price for you... Almost there!')
-      } else if (progress < 75) {
-        setMessage('🤝 Working hard to finalize your exclusive deal... Just a moment more!')
-      } else if (progress < 95) {
-        setMessage('✨ Securing your special discount... Thank you for waiting!')
-      } else {
-        setMessage('🎉 Excellent news! We\'ve secured an amazing deal for you!')
+    }, delayForSpecialDeal)
+
+    // Do NOT say "Excellent news" before the 6th second
+    excellentNewsTimeoutRef.current = setTimeout(() => {
+      // Only show if still negotiating or already successful (avoid showing after expiry/no-offer)
+      if (statusRef.current === NEG_STATUS.NEGOTIATING || statusRef.current === NEG_STATUS.SUCCESS) {
+        setMessage('🎉 Excellent news! We\'ve secured an amazing deal for you! Confirming your price...')
       }
-    }, 400) // Slightly slower for better UX
+    }, delayForExcellent)
 
     ;(async () => {
       const res = await fetch('/api/negotiate', {
@@ -83,12 +109,24 @@ function NegotiatePageContent() {
       }
 
       if (data.status === 'discount' || data.status === 'success') {
-        setMessage('🎉 Excellent news! We\'ve secured an amazing deal for you! Confirming your price...')
+        // Respect the timing rules:
+        // - Show neutral "secured a special deal" at 4.5s
+        // - Show "Excellent news" at/after 6s
+        const now = Date.now()
+        const sixSecPassed = now - startAtRef.current >= 6000
+        if (sixSecPassed) {
+          // If we've already passed 6s, reflect "Excellent news" immediately
+          setMessage('🎉 Excellent news! We\'ve secured an amazing deal for you! Confirming your price...')
+        }
         setNegotiationProgress(100)
         setTimeout(() => {
           setBase(Number(data.baseTotal))
           setPrice(Number(data.discountedTotal))
-          setMessage(data.message)
+          // If 6 seconds already passed, keep/display "Excellent news"; otherwise keep a neutral success message
+          const passed = Date.now() - startAtRef.current >= 6000
+          if (!passed) {
+            setMessage('Your exclusive price is ready. Proceed to secure it now.')
+          }
           setProperty(data.property)
           setExpiresAt(Date.now() + 5 * 60 * 1000)
           setNegStatus(NEG_STATUS.SUCCESS)
@@ -108,6 +146,14 @@ function NegotiatePageContent() {
       if (progressRef.current) {
         clearInterval(progressRef.current)
         progressRef.current = null
+      }
+      if (excellentNewsTimeoutRef.current) {
+        clearTimeout(excellentNewsTimeoutRef.current)
+        excellentNewsTimeoutRef.current = null
+      }
+      if (specialDealTimeoutRef.current) {
+        clearTimeout(specialDealTimeoutRef.current)
+        specialDealTimeoutRef.current = null
       }
     }
   }, [propertyId])

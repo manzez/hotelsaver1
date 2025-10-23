@@ -1,10 +1,13 @@
-# HotelSaver.ng - Hotel Booking & Negotiation Platform
+# HotelSaver.ng – Hotel Booking & Negotiation Platform
 
 [![CI/CD Pipeline](https://github.com/manzez/hotelsaver1/actions/workflows/ci-cd-pipeline.yml/badge.svg)](https://github.com/manzez/hotelsaver1/actions/workflows/ci-cd-pipeline.yml)
 [![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://hotelsaverversion-azhmsv4o5-amanzes-projects-2bbd5fbf.vercel.app)
 [![Test Coverage](https://img.shields.io/badge/Test%20Coverage-150%2B%20Cases-brightgreen)](#-cicd-pipeline--automated-testing)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2.33-blue?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue?logo=typescript)](https://www.typescriptlang.org/)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC?logo=tailwindcss&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)
+![Playwright](https://img.shields.io/badge/Playwright-E2E-45ba4b?logo=playwright)
 
 ## 🌟 Welcome to HotelSaver.ng
 
@@ -36,7 +39,7 @@ To democratize travel in Nigeria by:
 - Event planners booking multiple rooms for weddings/conferences
 - International visitors exploring Nigeria's major cities
 
-### 💡 How It Works - The Magic Behind Negotiation
+### 💡 How It Works – The Magic Behind Negotiation
 
 ```
 1. 🔍 Smart Search → AI-powered hotel matching based on preferences
@@ -51,7 +54,7 @@ To democratize travel in Nigeria by:
 - **Negotiable hotels** (105+ properties) offer dynamic discounts based on availability, seasonality, and demand
 - **Time pressure** creates win-win scenarios for both travelers and hotels
 
-### 🎨 For New Developers - What You're Working On
+### 🎨 For New Developers – What You're Working On
 
 If you're joining our development team, you're building more than just another booking site. You're creating:
 
@@ -87,6 +90,23 @@ npm run test
 # 5. Build for production
 npm run build
 ```
+
+### 📚 Table of Contents
+
+- Welcome & Mission
+- Application Overview
+- Architecture & Key Features
+- User Journey
+- Key Pages & Components
+- Payments & Persistence
+- CI/CD & Automated Testing
+- Test Automation Suite
+- Development Setup
+- Database (Prisma)
+- API Documentation
+- Support & Contact
+- Version Information
+- Further Reading
 
 **🔥 Pro Tips for New Developers:**
 - Start by exploring the `/app` directory to understand the page structure
@@ -124,20 +144,23 @@ HotelSaver.ng is a Next.js 14 hotel booking platform that allows users to negoti
 - **Social Authentication**: Google, Facebook, Instagram login with NextAuth.js
 
 #### **Technical Stack**
-- **Frontend**: Next.js 14 (App Router), React 18, TypeScript
-- **Styling**: Tailwind CSS with custom utility classes
-- **Authentication**: NextAuth.js with OAuth providers (Google, Facebook, Instagram)
-- **State Management**: URL-based state with React hooks, localStorage persistence
-- **Date Handling**: react-datepicker with mobile fallbacks
-- **Image Handling**: SafeImage component with fallback support
-- **Deployment**: Vercel with automatic builds
+- Frontend: Next.js 14 (App Router), React 18, TypeScript
+- Styling: Tailwind CSS with custom utility classes
+- State management: URLSearchParams + React hooks (no global store)
+- Date handling: react-datepicker (SSR-safe client wrapper)
+- Images: Direct CDN URLs with SafeImage fallbacks
+- Server: Next.js route handlers (/app/api)
+- Database: Prisma (minimal PaymentIntent model)
+- Testing: Playwright E2E + API scripts
+- Deployment: Vercel (postinstall Prisma generate)
 
 #### **Business Logic**
-- **Pricing**: Nigerian Naira (₦) with 7.5% VAT on multi-night stays
-- **Discounts**: Selective negotiation system - premium hotels have fixed pricing, others offer 10-50% discounts
-- **Cities**: Lagos, Abuja, Port Harcourt, Owerri
-- **Budget Ranges**: Under ₦80k, ₦80k-₦130k, ₦130k-₦200k, ₦200k+
-- **Hotel Categories**: 120+ hotels with 15 premium properties having fixed pricing, others negotiable
+- Currency: Nigerian Naira (₦) with formatting via toLocaleString()
+- VAT: 7.5% applied to multi-night stays (rounded to nearest Naira)
+- Discounts: Default 15% unless overridden; time-limited 5-minute offers
+- Cities: Lagos, Abuja, Port Harcourt, Owerri (hardcoded)
+- Budgets: u80, 80_130, 130_200, 200p mapped to price ranges
+- Mixed price fields: basePriceNGN vs price handled defensively
 
 ### 🗺️ User Journey Flow
 
@@ -154,14 +177,15 @@ HotelSaver.ng is a Next.js 14 hotel booking platform that allows users to negoti
 ### 📱 Key Pages & Components
 
 #### **Primary Pages**
-- `/` - Homepage with hero search and featured hotels
-- `/search` - Hotel search results with smart filtering and negotiate/book buttons
-- `/hotel/[id]` - Hotel detail page with gallery and conditional pricing
-- `/negotiate` - Real-time negotiation with progress (fixed header overlap issue)
-- `/book` - Booking form with contact details and price preservation
-- `/services` - Local service marketplace with Nigerian providers
-- `/food` - Nigerian food ordering with traditional cuisine
-- `/auth/signin` - Authentication page with social login options
+- `/` – Homepage with hero + search, featured hotels, services
+- `/search` – Filtered results (city, budget, guests, stay type)
+- `/hotel/[id]` – Hotel details with conditional negotiate button
+- `/negotiate` – Discount negotiation + 5-minute countdown
+- `/book` – Booking form; preserves negotiated price
+- `/payment` – Choose Pay at Hotel or Paystack; summary & totals
+- `/payment/callback` – Handles Paystack callback and verification
+- `/confirmation` – Final confirmation with breakdown
+- `/services`, `/food` – Local marketplace sections
 
 #### **Core Components**
 - `SearchBar` - Complex form with device-specific date pickers and localStorage persistence
@@ -170,6 +194,63 @@ HotelSaver.ng is a Next.js 14 hotel booking platform that allows users to negoti
 - `CategoryTabs` - Navigation between Hotels/Services/Food
 - `UserMenu` - Authentication interface with social login and clean UI
 - `AuthProvider` - NextAuth.js wrapper for session management
+
+---
+
+## 💳 Payments & Persistence
+
+We implemented a minimal but production-aware Paystack integration with server-side verification and a persistence layer for payment events.
+
+### Paystack Flow
+1) Payment selection on `/payment` supports:
+   - Pay at Hotel (no online payment; deterministic E2E happy path)
+   - Paystack (server-initiated redirect to gateway)
+2) Server-side initialize route creates a PaymentIntent and returns the gateway URL
+3) User pays on Paystack and is redirected to `/payment/callback`
+4) Callback calls verification route; status is reconciled and user is sent to `/confirmation`
+5) Webhook receives final events and updates PaymentIntent for auditability
+
+### Implemented Endpoints
+- POST `/api/paystack/initialize`
+  - Validates payload (amount, email, metadata)
+  - Calls Paystack initialize; stores PaymentIntent with status INITIATED and reference
+  - Responds with authorization_url to redirect client
+- GET `/api/paystack/verify?reference=...`
+  - Verifies reference with Paystack; updates PaymentIntent status to PAID/FAILED
+  - Returns normalized result for client callback handling
+- POST `/api/paystack/webhook`
+  - Verifies `x-paystack-signature` (HMAC SHA512 with PAYSTACK_SECRET_KEY)
+  - Upserts PaymentIntent (PAID/FAILED) and stores raw payload for audit
+
+Client pages:
+- `/payment` – collects context, posts to initialize, then redirects
+- `/payment/callback` – reads reference/trxref, calls verify, forwards to `/confirmation`
+
+### Prisma Model (minimal)
+Model: PaymentIntent
+- provider: 'paystack'
+- reference: string (unique)
+- amountNGN: number
+- currency: 'NGN'
+- email: string
+- status: 'INITIATED' | 'PAID' | 'FAILED'
+- propertyId: string | null
+- context: JSON (booking details)
+- paidAt: Date | null
+- raw: JSON (last gateway payload)
+- createdAt/updatedAt: Date
+
+Migration notes:
+- Prisma Client is generated on install via `postinstall`
+- Apply migrations locally with `npx prisma migrate dev`
+- In serverless builds (Vercel), prefer `prisma db push` or managed migrations
+
+### Environment Variables
+- PAYSTACK_SECRET_KEY – required on server for initialize/verify/webhook
+- DATABASE_URL – Postgres connection for Prisma
+- (Optional) NEXT_PUBLIC_BASE_URL – if needed for absolute callback URLs
+
+See docs for step-by-step setup: docs/PAYMENT_SETUP.md and docs/PAYMENT_VALIDATION.md.
 
 ---
 
@@ -416,41 +497,56 @@ npm run build
 npm start
 ```
 
-### �️ Database (Postgres + Prisma)
+### 🧰 Technologies Used
 
-The app now includes a Postgres schema via Prisma for hotels, images, availability, negotiations, bookings, and payments. JSON files continue to power read paths, but DB endpoints are available for admin operations and future migration.
+- Next.js 14 (App Router) / React 18 / TypeScript
+- Tailwind CSS (brand utilities in `globals.css` / `tailwind.config.js`)
+- Prisma (minimal PaymentIntent model in `prisma/schema.prisma`)
+- Playwright (E2E happy-path in `tests/e2e`)
+- Paystack (initialize, verify, webhook routes under `/app/api/paystack/*`)
+- Vercel (serverless deployment)
 
-Quick setup:
+### 🗂️ Folder Structure
+
+```
+app/                    # App Router pages and API route handlers
+components/             # Reusable UI components (client)
+lib/                    # Business logic, utilities, prisma client
+public/                 # Static assets
+docs/                   # Documentation (architecture, payments, API)
+prisma/                 # Prisma schema
+tests/                  # Playwright tests and helpers
+```
+
+### 🔑 Environment Variables
+
+- DATABASE_URL – Postgres connection for Prisma
+- PAYSTACK_SECRET_KEY – server secret for initialize/verify/webhook
+- (Optional) NEXT_PUBLIC_BASE_URL – absolute URL for callbacks
+
+See `.env.example` for the complete list.
+
+### 🗄️ Database (Prisma)
+
+This project uses a minimal Prisma setup focused on payment tracking:
 
 1) Create .env
 - Copy .env.example to .env
 - Set DATABASE_URL to your Postgres instance
 
-2) Install Prisma deps (if not already)
-- npm install
+2) Generate client and run migrations
+- npm install (runs prisma generate via postinstall)
+- npx prisma migrate dev  # local iterative development
 
-3) Generate client and run migrations
-- npm run prisma:generate
-- npm run db:migrate  # for local dev
-- or npm run db:deploy # in hosted environments
-
-4) Seed hotels from lib.hotels.json
-- npm run db:seed
-
-5) Explore data
-- npm run db:studio
+3) Explore data
+- npx prisma studio
 
 Notes:
-- Cities map to enum: Lagos, Abuja, PortHarcourt, Owerri
-- Shelf price is populated from basePriceNGN/price in lib.hotels.json
-- Admin create endpoint (secured): POST /api/admin/hotels/create with x-admin-key
-- See prisma/schema.prisma for full model (Hotel, HotelImage, Availability, Negotiation, Booking, Payment)
+- Hotels and services are currently powered by static JSON (lib.hotels.json, lib.services.json)
+- The PaymentIntent model persists payment lifecycle events
+- Future work may move hotels/services into the DB for admin features
 
-Data source flag:
-- Set DATA_SOURCE=db in your environment to make search and negotiate read from Postgres.
-- Default is DATA_SOURCE=json. When DATA_SOURCE=db is set but DB is unavailable, code falls back to JSON seamlessly.
-
-### �🚀 CI/CD Development Workflow
+### 🧪 CI-friendly Development Workflow
 
 ```bash
 # Before pushing code, run regression tests
@@ -476,7 +572,7 @@ git push origin main      # Triggers automatic deployment
 
 ---
 
-## � API Documentation
+## 📚 API Documentation
 
 HotelSaver.ng provides comprehensive RESTful APIs for hotel booking, negotiation, and administration.
 
@@ -534,7 +630,7 @@ The OpenAPI specification at `/api/openapi` provides:
 
 ---
 
-## �📞 Support & Contact
+## 📞 Support & Contact
 
 - **Customer Support**: https://wa.me/2347077775545
 - **Email**: [Contact form on website]
@@ -547,10 +643,17 @@ The OpenAPI specification at `/api/openapi` provides:
 - **Application Version**: v9
 - **Next.js**: 14.2.33
 - **Node.js**: >=18.0.0
-- **Last Updated**: October 18, 2025
-- **Recent Updates**: 
-  - Fixed selective negotiate buttons (only show for discounted hotels)
-  - Resolved authentication server configuration errors
-  - Added search data persistence across navigation
-  - Fixed header overlap issue on negotiate page
-  - Deployed latest version to production
+- **Last Updated**: October 21, 2025
+- **Recent Updates**:
+  - Implemented Paystack initialize/verify routes and client callback
+  - Added secure webhook with signature verification and persistence
+  - Introduced minimal Prisma PaymentIntent model; enabled prisma generate on install
+  - Refactored booking → payment → confirmation flows; preserved negotiated totals
+  - Added Playwright happy-path test for Pay at Hotel flow
+
+---
+
+## 🧭 Further Reading
+- docs/ARCHITECTURE.md – Deep dive into flows, components, and state patterns
+- docs/PAYMENT_SETUP.md – Paystack setup, env, endpoints, webhook, Prisma
+- docs/PAYMENT_VALIDATION.md – Manual validation steps and hardening checklist

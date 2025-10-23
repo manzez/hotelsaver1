@@ -3,16 +3,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:lan": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start",
+    "start:lan": "next start -H 0.0.0.0 -p 3000",
     "lint": "next lint",
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
     "db:deploy": "prisma migrate deploy",
+    "db:deploy:prod": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:seed": "node scripts/db-seed.js",
+    "db:seed:services": "node scripts/db-seed-services.js",
     "db:reset": "prisma migrate reset --force && npm run db:seed",
+    "db:smoke": "node scripts/db-smoke.js",
+    "pack:design": "bash scripts/package-design-pack.sh",
     "availability:import": "echo 'Upload CSV to /api/admin/availability/import with x-admin-key header'",
     "update:prices": "node scripts/update-prices.js",
     "test": "cd tests && npx playwright test",
@@ -37,7 +43,8 @@
     "deploy:staging": "vercel",
     "deploy:production": "vercel --prod",
     "ci:setup": "npm ci && cd tests && npm ci && npx playwright install --with-deps",
-    "ci:test:all": "npm run test:regression && npm run report:full"
+    "ci:test:all": "npm run test:regression && npm run report:full",
+    "seed:apartments": "node scripts/seed-apartments.js"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

@@ -1,6 +1,8 @@
 'use client'
+import { Suspense } from 'react'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import CategoryTabs from '@/components/CategoryTabs'
 import SafeImage from '@/components/SafeImage'
@@ -21,7 +23,8 @@ type ServiceCard = {
   prices?: Array<{ name: string; amountNGN: number; duration?: string }>
 }
 
-export default function Services() {
+function ServicesInner() {
+  const sp = useSearchParams()
   const { addToCart, isInCart } = useCart()
   const [city, setCity] = useState('Lagos')
   const [q, setQ] = useState('')
@@ -35,20 +38,40 @@ export default function Services() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   async function run(targetCity = city, query = q, categoryFilter = '') {
+    // Try API first with a short timeout; if it fails or times out, fall back to local JSON
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 3000)
     try {
       setLoading(true)
       setError(null)
       const res = await fetch('/api/services/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ city: targetCity, query: categoryFilter || query })
+        body: JSON.stringify({ city: targetCity, query: categoryFilter || query }),
+        signal: controller.signal
       })
+      clearTimeout(timeout)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       setList((data?.results as ServiceCard[]) || [])
     } catch (e) {
-      setError('Could not load services. Please try again.')
-      setList([])
+      // Offline/dev fallback: use bundled JSON and filter client-side
+      try {
+        const mod: any = await import('../../lib.services.json')
+        const arr: any[] = (mod && mod.default) ? (mod.default as any[]) : Array.isArray(mod) ? (mod as any[]) : []
+        const qLower = String(categoryFilter || query || '').toLowerCase()
+        const filtered = arr
+          .filter(s => !targetCity || String(s.city) === targetCity)
+          .filter(s => !qLower || (String(s.title || '').toLowerCase().includes(qLower) || String(s.category || '').toLowerCase().includes(qLower)))
+          .slice(0, 60)
+        setList(filtered as ServiceCard[])
+        setError(null)
+      } catch (fallbackErr) {
+        setError('Could not load services. Please try again.')
+        setList([])
+      }
     } finally {
+      clearTimeout(timeout)
       setLoading(false)
     }
   }
@@ -106,6 +129,10 @@ export default function Services() {
 
   // Initial load
   useEffect(() => {
+    const urlCity = sp.get('city')
+    if (urlCity && cities.includes(urlCity)) {
+      setCity(urlCity)
+    }
     run()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -129,6 +156,8 @@ export default function Services() {
   return (
     <div className="py-8">
       <CategoryTabs active="services" />
+
+      
 
       <div className="flex items-center justify-between mt-4">
         <div>
@@ -381,5 +410,13 @@ export default function Services() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function Services() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-4 py-8">Loading…</div>}>
+      <ServicesInner />
+    </Suspense>
   )
 }

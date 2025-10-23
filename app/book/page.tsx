@@ -328,7 +328,7 @@ function BookPageContent() {
             />
           </div>
 
-          <button type="submit" className="btn-primary w-full" disabled={submitting || !form.name || !form.phone || !form.email}>
+          <button type="submit" className="btn-accent w-full" disabled={submitting || !form.name || !form.phone || !form.email}>
             {submitting ? 'Processing…' : '🔒 Confirm Booking'}
           </button>
 

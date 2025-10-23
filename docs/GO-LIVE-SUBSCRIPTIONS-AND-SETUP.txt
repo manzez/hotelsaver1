@@ -1,0 +1,122 @@
+Great question—here’s the lean, production-ready stack and what (if anything) you need to subscribe to in order to go live and safely handle real customer data.
+
+## Minimal Day-1 Stack (production-ready, low-cost)
+
+- Domain and DNS
+  - Cloudflare Registrar (cheap) or Namecheap for domain
+  - Use Cloudflare DNS (Free) for fast global DNS + TLS/HTTP/2 proxy if desired
+
+- Hosting (Next.js)
+  - Vercel (Hobby: $0 to start; Pro recommended for team/traffic, ~$20+/seat)
+  - Set region close to Nigeria (Frankfurt/London often best)
+
+- Payments
+  - Paystack (no monthly fee; per-transaction fees)
+  - Required: switch to live mode, add webhook URL, set webhook secret, whitelist your production domains
+
+- Database (for real customer data)
+  - Neon Postgres (Free tier is fine to start; upgrade later)
+  - Alternative: Supabase (Postgres + Auth + Storage, free to start)
+  - Use Prisma (already in repo) with migrate deploy and a daily backup plan
+
+- Email (transactional)
+  - Resend (Free tier) or Postmark/Mailgun (low-cost)
+  - Use for booking confirmations, admin alerts, receipts
+
+- Error tracking and monitoring
+  - Sentry (Free tier) for error tracking
+  - UptimeRobot (Free) for uptime checks
+  - Optional logs: Better Stack (Logtail) free tier or Vercel Logs
+
+- Rate limiting
+  - Upstash Redis (Free tier) if you want durable, shared rate limiting across regions (you already have rate limiting logic—this makes it production-robust)
+
+- Analytics (optional but helpful)
+  - Vercel Analytics (Free/Pro) or Plausible (Paid, privacy-friendly) or Google Analytics (Free, needs consent banner)
+
+- Storage/CDN (only if you start accepting uploads)
+  - Cloudinary, Supabase Storage, or Bunny (all low-cost)
+  - Not needed if you keep using Unsplash/static assets
+
+- WhatsApp support
+  - wa.me links: free, no subscription needed
+  - If you want the WhatsApp Business API: Meta’s Cloud API (first 1000 conversations/month free; then usage-based). Twilio is an alternative provider.
+
+## What to provision now (subscriptions and accounts)
+
+- Vercel account + GitHub integration (Hobby or Pro)
+- Domain (Cloudflare or Namecheap)
+- Paystack production account (activate live keys, set webhook)
+- Neon Postgres (or Supabase) database
+- Resend (or Postmark/Mailgun) transactional email
+- Sentry org (free) for error tracking
+- UptimeRobot monitors (free)
+- Optional: Upstash Redis for rate limiting
+
+You can launch on free tiers for everything except the domain and payment fees.
+
+## Production environment checklist
+
+- Environment variables (set in Vercel for each env)
+  - NEXTAUTH_URL, NEXTAUTH_SECRET
+  - PAYSTACK_SECRET_KEY, PAYSTACK_PUBLIC_KEY
+  - PAYSTACK_WEBHOOK_SECRET (and configure webhook to /api/paystack/webhook)
+  - DATABASE_URL (Neon/Supabase Postgres)
+  - ADMIN KEYS (x-admin-key, x-hotel-key) — rotate and store only in env
+  - Any optional: SENTRY_DSN, LOGTAIL_TOKEN, REDIS_URL (Upstash)
+
+- Database
+  - Create the DB (Neon/Supabase)
+  - Run migrations: prisma migrate deploy
+  - Seed minimal data if you move any dynamic content off JSON (you already have scripts)
+
+- Hosting
+  - Deploy to Vercel from GitHub main branch
+  - Set production region close to NG (fra/lhr)
+  - Custom domain connected in Vercel; DNS on Cloudflare or Vercel-managed
+  - Force HTTPS (default via Vercel), add security headers if needed
+
+- Webhooks (Paystack)
+  - Set production webhook URL
+  - Add and verify webhook secret
+  - Test a live small NGN charge to verify callback flow
+
+- Observability
+  - Sentry DSN configured; verify an intentional test error gets captured
+  - UptimeRobot monitor for https://yourdomain.com
+  - Logs: Vercel or Better Stack tail
+
+- Security & privacy
+  - Cookie settings: secure cookies on prod, SameSite=Lax/Strict as appropriate
+  - Rate limiting backed by Redis if you expect higher traffic
+  - PII minimization: store only what you need; redact PII from logs
+  - Backups: enable Neon scheduled backups or a daily pg_dump to S3/B2
+  - Policies: Terms of Service, Privacy Policy (NDPR-aligned for Nigeria), Cookie notice if using analytics
+  - Keys rotation policy: Paystack + admin keys (calendar reminder)
+
+## Nice-to-have soon after launch
+
+- Staging environment (separate Vercel project + separate DB)
+- Alerts: Sentry alert rules to Slack/Email
+- Analytics: Plausible or Vercel Analytics enabled
+- WAF/DDoS: Cloudflare proxy in front of your domain if desired
+- On-call basics: UptimeRobot SMS/email alerts to an admin group
+
+## Cost snapshot (typical early-stage)
+
+- Domain: ~$10–$20/year
+- Vercel: $0 (Hobby) to ~$20+/seat (Pro)
+- Neon/Supabase: $0 to ~$15/month as you grow
+- Resend/Postmark: $0 to small monthly
+- Sentry: $0 initially
+- Upstash: $0 initially
+- UptimeRobot: $0
+
+You can launch with one paid item (domain) and everything else on free tiers, paying only Paystack transaction fees as you process bookings.
+
+If you want, I can:
+- Set up the Vercel projects (dev/staging/prod), wire env vars, and add a simple “prod hardening” header config.
+- Provision Neon and run prisma migrations end-to-end.
+- Enable Sentry and UptimeRobot with sensible defaults.
+
+Tell me which providers you prefer (Neon vs Supabase, Resend vs Postmark), and I’ll wire it up.

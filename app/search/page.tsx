@@ -4,7 +4,10 @@ import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
 import HotelCardSkeleton from '@/components/HotelCardSkeleton'
 import SearchBar from '@/components/SearchBar'
+import ResultsSearchHeader from '@/components/ResultsSearchHeader'
 import { Suspense } from 'react'
+import CategoryTabs from '@/components/CategoryTabs'
+import MobileAutoScrollToResults from '@/components/MobileAutoScrollToResults'
 
 const TAX_RATE = 0.075 // 7.5% VAT (adjust if you need)
 
@@ -36,6 +39,8 @@ async function fetchHotels(params:URLSearchParams){
   const hotelQuery=params.get('hotelQuery')||''
   const budget=params.get('budget')||''
   const stayType=(params.get('stayType') as 'any'|'hotel'|'apartment')||'any'
+  const negotiating = params.get('negotiating') === '1'
+  const minStars = Number(params.get('minStars') || '0')
 
   // Base list from source (DB or JSON)
   let list = await listHotels({ city, budgetKey: budget || undefined, stayType })
@@ -44,6 +49,14 @@ async function fetchHotels(params:URLSearchParams){
   if (hotelQuery) {
     const q = hotelQuery.toLowerCase()
     list = list.filter(h => h.name.toLowerCase().includes(q))
+  }
+
+  // Extra filters based on chips
+  if (minStars > 0) {
+    list = list.filter(h => (h.stars || 0) >= minStars)
+  }
+  if (negotiating) {
+    list = list.filter(h => getDiscountFor(h.id) > 0)
   }
 
   return list
@@ -56,6 +69,13 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
   checkIn: string | null
   checkOut: string | null
 }) {
+  // Deterministic, demo-only review count based on id
+  const reviewCountFor = (id: string) => {
+    let hash = 0
+    for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) >>> 0
+    return 20 + (hash % 280) // 20 - 299
+  }
+
   if (hotels.length === 0) {
     const hotelQuery = params.get('hotelQuery')
     const city = params.get('city')
@@ -75,7 +95,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
+    <div id="results-start" data-testid="results-start" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 md:mt-6">
       {hotels.map(h => {
         const base = h.basePriceNGN
         const subtotal = nights > 0 ? base * nights : base
@@ -107,7 +127,26 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
               {/* Hotel info - fixed height */}
               <div className="flex-grow">
                 <h3 className="font-bold text-gray-900 mb-2 text-sm leading-tight h-10 line-clamp-2">{h.name}</h3>
-                <p className="text-gray-600 text-xs mb-3 h-4">📍 {h.city} • {h.type}</p>
+                <div className="text-xs text-gray-600 mb-3 h-4 flex items-center gap-3">
+                  <a
+                    href={`https://www.google.com/maps/search/${encodeURIComponent(h.name + ' ' + h.city)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 hover:bg-gray-200"
+                  >
+                    <svg className="w-3.5 h-3.5 text-brand-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0Z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <span className="text-gray-700">{h.city}</span>
+                  </a>
+                  <span className="inline-flex items-center gap-1 text-gray-600">
+                    <svg className="w-3.5 h-3.5 text-yellow-500" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.869 1.4-8.168L.132 9.21l8.2-1.192L12 .587z"/>
+                    </svg>
+                    <span>{reviewCountFor(h.id)} reviews</span>
+                  </span>
+                </div>
 
                 {/* Pricing Section - fixed layout to prevent jumping */}
                 <div className="mb-4">
@@ -135,7 +174,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
               {/* Fixed button area */}
               <div className="flex gap-2 mt-auto">
                 <Link 
-                  href={`/hotel/${h.id}`} 
+                  href={`/hotel/${h.id}?checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} 
                   className="flex-1 text-center py-2.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                 >
                   View Details
@@ -171,25 +210,80 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
   const checkIn = params.get('checkIn')
   const checkOut = params.get('checkOut')
   const nights = nightsBetween(checkIn, checkOut)
+  const cityParam = params.get('city') || ''
+  const hotelsHref = `/search?${params.toString()}`
+  const servicesHref = `/services${cityParam ? `?city=${encodeURIComponent(cityParam)}` : ''}`
+  const foodHref = `/food${cityParam ? `?city=${encodeURIComponent(cityParam)}` : ''}`
+
+  // Derive simple counts for filter chips
+  const negotiatingCount = hotels.filter(h => getDiscountFor(h.id) > 0).length
+  const fourPlusStars = hotels.filter(h => (h.stars || 0) >= 4).length
+  const apartmentsCount = hotels.filter(h => h.type === 'Apartment').length
+
+  // Helpers to build chip hrefs while preserving other params
+  const buildHref = (updates: Record<string,string|undefined>) => {
+    const p = new URLSearchParams(params)
+    Object.entries(updates).forEach(([k,v]) => {
+      if (v === undefined) p.delete(k)
+      else p.set(k, v)
+    })
+    return `/search?${p.toString()}`
+  }
+
+  const negotiatingActive = params.get('negotiating') === '1'
+  const minStarsActive = Number(params.get('minStars') || '0') >= 4
+  const apartmentsActive = (params.get('stayType') || '') === 'apartment'
 
   return (
-    <div className="container mx-auto px-4 py-8 min-h-screen">
-      {/* Search Bar for filtering */}
-      <div className="mb-8">
-        <SearchBar 
-          defaultCity={params.get('city') || ''}
-          defaultHotelQuery={params.get('hotelQuery') || ''}
-          defaultCheckIn={checkIn || ''}
-          defaultCheckOut={checkOut || ''}
-          defaultAdults={Number(params.get('adults')) || 2}
-          defaultChildren={Number(params.get('children')) || 0}
-          defaultRooms={Number(params.get('rooms')) || 1}
-          defaultBudget={params.get('budget') || 'u80'}
-          defaultStayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment') || 'any'}
-        />
+    <div className="container mx-auto px-4 py-2 md:py-6 min-h-screen">
+      <MobileAutoScrollToResults targetId="results-start" />
+      {/* Logo removed (already present globally) */}
+
+      {/* Centered toggle: Hotels / Services / Food above search box */}
+      <div className="mb-2 md:mb-4 flex justify-center">
+        <CategoryTabs active="hotels" hrefs={{ hotels: hotelsHref, services: servicesHref, food: foodHref }} />
       </div>
 
-      <div className="flex items-center justify-between mb-6">
+      {/* Compact search summary (mobile) + full search (desktop) */}
+      <div className="mb-3 md:mb-6">
+        <div className="md:hidden">
+          <ResultsSearchHeader
+            city={params.get('city') || ''}
+            checkIn={checkIn || ''}
+            checkOut={checkOut || ''}
+            adults={Number(params.get('adults')) || 2}
+            children={Number(params.get('children')) || 0}
+            rooms={Number(params.get('rooms')) || 1}
+            budget={params.get('budget') || 'u80'}
+            stayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment') || 'any'}
+          />
+        </div>
+        <div className="hidden md:block">
+          <SearchBar 
+            defaultCity={params.get('city') || ''}
+            defaultHotelQuery={params.get('hotelQuery') || ''}
+            defaultCheckIn={checkIn || ''}
+            defaultCheckOut={checkOut || ''}
+            defaultAdults={Number(params.get('adults')) || 2}
+            defaultChildren={Number(params.get('children')) || 0}
+            defaultRooms={Number(params.get('rooms')) || 1}
+            defaultBudget={params.get('budget') || 'u80'}
+            defaultStayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment') || 'any'}
+          />
+        </div>
+      </div>
+
+      {/* Horizontal filters strip */}
+      <div className="mb-3 overflow-x-auto -mx-4 px-4 pb-2 bg-transparent no-scrollbar">
+        <div className="flex gap-2 text-sm">
+          <Link href={buildHref({ stayType: 'hotel', negotiating: undefined, minStars: undefined })} className={`no-underline chip whitespace-nowrap ${params.get('stayType')==='hotel' && !negotiatingActive && !minStarsActive ? 'active' : ''}`}>Hotels {hotels.length}</Link>
+          <Link href={buildHref({ negotiating: negotiatingActive ? undefined : '1' })} className={`no-underline chip whitespace-nowrap ${negotiatingActive ? 'active' : ''}`}>Negotiating {negotiatingCount}</Link>
+          <Link href={buildHref({ minStars: minStarsActive ? undefined : '4' })} className={`no-underline chip whitespace-nowrap ${minStarsActive ? 'active' : ''}`}>4+ Stars {fourPlusStars}</Link>
+          <Link href={buildHref({ stayType: apartmentsActive ? 'any' : 'apartment' })} className={`no-underline chip whitespace-nowrap ${apartmentsActive ? 'active' : ''}`}>Apartments {apartmentsCount}</Link>
+        </div>
+      </div>
+
+  <div className="flex items-center justify-between mb-4 md:mb-6">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
             {(() => {

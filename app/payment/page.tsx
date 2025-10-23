@@ -116,7 +116,7 @@ function PaymentPageContent() {
       // Simulate payment processing
       await new Promise(resolve => setTimeout(resolve, 2000))
 
-      if (selectedPayment === 'pay-at-hotel') {
+  if (selectedPayment === 'pay-at-hotel') {
         // For pay at hotel, just create the booking
         const bookingResponse = await fetch('/api/book', {
           method: 'POST',
@@ -138,8 +138,21 @@ function PaymentPageContent() {
 
         const booking = await bookingResponse.json()
         
-        // Redirect to confirmation page
-        router.push(`/confirmation?bookingId=${booking.bookingId}&paymentMethod=pay-at-hotel`)
+        // Redirect to confirmation page with full context and customer name
+        const qp = new URLSearchParams({
+          bookingId: String(booking.bookingId || `BK${Date.now()}`),
+          paymentMethod: 'pay-at-hotel',
+          name: customerInfo.name,
+          propertyId,
+          price: String(negotiatedPrice),
+          originalPrice: String(originalPrice),
+          checkIn,
+          checkOut,
+          adults: String(adults),
+          children: String(children),
+          rooms: String(rooms),
+        })
+        router.push(`/confirmation?${qp.toString()}`)
       } else if (selectedPayment === 'paystack') {
         // Initialize Paystack transaction via server
         const context = {
@@ -151,6 +164,7 @@ function PaymentPageContent() {
           adults: String(adults),
           children: String(children),
           rooms: String(rooms),
+          name: customerInfo.name,
           // you can include more fields if needed
         }
         const initRes = await fetch('/api/paystack/initialize', {
@@ -168,7 +182,20 @@ function PaymentPageContent() {
       } else {
         // Placeholder for other providers
         alert(`Redirecting to ${selectedPayment} for payment of ${naira(total)}...`)
-        router.push(`/confirmation?bookingId=BK${Date.now()}&paymentMethod=${selectedPayment}`)
+        const qp = new URLSearchParams({
+          bookingId: `BK${Date.now()}`,
+          paymentMethod: selectedPayment,
+          name: customerInfo.name,
+          propertyId,
+          price: String(negotiatedPrice),
+          originalPrice: String(originalPrice),
+          checkIn,
+          checkOut,
+          adults: String(adults),
+          children: String(children),
+          rooms: String(rooms),
+        })
+        router.push(`/confirmation?${qp.toString()}`)
       }
     } catch (error) {
       console.error('Payment error:', error)
@@ -380,7 +407,7 @@ function PaymentPageContent() {
                     disabled={!selectedPayment || isProcessing}
                     className={`flex-1 py-3 rounded-lg font-medium transition-colors ${
                       selectedPayment && !isProcessing
-                        ? 'bg-brand-green text-white hover:bg-brand-dark'
+                        ? 'bg-blue-600 text-white hover:bg-blue-700'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
                   >

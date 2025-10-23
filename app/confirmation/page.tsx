@@ -5,6 +5,30 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState, Suspense } from 'react'
 import { HOTELS } from '@/lib/data'
 
+// Minimal address directory for directions (can be expanded or moved to a shared util)
+const HOTEL_ADDRESSES: Record<string, { address: string; landmarks: string; phone: string }> = {
+  'eko-hotels-and-suites-lagos': {
+    address: '1415 Adetokunbo Ademola Street, Victoria Island, Lagos',
+    landmarks: 'Near Tafawa Balewa Square, opposite Lagos Island',
+    phone: '+234 1 277 7000'
+  },
+  'transcorp-hilton-abuja-abuja': {
+    address: '1 Aguiyi Ironsi Street, Maitama District, Abuja',
+    landmarks: 'Near National Assembly Complex, Central Business District',
+    phone: '+234 9 461 0900'
+  },
+  'golden-tulip-port-harcourt-portharcourt': {
+    address: '1 Stadium Road, GRA Phase IV, Port Harcourt',
+    landmarks: 'Near Liberation Stadium, Government Residential Area',
+    phone: '+234 84 817 777'
+  },
+  'protea-hotel-owerri-owerri': {
+    address: 'Plot 1, Ikenegbu Layout, New Owerri, Imo State',
+    landmarks: 'Near Imo State University, New Owerri axis',
+    phone: '+234 83 828 888'
+  }
+}
+
 function naira(n: number) {
   return `₦${Math.round(n).toLocaleString()}`
 }
@@ -24,6 +48,7 @@ function ConfirmationPageContent() {
   const bookingId = searchParams.get('bookingId') || ''
   const paymentMethod = searchParams.get('paymentMethod') || ''
   const propertyId = searchParams.get('propertyId') || ''
+  const customerName = searchParams.get('name') || ''
   const negotiatedPrice = Number(searchParams.get('price')) || 0
   const originalPriceParam = Number(searchParams.get('originalPrice')) || 0
   const checkIn = searchParams.get('checkIn')
@@ -33,12 +58,18 @@ function ConfirmationPageContent() {
   const rooms = searchParams.get('rooms') || '1'
 
   const hotel = useMemo(() => HOTELS.find(h => h.id === propertyId), [propertyId])
+  const hotelInfo = HOTEL_ADDRESSES[propertyId] || { address: '', landmarks: '', phone: '' }
   const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
   const nights = useMemo(() => (nightsBetween(checkIn, checkOut) || 1), [checkIn, checkOut])
   const subtotal = negotiatedPrice * nights
   const tax = nights > 1 ? Math.round(subtotal * 0.075) : 0
   const total = subtotal + tax
   const savings = Math.max(0, originalPrice - negotiatedPrice)
+
+  const directionsUrl = useMemo(() => {
+    const q = [hotel?.name, hotelInfo.address || hotel?.city].filter(Boolean).join(' ')
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
+  }, [hotel?.name, hotel?.city, hotelInfo.address])
 
   useEffect(() => {
     // Simulate sending confirmation email
@@ -74,6 +105,21 @@ function ConfirmationPageContent() {
                 : 'Payment successful! Your hotel reservation is confirmed.'
               }
             </p>
+            {/* Polite thank you with enhanced styling and visibility */}
+            {customerName ? (
+              <div className="mt-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 border border-green-200">
+                  <span className="text-sm text-gray-700">Thank you,</span>
+                  <span className="text-base md:text-lg font-bold text-brand-green">{customerName}</span>
+                  <span className="hidden sm:inline text-sm text-gray-700">— we truly appreciate your booking.</span>
+                </div>
+                <div className="sm:hidden text-xs text-gray-600 mt-2">We truly appreciate your booking.</div>
+              </div>
+            ) : (
+              <div className="mt-3 text-sm font-medium text-gray-700">
+                Thank you for choosing HotelSaver.ng. We truly appreciate your booking.
+              </div>
+            )}
           </div>
 
           {/* Booking Details Card */}
@@ -213,6 +259,47 @@ function ConfirmationPageContent() {
               <p>• Free cancellation up to 24 hours before check-in</p>
             </div>
           </div>
+
+          {/* Directions & Share */}
+          {hotel && (
+            <div className="bg-white rounded-xl shadow-sm p-6 mb-8 text-left">
+              <h3 className="font-semibold text-gray-900 mb-3">Directions to {hotel.name}</h3>
+              {hotelInfo.address && (
+                <>
+                  <div className="text-sm font-medium text-gray-700 mb-1">Hotel: {hotel.name}</div>
+                  <p className="text-sm text-gray-700">{hotelInfo.address}</p>
+                  {hotelInfo.landmarks && (
+                    <p className="text-xs text-gray-500 mt-1">Near: {hotelInfo.landmarks}</p>
+                  )}
+                </>
+              )}
+              <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="btn-primary sm:flex-1 text-center">🗺️ Get Directions</a>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(`Directions to ${hotel.name}: ${directionsUrl}`)}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="btn-ghost sm:flex-1 text-center"
+                >
+                  📱 Share via WhatsApp
+                </a>
+                <a
+                  href={`mailto:?subject=${encodeURIComponent(`Directions to ${hotel.name}`)}&body=${encodeURIComponent(`Here are the directions to ${hotel.name}:
+${directionsUrl}
+${hotelInfo.address ? `Address: ${hotelInfo.address}` : ''}`)}`}
+                  className="btn-ghost sm:flex-1 text-center"
+                >
+                  ✉️ Share via Email
+                </a>
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(directionsUrl)}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="btn-ghost sm:flex-1 text-center"
+                >
+                  👍 Share on Facebook
+                </a>
+              </div>
+            </div>
+          )}
 
           {/* Customer Support */}
           <div className="bg-gray-100 rounded-xl p-6 mb-8">
