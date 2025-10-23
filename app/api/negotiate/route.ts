@@ -2,6 +2,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getHotelById } from '@/lib/hotels-source';
 import { getDiscountFor } from '@/lib/discounts';
+import { signNegotiationOffer } from '@/lib/negotiation'
+import { allowIp } from '@/lib/rate-limit'
 
 type Hotel = {
   id: string;
@@ -17,6 +19,16 @@ type Hotel = {
 
 export async function POST(req: NextRequest) {
   try {
+    // Lightweight IP-based rate limiting
+    const ip = (req.ip || req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown'
+    const rl = allowIp(ip, { capacity: 12, refillPerSec: 0.2 }) // ~12/min
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { status: 'no-offer', reason: 'rate-limited' },
+        { status: 429, headers: { 'Retry-After': '10' } }
+      )
+    }
+
     const { propertyId } = await req.json();
 
     if (!propertyId || typeof propertyId !== 'string') {
@@ -61,6 +73,14 @@ export async function POST(req: NextRequest) {
     }
 
     const discounted = Math.round(base * (1 - discount));
+    const expiresAtMs = Date.now() + 5 * 60 * 1000
+    const negotiationToken = signNegotiationOffer({
+      propertyId,
+      baseTotal: base,
+      discountedTotal: discounted,
+      discountRate: discount,
+      expiresAt: expiresAtMs,
+    })
 
     return NextResponse.json({
       status: 'discount', // Changed from 'success' to match test expectations
@@ -73,7 +93,8 @@ export async function POST(req: NextRequest) {
         complimentaryGifts: true
       },
       message: `Great news! We negotiated ${Math.round(discount * 100)}% off + FREE car wash + complimentary gifts!`,
-      expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+      expiresAt: new Date(expiresAtMs).toISOString(),
+      negotiationToken,
       property: { 
         id: property.id, 
         name: property.name, 

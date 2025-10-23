@@ -26,6 +26,7 @@ function NegotiatePageContent() {
   const [price, setPrice] = useState<number | null>(null)
   const [message, setMessage] = useState<string>('')
   const [property, setProperty] = useState<any>(null)
+  const [negotiationToken, setNegotiationToken] = useState<string>('')
   const [expiresAt, setExpiresAt] = useState<number | null>(null)
   const [remaining, setRemaining] = useState<number>(0)
   const [negotiationProgress, setNegotiationProgress] = useState(0)
@@ -108,7 +109,7 @@ function NegotiatePageContent() {
         progressRef.current = null
       }
 
-      if (data.status === 'discount' || data.status === 'success') {
+  if (data.status === 'discount' || data.status === 'success') {
         // Respect the timing rules:
         // - Show neutral "secured a special deal" at 4.5s
         // - Show "Excellent news" at/after 6s
@@ -128,7 +129,13 @@ function NegotiatePageContent() {
             setMessage('Your exclusive price is ready. Proceed to secure it now.')
           }
           setProperty(data.property)
-          setExpiresAt(Date.now() + 5 * 60 * 1000)
+          if (data.expiresAt) {
+            const t = new Date(data.expiresAt).getTime()
+            setExpiresAt(isNaN(t) ? Date.now() + 5 * 60 * 1000 : t)
+          } else {
+            setExpiresAt(Date.now() + 5 * 60 * 1000)
+          }
+          setNegotiationToken(String(data.negotiationToken || ''))
           setNegStatus(NEG_STATUS.SUCCESS)
         }, 7000)
       } else if (data.status === 'no-deals') {
@@ -194,7 +201,7 @@ function NegotiatePageContent() {
 
         {/* Negotiation in progress */}
         {negStatus === NEG_STATUS.NEGOTIATING && (
-          <div className="space-y-6">
+          <div className="space-y-6" data-testid="negotiation-loading">
             <div className="card p-6 text-center">
               <div className="animate-spin w-12 h-12 border-4 border-brand-green border-t-transparent rounded-full mx-auto mb-4"></div>
               <div className="text-xl font-semibold text-gray-900 mb-2">{message}</div>
@@ -240,7 +247,7 @@ function NegotiatePageContent() {
 
         {/* Success - Deal secured */}
         {negStatus === NEG_STATUS.SUCCESS && (
-          <div className="card p-6">
+          <div className="card p-6" data-testid="negotiation-result">
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🎉</span>
@@ -261,15 +268,15 @@ function NegotiatePageContent() {
               
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-700">Original Price:</span>
-                <span className="line-through text-gray-500">₦{base?.toLocaleString()}</span>
+                <span className="line-through text-gray-500" data-testid="original-price">₦{base?.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-700">Your Negotiated Price:</span>
-                <span className="text-2xl font-bold text-brand-green">₦{price?.toLocaleString()}</span>
+                <span className="text-2xl font-bold text-brand-green" data-testid="discounted-price">₦{price?.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center mb-4">
                 <span className="text-gray-700">You Save:</span>
-                <span className="text-xl font-bold text-red-600">₦{(((base ?? 0) - (price ?? 0)) as number).toLocaleString()}</span>
+                <span className="text-xl font-bold text-red-600" data-testid="savings-amount">₦{(((base ?? 0) - (price ?? 0)) as number).toLocaleString()}</span>
               </div>
               
               <div className="border-t border-green-200 pt-3">
@@ -289,7 +296,7 @@ function NegotiatePageContent() {
 
             <div className="flex flex-col gap-3">
               <div className="text-center text-sm text-gray-600">
-                ⏰ This exclusive offer expires in <span className="font-bold text-red-600">{mmss}</span>
+                ⏰ This exclusive offer expires in <span className="font-bold text-red-600" data-testid="countdown-timer">{mmss}</span>
               </div>
               <button
                 disabled={isExpired(negStatus)}
@@ -306,17 +313,19 @@ function NegotiatePageContent() {
                       checkOut: sp.get('checkOut') || '',
                       adults: sp.get('adults') || '2',
                       children: sp.get('children') || '0',
-                      rooms: sp.get('rooms') || '1'
+                      rooms: sp.get('rooms') || '1',
+                      negotiationToken
                     })
                     router.push(`/payment?${paymentParams.toString()}`)
                   }, 100)
                 }}
                 className={`btn-primary w-full ${isExpired(negStatus) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                data-testid="book-now-button"
               >
                 {isExpired(negStatus) ? 'Offer Expired' : '💳 Proceed to Payment'}
               </button>
               {isExpired(negStatus) && (
-                <div className="text-center text-red-600 text-sm">
+                <div className="text-center text-red-600 text-sm" data-testid="expired-message">
                   This offer has expired. Please try negotiating again.
                 </div>
               )}
@@ -326,7 +335,7 @@ function NegotiatePageContent() {
 
         {/* No deals available (Abuja) */}
         {negStatus === NEG_STATUS.NO_DEALS && (
-          <div className="card p-6 text-center">
+          <div className="card p-6 text-center" data-testid="no-offer-message">
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl">😔</span>
             </div>
@@ -351,7 +360,7 @@ function NegotiatePageContent() {
               <span className="text-2xl">🤷‍♂️</span>
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">Sorry, No Discount Available for this Hotel Today</h2>
-            <p className="text-gray-600 mb-4">{message}</p>
+            <p className="text-gray-600 mb-4" data-testid="no-offer-message">{message}</p>
             <div className="flex gap-3 justify-center">
               <button
                 onClick={() => {
@@ -359,6 +368,7 @@ function NegotiatePageContent() {
                   setTimeout(() => window.location.reload(), 100)
                 }}
                 className="btn-ghost"
+                data-testid="retry-negotiation"
               >
                 Try Again
               </button>

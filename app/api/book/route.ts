@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { verifyNegotiationToken } from '@/lib/negotiation'
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,6 +20,28 @@ export async function POST(req: NextRequest) {
       // Try to parse as JSON by default
       payload = await req.json();
     }
+
+    // Verify negotiation token
+    const token = String(payload?.negotiationToken || '')
+    const verified = verifyNegotiationToken(token)
+    if (!verified.ok) {
+      return NextResponse.json(
+        { status: 'no-offer', reason: verified.reason || 'invalid-token' },
+        { status: 400 }
+      )
+    }
+
+    // Optional: ensure propertyId matches token
+    if (payload?.propertyId && payload.propertyId !== verified.payload.propertyId) {
+      return NextResponse.json(
+        { status: 'no-offer', reason: 'mismatched-property' },
+        { status: 400 }
+      )
+    }
+
+    // We trust the discountedTotal from the signed token
+    payload.negotiatedPrice = verified.payload.discountedTotal
+    payload.originalPrice = verified.payload.baseTotal
 
     // Generate unique booking ID
     const bookingId = 'BK' + Date.now();

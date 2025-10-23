@@ -47,6 +47,8 @@ function ConfirmationPageContent() {
   
   const bookingId = searchParams.get('bookingId') || ''
   const paymentMethod = searchParams.get('paymentMethod') || ''
+  const status = searchParams.get('status') || ''
+  const reference = searchParams.get('reference') || ''
   const propertyId = searchParams.get('propertyId') || ''
   const customerName = searchParams.get('name') || ''
   const negotiatedPrice = Number(searchParams.get('price')) || 0
@@ -58,6 +60,7 @@ function ConfirmationPageContent() {
   const rooms = searchParams.get('rooms') || '1'
 
   const hotel = useMemo(() => HOTELS.find(h => h.id === propertyId), [propertyId])
+  const [paidAt, setPaidAt] = useState<string | null>(null)
   const hotelInfo = HOTEL_ADDRESSES[propertyId] || { address: '', landmarks: '', phone: '' }
   const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
   const nights = useMemo(() => (nightsBetween(checkIn, checkOut) || 1), [checkIn, checkOut])
@@ -80,6 +83,22 @@ function ConfirmationPageContent() {
     return () => clearTimeout(timer)
   }, [])
 
+  // Try to look up paidAt from our server if we have a reference and this was a paid paystack flow
+  useEffect(() => {
+    let cancelled = false
+    const fetchPaidAt = async () => {
+      if (paymentMethod !== 'paystack' || status !== 'paid' || !reference) return
+      try {
+        const res = await fetch(`/api/payments/intent?reference=${encodeURIComponent(reference)}`)
+        const data = await res.json().catch(() => ({}))
+        const ts = data?.paidAt
+        if (!cancelled && ts) setPaidAt(ts)
+      } catch {}
+    }
+    fetchPaidAt()
+    return () => { cancelled = true }
+  }, [paymentMethod, status, reference])
+
   const paymentMethodNames: { [key: string]: string } = {
     'paystack': 'Paystack',
     'flutterwave': 'Flutterwave',
@@ -93,18 +112,32 @@ function ConfirmationPageContent() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto text-center">
           
-          {/* Success Icon */}
+          {/* Status Icon */}
           <div className="mb-8">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl text-green-600">✅</span>
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
-            <p className="text-gray-600">
-              {paymentMethod === 'pay-at-hotel' 
-                ? 'Your reservation has been secured. Pay when you check in.'
-                : 'Payment successful! Your hotel reservation is confirmed.'
-              }
-            </p>
+            {paymentMethod === 'paystack' && status === 'failed' ? (
+              <>
+                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-4xl text-red-600">❌</span>
+                </div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Payment Failed</h1>
+                <p className="text-gray-600">
+                  We couldn't complete your payment. No charges were made. You can try again or choose Pay at Hotel.
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-4xl text-green-600">✅</span>
+                </div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
+                <p className="text-gray-600">
+                  {paymentMethod === 'pay-at-hotel' 
+                    ? 'Your reservation has been secured. Pay when you check in.'
+                    : 'Payment successful! Your hotel reservation is confirmed.'
+                  }
+                </p>
+              </>
+            )}
             {/* Polite thank you with enhanced styling and visibility */}
             {customerName ? (
               <div className="mt-4">
@@ -138,9 +171,13 @@ function ConfirmationPageContent() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Status:</span>
-                    <span className="text-green-600 font-medium">
-                      {paymentMethod === 'pay-at-hotel' ? 'Reserved' : 'Paid & Confirmed'}
-                    </span>
+                    {paymentMethod === 'paystack' && status === 'failed' ? (
+                      <span className="text-red-600 font-medium">Payment Failed</span>
+                    ) : (
+                      <span className="text-green-600 font-medium">
+                        {paymentMethod === 'pay-at-hotel' ? 'Reserved' : 'Paid & Confirmed'}
+                      </span>
+                    )}
                   </div>
                   {hotel && (
                     <div className="flex justify-between">
@@ -203,6 +240,12 @@ function ConfirmationPageContent() {
                     <div className="flex items-center gap-2">
                       <span className="text-orange-500">💳</span>
                       <span>Bring payment for check-in</span>
+                    </div>
+                  )}
+                  {paymentMethod === 'paystack' && status === 'failed' && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-orange-500">↩️</span>
+                      <span>Return to payment and try another method</span>
                     </div>
                   )}
                 </div>
@@ -321,18 +364,37 @@ ${hotelInfo.address ? `Address: ${hotelInfo.address}` : ''}`)}`}
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/"
-              className="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              Book Another Hotel
-            </Link>
-            <Link
-              href="/services"
-              className="flex-1 py-3 bg-brand-green text-white rounded-lg hover:bg-brand-dark transition-colors"
-            >
-              Book Local Services
-            </Link>
+            {paymentMethod === 'paystack' && status === 'failed' ? (
+              <>
+                <Link
+                  href={`/payment?propertyId=${propertyId}`}
+                  className="flex-1 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-center"
+                >
+                  Retry Payment
+                </Link>
+                <Link
+                  href="/"
+                  className="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-center"
+                >
+                  Back to Home
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/"
+                  className="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-center"
+                >
+                  Book Another Hotel
+                </Link>
+                <Link
+                  href="/services"
+                  className="flex-1 py-3 bg-brand-green text-white rounded-lg hover:bg-brand-dark transition-colors text-center"
+                >
+                  Book Local Services
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Booking ID Reference */}
@@ -345,6 +407,31 @@ ${hotelInfo.address ? `Address: ${hotelInfo.address}` : ''}`)}`}
           </div>
         </div>
       </div>
+
+            {/* Payment Receipt (Paystack paid) */}
+            {paymentMethod === 'paystack' && status === 'paid' && (
+              <div className="mt-6 border-t pt-6 text-left">
+                <h3 className="font-semibold text-gray-900 mb-2">Payment Details</h3>
+                <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Provider:</span>
+                    <span className="font-medium">Paystack</span>
+                  </div>
+                  {reference && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Reference:</span>
+                      <span className="font-mono">{reference}</span>
+                    </div>
+                  )}
+                  {paidAt && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Paid at:</span>
+                      <span className="font-medium">{new Date(paidAt).toLocaleString()}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
     </div>
   )
 }

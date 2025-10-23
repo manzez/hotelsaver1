@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { verifyNegotiationToken } from '@/lib/negotiation'
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,6 +22,18 @@ export async function POST(req: NextRequest) {
 
     if (!amount || !email) {
       return NextResponse.json({ error: 'amount and email required' }, { status: 400 })
+    }
+
+    // Verify negotiation token in context before proceeding
+    const token = String(context?.negotiationToken || '')
+    const verified = verifyNegotiationToken(token)
+    if (!verified.ok) {
+      return NextResponse.json({ error: 'invalid negotiation token', reason: verified.reason }, { status: 400 })
+    }
+
+    // Optional sanity: ensure context contains same propertyId
+    if (context?.propertyId && context.propertyId !== verified.payload.propertyId) {
+      return NextResponse.json({ error: 'mismatched propertyId' }, { status: 400 })
     }
 
     const qs = new URLSearchParams(context).toString()

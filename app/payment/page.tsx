@@ -35,6 +35,7 @@ function PaymentPageContent() {
   // Get booking details from URL params
   const propertyId = searchParams.get('propertyId') || ''
   const negotiatedPrice = Number(searchParams.get('price')) || 0
+  const negotiationToken = searchParams.get('negotiationToken') || ''
   const hotel = HOTELS.find(h => h.id === propertyId)
   const originalPriceParam = Number(searchParams.get('originalPrice')) || 0
   const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
@@ -105,6 +106,8 @@ function PaymentPageContent() {
     )
   }
 
+  const hasValidToken = Boolean(negotiationToken)
+
   const handlePayment = async () => {
     if (!selectedPayment) {
       alert('Please select a payment method')
@@ -136,6 +139,7 @@ function PaymentPageContent() {
             adults,
             children,
             rooms,
+            negotiationToken,
             paymentMethod: 'pay-at-hotel',
             customerInfo,
             total
@@ -175,6 +179,7 @@ function PaymentPageContent() {
           children: String(children),
           rooms: String(rooms),
           name: customerInfo.name,
+          negotiationToken,
           // you can include more fields if needed
         }
         const initRes = await fetch('/api/paystack/initialize', {
@@ -414,9 +419,9 @@ function PaymentPageContent() {
                   </Link>
                   <button
                     onClick={handlePayment}
-                    disabled={!selectedPayment || isProcessing}
+                    disabled={!selectedPayment || isProcessing || !hasValidToken}
                     className={`flex-1 py-3 rounded-lg font-medium transition-colors ${
-                      selectedPayment && !isProcessing
+                      selectedPayment && !isProcessing && hasValidToken
                         ? 'bg-blue-600 text-white hover:bg-blue-700'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
@@ -427,12 +432,18 @@ function PaymentPageContent() {
                         Processing...
                       </span>
                     ) : selectedPayment === 'pay-at-hotel' ? (
-                      'Confirm Booking'
+                      hasValidToken ? 'Confirm Booking' : 'Token required'
                     ) : (
-                      `Pay ₦${total.toLocaleString()}`
+                      hasValidToken ? `Pay ₦${total.toLocaleString()}` : 'Token required'
                     )}
                   </button>
                 </div>
+
+                {!hasValidToken && (
+                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-900">
+                    Your negotiation token is missing or expired. Please re-run negotiation to secure a fresh price.
+                  </div>
+                )}
 
                 {/* Security Notice */}
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg">
