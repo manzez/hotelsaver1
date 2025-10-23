@@ -21,6 +21,7 @@ function nightsBetween(checkIn?: string | null, checkOut?: string | null) {
 function PaymentPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const hasPaystack = !!process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
   
   const [selectedPayment, setSelectedPayment] = useState<string>('')
   const [isProcessing, setIsProcessing] = useState(false)
@@ -89,6 +90,11 @@ function PaymentPageContent() {
     }
   ]
 
+  // Hide Paystack option entirely when no public key is configured
+  const visibleMethods = useMemo(() => {
+    return paymentMethods.filter(m => (m.id === 'paystack' ? hasPaystack : true))
+  }, [hasPaystack])
+
   if (!hotel) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
@@ -154,6 +160,10 @@ function PaymentPageContent() {
         })
         router.push(`/confirmation?${qp.toString()}`)
       } else if (selectedPayment === 'paystack') {
+        if (!hasPaystack) {
+          alert('Online card payment is not available right now. Please choose Pay at Hotel.')
+          return
+        }
         // Initialize Paystack transaction via server
         const context = {
           propertyId,
@@ -354,7 +364,7 @@ function PaymentPageContent() {
                 <div className="mb-8">
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Choose Payment Method</h3>
                   <div className="space-y-3">
-                    {paymentMethods.map((method) => (
+                    {visibleMethods.map((method) => (
                       <div
                         key={method.id}
                         className={`border rounded-lg p-4 cursor-pointer transition-all ${

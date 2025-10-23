@@ -2,6 +2,7 @@
 import './globals.css'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import type { Metadata } from 'next'
 // import Chatbot from '@/components/Chatbot'
 // import AIChatbot from '@/components/AIChatbot'
@@ -40,6 +41,25 @@ export default function RootLayout({children}:{children:React.ReactNode}){
   return(
     <html lang='en' className={inter.className}>
       <body className='min-h-screen bg-gray-50 text-gray-900'>
+        {/* Optional Google Analytics (injected only when NEXT_PUBLIC_GA_ID is set) */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
         <AuthProvider>
           <CartProvider>
             <ClientLayout>{children}</ClientLayout>
