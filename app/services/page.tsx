@@ -159,7 +159,7 @@ function ServicesInner() {
 
       
 
-      <div className="flex items-center justify-between mt-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4">
         <div>
           <h1 className="text-2xl font-bold">Services in Nigeria</h1>
           <div className="text-sm text-gray-600">
@@ -254,7 +254,7 @@ function ServicesInner() {
             <select
               value={city}
               onChange={e => setCity(e.target.value)}
-              className="select md:w-48"
+              className="select md:w-48 h-12"
               aria-label="City"
             >
               {cities.map(c => (
@@ -266,11 +266,11 @@ function ServicesInner() {
               value={q}
               onChange={e => setQ(e.target.value)}
               placeholder="Type of service (e.g. massage, hair, translator)"
-              className="input flex-1"
+              className="input flex-1 h-12"
               aria-label="Service query"
             />
 
-            <button onClick={() => run(city, q)} className="btn-primary">
+            <button onClick={() => run(city, q)} className="btn-primary h-12">
               Search
             </button>
           </div>
@@ -354,7 +354,7 @@ function ServicesInner() {
                         </span>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-left md:text-right">
                       <div className="text-lg font-bold">
                         ₦{((s.prices?.[0]?.amountNGN || 0) as number).toLocaleString()}
                       </div>

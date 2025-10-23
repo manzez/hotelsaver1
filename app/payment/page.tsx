@@ -419,9 +419,9 @@ function PaymentPageContent() {
                   </Link>
                   <button
                     onClick={handlePayment}
-                    disabled={!selectedPayment || isProcessing || !hasValidToken}
+                    disabled={!selectedPayment || isProcessing || (!hasValidToken && selectedPayment !== 'pay-at-hotel')}
                     className={`flex-1 py-3 rounded-lg font-medium transition-colors ${
-                      selectedPayment && !isProcessing && hasValidToken
+                      selectedPayment && !isProcessing && (hasValidToken || selectedPayment === 'pay-at-hotel')
                         ? 'bg-blue-600 text-white hover:bg-blue-700'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
@@ -432,16 +432,17 @@ function PaymentPageContent() {
                         Processing...
                       </span>
                     ) : selectedPayment === 'pay-at-hotel' ? (
-                      hasValidToken ? 'Confirm Booking' : 'Token required'
+                      'Confirm Booking'
                     ) : (
                       hasValidToken ? `Pay ₦${total.toLocaleString()}` : 'Token required'
                     )}
                   </button>
                 </div>
 
-                {!hasValidToken && (
+                {!hasValidToken && selectedPayment && selectedPayment !== 'pay-at-hotel' && (
                   <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-900">
-                    Your negotiation token is missing or expired. Please re-run negotiation to secure a fresh price.
+                    Your negotiation token is missing or expired. Online payment requires a valid negotiated offer.
+                    Choose “Pay at Hotel” or re-run negotiation to secure a fresh price.
                   </div>
                 )}
 
