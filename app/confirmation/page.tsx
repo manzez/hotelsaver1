@@ -45,6 +45,7 @@ function nightsBetween(checkIn?: string | null, checkOut?: string | null) {
 function ConfirmationPageContent() {
   const searchParams = useSearchParams()
   const [emailSent, setEmailSent] = useState(false)
+  const [emailConfigured, setEmailConfigured] = useState<boolean | null>(null)
   
   const bookingId = searchParams.get('bookingId') || ''
   const paymentMethod = searchParams.get('paymentMethod') || ''
@@ -93,13 +94,27 @@ function ConfirmationPageContent() {
   }, [hotel, checkIn, checkOut, hotelInfo.address, bookingId])
 
   useEffect(() => {
-    // Simulate sending confirmation email
-    const timer = setTimeout(() => {
-      setEmailSent(true)
-    }, 2000)
-
-    return () => clearTimeout(timer)
+    // Check if email is configured on the server
+    let cancelled = false
+    const probe = async () => {
+      try {
+        const res = await fetch('/api/system/email-config', { cache: 'no-store' })
+        const data = await res.json().catch(() => ({}))
+        if (!cancelled) setEmailConfigured(Boolean(data?.configured))
+      } catch {
+        if (!cancelled) setEmailConfigured(false)
+      }
+    }
+    probe()
+    return () => { cancelled = true }
   }, [])
+
+  useEffect(() => {
+    // Simulate async send only when email is configured
+    if (!emailConfigured) return
+    const timer = setTimeout(() => setEmailSent(true), 1500)
+    return () => clearTimeout(timer)
+  }, [emailConfigured])
 
   // Try to look up paidAt from our server if we have a reference and this was a paid paystack flow
   useEffect(() => {
@@ -169,6 +184,20 @@ function ConfirmationPageContent() {
             ) : (
               <div className="mt-3 text-sm font-medium text-gray-700">
                 Thank you for choosing HotelSaver.ng. We truly appreciate your booking.
+              </div>
+            )}
+
+            {/* Email/WhatsApp Notice */}
+            {emailConfigured && emailSent && (
+              <div className="mt-4 rounded-lg bg-green-50 border border-green-200 p-3 text-sm text-green-800 text-left max-w-xl mx-auto">
+                <div className="flex items-center gap-2">
+                  <span>✉️</span>
+                  <span>Email sent to your inbox.</span>
+                </div>
+                <div className="flex items-center gap-2 mt-1">
+                  <span>📱</span>
+                  <span>We’ll reach out via WhatsApp if needed.</span>
+                </div>
               </div>
             )}
           </div>
@@ -255,26 +284,33 @@ function ConfirmationPageContent() {
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">What's Next?</h3>
                 <div className="space-y-2 text-sm text-gray-600">
-                  {emailSent ? (
-                    <>
+                  {emailConfigured ? (
+                    emailSent ? (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600">✓</span>
+                          <span>Confirmation email sent</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600">✓</span>
+                          <span>Hotel has been notified</span>
+                        </div>
+                      </>
+                    ) : (
                       <div className="flex items-center gap-2">
-                        <span className="text-green-600">✓</span>
-                        <span>Confirmation email sent</span>
+                        <div className="w-4 h-4 border-2 border-brand-green border-t-transparent rounded-full animate-spin"></div>
+                        <span>Sending confirmation email...</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-green-600">✓</span>
-                        <span>Hotel has been notified</span>
-                      </div>
-                    </>
+                    )
                   ) : (
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-brand-green border-t-transparent rounded-full animate-spin"></div>
-                      <span>Sending confirmation email...</span>
+                      <span className="text-brand-green">📱</span>
+                      <span>We’ll reach out via WhatsApp with your booking details.</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2">
                     <span className="text-brand-green">→</span>
-                    <span>Check your email for details</span>
+                    <span>{emailConfigured ? 'Check your email for details' : 'Our team will message you shortly'}</span>
                   </div>
                   {paymentMethod === 'pay-at-hotel' && (
                     <div className="flex items-center gap-2">

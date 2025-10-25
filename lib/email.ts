@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import type { NextRequest } from 'next/server'
 
 type BookingPayload = {
   bookingId: string
@@ -142,3 +143,70 @@ export async function sendBookingEmails(payload: BookingPayload) {
 
   await Promise.allSettled(tasks)
 }
+
+// === Transactional (Activation / Password Reset) ===
+
+const emailRateBucket: Map<string, { count: number; resetAt: number }> = new Map()
+
+function canSendTo(email: string, maxPerWindow = 5, windowMs = 10 * 60 * 1000) {
+  const key = email.toLowerCase().trim()
+  const now = Date.now()
+  const cur = emailRateBucket.get(key)
+  if (!cur || now > cur.resetAt) {
+    emailRateBucket.set(key, { count: 1, resetAt: now + windowMs })
+    return true
+  }
+  if (cur.count >= maxPerWindow) return false
+  cur.count++
+  return true
+}
+
+async function sendWithRetry(args: { to: string; subject: string; html: string }, attempts = 3) {
+  const resend = getResend()
+  if (!resend) {
+    console.log('[email:dry-run:tx]', { to: args.to, subject: args.subject })
+    return
+  }
+  let lastErr: any
+  for (let i = 0; i < attempts; i++) {
+    try {
+      await resend.emails.send({ from: EMAIL_FROM, ...args })
+      return
+    } catch (e) {
+      lastErr = e
+      await new Promise(r => setTimeout(r, 300 * (i + 1)))
+    }
+  }
+  console.error('[email:tx:error]', args.subject, args.to, lastErr)
+}
+
+function activationHtml(link: string) {
+  return `
+  <div style="font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height:1.55; color:#111;">
+    <h2 style="margin:0 0 12px;">Confirm your email</h2>
+    <p style="margin:0 0 12px;">Click the button below to activate your account on HotelSaver.ng.</p>
+    <p style="margin:16px 0;"><a href="${link}" style="display:inline-block; background:#009739; color:#fff; padding:10px 16px; border-radius:8px; text-decoration:none;">Activate account</a></p>
+    <p style="margin:12px 0; font-size:12px; color:#555;">If the button doesn't work, copy and paste this link: <br/><span style="word-break:break-all;">${link}</span></p>
+  </div>`
+}
+
+function passwordResetHtml(link: string) {
+  return `
+  <div style="font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height:1.55; color:#111;">
+    <h2 style="margin:0 0 12px;">Reset your password</h2>
+    <p style="margin:0 0 12px;">We received a request to reset your password. Click the button below to continue.</p>
+    <p style="margin:16px 0;"><a href="${link}" style="display:inline-block; background:#009739; color:#fff; padding:10px 16px; border-radius:8px; text-decoration:none;">Reset password</a></p>
+    <p style="margin:12px 0; font-size:12px; color:#555;">If the button doesn't work, copy and paste this link: <br/><span style="word-break:break-all;">${link}</span></p>
+  </div>`
+}
+
+export async function sendActivationEmail(email: string, link: string) {
+  if (!canSendTo(email)) throw new Error('rate-limited')
+  await sendWithRetry({ to: email, subject: 'Activate your HotelSaver.ng account', html: activationHtml(link) })
+}
+
+export async function sendPasswordResetEmail(email: string, link: string) {
+  if (!canSendTo(email)) throw new Error('rate-limited')
+  await sendWithRetry({ to: email, subject: 'Reset your HotelSaver.ng password', html: passwordResetHtml(link) })
+}
+

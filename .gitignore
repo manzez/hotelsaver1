@@ -22,7 +22,7 @@ test-results/
 tests/reports/
 tests/reports/**
 
-# Misc
+Preferences: Configure Runtime Arguments# Misc
 *.local
 # media
 public/images/
@@ -31,3 +31,7 @@ public/images/
 *.png
 *.webp
 .vercel
+
+# Local data logs (webhook events, etc.)
+data/
+!data/.gitkeep

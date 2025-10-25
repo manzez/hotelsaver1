@@ -16,31 +16,43 @@ export async function POST(req: NextRequest) {
       context?: Record<string, string>
     }
 
-    const amount = Number(body.amount) || 0
+    let amount = Number(body.amount) || 0
     const email = String(body.email || '')
-  const context = body.context || {}
+    const context = body.context || {}
 
     if (!amount || !email) {
       return NextResponse.json({ error: 'amount and email required' }, { status: 400 })
     }
 
-    // Booking flow does not require a negotiation token
-    const flow = String(context?.flow || '')
-    if (flow !== 'book') {
-      // Verify negotiation token in context before proceeding (negotiation-only flows)
-      const token = String(context?.negotiationToken || '')
+    // If a negotiation token is provided (recommended), verify and compute amount server-side
+    const token = String(context?.negotiationToken || '')
+    if (token) {
       const verified = verifyNegotiationToken(token)
       if (!verified.ok) {
         return NextResponse.json({ error: 'invalid negotiation token', reason: verified.reason }, { status: 400 })
       }
-
-      // Optional sanity: ensure context contains same propertyId
       if (context?.propertyId && context.propertyId !== verified.payload.propertyId) {
         return NextResponse.json({ error: 'mismatched propertyId' }, { status: 400 })
       }
+      // Compute amount based on negotiated nightly rate, nights and tax
+      const checkIn = String(context?.checkIn || '')
+      const checkOut = String(context?.checkOut || '')
+      const nights = (() => {
+        if (!checkIn || !checkOut) return 1
+        const ci = new Date(checkIn)
+        const co = new Date(checkOut)
+        if (isNaN(+ci) || isNaN(+co)) return 1
+        const ms = co.getTime() - ci.getTime()
+        const n = Math.max(1, Math.round(ms / (1000 * 60 * 60 * 24)))
+        return n
+      })()
+      const nightly = Number(verified.payload.discountedTotal) || 0
+      const subtotal = nightly * nights
+      const tax = nights > 1 ? Math.round(subtotal * 0.075) : 0
+      amount = subtotal + tax
     }
 
-    const qs = new URLSearchParams(context).toString()
+  const qs = new URLSearchParams(context).toString()
     const redirect_url = `${origin}/payment/callback${qs ? `?${qs}` : ''}`
 
     const res = await fetch('https://api.paystack.co/transaction/initialize', {

@@ -35,12 +35,15 @@ function PaymentPageContent() {
   // Get booking details from URL params
   const propertyId = searchParams.get('propertyId') || ''
   const priceParam = Number(searchParams.get('price')) || 0
+  const negotiationToken = searchParams.get('negotiationToken') || ''
   const firstName = searchParams.get('firstName') || ''
   const lastName = searchParams.get('lastName') || ''
   const phoneFromParams = searchParams.get('phone') || ''
   const hotel = HOTELS.find(h => h.id === propertyId)
-  // Determine base rate per night from hotel data (booking flow doesn't use negotiation)
-  const baseRate = typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : priceParam
+  // Determine rate per night: prefer price from URL (negotiated or selected), else fall back to hotel data
+  const baseRate = priceParam > 0
+    ? priceParam
+    : (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : 0)
   const checkIn = searchParams.get('checkIn') || ''
   const checkOut = searchParams.get('checkOut') || ''
   const adults = searchParams.get('adults') || '2'
@@ -153,6 +156,7 @@ function PaymentPageContent() {
             children,
             rooms,
             paymentMethod: 'pay-at-hotel',
+            negotiationToken,
             customerInfo: { name: nameForPayment, phone: phoneForPayment, email: emailForPayment, address: customerInfo.address },
             total
           })
@@ -174,7 +178,7 @@ function PaymentPageContent() {
           rooms: String(rooms),
         })
         router.push(`/confirmation?${qp.toString()}`)
-      } else if (selectedPayment === 'paystack') {
+  } else if (selectedPayment === 'paystack') {
         if (!hasPaystack) {
           alert('Online card payment is not available right now. Please choose Pay at Hotel.')
           return
@@ -192,11 +196,13 @@ function PaymentPageContent() {
           phone: phoneForPayment,
           email: emailForPayment,
           flow: 'book',
+          negotiationToken,
           // you can include more fields if needed
         }
         const initRes = await fetch('/api/paystack/initialize', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          // Pass amount for display, but server will recompute if a valid negotiationToken is present
           body: JSON.stringify({ amount: total, email: emailForPayment, context })
         })
         const initData = await initRes.json()
