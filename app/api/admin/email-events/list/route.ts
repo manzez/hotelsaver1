@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { validateAdminApiKey } from '@/lib/timing-safe-compare'
 
 function ok(data: any) { return NextResponse.json({ ok: true, ...data }) }
 function err(status: number, message: string) { return NextResponse.json({ ok: false, error: message }, { status }) }
 
 export async function GET(req: NextRequest) {
   const adminKey = process.env.ADMIN_API_KEY || ''
-  const provided = req.headers.get('x-admin-key') || req.nextUrl.searchParams.get('key')
-  if (!adminKey || !provided || provided !== adminKey) return err(401, 'unauthorized')
+  const provided = req.headers.get('x-admin-key') || req.nextUrl.searchParams.get('key') || ''
+  if (!adminKey || !validateAdminApiKey(provided, adminKey)) return err(401, 'unauthorized')
 
   const sp = req.nextUrl.searchParams
   const typeFilter = String(sp.get('type') || '').toLowerCase() // delivered|bounced|complained|opened|clicked|''

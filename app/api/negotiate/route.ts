@@ -19,9 +19,9 @@ type Hotel = {
 
 export async function POST(req: NextRequest) {
   try {
-    // Lightweight IP-based rate limiting
+    // Lightweight IP-based rate limiting (5/min per IP for production safety)
     const ip = (req.ip || req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown'
-    const rl = allowIp(ip, { capacity: 12, refillPerSec: 0.2 }) // ~12/min
+    const rl = allowIp(ip, { capacity: 5, refillPerSec: 0.083 }) // ~5/min
     if (!rl.allowed) {
       return NextResponse.json(
         { status: 'no-offer', reason: 'rate-limited' },

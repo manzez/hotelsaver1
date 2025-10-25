@@ -10,8 +10,14 @@ export type NegotiationPayload = {
 
 function getSecret(): string {
   const s = process.env.NEGOTIATION_SECRET || process.env.NEXTAUTH_SECRET || ''
-  // Provide a safe dev fallback; must be overridden in production
-  return s || 'dev-only-secret-change-in-prod'
+  if (!s) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('FATAL: NEGOTIATION_SECRET or NEXTAUTH_SECRET required in production')
+    }
+    // Dev fallback only
+    return 'dev-only-secret-change-in-prod'
+  }
+  return s
 }
 
 function b64url(input: Buffer | string): string {

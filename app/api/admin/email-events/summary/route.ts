@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { validateAdminApiKey } from '@/lib/timing-safe-compare'
 
 type Summary = {
   windowHours: number
@@ -22,8 +23,8 @@ function err(status: number, message: string) {
 
 export async function GET(req: NextRequest) {
   const adminKey = process.env.ADMIN_API_KEY || ''
-  const provided = req.headers.get('x-admin-key') || req.nextUrl.searchParams.get('key')
-  if (!adminKey || !provided || provided !== adminKey) {
+  const provided = req.headers.get('x-admin-key') || req.nextUrl.searchParams.get('key') || ''
+  if (!adminKey || !validateAdminApiKey(provided, adminKey)) {
     return err(401, 'unauthorized')
   }
 

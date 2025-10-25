@@ -14,7 +14,10 @@ const handler = NextAuth({
   // Attach Prisma adapter only when a database is configured
   ...(useDb ? { adapter: PrismaAdapter(prisma) } : {}),
   providers: [
-    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+    // Only enable Google when real credentials are provided (not demo placeholders)
+    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET &&
+      !String(process.env.GOOGLE_CLIENT_ID).startsWith('demo-') &&
+      !String(process.env.GOOGLE_CLIENT_SECRET).startsWith('demo-')
       ? [
           GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
