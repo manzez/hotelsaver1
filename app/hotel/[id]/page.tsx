@@ -121,20 +121,22 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons: Book first, then Negotiate (if available) */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Link 
-              href={canNegotiate 
-                ? `/negotiate?propertyId=${h.id}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`
-                : `/book?propertyId=${h.id}&price=${base}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
-              className={`w-full sm:flex-1 text-center py-3 rounded-lg font-medium transition-colors ${
-                canNegotiate 
-                  ? 'bg-brand-green text-white hover:bg-brand-dark' 
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
+              href={`/book?propertyId=${h.id}&price=${base}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
+              className="w-full sm:flex-1 text-center py-3 rounded-lg font-medium transition-colors bg-teal-600 text-white hover:bg-teal-700"
             >
-              {canNegotiate ? 'Negotiate Now' : 'Book Now'}
+              Book Now
             </Link>
+            {canNegotiate && (
+              <Link 
+                href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
+                className="w-full sm:flex-1 text-center py-3 rounded-lg font-medium transition-colors bg-brand-green text-white hover:bg-brand-dark"
+              >
+                Negotiate
+              </Link>
+            )}
             <button className="w-full sm:w-auto px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
               ❤️ Save
             </button>
@@ -238,28 +240,18 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
 
               <div className="space-y-3">
                 <Link 
-                  href={canNegotiate 
-                    ? `/negotiate?propertyId=${h.id}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`
-                    : `/book?propertyId=${h.id}&price=${base}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
-                   className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
-                     canNegotiate 
-                       ? 'bg-brand-green text-white hover:bg-brand-dark' 
-                       : 'bg-blue-600 text-white hover:bg-blue-700'
-                   }`}
+                  href={`/book?propertyId=${h.id}&price=${base}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
+                  className="block w-full text-center py-3 rounded-lg font-medium transition-colors bg-teal-600 text-white hover:bg-teal-700"
                 >
-                  {canNegotiate ? 'Negotiate' : 'Book Now'}
+                  Book Now
                 </Link>
-                
                 {canNegotiate && (
-                  <div className="text-center">
-                    <div className="text-xs text-gray-500 mb-1">Or book at regular price</div>
-                    <Link 
-                      href={`/book?propertyId=${h.id}&price=${base}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
-                      className="text-sm text-gray-600 hover:text-gray-900 underline"
-                    >
-                      Book for ₦{base.toLocaleString()}
-                    </Link>
-                  </div>
+                  <Link 
+                    href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&rooms=${rooms}`}
+                    className="block w-full text-center py-3 rounded-lg font-medium transition-colors bg-brand-green text-white hover:bg-brand-dark"
+                  >
+                    Negotiate
+                  </Link>
                 )}
               </div>
 

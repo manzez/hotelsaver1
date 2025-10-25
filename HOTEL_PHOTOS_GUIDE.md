@@ -94,11 +94,54 @@ hashtags = [
 
 ## Implementation Steps
 
-### Step 1: Run the Photo Update Script
+### Step 1: Quick (Node) — Collect and Apply Google Places photos
+
+1) Collect photos for Owerri under ₦80k using Google Places (free tier):
 
 ```bash
-cd /Users/mac/Downloads/hotelsaver-ng-v9
-python3 scripts/update-hotel-photos.py
+export GOOGLE_PLACES_API_KEY="your_api_key_here"
+npm run photos:collect:owerri:u80
+```
+
+This creates `scripts/output/hotel-photo-map.Owerri.u80.json` with hotel-id → photo URLs.
+
+2) Apply the mapping to `lib.hotels.json` (backup is created automatically):
+
+```bash
+npm run photos:update
+```
+
+3) Start the app and verify `/search?city=Owerri&budget=u80`.
+### Step 1b: Scale up — All cities and types
+
+Collect photos for all hotels and apartments (rate-limited):
+
+```bash
+export GOOGLE_PLACES_API_KEY="your_api_key_here"
+npm run photos:collect:all
+```
+
+This will produce a mapping file for the selection you filtered (by default, all properties). You can then adapt `scripts/update-hotel-photos.js` to point to the generated file and apply.
+
+### Step 1c: Ensure coverage — Audit and fill fallbacks
+
+Before/after collection, audit how many properties lack sufficient photos:
+
+```bash
+npm run photos:audit
+```
+
+Fill any missing/short image arrays (default: ensure at least 3 images) with curated per-city/type sets:
+
+```bash
+npm run photos:fill
+```
+
+This creates a backup and then prepends fallbacks so every hotel/apartment has at least 3 images.
+
+
+```bash
+npm run dev
 ```
 
 ### Step 2: Set Up Google Places API (Optional but Recommended)
@@ -109,10 +152,8 @@ python3 scripts/update-hotel-photos.py
 4. Create API key
 5. Set usage limits (25,000/month free)
 
-```bash
-export GOOGLE_PLACES_API_KEY="your_key_here"
-python3 scripts/collect-hotel-photos.py
-```
+You can use either the Node scripts above or a Python workflow. For Node, just export
+`GOOGLE_PLACES_API_KEY` and run the provided npm scripts.
 
 ### Step 3: Contact Hotels Directly
 
@@ -141,7 +182,7 @@ with open('hotel-contacts.csv', 'w') as f:
 
 ### Step 4: Legal Compliance
 
-**Create Terms for Photo Usage:**
+**Create Terms for Photo Usage:** (Google Places Photos terms require proper API usage and attribution when applicable.)
 ```
 Photo Usage Terms:
 - Photos used only for hotel booking purposes

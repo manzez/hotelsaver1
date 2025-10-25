@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense, useMemo } from 'react'
+import { useState, Suspense, useMemo, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { HOTELS } from '@/lib/data'
 import Link from 'next/link'
@@ -34,22 +34,33 @@ function PaymentPageContent() {
 
   // Get booking details from URL params
   const propertyId = searchParams.get('propertyId') || ''
-  const negotiatedPrice = Number(searchParams.get('price')) || 0
-  const negotiationToken = searchParams.get('negotiationToken') || ''
+  const priceParam = Number(searchParams.get('price')) || 0
+  const firstName = searchParams.get('firstName') || ''
+  const lastName = searchParams.get('lastName') || ''
+  const phoneFromParams = searchParams.get('phone') || ''
   const hotel = HOTELS.find(h => h.id === propertyId)
-  const originalPriceParam = Number(searchParams.get('originalPrice')) || 0
-  const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
+  // Determine base rate per night from hotel data (booking flow doesn't use negotiation)
+  const baseRate = typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : priceParam
   const checkIn = searchParams.get('checkIn') || ''
   const checkOut = searchParams.get('checkOut') || ''
   const adults = searchParams.get('adults') || '2'
   const children = searchParams.get('children') || '0'
   const rooms = searchParams.get('rooms') || '1'
+  const fullName = `${firstName} ${lastName}`.trim()
 
-  const savings = originalPrice - negotiatedPrice
+  // Prime customer fields from URL if available
+  useEffect(() => {
+    setCustomerInfo(prev => ({
+      ...prev,
+      name: prev.name || fullName,
+      phone: prev.phone || phoneFromParams,
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Calculate nights and total
   const nights = useMemo(() => (nightsBetween(checkIn, checkOut) || 1), [checkIn, checkOut])
-  const subtotal = negotiatedPrice * nights
+  const subtotal = baseRate * nights
   const tax = nights > 1 ? Math.round(subtotal * 0.075) : 0 // VAT only for multi-night
   const total = subtotal + tax
 
@@ -106,16 +117,19 @@ function PaymentPageContent() {
     )
   }
 
-  const hasValidToken = Boolean(negotiationToken)
-
   const handlePayment = async () => {
     if (!selectedPayment) {
       alert('Please select a payment method')
       return
     }
 
-    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
-      alert('Please fill in all required customer information')
+    // Require basic contact details
+    const nameForPayment = (customerInfo.name || fullName || '').trim()
+    const phoneForPayment = (customerInfo.phone || phoneFromParams || '').trim()
+    const emailForPayment = (customerInfo.email || '').trim()
+
+    if (!nameForPayment || !phoneForPayment || !emailForPayment) {
+      alert('Please enter your name, phone number, and email to continue')
       return
     }
 
@@ -132,16 +146,14 @@ function PaymentPageContent() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             propertyId,
-            negotiatedPrice,
-            originalPrice,
+            pricePerNight: baseRate,
             checkIn,
             checkOut,
             adults,
             children,
             rooms,
-            negotiationToken,
             paymentMethod: 'pay-at-hotel',
-            customerInfo,
+            customerInfo: { name: nameForPayment, phone: phoneForPayment, email: emailForPayment, address: customerInfo.address },
             total
           })
         })
@@ -152,10 +164,9 @@ function PaymentPageContent() {
         const qp = new URLSearchParams({
           bookingId: String(booking.bookingId || `BK${Date.now()}`),
           paymentMethod: 'pay-at-hotel',
-          name: customerInfo.name,
+          name: nameForPayment,
           propertyId,
-          price: String(negotiatedPrice),
-          originalPrice: String(originalPrice),
+          price: String(baseRate),
           checkIn,
           checkOut,
           adults: String(adults),
@@ -171,21 +182,22 @@ function PaymentPageContent() {
         // Initialize Paystack transaction via server
         const context = {
           propertyId,
-          price: String(negotiatedPrice),
-          originalPrice: String(originalPrice),
+          price: String(baseRate),
           checkIn,
           checkOut,
           adults: String(adults),
           children: String(children),
           rooms: String(rooms),
-          name: customerInfo.name,
-          negotiationToken,
+          name: nameForPayment,
+          phone: phoneForPayment,
+          email: emailForPayment,
+          flow: 'book',
           // you can include more fields if needed
         }
         const initRes = await fetch('/api/paystack/initialize', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: total, email: customerInfo.email, context })
+          body: JSON.stringify({ amount: total, email: emailForPayment, context })
         })
         const initData = await initRes.json()
         if (!initRes.ok || !initData?.authorization_url) {
@@ -200,10 +212,9 @@ function PaymentPageContent() {
         const qp = new URLSearchParams({
           bookingId: `BK${Date.now()}`,
           paymentMethod: selectedPayment,
-          name: customerInfo.name,
+          name: nameForPayment,
           propertyId,
-          price: String(negotiatedPrice),
-          originalPrice: String(originalPrice),
+          price: String(baseRate),
           checkIn,
           checkOut,
           adults: String(adults),
@@ -228,7 +239,7 @@ function PaymentPageContent() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Payment</h1>
-            <p className="text-gray-600">Secure your negotiated rate for {hotel.name}</p>
+            <p className="text-gray-600">Secure your booking at {hotel.name}</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
@@ -280,16 +291,8 @@ function PaymentPageContent() {
                 {/* Pricing Breakdown */}
                 <div className="space-y-2 text-sm border-t border-gray-200 pt-4">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Original price:</span>
-                    <span className="line-through text-gray-500">{naira(originalPrice)}</span>
-                  </div>
-                  <div className="flex justify-between text-green-600">
-                    <span>Negotiated price:</span>
-                    <span className="font-medium">{naira(negotiatedPrice)}</span>
-                  </div>
-                  <div className="flex justify-between text-green-600">
-                    <span>You saved:</span>
-                    <span className="font-bold">{naira(savings)}</span>
+                    <span className="text-gray-600">Rate per night:</span>
+                    <span className="font-medium">{naira(baseRate)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal ({nights} nights):</span>
@@ -311,55 +314,64 @@ function PaymentPageContent() {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-xl shadow-sm p-6">
                 
-                {/* Customer Information */}
+                {/* Personalization + Address Only */}
                 <div className="mb-8">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Contact Information</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="pay-name" className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Hi {fullName || 'there'},</h3>
+                  {phoneFromParams && (
+                    <p className="text-sm text-gray-600 mb-4">We’ll contact you on {phoneFromParams} if needed.</p>
+                  )}
+                  <div>
+                    <label htmlFor="pay-address" className="block text-sm font-medium text-gray-700 mb-1">Address (optional)</label>
+                    <input
+                      id="pay-address"
+                      type="text"
+                      className="input"
+                      value={customerInfo.address}
+                      onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})}
+                      placeholder="Your address"
+                    />
+                  </div>
+                </div>
+
+                {/* Customer details (required) */}
+                <div className="mb-8">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Your Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="md:col-span-2">
+                      <label htmlFor="cust-name" className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
                       <input
-                        id="pay-name"
+                        id="cust-name"
                         type="text"
                         className="input"
                         value={customerInfo.name}
-                        onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                        placeholder="John Doe"
+                        onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
+                        placeholder="e.g. Adaeze Okafor"
                         required
                       />
                     </div>
                     <div>
-                      <label htmlFor="pay-email" className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                      <label htmlFor="cust-phone" className="block text-sm font-medium text-gray-700 mb-1">Phone number</label>
                       <input
-                        id="pay-email"
+                        id="cust-phone"
+                        type="tel"
+                        inputMode="tel"
+                        className="input"
+                        value={customerInfo.phone}
+                        onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
+                        placeholder="e.g. 0701 234 5678"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="cust-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                      <input
+                        id="cust-email"
                         type="email"
                         className="input"
                         value={customerInfo.email}
-                        onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
-                        placeholder="john@example.com"
+                        onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
+                        placeholder="e.g. you@example.com"
                         required
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="pay-phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                      <input
-                        id="pay-phone"
-                        type="tel"
-                        className="input"
-                        value={customerInfo.phone}
-                        onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                        placeholder="+234 800 000 0000"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="pay-address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                      <input
-                        id="pay-address"
-                        type="text"
-                        className="input"
-                        value={customerInfo.address}
-                        onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})}
-                        placeholder="Your address"
                       />
                     </div>
                   </div>
@@ -412,16 +424,16 @@ function PaymentPageContent() {
                 {/* Payment Button */}
                 <div className="flex gap-4">
                   <Link
-                    href={`/negotiate?propertyId=${propertyId}`}
+                    href={`/book?propertyId=${propertyId}${checkIn ? `&checkIn=${encodeURIComponent(checkIn)}` : ''}${checkOut ? `&checkOut=${encodeURIComponent(checkOut)}` : ''}`}
                     className="flex-1 text-center py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                   >
-                    ← Back to Negotiation
+                    ← Back to Details
                   </Link>
                   <button
                     onClick={handlePayment}
-                    disabled={!selectedPayment || isProcessing || (!hasValidToken && selectedPayment !== 'pay-at-hotel')}
+                    disabled={!selectedPayment || isProcessing}
                     className={`flex-1 py-3 rounded-lg font-medium transition-colors ${
-                      selectedPayment && !isProcessing && (hasValidToken || selectedPayment === 'pay-at-hotel')
+                      selectedPayment && !isProcessing
                         ? 'bg-blue-600 text-white hover:bg-blue-700'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
@@ -434,17 +446,10 @@ function PaymentPageContent() {
                     ) : selectedPayment === 'pay-at-hotel' ? (
                       'Confirm Booking'
                     ) : (
-                      hasValidToken ? `Pay ₦${total.toLocaleString()}` : 'Token required'
+                      `Pay ₦${total.toLocaleString()}`
                     )}
                   </button>
                 </div>
-
-                {!hasValidToken && selectedPayment && selectedPayment !== 'pay-at-hotel' && (
-                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-900">
-                    Your negotiation token is missing or expired. Online payment requires a valid negotiated offer.
-                    Choose “Pay at Hotel” or re-run negotiation to secure a fresh price.
-                  </div>
-                )}
 
                 {/* Security Notice */}
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg">

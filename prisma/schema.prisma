@@ -235,3 +235,32 @@ model ServiceBooking {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 }
+
+// === FOOD ORDERS (optional persistence used by /api/food/order) ===
+model FoodOrder {
+  id              String         @id @default(cuid())
+  reference       String         @unique
+
+  restaurantId    String
+  restaurantName  String
+  city            String         // Keep as string to align with JSON values (e.g., "Port Harcourt")
+
+  contactName     String
+  contactPhone    String
+  contactAddress  String?
+
+  items           Json           // Ordered items payload
+  discountPct     Int
+  deliveryFee     Int
+  deliveryWindow  String         // "Morning" | "Afternoon" | "Evening" | "Scheduled"
+  scheduleDate    String?
+  scheduleTime    String?
+
+  total           Int
+  status          BookingStatus  @default(PENDING)
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([createdAt])
+}

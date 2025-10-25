@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useEffect, useMemo, useState, Suspense } from 'react'
+import SafeImage from '@/components/SafeImage'
 import { HOTELS } from '@/lib/data'
 
 // Minimal address directory for directions (can be expanded or moved to a shared util)
@@ -51,8 +52,7 @@ function ConfirmationPageContent() {
   const reference = searchParams.get('reference') || ''
   const propertyId = searchParams.get('propertyId') || ''
   const customerName = searchParams.get('name') || ''
-  const negotiatedPrice = Number(searchParams.get('price')) || 0
-  const originalPriceParam = Number(searchParams.get('originalPrice')) || 0
+  const pricePerNight = Number(searchParams.get('price')) || 0
   const checkIn = searchParams.get('checkIn')
   const checkOut = searchParams.get('checkOut')
   const adults = searchParams.get('adults') || '2'
@@ -62,17 +62,35 @@ function ConfirmationPageContent() {
   const hotel = useMemo(() => HOTELS.find(h => h.id === propertyId), [propertyId])
   const [paidAt, setPaidAt] = useState<string | null>(null)
   const hotelInfo = HOTEL_ADDRESSES[propertyId] || { address: '', landmarks: '', phone: '' }
-  const originalPrice = originalPriceParam || (typeof hotel?.basePriceNGN === 'number' ? hotel.basePriceNGN : negotiatedPrice)
   const nights = useMemo(() => (nightsBetween(checkIn, checkOut) || 1), [checkIn, checkOut])
-  const subtotal = negotiatedPrice * nights
+  const subtotal = pricePerNight * nights
   const tax = nights > 1 ? Math.round(subtotal * 0.075) : 0
   const total = subtotal + tax
-  const savings = Math.max(0, originalPrice - negotiatedPrice)
 
   const directionsUrl = useMemo(() => {
     const q = [hotel?.name, hotelInfo.address || hotel?.city].filter(Boolean).join(' ')
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
   }, [hotel?.name, hotel?.city, hotelInfo.address])
+
+  function fmtDateForGCAL(d?: string | null) {
+    if (!d) return ''
+    const dt = new Date(d)
+    if (isNaN(+dt)) return ''
+    const y = dt.getUTCFullYear()
+    const m = String(dt.getUTCMonth() + 1).padStart(2, '0')
+    const day = String(dt.getUTCDate()).padStart(2, '0')
+    return `${y}${m}${day}`
+  }
+
+  const gcalUrl = useMemo(() => {
+    if (!hotel || !checkIn || !checkOut) return ''
+    const start = fmtDateForGCAL(checkIn)
+    const end = fmtDateForGCAL(checkOut)
+    const text = `Stay at ${hotel.name}`
+    const details = `Booking ID: ${bookingId}`
+    const location = hotelInfo.address || hotel.city
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${start}/${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`
+  }, [hotel, checkIn, checkOut, hotelInfo.address, bookingId])
 
   useEffect(() => {
     // Simulate sending confirmation email
@@ -155,8 +173,24 @@ function ConfirmationPageContent() {
             )}
           </div>
 
-          {/* Booking Details Card */}
-          <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
+          {/* Booking Details Card with image */}
+          <div className="bg-white rounded-xl shadow-sm p-0 mb-8 overflow-hidden">
+            {hotel && (
+              <div className="relative h-40 w-full">
+                <SafeImage
+                  src={hotel.images?.[0] || ''}
+                  alt={hotel.name}
+                  className="h-40 w-full object-cover"
+                  fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute bottom-3 left-4 text-white">
+                  <div className="text-lg font-semibold">{hotel.name}</div>
+                  <div className="text-sm text-white/90">{hotel.city} • {"★".repeat(hotel.stars)}</div>
+                </div>
+              </div>
+            )}
+            <div className="p-8">
             <div className="grid md:grid-cols-2 gap-6 text-left">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Booking Information</h3>
@@ -165,6 +199,12 @@ function ConfirmationPageContent() {
                     <span className="text-gray-600">Booking ID:</span>
                     <span className="font-mono text-brand-green">{bookingId}</span>
                   </div>
+                  {customerName && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Guest:</span>
+                      <span className="font-medium">{customerName}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span className="text-gray-600">Payment Method:</span>
                     <span className="font-medium">{paymentMethodNames[paymentMethod] || paymentMethod}</span>
@@ -249,25 +289,23 @@ function ConfirmationPageContent() {
                     </div>
                   )}
                 </div>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button onClick={() => window.print()} className="btn-ghost">🖨️ Print Confirmation</button>
+                  {gcalUrl && (
+                    <a href={gcalUrl} target="_blank" rel="noopener noreferrer" className="btn-ghost">📅 Add to Calendar</a>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Price Summary (if context present) */}
-            {(negotiatedPrice > 0) && (
+            {/* Price Summary */}
+            {(pricePerNight > 0) && (
               <div className="mt-6 border-t pt-6 text-left">
                 <h3 className="font-semibold text-gray-900 mb-2">Price Summary</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Original price:</span>
-                    <span className="line-through text-gray-500">{naira(originalPrice)}</span>
-                  </div>
-                  <div className="flex justify-between text-green-600">
-                    <span>Negotiated price:</span>
-                    <span className="font-medium">{naira(negotiatedPrice)}</span>
-                  </div>
-                  <div className="flex justify-between text-green-600">
-                    <span>You saved:</span>
-                    <span className="font-bold">{naira(savings)}</span>
+                    <span className="text-gray-600">Rate per night:</span>
+                    <span className="font-medium">{naira(pricePerNight)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal ({nights} nights):</span>
@@ -284,6 +322,7 @@ function ConfirmationPageContent() {
                 </div>
               </div>
             )}
+            </div>
           </div>
 
           {/* Important Information */}
@@ -295,7 +334,7 @@ function ConfirmationPageContent() {
             <div className="space-y-2 text-sm text-blue-800">
               <p>• Check-in time: 2:00 PM | Check-out time: 12:00 PM</p>
               <p>• Please bring a valid ID for check-in</p>
-              <p>• Your negotiated rate is locked and guaranteed</p>
+              {/* Booking journey does not use negotiation */}
               {paymentMethod === 'pay-at-hotel' && (
                 <p>• Payment can be made by cash or card at the hotel</p>
               )}
@@ -359,6 +398,9 @@ ${hotelInfo.address ? `Address: ${hotelInfo.address}` : ''}`)}`}
               <p className="text-sm text-gray-600">
                 Our customer support team is available 24/7 to assist you
               </p>
+              {hotelInfo.phone && (
+                <p className="text-sm text-gray-700">Hotel phone: <span className="font-medium">{hotelInfo.phone}</span></p>
+              )}
             </div>
           </div>
 

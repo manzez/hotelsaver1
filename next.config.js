@@ -23,11 +23,14 @@ function getLanIp() {
 }
 
 const lanIp = getLanIp()
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-]
-if (lanIp) allowedOrigins.push(`http://${lanIp}:3000`)
+// Support common dev ports to avoid CORS warnings when Next hops ports
+const devPorts = [3000, 3001, 3002, 3010]
+const allowedOrigins = []
+for (const p of devPorts) {
+  allowedOrigins.push(`http://localhost:${p}`)
+  allowedOrigins.push(`http://127.0.0.1:${p}`)
+  if (lanIp) allowedOrigins.push(`http://${lanIp}:${p}`)
+}
 
 const nextConfig = {
   // Unblock production builds while we fix lint errors incrementally

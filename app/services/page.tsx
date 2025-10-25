@@ -189,18 +189,27 @@ function ServicesInner() {
           {!selectedCategory ? (
             <>
               <h2 className="text-lg font-semibold mb-4">Choose a Service Category</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
                 {SERVICE_CATEGORIES.map(category => (
                   <button
                     key={category.id}
                     onClick={() => handleCategorySelect(category.id)}
-                    className={`card p-4 hover:shadow-md transition-all text-left ${category.color}`}
+                    className={`group card tile tile-shimmer hover-lift p-5 text-left ${category.color} hover:ring-2 hover:ring-brand-green/30`}
                   >
-                    <div className="text-2xl mb-2">{category.icon}</div>
-                    <h3 className="font-semibold">{category.name}</h3>
-                    <p className="text-xs mt-1 opacity-80">
-                      {category.subcategories.length} services
-                    </p>
+                    {/* Decorative glow */}
+                    <div className="pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-emerald-100 blur-2xl opacity-0 group-hover:opacity-60 transition" />
+
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-2xl">
+                        {category.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">{category.name}</h3>
+                        <p className="text-xs mt-1 text-gray-600">
+                          {category.subcategories.length} services
+                        </p>
+                      </div>
+                    </div>
                   </button>
                 ))}
               </div>
@@ -219,23 +228,25 @@ function ServicesInner() {
                 </h2>
               </div>
               
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {SERVICE_CATEGORIES
                   .find(cat => cat.id === selectedCategory)
                   ?.subcategories.map(subcategory => (
                     <button
                       key={subcategory.id}
                       onClick={() => handleSubcategorySelect(subcategory.id)}
-                      className={`card p-4 hover:shadow-md transition-all text-left ${
+                      className={`group card tile tile-shimmer hover-lift p-4 text-left ${
                         selectedSubcategory === subcategory.id 
                           ? 'ring-2 ring-brand-green bg-green-50' 
-                          : 'hover:bg-gray-50'
+                          : 'hover:bg-gray-50 hover:ring-2 hover:ring-brand-green/20'
                       }`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="text-xl">{subcategory.icon}</div>
+                        <div className="h-10 w-10 rounded-lg bg-emerald-50 flex items-center justify-center text-xl">
+                          {subcategory.icon}
+                        </div>
                         <div>
-                          <h4 className="font-semibold text-sm">{subcategory.name}</h4>
+                          <h4 className="font-semibold text-sm text-gray-900">{subcategory.name}</h4>
                           <p className="text-xs text-gray-600 mt-1">{subcategory.description}</p>
                         </div>
                       </div>

@@ -324,6 +324,24 @@ function NegotiatePageContent() {
               >
                 {isExpired(negStatus) ? 'Offer Expired' : '💳 Proceed to Payment'}
               </button>
+              {/* Offer an alternate regular booking path with clear, colored CTA */}
+              <Link
+                href={{
+                  pathname: '/book',
+                  query: {
+                    propertyId,
+                    price: String(base || 0),
+                    checkIn: sp.get('checkIn') || '',
+                    checkOut: sp.get('checkOut') || '',
+                    adults: sp.get('adults') || '2',
+                    children: sp.get('children') || '0',
+                    rooms: sp.get('rooms') || '1'
+                  }
+                }}
+                className="w-full inline-flex items-center justify-center h-11 rounded-md bg-teal-600 text-white font-medium hover:bg-teal-700 no-underline"
+              >
+                Book at regular price
+              </Link>
               {isExpired(negStatus) && (
                 <div className="text-center text-red-600 text-sm" data-testid="expired-message">
                   This offer has expired. Please try negotiating again.

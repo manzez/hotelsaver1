@@ -41,29 +41,27 @@ export default function ServiceDetail({params}:{params:{id:string}}){
   const [reviews, setReviews] = useState<ServiceReview[]>([])
   const [reviewsLoaded, setReviewsLoaded] = useState(false)
 
-  if(!s) return <div className="py-10">Not found</div>
-
-  // Get category information for enhanced display
-  const categoryMapping = mapLegacyCategory(s.category)
+  // Get category information for enhanced display (guard for missing service)
+  const categoryMapping = s ? mapLegacyCategory(s.category) : null
   const categoryInfo = categoryMapping ? 
     SERVICE_CATEGORIES.find(cat => cat.id === categoryMapping.categoryId) : null
   const subcategoryInfo = categoryMapping && categoryInfo ?
     categoryInfo.subcategories.find(sub => sub.id === categoryMapping.subcategoryId) : null
 
   // Check if this is a hire service that needs special handling
-  const isHireService = categoryInfo?.id === 'hire' || 
-    ['Canopy Hire', 'Chair Hire', 'MC Services', 'Cooler Hire', 'Sound Equipment'].includes(s.category)
+  const isHireService = (categoryInfo?.id === 'hire') || 
+    (s ? ['Canopy Hire', 'Chair Hire', 'MC Services', 'Cooler Hire', 'Sound Equipment'].includes(s.category) : false)
   
   // Check if this is an entertainment service
-  const isEntertainmentService = categoryInfo?.id === 'entertainment' ||
-    ['DJ Services', 'Live Band', 'Photography'].includes(s.category)
+  const isEntertainmentService = (categoryInfo?.id === 'entertainment') ||
+    (s ? ['DJ Services', 'Live Band', 'Photography'].includes(s.category) : false)
 
   // Check availability when date changes for hire services
   useEffect(() => {
-    if (isHireService && eventDate) {
+    if (s && isHireService && eventDate) {
       checkAvailability()
     }
-  }, [eventDate, people, isHireService])
+  }, [s, eventDate, people, isHireService])
 
   // Load reviews on component mount
   useEffect(() => {
@@ -75,13 +73,13 @@ export default function ServiceDetail({params}:{params:{id:string}}){
   }, [s, reviewsLoaded])
 
   async function checkAvailability() {
-    if (!eventDate || !isHireService) return
+    if (!s || !eventDate || !isHireService) return
     
     setAvailability(prev => ({ ...prev, loading: true }))
     
     try {
       const response = await fetch(
-        `/api/services/availability?serviceId=${s.id}&date=${eventDate}&quantity=${people}`
+  `/api/services/availability?serviceId=${s.id}&date=${eventDate}&quantity=${people}`
       )
       
       if (response.ok) {
@@ -195,6 +193,7 @@ export default function ServiceDetail({params}:{params:{id:string}}){
   }
 
   async function reserve(){
+    if (!s) return
     const bookingData = {
       serviceId: s.id,
       people,
@@ -218,6 +217,10 @@ export default function ServiceDetail({params}:{params:{id:string}}){
     })
     
     if(res.ok) setDone(true)
+  }
+
+  if(!s) {
+    return <div className="py-10">Not found</div>
   }
 
   if(done) return (

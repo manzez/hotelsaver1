@@ -1,79 +1,36 @@
 "use client";
 import CategoryTabs from '@/components/CategoryTabs'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import FOOD_DATA from '@/lib.food.json'
 
-const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri', 'All Cities']
+type MenuItem = { name: string; priceNGN: number; category: string }
+type Restaurant = {
+  id: string
+  name: string
+  city: string
+  rating: number
+  image: string
+  priceRange: string
+  menu: MenuItem[]
+  discountPct?: number
+}
 
+const cities = ['Owerri', 'Lagos', 'Abuja', 'Port Harcourt', 'All Cities']
 
-
-const restaurants = [
-  {
-    id: 1,
-    name: "Nigerian Delights",
-    type: "Traditional",
-    city: "Lagos",
-    rating: 4.5,
-    image: "/images/food/ogbono-egusi.jpg",
-    dishes: ["Pounded Yam & Egusi", "Jollof Rice", "Pepper Soup"],
-    priceRange: "₦₦"
-  },
-  {
-    id: 2,
-    name: "Jollof Masters", 
-    type: "African",
-    city: "Abuja",
-    rating: 4.8,
-    image: "/images/food/jollof-rice.jpg",
-    dishes: ["Party Jollof", "Fried Chicken", "Plantain"],
-    priceRange: "₦₦"
-  },
-  {
-    id: 3,
-    name: "Pizza Palace",
-    type: "Italian",
-    city: "Port Harcourt", 
-    rating: 4.3,
-    image: "/images/food/fresh-pizza.jpg",
-    dishes: ["Pepperoni Pizza", "Pasta", "Garlic Bread"],
-    priceRange: "₦₦₦"
-  },
-  {
-    id: 4,
-    name: "Ice Cream Dream",
-    type: "Desserts",
-    city: "Lagos",
-    rating: 4.7,
-    image: "/images/food/ice-cream.jpg",
-    dishes: ["Bubblegum Ice Cream", "Strawberry Sundae", "Chocolate Cone"],
-    priceRange: "₦"
-  },
-  {
-    id: 5,
-    name: "Suya Spot",
-    type: "Grill",
-    city: "Abuja",
-    rating: 4.6,
-    image: "/images/food/suya.jpg",
-    dishes: ["Beef Suya", "Chicken Suya", "Kilishi"],
-    priceRange: "₦₦"
-  },
-  {
-    id: 6,
-    name: "Seafood Haven",
-    type: "Seafood", 
-    city: "Port Harcourt",
-    rating: 4.4,
-    image: "/images/food/grilled-fish.jpg",
-    dishes: ["Grilled Fish", "Pepper Soup", "Prawns"],
-    priceRange: "₦₦₦"
-  }
-]
+const DEFAULT_DISCOUNT = 10 // percent
+function naira(n: number) { return `₦${Math.round(n).toLocaleString()}` }
 
 function FoodInner() {
   const sp = useSearchParams()
-  const [selectedCity, setSelectedCity] = useState('All Cities')
+  const [selectedCity, setSelectedCity] = useState('Owerri')
   const [searchQuery, setSearchQuery] = useState('')
+  const [menuOpenFor, setMenuOpenFor] = useState<string | null>(null)
+  const [orderOpenFor, setOrderOpenFor] = useState<string | null>(null)
+  const [quantities, setQuantities] = useState<Record<string, number>>({})
+  const [contact, setContact] = useState({ name: '', phone: '', address: '' })
+  const [schedule, setSchedule] = useState<{ date: string; time: string }>({ date: '', time: '' })
+  const [orderError, setOrderError] = useState<string>('')
 
   useEffect(() => {
     const urlCity = sp.get('city')
@@ -82,12 +39,33 @@ function FoodInner() {
     }
   }, [sp])
 
-  const filteredRestaurants = restaurants.filter(restaurant => {
-    const matchesCity = selectedCity === 'All Cities' || restaurant.city === selectedCity
-    const matchesSearch = restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         restaurant.dishes.some(dish => dish.toLowerCase().includes(searchQuery.toLowerCase()))
+  const restaurants: Restaurant[] = FOOD_DATA as any
+
+  const filteredRestaurants = restaurants.filter(r => {
+    const matchesCity = selectedCity === 'All Cities' || r.city === selectedCity
+    const matchesSearch = r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.menu.some(mi => mi.name.toLowerCase().includes(searchQuery.toLowerCase()))
     return matchesCity && matchesSearch
   })
+
+  const currentRestaurant = useMemo(() => restaurants.find(r => r.id === (menuOpenFor || orderOpenFor)), [menuOpenFor, orderOpenFor, restaurants])
+
+  function restaurantDiscountPct(r?: Restaurant | null) { return r?.discountPct ?? DEFAULT_DISCOUNT }
+  function discounted(price: number) { return Math.max(0, Math.round(price * (1 - (restaurantDiscountPct(currentRestaurant) / 100)))) }
+  function inc(key: string) { setQuantities(q => ({ ...q, [key]: (q[key] || 0) + 1 })) }
+  function dec(key: string) { setQuantities(q => ({ ...q, [key]: Math.max(0, (q[key] || 0) - 1) })) }
+  function resetOrder() { setQuantities({}); setContact({ name: '', phone: '', address: '' }) }
+  const orderItems = useMemo(() => {
+    if (!currentRestaurant) return [] as Array<{ item: MenuItem; qty: number }>
+    return currentRestaurant.menu
+      .map(item => ({ item, qty: quantities[item.name] || 0 }))
+      .filter(x => x.qty > 0)
+  }, [currentRestaurant, quantities])
+  const subtotal = useMemo(() => orderItems.reduce((s, x) => s + discounted(x.item.priceNGN) * x.qty, 0), [orderItems])
+  const DELIVERY_FEES: Record<string, number> = { Lagos: 1500, Abuja: 1500, 'Port Harcourt': 1200, Owerri: 1000 }
+  const ETA_TEXT: Record<string, string> = { Lagos: '≈45–60 mins', Abuja: '≈45–60 mins', 'Port Harcourt': '≈35–50 mins', Owerri: '≈30–45 mins' }
+  const deliveryFee = currentRestaurant ? (DELIVERY_FEES[currentRestaurant.city] ?? 1000) : 0
+  const totalWithDelivery = subtotal + deliveryFee
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -170,21 +148,21 @@ function FoodInner() {
                 <div className="mb-3">
                   <h3 className="font-semibold text-lg text-gray-900 mb-1">{restaurant.name}</h3>
                   <div className="flex items-center justify-between">
-                    <p className="text-sm text-gray-600">{restaurant.type} • {restaurant.city}</p>
+                    <p className="text-sm text-gray-600">{restaurant.city}</p>
                     <span className="text-sm font-medium text-brand-green">{restaurant.priceRange}</span>
                   </div>
                 </div>
                 
                 <div className="mb-4">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    {restaurant.dishes.slice(0, 2).join(', ')}
-                    {restaurant.dishes.length > 2 && ` +${restaurant.dishes.length - 2} more`}
+                    {restaurant.menu.slice(0, 2).map(m => m.name).join(', ')}
+                    {restaurant.menu.length > 2 && ` +${restaurant.menu.length - 2} more`}
                   </p>
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="btn-ghost flex-1 text-sm h-9">View Menu</button>
-                  <button className="btn-primary flex-1 text-sm h-9">Order Now</button>
+                  <button className="btn-ghost flex-1 text-sm h-9" onClick={() => { setMenuOpenFor(restaurant.id); setOrderOpenFor(null) }}>View Menu</button>
+                  <button className="btn-primary flex-1 text-sm h-9" onClick={() => { setOrderOpenFor(restaurant.id); setMenuOpenFor(null); resetOrder() }}>Order Now</button>
                 </div>
               </div>
             </div>
@@ -224,6 +202,160 @@ function FoodInner() {
           </button>
         </div>
       </div>
+
+      {/* Menu Drawer */}
+      {menuOpenFor && currentRestaurant && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex" onClick={() => setMenuOpenFor(null)}>
+          <div className="ml-auto w-full max-w-md bg-white h-full p-5 overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Menu — {currentRestaurant.name}</h3>
+              <button className="btn-ghost h-9" onClick={() => setMenuOpenFor(null)}>✕</button>
+            </div>
+            <div className="space-y-3">
+              {currentRestaurant.menu.map(mi => (
+                <div key={mi.name} className="flex items-center justify-between border-b pb-2">
+                  <div>
+                    <div className="font-medium text-gray-900">{mi.name}</div>
+                    <div className="text-xs text-gray-500">{mi.category}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-gray-500 line-through text-xs">{naira(mi.priceNGN)}</div>
+                    <div className="text-brand-green font-semibold">{naira(discounted(mi.priceNGN))}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Order Modal */}
+      {orderOpenFor && currentRestaurant && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setOrderOpenFor(null)}>
+          <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg overflow-hidden" onClick={e => e.stopPropagation()}>
+            <div className="p-5 border-b flex items-center justify-between">
+              <h3 className="font-bold text-gray-900">Order from {currentRestaurant.name}</h3>
+              <button className="btn-ghost h-9" onClick={() => setOrderOpenFor(null)}>✕</button>
+            </div>
+            <div className="p-5 grid md:grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-semibold mb-2">Menu</h4>
+                <div className="space-y-3 max-h-72 overflow-y-auto pr-2">
+                  {currentRestaurant.menu.map(mi => (
+                    <div key={mi.name} className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{mi.name}</div>
+                        <div className="text-xs text-gray-500">{mi.category}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs line-through text-gray-500">{naira(mi.priceNGN)}</div>
+                        <div className="text-brand-green font-semibold">{naira(discounted(mi.priceNGN))}</div>
+                        <div className="mt-1 inline-flex items-center gap-2">
+                          <button className="btn-ghost h-7 px-2" onClick={() => dec(mi.name)}>-</button>
+                          <span className="w-6 text-center text-sm">{quantities[mi.name] || 0}</span>
+                          <button className="btn-primary h-7 px-2" onClick={() => inc(mi.name)}>+</button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Your Details</h4>
+                <div className="space-y-3">
+                  <input className="input" placeholder="Full name" value={contact.name} onChange={e => setContact({ ...contact, name: e.target.value })} />
+                  <input className="input" placeholder="Phone (WhatsApp)" value={contact.phone} onChange={e => setContact({ ...contact, phone: e.target.value })} />
+                  <input className="input" placeholder="Delivery address" value={contact.address} onChange={e => setContact({ ...contact, address: e.target.value })} />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-xs text-gray-600">Delivery date</label>
+                      <input type="date" className="input" value={schedule.date} onChange={e => setSchedule({ ...schedule, date: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="text-xs text-gray-600">Delivery time</label>
+                      <input type="time" className="input" value={schedule.time} onChange={e => setSchedule({ ...schedule, time: e.target.value })} />
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-green-50 rounded border border-green-100 text-sm">
+                  <div className="flex justify-between">
+                    <span>Items total:</span>
+                    <span className="font-medium">{naira(subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-green-700">
+                    <span>Discount:</span>
+                    <span className="font-medium">{restaurantDiscountPct(currentRestaurant)}% off</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Delivery fee ({currentRestaurant.city}):</span>
+                    <span>{naira(deliveryFee)}</span>
+                  </div>
+                  <div className="text-xs text-gray-600 mt-1">Estimated time: {ETA_TEXT[currentRestaurant.city] || '≈45 mins'}</div>
+                </div>
+                {orderError && (
+                  <div className="mt-3 p-3 bg-red-50 border border-red-200 text-sm text-red-800 rounded">
+                    {orderError}
+                  </div>
+                )}
+                <button
+                  className="btn-primary w-full mt-4"
+                  disabled={subtotal <= 0 || !contact.name || !contact.phone || !contact.address}
+                  onClick={async () => {
+                    setOrderError('')
+                    const items = orderItems.map(x => ({ name: x.item.name, qty: x.qty, priceNGN: discounted(x.item.priceNGN) }))
+                    try {
+                      const resp = await fetch('/api/food/order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          restaurantId: currentRestaurant.id,
+                          restaurantName: currentRestaurant.name,
+                          city: currentRestaurant.city,
+                          contact,
+                          items,
+                          total: subtotal,
+                          discountRate: restaurantDiscountPct(currentRestaurant),
+                          deliveryWindow: schedule.time ? undefined : 'Afternoon',
+                          scheduleDate: schedule.date,
+                          scheduleTime: schedule.time,
+                        })
+                      })
+                      if (!resp.ok) {
+                        const err = await resp.json().catch(() => ({}))
+                        setOrderError(err?.error || 'Unable to place order. Please try again.')
+                        return
+                      }
+                      const data = await resp.json().catch(() => ({}))
+                      const ref = data?.reference || `FD${Date.now()}`
+                      // Redirect to food confirmation page with server-provided summary
+                      const qp = new URLSearchParams({
+                        reference: ref,
+                        restaurant: currentRestaurant.name,
+                        city: currentRestaurant.city,
+                        total: String(data?.total || subtotal + deliveryFee),
+                        deliveryFee: String(data?.deliveryFee || deliveryFee),
+                        window: String(data?.deliveryWindow || (schedule.time ? 'Scheduled' : 'Afternoon')),
+                        scheduleDate: schedule.date || '',
+                        scheduleTime: schedule.time || '',
+                        name: contact.name,
+                        phone: contact.phone,
+                        address: contact.address,
+                        eta: String(ETA_TEXT[currentRestaurant.city] || ''),
+                      })
+                      setOrderOpenFor(null)
+                      window.location.href = `/food/confirmation?${qp.toString()}`
+                    } catch (e) {
+                      setOrderError('Network error. Please check your connection and try again.')
+                    }
+                  }}
+                >
+                  Confirm Order — {naira(totalWithDelivery)}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

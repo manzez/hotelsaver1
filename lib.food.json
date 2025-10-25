@@ -1,0 +1,107 @@
+[
+  {
+    "id": "julies-lounge-owerri",
+    "name": "Julies Lounge",
+    "city": "Owerri",
+    "rating": 4.5,
+    "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200",
+    "priceRange": "₦₦",
+    "discountPct": 12,
+    "menu": [
+      { "name": "Jollof Rice & Chicken", "priceNGN": 4500, "category": "Mains" },
+      { "name": "Fried Rice & Chicken", "priceNGN": 4800, "category": "Mains" },
+      { "name": "Pounded Yam & Egusi", "priceNGN": 5200, "category": "Trad" },
+      { "name": "Ofada Rice & Ayamase", "priceNGN": 5000, "category": "Mains" },
+      { "name": "Goat Meat Pepper Soup", "priceNGN": 4200, "category": "Soups" },
+      { "name": "Suya (Beef)", "priceNGN": 3500, "category": "Grill" },
+      { "name": "Chicken Wings", "priceNGN": 3800, "category": "Grill" },
+      { "name": "Grilled Fish", "priceNGN": 6500, "category": "Seafood" },
+      { "name": "Shawarma (Chicken)", "priceNGN": 3000, "category": "Wraps" },
+      { "name": "Soft Drink", "priceNGN": 800, "category": "Drinks" }
+    ]
+  },
+  {
+    "id": "chukas-place-owerri",
+    "name": "Chukas Place",
+    "city": "Owerri",
+    "rating": 4.4,
+    "image": "https://images.unsplash.com/photo-1541542684-4a7c6a452c09?w=1200",
+    "priceRange": "₦₦",
+    "discountPct": 10,
+    "menu": [
+      { "name": "Jollof Rice & Chicken", "priceNGN": 4300, "category": "Mains" },
+      { "name": "Fried Rice & Chicken", "priceNGN": 4600, "category": "Mains" },
+      { "name": "Pounded Yam & Egusi", "priceNGN": 5100, "category": "Trad" },
+      { "name": "Ofada Rice & Ayamase", "priceNGN": 4900, "category": "Mains" },
+      { "name": "Goat Meat Pepper Soup", "priceNGN": 4000, "category": "Soups" },
+      { "name": "Suya (Beef)", "priceNGN": 3400, "category": "Grill" },
+      { "name": "Chicken Wings", "priceNGN": 3700, "category": "Grill" },
+      { "name": "Grilled Fish", "priceNGN": 6200, "category": "Seafood" },
+      { "name": "Shawarma (Chicken)", "priceNGN": 2900, "category": "Wraps" },
+      { "name": "Soft Drink", "priceNGN": 800, "category": "Drinks" }
+    ]
+  },
+  {
+    "id": "chillis-owerri",
+    "name": "Chillis",
+    "city": "Owerri",
+    "rating": 4.3,
+    "image": "https://images.unsplash.com/photo-1551782450-17144c3a3f59?w=1200",
+    "priceRange": "₦₦₦",
+    "discountPct": 8,
+    "menu": [
+      { "name": "Jollof Rice & Chicken", "priceNGN": 5000, "category": "Mains" },
+      { "name": "Fried Rice & Chicken", "priceNGN": 5200, "category": "Mains" },
+      { "name": "Pounded Yam & Egusi", "priceNGN": 5600, "category": "Trad" },
+      { "name": "Ofada Rice & Ayamase", "priceNGN": 5400, "category": "Mains" },
+      { "name": "Goat Meat Pepper Soup", "priceNGN": 4500, "category": "Soups" },
+      { "name": "Suya (Beef)", "priceNGN": 3800, "category": "Grill" },
+      { "name": "Chicken Wings", "priceNGN": 4200, "category": "Grill" },
+      { "name": "Grilled Fish", "priceNGN": 7000, "category": "Seafood" },
+      { "name": "Shawarma (Chicken)", "priceNGN": 3200, "category": "Wraps" },
+      { "name": "Soft Drink", "priceNGN": 900, "category": "Drinks" }
+    ]
+  },
+  {
+    "id": "donalds-owerri",
+    "name": "Donalds",
+    "city": "Owerri",
+    "rating": 4.2,
+    "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200",
+    "priceRange": "₦₦",
+    "discountPct": 10,
+    "menu": [
+      { "name": "Jollof Rice & Chicken", "priceNGN": 4200, "category": "Mains" },
+      { "name": "Fried Rice & Chicken", "priceNGN": 4500, "category": "Mains" },
+      { "name": "Pounded Yam & Egusi", "priceNGN": 5000, "category": "Trad" },
+      { "name": "Ofada Rice & Ayamase", "priceNGN": 4800, "category": "Mains" },
+      { "name": "Goat Meat Pepper Soup", "priceNGN": 3900, "category": "Soups" },
+      { "name": "Suya (Beef)", "priceNGN": 3300, "category": "Grill" },
+      { "name": "Chicken Wings", "priceNGN": 3600, "category": "Grill" },
+      { "name": "Grilled Fish", "priceNGN": 6000, "category": "Seafood" },
+      { "name": "Shawarma (Chicken)", "priceNGN": 2800, "category": "Wraps" },
+      { "name": "Soft Drink", "priceNGN": 700, "category": "Drinks" }
+    ]
+  },
+  {
+    "id": "mangroove-owerri",
+    "name": "Mangroove",
+    "city": "Owerri",
+    "rating": 4.4,
+    "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200",
+    "priceRange": "₦₦₦",
+    "discountPct": 15,
+    "menu": [
+      { "name": "Jollof Rice & Chicken", "priceNGN": 5200, "category": "Mains" },
+      { "name": "Fried Rice & Chicken", "priceNGN": 5500, "category": "Mains" },
+      { "name": "Pounded Yam & Egusi", "priceNGN": 5800, "category": "Trad" },
+      { "name": "Ofada Rice & Ayamase", "priceNGN": 5600, "category": "Mains" },
+      { "name": "Goat Meat Pepper Soup", "priceNGN": 4600, "category": "Soups" },
+      { "name": "Suya (Beef)", "priceNGN": 3800, "category": "Grill" },
+      { "name": "Chicken Wings", "priceNGN": 4200, "category": "Grill" },
+      { "name": "Grilled Fish", "priceNGN": 7200, "category": "Seafood" },
+      { "name": "Shawarma (Chicken)", "priceNGN": 3200, "category": "Wraps" },
+      { "name": "Soft Drink", "priceNGN": 900, "category": "Drinks" }
+    ]
+  }
+]

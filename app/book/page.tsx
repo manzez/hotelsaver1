@@ -66,7 +66,7 @@ function BookPageContent() {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
   }, [hotel?.name, hotelInfo.address])
 
-  const [form, setForm] = useState({ name: '', phone: '', email: '', eta: '' })
+  const [form, setForm] = useState({ firstName: '', lastName: '', phone: '' })
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
 
@@ -106,36 +106,20 @@ function BookPageContent() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
-    if (!form.name || !form.phone || !form.email) return
+    if (!form.firstName || !form.lastName || !form.phone) return
     setSubmitting(true)
     try {
-      const payload = {
-        propertyId,
-        price,
-        rooms,
-        adults,
-        children,
-        checkIn,
-        checkOut,
-        contact: form,
-      }
-      const resp = await fetch('/api/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      const data = await resp.json().catch(() => ({} as any))
-      const bookingId = (data as any)?.bookingId || `BK${Date.now()}`
       const q = new URLSearchParams({
         propertyId,
-        price: String(price),
-        bookingId,
-        originalPrice: String(originalPrice),
+        price: String(originalPrice || price),
         checkIn: checkIn || '',
         checkOut: checkOut || '',
         adults: String(adults),
         children: String(children),
         rooms: String(rooms),
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phone: form.phone,
       })
       router.push(`/payment?${q.toString()}`)
     } finally {
@@ -257,7 +241,7 @@ function BookPageContent() {
   return (
     <div className="container py-10">
       <div className="max-w-xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Complete Your Booking</h2>
+        <h2 className="text-2xl font-bold mb-6">Your Details</h2>
 
         {hotel && (
           <div className="card p-4 mb-6">
@@ -279,16 +263,29 @@ function BookPageContent() {
         )}
 
         <form onSubmit={submit} className="card p-6 space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-            <input
-              id="name"
-              className="input"
-              placeholder="Enter your full name"
-              value={form.name}
-              onChange={e => setForm({ ...form, name: e.target.value })}
-              required
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+              <input
+                id="firstName"
+                className="input"
+                placeholder="Enter your first name"
+                value={form.firstName}
+                onChange={e => setForm({ ...form, firstName: e.target.value })}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+              <input
+                id="lastName"
+                className="input"
+                placeholder="Enter your last name"
+                value={form.lastName}
+                onChange={e => setForm({ ...form, lastName: e.target.value })}
+                required
+              />
+            </div>
           </div>
 
           <div>
@@ -303,37 +300,12 @@ function BookPageContent() {
             />
           </div>
 
-        
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-            <input
-              id="email"
-              type="email"
-              className="input"
-              placeholder="your.email@example.com"
-              value={form.email}
-              onChange={e => setForm({ ...form, email: e.target.value })}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="eta" className="block text-sm font-medium text-gray-700 mb-2">Expected Arrival Time</label>
-            <input
-              id="eta"
-              className="input"
-              placeholder="e.g. 2:00 PM or 14:00"
-              value={form.eta}
-              onChange={e => setForm({ ...form, eta: e.target.value })}
-            />
-          </div>
-
-          <button type="submit" className="btn-accent w-full" disabled={submitting || !form.name || !form.phone || !form.email}>
-            {submitting ? 'Processing…' : '🔒 Confirm Booking'}
+          <button type="submit" className="btn-accent w-full" disabled={submitting || !form.firstName || !form.lastName || !form.phone}>
+            {submitting ? 'Processing…' : 'Continue to Payment'}
           </button>
 
           <p className="text-xs text-gray-500 text-center">
-            By booking, you agree to our terms. We'll send confirmation via email and WhatsApp.
+            We'll personalize your payment step and keep you updated via WhatsApp.
           </p>
         </form>
       </div>

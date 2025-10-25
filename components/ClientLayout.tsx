@@ -6,43 +6,9 @@ import UserMenu from './UserMenu'
 import CartButton from './CartButton'
 
 function Header() {
-  const [show, setShow] = useState(true)
-  const lastYRef = useRef(0)
-  const tickingRef = useRef(false)
-
-  useEffect(() => {
-    // Auto-hide header on scroll down, show on scroll up
-    const onScroll = () => {
-      if (tickingRef.current) return
-      tickingRef.current = true
-      requestAnimationFrame(() => {
-        const y = Math.max(0, window.scrollY || 0)
-        const last = lastYRef.current
-
-        // Always show near the very top
-        if (y < 10) {
-          setShow(true)
-        } else {
-          const diff = y - last
-          // Small threshold to prevent flicker on tiny scrolls
-          if (Math.abs(diff) > 6) {
-            setShow(diff < 0) // show when scrolling up
-          }
-        }
-
-        lastYRef.current = y
-        tickingRef.current = false
-      })
-    }
-
-    // Initialize last position
-    lastYRef.current = Math.max(0, window.scrollY || 0)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
+  // Non-sticky header: scrolls with the page
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm transition-transform duration-300 will-change-transform ${show ? 'translate-y-0' : '-translate-y-full'}`}>
+    <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
       <div className='container h-16 flex items-center gap-6'>
         <Link href='/' className='flex items-center gap-2 text-2xl font-bold text-brand-green tracking-tight hover:text-brand-dark transition-colors'>
           <div className='w-8 h-8 bg-brand-green rounded-lg flex items-center justify-center text-white font-bold text-sm'>
@@ -199,8 +165,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <>
       <Header />
-      {/* Pad top to account for fixed header height */}
-      <main className='container pt-16 pb-20 md:pb-0'>{children}</main>
+      {/* Standard flow layout (header is not fixed) */}
+      <main className='container pb-20 md:pb-0'>{children}</main>
       <MobileBottomNav />
       
       <footer className='mt-16 bg-white border-t border-gray-200'>

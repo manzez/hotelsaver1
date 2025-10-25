@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, forwardRef } from 'react'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 // Lazy-load the DatePicker to avoid heavy JS on initial paint
 const DatePicker = dynamic<any>(() => import('react-datepicker'), { ssr: false })
 import "react-datepicker/dist/react-datepicker.css"
-// Scoped custom styles for green range link and mobile popover behavior
+// Scoped custom styles for themed range link and mobile popover behavior
 import "./datepicker.css"
 
 const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri']
@@ -30,6 +30,8 @@ interface SearchBarProps {
   submitLabel?: string
   onBeforeSubmit?: () => void
   showBrandSplashOnSubmit?: boolean
+  // Mobile-only date picker mode: 'native' uses <input type="date">, 'custom' uses our calendar UI
+  mobileDatePicker?: 'native' | 'custom'
 }
 
 interface SearchResult {
@@ -59,7 +61,8 @@ export default function SearchBar({
   defaultStayType = 'any',
   submitLabel = 'Update Results',
   onBeforeSubmit,
-  showBrandSplashOnSubmit = false
+  showBrandSplashOnSubmit = false,
+  mobileDatePicker = 'native'
 }: SearchBarProps = {}) {
   const router = useRouter()
   
@@ -140,9 +143,9 @@ export default function SearchBar({
   setIsMobile(isMobileDevice)
   setIsAndroid(isAndroidDevice)
       
-  // Use the same calendar (range picker) on mobile by default
-  // We still keep a fallback to native if the popup fails on Android.
-  setUseNativeDatePicker(false)
+  // Choose mobile date picker mode based on prop
+  // Desktop keeps the custom calendar by default
+  setUseNativeDatePicker(isMobileDevice && mobileDatePicker !== 'custom')
       
       // Add device class to body for CSS targeting
       if (isAndroidDevice && isMobileDevice) {
@@ -187,7 +190,7 @@ export default function SearchBar({
     }
 
     detectDevice()
-  }, [])
+  }, [mobileDatePicker])
 
   // Click outside handlers
   useEffect(() => {
@@ -255,6 +258,25 @@ export default function SearchBar({
     } else {
       setIsDatePickerOpen(true)
       setShowGuestPicker(false)
+      // On some Android Chrome builds, opening the portal can silently fail.
+      // After a short delay, detect failure and fall back to native.
+      if (datePickerTimeoutRef.current) {
+        clearTimeout(datePickerTimeoutRef.current)
+      }
+      datePickerTimeoutRef.current = setTimeout(() => {
+        try {
+          const portal = document.querySelector('#date-picker-portal')
+          const calendar = document.querySelector('.react-datepicker, .react-datepicker-popper')
+          const isOpen = !!calendar || !!(portal && portal.childNodes.length > 0)
+          if (!isOpen && isAndroid && isMobile) {
+            setUseNativeDatePicker(true)
+            requestAnimationFrame(() => {
+              nativeStartRef.current?.focus()
+              nativeStartRef.current?.showPicker?.()
+            })
+          }
+        } catch {}
+      }, 250)
     }
   }
 
@@ -408,12 +430,12 @@ export default function SearchBar({
       container.style.position = 'relative'
       container.style.display = 'inline-block'
 
-      const letter = document.createElement('div')
+  const letter = document.createElement('div')
       letter.textContent = 'H'
       letter.style.fontSize = '22rem'
       letter.style.fontWeight = '900'
       letter.style.lineHeight = '1'
-      letter.style.color = '#009739' // brand green
+  letter.style.color = '#009739' // brand green
       letter.style.textShadow = '0 8px 24px rgba(0,0,0,0.06)'
 
       const sweep = document.createElement('div')
@@ -444,11 +466,18 @@ export default function SearchBar({
 
   const renderDatePicker = () => {
     if (!isInitialized) {
-      // Render a neutral placeholder to avoid implying a stuck loading state
+      // Render a clickable placeholder so users can still open the calendar immediately
       return (
-        <div className="w-full h-12 pl-4 pr-10 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium flex items-center">
+        <button
+          type="button"
+          className="w-full h-12 pl-4 pr-10 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-100"
+          onClick={() => {
+            ensureDefaultDatesAndOpen()
+          }}
+        >
           <span className="text-gray-500">Select dates</span>
-        </div>
+          <span className="sr-only">Open date picker</span>
+        </button>
       )
     }
 
@@ -502,65 +531,60 @@ export default function SearchBar({
       return (
         <div className={className}>
           {children}
-          <div className="px-3 pb-3 pt-2 border-t border-gray-100 bg-white">
-            <button
-              type="button"
-              className="w-full btn-primary rounded-lg h-11"
-              onClick={() => {
-                // If only start selected, default end to next day
-                if (startDate && !endDate) {
-                  const nextDay = new Date(startDate)
-                  nextDay.setDate(nextDay.getDate() + 1)
-                  setEndDate(nextDay)
-                }
-                // Ensure defaults exist
-                if (!startDate || !endDate) {
-                  const today = startOfDay(new Date())
-                  const tomorrow = addDays(today, 1)
-                  setStartDate(today)
-                  setEndDate(tomorrow)
-                }
-                setIsDatePickerOpen(false)
-              }}
-            >
-              Done
-            </button>
-          </div>
         </div>
       )
     }
-    return (
-      <div className="relative w-full overflow-hidden rounded-xl">
-        {/* Mobile touch overlay - only when not using native */}
-        {isMobile && !useNativeDatePicker && (
-          <div
-            className="absolute inset-0 z-10 bg-transparent cursor-pointer"
-            onTouchStart={(e) => {
-              e.preventDefault()
-              if (!destinationSelected) return
-              setIsDatePickerOpen(true)
-              setShowGuestPicker(false)
-              
-              if (isAndroid) {
-                datePickerTimeoutRef.current = setTimeout(() => {
-                  if (!document.querySelector('.react-datepicker')) {
-                    setDatePickerFailCount(prev => {
-                      const next = prev + 1
-                      if (next >= 1) setUseNativeDatePicker(true)
-                      return next
-                    })
-                  }
-                }, 1000)
+    // Build a mobile-friendly custom input that always opens the calendar reliably
+    const formatRangeLabel = () => {
+      if (startDate && endDate) {
+        const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
+        return `${startDate.toLocaleDateString('en-GB', opts)} - ${endDate.toLocaleDateString('en-GB', opts)}`
+      }
+      if (startDate) {
+        const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
+        return `${startDate.toLocaleDateString('en-GB', opts)} - Add checkout`
+      }
+      return 'Add dates'
+    }
+
+    const DateButtonInput = forwardRef<HTMLButtonElement, any>(({ onClick }: any, ref) => (
+      <button
+        type="button"
+        ref={ref}
+        onClick={(e) => {
+          // Trigger react-datepicker internal handler if present
+          onClick?.(e)
+          // Force open under our control
+          setIsDatePickerOpen(true)
+          setShowGuestPicker(false)
+          // Android fallback if portal fails to render
+          if (datePickerTimeoutRef.current) {
+            clearTimeout(datePickerTimeoutRef.current)
+          }
+          datePickerTimeoutRef.current = setTimeout(() => {
+            try {
+              const portal = document.querySelector('#date-picker-portal')
+              const calendar = document.querySelector('.react-datepicker, .react-datepicker-popper')
+              const isOpen = !!calendar || !!(portal && portal.childNodes.length > 0)
+              if (!isOpen && isAndroid && isMobile) {
+                setUseNativeDatePicker(true)
+                requestAnimationFrame(() => {
+                  nativeStartRef.current?.focus()
+                  nativeStartRef.current?.showPicker?.()
+                })
               }
-            }}
-            onClick={(e) => {
-              e.preventDefault()
-              if (!destinationSelected) return
-              setIsDatePickerOpen(true)
-              setShowGuestPicker(false)
-            }}
-          />
-        )}
+            } catch {}
+          }, 250)
+        }}
+        className="w-full h-12 pl-4 pr-10 bg-gray-50 border-2 border-brand-green/30 rounded-xl text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-100"
+      >
+        <span>{formatRangeLabel()}</span>
+      </button>
+    ))
+
+    return (
+      <div className="relative w-full overflow-visible rounded-xl">
+        {/* Mobile: open calendar on input click; no separate overlay to avoid dual behaviors */}
 
         <DatePicker
           selected={startDate}
@@ -572,6 +596,7 @@ export default function SearchBar({
           startDate={startDate}
           endDate={endDate}
           selectsRange
+          shouldCloseOnSelect={true}
           inline={false}
           open={isDatePickerOpen}
           onClickOutside={() => {
@@ -584,7 +609,7 @@ export default function SearchBar({
             }
           }}
           onFocus={() => {
-            if (!isMobile && destinationSelected) {
+            if (!isMobile) {
               setIsDatePickerOpen(true)
               setShowGuestPicker(false)
             }
@@ -601,12 +626,33 @@ export default function SearchBar({
           filterDate={(date: Date) => startOfDay(date) >= startOfDay(new Date())}
           portalId="date-picker-portal"
           withPortal={isMobile}
-          popperPlacement="bottom"
-          preventOpenOnFocus={isMobile}
+          popperPlacement={isMobile ? 'bottom' : 'bottom-start'}
+          preventOpenOnFocus={true}
           readOnly={isMobile}
           disabledKeyboardNavigation={isMobile}
           calendarContainer={CalendarContainer as any}
+          customInput={<DateButtonInput /> as any}
+          onInputClick={() => {
+            // Open for both desktop and mobile to unify behavior
+            setIsDatePickerOpen(true)
+            setShowGuestPicker(false)
+          }}
+          onCalendarOpen={() => {
+            if (isMobile) {
+              try { document.body.style.overflow = 'hidden' } catch {}
+            }
+          }}
+          onCalendarClose={() => {
+            if (isMobile) {
+              try { document.body.style.overflow = '' } catch {}
+            }
+          }}
         />
+
+        {/* Spacer to prevent overlapping content on desktop when calendar is open */}
+        {!isMobile && isDatePickerOpen && (
+          <div className="hidden md:block h-[340px]" aria-hidden="true"></div>
+        )}
 
         {/* Calendar icon */}
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none z-1">
@@ -615,16 +661,7 @@ export default function SearchBar({
           </svg>
         </div>
 
-        {/* Switch to native option for mobile devices */}
-        {isMobile && !useNativeDatePicker && (
-          <button
-            type="button"
-            onClick={() => setUseNativeDatePicker(true)}
-            className="absolute -bottom-6 left-0 text-xs text-brand-green hover:text-brand-dark transition-colors"
-          >
-            Having issues? Try simple date picker
-          </button>
-        )}
+        {/* Note: we still auto-fallback to native on Android if the popup fails, but no visible toggle to avoid confusion */}
       </div>
     )
   }

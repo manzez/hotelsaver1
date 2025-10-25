@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearchBar'
 
 export default function MobileHero() {
   return (
-    <section className="md:hidden bg-gradient-to-b from-emerald-50 to-white pt-6 pb-4">
+  <section className="md:hidden bg-gradient-to-b from-emerald-50 to-white pt-6 pb-4">
       <div className="px-4">
         <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
           Negotiate Your Price —

@@ -18,22 +18,26 @@ export async function POST(req: NextRequest) {
 
     const amount = Number(body.amount) || 0
     const email = String(body.email || '')
-    const context = body.context || {}
+  const context = body.context || {}
 
     if (!amount || !email) {
       return NextResponse.json({ error: 'amount and email required' }, { status: 400 })
     }
 
-    // Verify negotiation token in context before proceeding
-    const token = String(context?.negotiationToken || '')
-    const verified = verifyNegotiationToken(token)
-    if (!verified.ok) {
-      return NextResponse.json({ error: 'invalid negotiation token', reason: verified.reason }, { status: 400 })
-    }
+    // Booking flow does not require a negotiation token
+    const flow = String(context?.flow || '')
+    if (flow !== 'book') {
+      // Verify negotiation token in context before proceeding (negotiation-only flows)
+      const token = String(context?.negotiationToken || '')
+      const verified = verifyNegotiationToken(token)
+      if (!verified.ok) {
+        return NextResponse.json({ error: 'invalid negotiation token', reason: verified.reason }, { status: 400 })
+      }
 
-    // Optional sanity: ensure context contains same propertyId
-    if (context?.propertyId && context.propertyId !== verified.payload.propertyId) {
-      return NextResponse.json({ error: 'mismatched propertyId' }, { status: 400 })
+      // Optional sanity: ensure context contains same propertyId
+      if (context?.propertyId && context.propertyId !== verified.payload.propertyId) {
+        return NextResponse.json({ error: 'mismatched propertyId' }, { status: 400 })
+      }
     }
 
     const qs = new URLSearchParams(context).toString()
