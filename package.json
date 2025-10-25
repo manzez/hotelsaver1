@@ -61,7 +61,8 @@
     "react-dom": "18.2.0",
     "react-tailwindcss-datepicker": "^1.7.3",
     "swagger-ui-dist": "^5.29.5",
-    "swagger-ui-react": "^5.29.5"
+    "swagger-ui-react": "^5.29.5",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",

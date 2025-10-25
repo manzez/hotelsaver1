@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyNegotiationToken } from '@/lib/negotiation'
+import { sendBookingEmails } from '@/lib/email'
 
 export async function POST(req: NextRequest) {
   try {
@@ -57,7 +58,34 @@ export async function POST(req: NextRequest) {
 
     // Generate unique booking ID
     const bookingId = 'BK' + Date.now();
-    
+
+    // Best-effort: send confirmation emails (user, admin, hotel)
+    // Run before responding to ensure at-least-once semantics in serverless
+    try {
+      const emailPayload = {
+        bookingId,
+        propertyId: String(payload?.propertyId || ''),
+        city: String(payload?.city || ''),
+        checkIn: String(payload?.checkIn || ''),
+        checkOut: String(payload?.checkOut || ''),
+        rooms: payload?.rooms,
+        adults: payload?.adults,
+        children: payload?.children,
+        negotiatedPrice: typeof payload?.negotiatedPrice === 'number' ? payload.negotiatedPrice : undefined,
+        originalPrice: typeof payload?.originalPrice === 'number' ? payload.originalPrice : undefined,
+        price: typeof payload?.price === 'number' ? payload.price : undefined,
+        contact: payload?.contact,
+        name: payload?.name,
+        email: payload?.email,
+        phone: payload?.phone,
+        paymentMethod: payload?.paymentMethod,
+      }
+      await sendBookingEmails(emailPayload as any)
+    } catch (e) {
+      // Do not fail booking on email error
+      console.error('[book] email error', e)
+    }
+
     return NextResponse.json({
       bookingId,
       status: 'confirmed',
