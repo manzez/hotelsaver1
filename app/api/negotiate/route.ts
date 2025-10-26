@@ -1,6 +1,6 @@
 // app/api/negotiate/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { getHotelById } from '@/lib/hotels-source';
+import { HOTELS } from '@/lib/data';
 import { getDiscountFor } from '@/lib/discounts';
 import { signNegotiationOffer } from '@/lib/negotiation'
 import { allowIp } from '@/lib/rate-limit'
@@ -14,8 +14,6 @@ type Hotel = {
   price?: number;
   [k: string]: unknown;
 };
-
-// HOTELS is imported from @/lib/data
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,7 +36,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const property = await getHotelById(propertyId);
+    const property = HOTELS.find((h: any) => h.id === propertyId);
     if (!property) {
       return NextResponse.json(
         { status: 'no-offer', reason: 'not-found' },
