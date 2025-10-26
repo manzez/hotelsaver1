@@ -27,8 +27,8 @@ export interface DiscountInfo {
 // Type the imported data
 const discounts = discountsData as DiscountsData;
 
-// Fallback if anything goes wrong - now 0% instead of 15%
-const DEFAULT_DISCOUNT = 0;
+// Fallback if anything goes wrong - 15% default discount
+const DEFAULT_DISCOUNT = 0.15;
 
 export function getDiscountFor(propertyId: string): number {
   try {

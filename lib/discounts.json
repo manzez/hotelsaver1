@@ -1,5 +1,5 @@
 {
-  "default": 0,
+  "default": 0.15,
   "overrides": {
     "protea-hotel-owerri-owerri": 0.12,
     "transcorp-hilton-abuja-abuja": 0.2,
