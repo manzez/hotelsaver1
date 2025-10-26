@@ -7,5 +7,10 @@
       "destination": "/search",
       "permanent": true
     }
-  ]
+  ],
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
 }
