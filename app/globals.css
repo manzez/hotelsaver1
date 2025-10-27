@@ -349,3 +349,13 @@ a.chip, a.chip:link, a.chip:visited, a.chip:hover, a.chip:focus { text-decoratio
   transform: translateX(60%);
   transition: transform 900ms ease, opacity 200ms ease;
 }
+
+/* Scrollbar hide utility for mobile navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

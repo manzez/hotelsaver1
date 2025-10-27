@@ -37,7 +37,7 @@ export default function StickyHeader() {
         isScrolled ? 'backdrop-blur-md bg-green-900/95' : ''
       }`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-3 md:px-6">
         {/* Top Navigation Bar */}
         <div className={`flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'py-2' : 'py-3'
@@ -50,24 +50,24 @@ export default function StickyHeader() {
           </div>
           
           {/* Right Side - Currency, Help, List Property, Register, Sign in */}
-          <div className="flex items-center space-x-4 text-sm">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 md:space-x-4 text-xs md:text-sm">
+            <div className="hidden md:flex items-center space-x-2">
               <span className="px-2 py-1 border border-white/30 rounded bg-white/10 backdrop-blur-sm">NGN</span>
             </div>
             <a 
               href="https://wa.me/+2349053999263?text=Hi%20HotelSaver.ng,%20I%20need%20help%20with%20my%20booking" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:bg-white/10 px-3 py-2 rounded transition-all duration-300"
+              className="hover:bg-white/10 px-2 md:px-3 py-1 md:py-2 rounded transition-all duration-300"
             >
               Help
             </a>
-            <a href="http://localhost:3002/partner" className="hover:bg-white/10 px-3 py-2 rounded transition-all duration-300">
+            <a href="http://localhost:3002/partner" className="hidden sm:block hover:bg-white/10 px-2 md:px-3 py-1 md:py-2 rounded transition-all duration-300">
               List your property
             </a>
             
             {/* Gift Box Section */}
-            <div className="relative group">
+            <div className="hidden md:block relative group">
               <div className="hover:bg-white/10 px-3 py-2 rounded transition-all duration-300 flex items-center gap-2 cursor-default">
                 <span className="text-2xl">🎁</span>
                 <span className="text-xs hidden md:block">Free gift with every booking</span>
@@ -84,40 +84,41 @@ export default function StickyHeader() {
               href="https://wa.me/+2349053999263?text=Welcome%20to%20HotelSaver.ng.%20How%20can%20I%20help%20you%20today%3F" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+              className="bg-green-600 hover:bg-green-700 text-white px-2 md:px-4 py-1 md:py-2 rounded font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-1 md:gap-2"
               title="Chat with us on WhatsApp - Instant Response!"
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3 h-3 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
               </svg>
               <span className="flex items-center gap-1">
-                WhatsApp Us
+                <span className="hidden sm:inline">WhatsApp Us</span>
+                <span className="sm:hidden">Chat</span>
                 <span className="text-xs opacity-75">💬</span>
               </span>
             </a>
-            <a href="/auth/signin" className="bg-white text-green-800 px-4 py-2 rounded font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg">
+            <a href="/auth/signin" className="bg-white text-green-800 px-2 md:px-4 py-1 md:py-2 rounded font-medium hover:bg-gray-100 transition-all duration-300 shadow-lg text-xs md:text-sm">
               Sign in
             </a>
           </div>
         </div>
         
         {/* Navigation Tabs - Hide when scrolled for compact view */}
-        <div className={`flex items-center space-x-1 pb-3 border-b border-green-600/20 transition-all duration-300 ${
+        <div className={`flex items-center space-x-1 pb-3 border-b border-green-600/20 transition-all duration-300 overflow-x-auto scrollbar-hide ${
           isScrolled ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'
         }`}>
-          <a href="/" className="bg-green-800/50 text-white px-4 py-3 rounded-full border border-white/20 font-medium">
+          <a href="/" className="bg-green-800/50 text-white px-3 md:px-4 py-2 md:py-3 rounded-full border border-white/20 font-medium whitespace-nowrap text-sm">
             Hotels
           </a>
-          <a href="/search?stayType=apartment" className="hover:bg-green-700/30 text-white/90 px-4 py-3 rounded-full transition-all duration-300">
+          <a href="/search?stayType=apartment" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
             Apartments
           </a>
-          <a href="/services" className="hover:bg-green-700/30 text-white/90 px-4 py-3 rounded-full transition-all duration-300">
+          <a href="/services" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
             Services
           </a>
-          <a href="/food" className="hover:bg-green-700/30 text-white/90 px-4 py-3 rounded-full transition-all duration-300">
+          <a href="/food" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
             Food
           </a>
-          <a href="http://localhost:3002/airport-taxi" className="hover:bg-green-700/30 text-white/90 px-4 py-3 rounded-full transition-all duration-300">
+          <a href="http://localhost:3002/airport-taxi" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
             Airport Taxi
           </a>
         </div>
