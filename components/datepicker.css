@@ -1,23 +1,18 @@
-/* Base datepicker styles */
+/* Base datepicker styles with stability improvements */
 .react-datepicker-wrapper {
   width: 100%;
   position: relative;
-  overflow: hidden !important;
-}
-
-/* Fix for elements sticking out */
-.react-datepicker-wrapper {
-  overflow: hidden !important;
+  transform: translateZ(0); /* Enable hardware acceleration */
+  backface-visibility: hidden; /* Prevent flickering */
 }
 
 .react-datepicker__input-container {
   position: relative !important;
-  overflow: hidden !important;
+  will-change: transform; /* Optimize for animations */
 }
 
-/* Ensure input container clips all content */
+/* Ensure input content is properly contained */
 .react-datepicker__input-container input {
-  overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
 }
@@ -103,6 +98,12 @@
   position: absolute !important;
 }
 
+/* Ensure datepicker appears below input on desktop */
+.react-datepicker-popper[data-placement^="bottom"] {
+  margin-top: 4px !important;
+  transform: none !important;
+}
+
 .react-datepicker {
   z-index: 9999 !important;
   position: relative !important;
@@ -130,6 +131,31 @@
 #date-picker-portal {
   position: fixed !important;
   z-index: 999999 !important;
+}
+
+/* Done button styling */
+.react-datepicker .done-button-container {
+  border-top: 1px solid #e5e7eb;
+  padding: 12px;
+  background-color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.react-datepicker .done-button {
+  width: 100%;
+  background-color: #009739;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.react-datepicker .done-button:hover {
+  background-color: #036a2a;
 }
 
 /* Single calendar layout (prevent phantom second column) */
@@ -233,6 +259,17 @@
 .is-android-mobile .react-datepicker__day {
   -webkit-tap-highlight-color: rgba(5, 150, 105, 0.3) !important;
   touch-action: manipulation !important;
+}
+
+/* Desktop positioning - ensure datepicker appears below input */
+@media (min-width: 769px) {
+  .react-datepicker-popper[data-placement="bottom-start"] {
+    margin-top: 4px !important;
+  }
+  
+  .react-datepicker-popper[data-placement="bottom"] {
+    margin-top: 4px !important;
+  }
 }
 
 /* Mobile responsive fixes */

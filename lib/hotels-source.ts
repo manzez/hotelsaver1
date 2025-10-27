@@ -11,12 +11,29 @@ export type HotelShape = {
   basePriceNGN?: number
   price?: number
   images?: string[]
+  source?: 'static' | 'places_api'
+  rating?: number
+  totalRatings?: number
+  address?: string
+  amenities?: string[]
+  phoneNumber?: string
+  website?: string
+  coordinates?: {
+    lat: number
+    lng: number
+  }
+  placeId?: string
+  lastUpdated?: string
   [k: string]: unknown
 }
 
 function isDbEnabled() {
   const src = (process.env.DATA_SOURCE || 'json').toLowerCase()
   return src === 'db'
+}
+
+function isLiveDataEnabled() {
+  return process.env.ENABLE_LIVE_HOTEL_DATA === 'true'
 }
 
 function normalizeFromJson(h: any): HotelShape | null {
@@ -55,6 +72,19 @@ function normalizeFromDb(h: any, images?: any[]): HotelShape | null {
 export async function getHotelById(id: string): Promise<HotelShape | null> {
   if (!id) return null
 
+  // Try hybrid system first if live data is enabled
+  if (isLiveDataEnabled()) {
+    try {
+      const { getHotelById: getHybridHotelById } = await import('@/lib/hybrid-hotels');
+      const hybridHotel = await getHybridHotelById(id);
+      if (hybridHotel) {
+        return hybridToHotelShape(hybridHotel);
+      }
+    } catch (error) {
+      console.error('Hybrid hotel fetch failed for ID:', id, error);
+    }
+  }
+
   if (isDbEnabled()) {
     try {
       const hotel = await prisma.hotel.findUnique({
@@ -87,9 +117,56 @@ function priceInBudget(base: number, key?: string) {
   return base >= 200000
 }
 
+function hybridToHotelShape(hybrid: any): HotelShape {
+  return {
+    id: hybrid.id,
+    name: hybrid.name,
+    city: hybrid.city,
+    type: hybrid.type,
+    stars: hybrid.stars,
+    basePriceNGN: hybrid.basePriceNGN,
+    price: hybrid.basePriceNGN,
+    images: hybrid.images,
+    source: hybrid.source,
+    rating: hybrid.rating,
+    totalRatings: hybrid.totalRatings,
+    address: hybrid.address,
+    amenities: hybrid.amenities,
+    phoneNumber: hybrid.phoneNumber,
+    website: hybrid.website,
+    coordinates: hybrid.coordinates,
+    placeId: hybrid.placeId,
+    lastUpdated: hybrid.lastUpdated
+  }
+}
+
 export async function listHotels(opts: ListOptions = {}): Promise<HotelShape[]> {
   const { city, limit = 60, budgetKey, stayType = 'any' } = opts
 
+  // Try hybrid system first if live data is enabled
+  if (isLiveDataEnabled()) {
+    try {
+      console.log(`Fetching hybrid hotel data for city: ${city || 'all'}`);
+      const { searchHotels: searchHybridHotels } = await import('@/lib/hybrid-hotels');
+      const hybridHotels = await searchHybridHotels({
+        city,
+        budget: budgetKey,
+        stayType,
+        useLiveData: true
+      });
+      
+      const converted = hybridHotels
+        .map(hybridToHotelShape)
+        .slice(0, limit);
+      
+      console.log(`Hybrid system returned ${converted.length} hotels`);
+      return converted;
+    } catch (error) {
+      console.error('Hybrid hotel system failed, falling back to static data:', error);
+    }
+  }
+
+  // Fallback to existing logic
   if (isDbEnabled()) {
     try {
       const where: any = {}

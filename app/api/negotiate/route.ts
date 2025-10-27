@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { propertyId } = await req.json();
+    const { propertyId, roomId } = await req.json();
 
     if (!propertyId || typeof propertyId !== 'string') {
       return NextResponse.json(
@@ -35,7 +35,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const property = HOTELS.find((h: any) => h.id === propertyId);
+    // Try to find property in static data first
+    let property = HOTELS.find((h: any) => h.id === propertyId);
+    
+    // If not found and it's a Places API ID, try hybrid system
+    if (!property && propertyId.startsWith('places_')) {
+      try {
+        const { getHotelById } = await import('@/lib/hybrid-hotels');
+        const hybridHotel = await getHotelById(propertyId, 'Owerri'); // Default city
+        if (hybridHotel) {
+          property = {
+            id: hybridHotel.id,
+            name: hybridHotel.name,
+            city: hybridHotel.city,
+            type: hybridHotel.type,
+            basePriceNGN: hybridHotel.basePriceNGN,
+            price: hybridHotel.basePriceNGN
+          };
+        }
+      } catch (error) {
+        console.error('Error fetching Places API hotel for negotiation:', error);
+      }
+    }
+    
     if (!property) {
       return NextResponse.json(
         { status: 'no-offer', reason: 'not-found' },
@@ -46,13 +68,30 @@ export async function POST(req: NextRequest) {
     // Add 1-second delay to simulate real negotiation (reduced from 7 seconds)
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Pull base price (supports both shapes)
-    const base =
+    // Pull base price (supports both shapes, with room-specific pricing)
+    let base =
       typeof property.basePriceNGN === 'number'
         ? property.basePriceNGN
         : typeof property.price === 'number'
         ? property.price
         : 0;
+
+    // If roomId is provided, try to get room-specific pricing
+    if (roomId && typeof roomId === 'string') {
+      try {
+        const roomResponse = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3001'}/api/hotels/${propertyId}/rooms`);
+        if (roomResponse.ok) {
+          const roomData = await roomResponse.json();
+          const selectedRoom = roomData.roomTypes?.find((room: any) => room.id === roomId);
+          if (selectedRoom && typeof selectedRoom.basePriceNGN === 'number') {
+            base = selectedRoom.basePriceNGN;
+          }
+        }
+      } catch (error) {
+        // Fallback to hotel base price if room pricing fails
+        console.warn('Failed to fetch room pricing, using hotel base price:', error);
+      }
+    }
 
     if (base <= 0) {
       return NextResponse.json({ status: 'no-offer', reason: 'no-base-price' });

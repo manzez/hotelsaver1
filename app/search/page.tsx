@@ -8,6 +8,7 @@ import ResultsSearchHeader from '@/components/ResultsSearchHeader'
 import SortControl from '@/components/SortControl'
 import SearchFilters from '@/components/SearchFilters'
 import InfoNotice from '@/components/InfoNotice'
+import SecurityBadge from '@/components/SecurityBadge'
 import { Suspense } from 'react'
 import CategoryTabs from '@/components/CategoryTabs'
 // MobileAutoScrollToResults removed to avoid auto scrolling on load
@@ -207,20 +208,39 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
         const FALLBACK_THUMB1 = 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&auto=format&q=80'
         const FALLBACK_THUMB2 = 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&auto=format&q=80'
   const imgs = Array.isArray(h.images) ? (h.images as string[]) : []
-  const nonGoogle = imgs.filter((u: string) => typeof u === 'string' && !u.includes('maps.googleapis.com'))
-        const firstNonGoogle = nonGoogle[0]
-        const secondNonGoogle = nonGoogle[1]
-        const thirdNonGoogle = nonGoogle[2]
+  
+  // For Places API hotels, use Google Places photos directly
+  const isPlacesHotel = h.id && h.id.startsWith('places_')
+  
+  let heroImg: string
+  let thumb1: string
+  let thumb2: string
+  
+  if (isPlacesHotel) {
+    // Use Google Places photos for Places API hotels with image proxy
+    const placesPhotos = imgs.filter((u: string) => typeof u === 'string' && u.includes('maps.googleapis.com'))
+    const proxiedPlacesPhotos = placesPhotos.map(url => `/api/image-proxy?url=${encodeURIComponent(url)}`)
+    
+    heroImg = proxiedPlacesPhotos[0] || FALLBACK_MAIN
+    thumb1 = proxiedPlacesPhotos[1] || proxiedPlacesPhotos[0] || FALLBACK_THUMB1
+    thumb2 = proxiedPlacesPhotos[2] || proxiedPlacesPhotos[0] || FALLBACK_THUMB2
+  } else {
+    // For static hotels, prioritize real hotel photos from Google Maps API
+    const googlePhotos = imgs.filter((u: string) => typeof u === 'string' && u.includes('maps.googleapis.com'))
+    const unsplashPhotos = imgs.filter((u: string) => typeof u === 'string' && u.includes('unsplash.com'))
+    const otherPhotos = imgs.filter((u: string) => typeof u === 'string' && !u.includes('maps.googleapis.com') && !u.includes('unsplash.com'))
 
-        const heroImg = (useCurated && curatedList)
-          ? curatedList[0]
-          : (firstNonGoogle || imgs[0] || FALLBACK_MAIN)
-        const thumb1 = (useCurated && curatedList)
-          ? (curatedList[1] || curatedList[0])
-          : (secondNonGoogle || imgs[1] || imgs[0] || FALLBACK_THUMB1)
-        const thumb2 = (useCurated && curatedList)
-          ? (curatedList[2] || curatedList[0])
-          : (thirdNonGoogle || imgs[2] || imgs[0] || FALLBACK_THUMB2)
+    // Priority: Google Maps (real hotel photos) first, then diverse fallbacks
+    // Use image proxy for Google Maps photos to handle CORS and authentication
+    const proxiedGooglePhotos = googlePhotos.map(url => `/api/image-proxy?url=${encodeURIComponent(url)}`)
+    
+    heroImg = proxiedGooglePhotos[0] || unsplashPhotos[0] ||
+      ((useCurated && curatedList) ? curatedList[0] : (otherPhotos[0] || FALLBACK_MAIN))
+    thumb1 = proxiedGooglePhotos[1] || unsplashPhotos[1] || proxiedGooglePhotos[0] ||
+      ((useCurated && curatedList) ? (curatedList[1] || curatedList[0]) : (otherPhotos[1] || unsplashPhotos[0] || FALLBACK_THUMB1))
+    thumb2 = proxiedGooglePhotos[2] || unsplashPhotos[2] || proxiedGooglePhotos[0] ||
+      ((useCurated && curatedList) ? (curatedList[2] || curatedList[0]) : (otherPhotos[2] || unsplashPhotos[0] || FALLBACK_THUMB2))
+  }
         
         return (
           <div
@@ -234,7 +254,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                   src={heroImg}
                   alt={h.name}
                   className="absolute inset-0 w-full h-full object-cover"
-                  fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
+                  fallbackSrc={(imgs.find(img => img.includes('unsplash.com')) || ((useCurated && curatedList) ? curatedList[0] : FALLBACK_MAIN))}
                   loading="lazy"
                 />
                 {showTopPick && (
@@ -262,9 +282,9 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                         <span className="text-gray-700 font-medium">{label}</span>
                       </span>
                     </div>
-                    <div className="mt-1 space-y-1.5 text-[12px]">
-                      <div className="text-green-700 font-medium">Free cancellation</div>
-                      <div className="text-rose-700">No prepayment needed — pay at the property</div>
+                    <div className="mt-1 space-y-1.5">
+                      <div className="text-green-700 font-medium text-[12px]">Free cancellation</div>
+                      <SecurityBadge size="sm" variant="compact" />
                     </div>
                   </div>
                   <div className="text-[11px] text-gray-500 mt-2">
@@ -289,9 +309,9 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                     </div>
                     <div className="text-[11px] text-gray-500">{nights>0? 'Includes taxes and fees' : 'Taxes may apply at checkout'}</div>
                     <div className="mt-2 flex flex-col sm:flex-row items-stretch gap-2 w-full">
-                      <Link href={`/book?propertyId=${h.id}&price=${displayPrice}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-10 sm:w-auto w-full rounded-md bg-teal-600 text-white text-sm hover:bg-teal-700 no-underline">Book</Link>
+                      <Link href={`/book?propertyId=${h.id}&price=${displayPrice}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-teal-600 text-white text-sm hover:bg-teal-700 no-underline">Book</Link>
                       {hasDeal && (
-                        <Link href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-10 sm:w-auto w-full rounded-md bg-brand-green text-white text-sm hover:bg-brand-dark no-underline">Negotiate</Link>
+                        <Link href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-brand-green text-white text-sm hover:bg-brand-dark no-underline">Negotiate</Link>
                       )}
                     </div>
                   </div>

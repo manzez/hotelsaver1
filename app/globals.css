@@ -2,36 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark Green Static Background - No Animation */
+.shimmer-effect {
+  background: linear-gradient(
+    135deg,
+    #0f3829 0%,
+    #1a5a3e 50%,
+    #0f3829 100%
+  );
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #059669 0%,
+    #10b981 50%,
+    #059669 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glossy-green {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+}
 
 /* Full screen width override */
-body {
+html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
   overflow-x: hidden;
 }
 
-.w-screen {
-  width: 100vw !important;
-  margin-left: calc(-50vw + 50%) !important;
+.full-width {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+/* Container override for full-width sections */
+.full-width-container {
+  max-width: none !important;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 /* --- existing utilities --- */
 .container { @apply mx-auto max-w-6xl px-4; }
 .card { @apply bg-white rounded-xl shadow-soft border border-gray-100; }
 .btn { @apply inline-flex items-center justify-center rounded-md px-4 h-11 font-medium; }
-.btn-primary { @apply btn bg-brand-green text-white hover:bg-brand-dark transition; }
-.btn-accent { @apply btn bg-emerald-600 text-white hover:bg-emerald-700 transition; }
-.btn-ghost { @apply btn bg-white border border-gray-200 hover:bg-gray-50; }
-.input, .select { @apply h-11 rounded-md border border-gray-300 px-3 w-full bg-white; }
-.badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-50 text-brand-green; }
+.btn-primary { @apply btn text-white hover:bg-emerald-700 transition-all duration-300; background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+.btn-accent { @apply btn text-white hover:bg-emerald-700 transition-all duration-300; background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%); }
+.btn-ghost { @apply btn bg-white border-2 border-emerald-300 hover:bg-emerald-50 transition-all duration-300; }
+.input, .select { @apply h-11 rounded-md border-2 border-emerald-300 px-3 w-full bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all duration-300; }
+.badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #059669; }
 .grid-cards { @apply grid sm:grid-cols-2 lg:grid-cols-3 gap-5; }
 .tabs { @apply inline-flex items-center rounded-lg bg-gray-100 p-1; }
 .tab { @apply px-3 h-9 inline-flex items-center rounded-md text-sm; }
-.tab-active { @apply bg-white text-brand-green border border-gray-200; }
+.tab-active { @apply bg-white border-2 border-emerald-400 shadow-lg; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); color: #059669; }
 .star { color:#fbbf24; }
 
-/* --- Enhanced search form with green borders --- */
-.search-card { @apply bg-white border-2 border-brand-green/20 rounded-xl p-3 md:p-4; }
+/* --- Enhanced search form with bright green borders --- */
+.search-card { @apply bg-white rounded-xl p-3 md:p-4; border: 3px solid transparent; background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #10b981, #34d399, #6ee7b7) border-box; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2); }
 .search-row { @apply flex flex-wrap items-end gap-2 md:gap-3; }
 
 .field { @apply flex flex-col gap-1.5; }
@@ -44,8 +82,8 @@ body {
 .sm-num { @apply w-20; } /* ~80px */
 
 .toggle { @apply flex gap-1.5; }
-.chip { @apply h-10 px-3 border-2 border-brand-green/30 rounded-full text-sm bg-white inline-flex items-center justify-center leading-none font-medium; text-decoration: none; }
-.chip.active { @apply border-brand-green/30 bg-emerald-50; }
+.chip { @apply h-10 px-3 rounded-full text-sm bg-white inline-flex items-center justify-center leading-none font-medium transition-all duration-300; border: 2px solid transparent; background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #10b981, #34d399) border-box; text-decoration: none; }
+.chip.active { background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%) padding-box, linear-gradient(135deg, #059669, #10b981) border-box; color: #059669; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
 /* Ensure chip links never show underlines in any state */
 a.chip, a.chip:link, a.chip:visited, a.chip:hover, a.chip:focus { text-decoration: none !important; }
 

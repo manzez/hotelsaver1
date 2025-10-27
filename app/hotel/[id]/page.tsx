@@ -4,6 +4,8 @@ import { getDiscountFor } from '@/lib/discounts'
 import { getFacilitiesFor, facilityLabel, facilityIcon, FACILITY_GROUPS, POPULAR_KEYS, type FacilityKey } from '@/lib/facilities'
 import SafeImage from '@/components/SafeImage'
 import MobileImageCarousel from '@/components/MobileImageCarousel'
+import RoomSelection from '@/components/RoomSelection'
+import SecurityBadge from '@/components/SecurityBadge'
 
 // Hotel descriptions and highlights (amenities moved to dynamic facilities)
 const hotelDetails: { [key: string]: { description: string; highlights: string[] } } = {
@@ -25,8 +27,48 @@ const hotelDetails: { [key: string]: { description: string; highlights: string[]
   }
 }
 
+async function getHotelByIdWithFallback(id: string) {
+  // First try the hybrid system
+  const h = await getHotelById(id)
+  if (h) return h
+
+  // If it's a Places API ID, try to extract city from search params or use default
+  if (id.startsWith('places_')) {
+    try {
+      const { getHotelById: getHybridHotelById } = await import('@/lib/hybrid-hotels')
+      const hybridHotel = await getHybridHotelById(id, 'Owerri') // Default to Owerri
+      if (hybridHotel) {
+        // Convert to HotelShape format
+        return {
+          id: hybridHotel.id,
+          name: hybridHotel.name,
+          city: hybridHotel.city,
+          type: hybridHotel.type,
+          stars: hybridHotel.stars,
+          basePriceNGN: hybridHotel.basePriceNGN,
+          price: hybridHotel.basePriceNGN,
+          images: hybridHotel.images,
+          source: hybridHotel.source,
+          rating: hybridHotel.rating,
+          totalRatings: hybridHotel.totalRatings,
+          address: hybridHotel.address,
+          amenities: hybridHotel.amenities,
+          phoneNumber: hybridHotel.phoneNumber,
+          website: hybridHotel.website,
+          coordinates: hybridHotel.coordinates,
+          placeId: hybridHotel.placeId
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching Places API hotel:', error)
+    }
+  }
+  
+  return null
+}
+
 export default async function HotelDetail({params, searchParams}:{params:{id:string}, searchParams?:Record<string,string|undefined>}){
-  const h = await getHotelById(params.id)
+  const h = await getHotelByIdWithFallback(params.id)
   if (!h) return (
     <div className="container mx-auto px-4 py-20 text-center">
       <h1 className="text-2xl font-bold text-gray-900 mb-4">Hotel Not Found</h1>
@@ -68,31 +110,71 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* Image Gallery first (especially for mobile) */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
-          {/* Mobile carousel */}
-          <MobileImageCarousel images={(h.images||[]).slice(0,5)} altBase={h.name} heightClass="h-64" />
-
-          {/* Desktop grid */}
-          <div className="hidden md:grid md:grid-cols-3 gap-1">
-            {(h.images||[]).slice(0, 5).map((src: string, i: number) => {
+          {(() => {
+            // Get images with priority for Places API photos
+            const isPlacesHotel = h.id && h.id.startsWith('places_')
+            const rawImages = Array.isArray(h.images) ? h.images : []
+            
+            let displayImages: string[]
+            
+            if (isPlacesHotel) {
+              // For Places API hotels, prioritize Google Places photos
+              const placesPhotos = rawImages.filter((img: string) => 
+                typeof img === 'string' && img.includes('maps.googleapis.com')
+              )
               const fallbackImages = [
                 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80',
                 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format&q=80',
                 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop&auto=format&q=80',
                 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&h=600&fit=crop&auto=format&q=80',
                 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop&auto=format&q=80'
-              ];
-              return (
-                <SafeImage
-                  key={i}
-                  src={src}
-                  alt={`${h.name} - Image ${i + 1}`}
-                  className={`w-full object-cover ${i === 0 ? 'md:col-span-2 h-80' : 'h-40'}`}
-                  fallbackSrc={fallbackImages[i] || fallbackImages[0]}
-                  loading="lazy"
-                />
-              )
-            })}
-          </div>
+              ]
+              // Use Places photos first, then fallback images to fill remaining slots
+              displayImages = [...placesPhotos, ...fallbackImages].slice(0, 5)
+            } else {
+              // For static hotels, use existing logic with curated fallbacks
+              displayImages = rawImages.slice(0, 5)
+              if (displayImages.length === 0) {
+                displayImages = [
+                  'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80',
+                  'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format&q=80',
+                  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop&auto=format&q=80',
+                  'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&h=600&fit=crop&auto=format&q=80',
+                  'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop&auto=format&q=80'
+                ]
+              }
+            }
+            
+            return (
+              <>
+                {/* Mobile carousel */}
+                <MobileImageCarousel images={displayImages} altBase={h.name} heightClass="h-64" />
+
+                {/* Desktop grid */}
+                <div className="hidden md:grid md:grid-cols-3 gap-1">
+                  {displayImages.map((src: string, i: number) => {
+                    const fallbackImages = [
+                      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80',
+                      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop&auto=format&q=80',
+                      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop&auto=format&q=80',
+                      'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&h=600&fit=crop&auto=format&q=80',
+                      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop&auto=format&q=80'
+                    ];
+                    return (
+                      <SafeImage
+                        key={i}
+                        src={src}
+                        alt={`${h.name} - Image ${i + 1}`}
+                        className={`w-full object-cover ${i === 0 ? 'md:col-span-2 h-80' : 'h-40'}`}
+                        fallbackSrc={fallbackImages[i] || fallbackImages[0]}
+                        loading="lazy"
+                      />
+                    )
+                  })}
+                </div>
+              </>
+            )
+          })()}
         </div>
 
         {/* Header */}
@@ -104,11 +186,46 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
                 <div className="text-amber-400 text-base md:text-lg leading-none">{"★".repeat(stars)}{"☆".repeat(5-stars)}</div>
                 <span className="text-gray-600 text-sm md:text-base">{stars}-star {h.type}</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-                <span>{h.city}, Nigeria</span>
+              {/* Location and Rating Info */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                  </svg>
+                  <span>{(h as any).address || `${h.city}, Nigeria`}</span>
+                </div>
+                
+                {/* Google Rating for Places API hotels */}
+                {(h as any).rating && (h as any).totalRatings && (
+                  <div className="flex items-center gap-2 text-gray-600 text-sm">
+                    <div className="flex items-center gap-1">
+                      <span className="text-amber-400">★</span>
+                      <span className="font-medium">{(h as any).rating}</span>
+                      <span>({((h as any).totalRatings).toLocaleString()} reviews)</span>
+                    </div>
+                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Google Reviews</span>
+                  </div>
+                )}
+                
+                {/* Contact Info for Places API hotels */}
+                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                  {(h as any).phoneNumber && (
+                    <a href={`tel:${(h as any).phoneNumber}`} className="flex items-center gap-1 hover:text-brand-green">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                      </svg>
+                      {(h as any).phoneNumber}
+                    </a>
+                  )}
+                  {(h as any).website && (
+                    <a href={(h as any).website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-brand-green">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clipRule="evenodd"/>
+                      </svg>
+                      Website
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
             <div className="mt-2 md:mt-0 md:text-right">
@@ -145,6 +262,21 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
 
         {/* end gallery moved above */}
 
+        {/* Room Selection Section */}
+        <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-6">
+          <RoomSelection 
+            hotelId={h.id}
+            basePrice={base}
+            searchParams={{
+              checkIn,
+              checkOut,
+              adults,
+              children,
+              rooms
+            }}
+          />
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
@@ -172,10 +304,27 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
               </div>
             </div>
 
-            {/* Facilities (dynamic per hotel) */}
+            {/* Facilities (Places API amenities or static facilities) */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Facilities</h2>
-              {facilityKeys.length > 0 ? (
+              
+              {/* Show Places API amenities if available */}
+              {(h as any).amenities && (h as any).amenities.length > 0 ? (
+                <div className="space-y-4">
+                  <div className="flex flex-wrap gap-2">
+                    {((h as any).amenities as string[]).map((amenity: string, idx: number) => (
+                      <span key={idx} className="badge">
+                        ✔️ {amenity}
+                      </span>
+                    ))}
+                  </div>
+                  {(h as any).source === 'places_api' && (
+                    <div className="text-xs text-gray-500 mt-2">
+                      ℹ️ Amenities sourced from Google Places
+                    </div>
+                  )}
+                </div>
+              ) : facilityKeys.length > 0 ? (
                 <>
                   {/* Popular quick-glance chips */}
                   <div className="mb-4 flex flex-wrap gap-2">
@@ -255,10 +404,11 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
                 )}
               </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-200">
+              <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col items-center space-y-2">
                 <div className="text-xs text-gray-500 text-center">
-                  ✨ Free cancellation • No prepayment needed
+                  ✨ Free cancellation
                 </div>
+                <SecurityBadge size="sm" />
               </div>
             </div>
 

@@ -53,6 +53,7 @@ function ConfirmationPageContent() {
   const reference = searchParams.get('reference') || ''
   const propertyId = searchParams.get('propertyId') || ''
   const customerName = searchParams.get('name') || ''
+  const customerEmail = searchParams.get('email') || ''
   const pricePerNight = Number(searchParams.get('price')) || 0
   const checkIn = searchParams.get('checkIn')
   const checkOut = searchParams.get('checkOut')
@@ -162,10 +163,17 @@ function ConfirmationPageContent() {
                 <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-4xl text-green-600">✅</span>
                 </div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {customerName ? `Thank you, ${customerName.split(' ')[0]}!` : 'Booking Confirmed!'}
+                </h1>
+                <h2 className="text-xl font-semibold text-brand-green mb-3">
+                  Booking Confirmed!
+                </h2>
                 <p className="text-gray-600">
-                  {paymentMethod === 'pay-at-hotel' 
+                  {paymentMethod === 'pay-at-property' 
                     ? 'Your reservation has been secured. Pay when you check in.'
+                    : paymentMethod === 'bank-transfer'
+                    ? 'Please complete your bank transfer to confirm your reservation.'
                     : 'Payment successful! Your hotel reservation is confirmed.'
                   }
                 </p>
@@ -207,10 +215,10 @@ function ConfirmationPageContent() {
             {hotel && (
               <div className="relative h-40 w-full">
                 <SafeImage
-                  src={hotel.images?.[0] || ''}
+                  src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&h=800&fit=crop&auto=format&q=80'}
                   alt={hotel.name}
                   className="h-40 w-full object-cover"
-                  fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200"
+                  fallbackSrc="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200&h=800&fit=crop&auto=format&q=80"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 <div className="absolute bottom-3 left-4 text-white">
@@ -276,6 +284,22 @@ function ConfirmationPageContent() {
                     <div className="flex justify-between">
                       <span className="text-gray-600">Rooms:</span>
                       <span className="font-medium">{rooms}</span>
+                    </div>
+                  )}
+                  {paymentMethod && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Payment:</span>
+                      <span className="font-medium">
+                        {paymentMethod === 'pay-at-property' && '🏨 Pay at Property'}
+                        {paymentMethod === 'bank-transfer' && '🏦 Bank Transfer'}
+                        {paymentMethod === 'paystack' && '💳 Card Payment'}
+                      </span>
+                    </div>
+                  )}
+                  {customerEmail && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Email:</span>
+                      <span className="font-medium text-sm">{customerEmail}</span>
                     </div>
                   )}
                 </div>
@@ -426,6 +450,7 @@ ${hotelInfo.address ? `Address: ${hotelInfo.address}` : ''}`)}`}
               <a 
                 href="https://wa.me/2347077775545" 
                 target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
               >
                 <span className="text-xl">📱</span>

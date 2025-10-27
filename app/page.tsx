@@ -1,4 +1,5 @@
 import SearchBar from '@/components/SearchBar'
+import StickyHeader from '@/components/StickyHeader'
 import CategoryTabs from '@/components/CategoryTabs'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
@@ -6,13 +7,18 @@ import { HOTELS } from '@/lib/data'
 import FOOD_DATA from '@/lib.food.json'
 import { getDiscountFor } from '@/lib/discounts'
 import TourismScroller from '@/components/TourismScroller'
+import SecurityBadge from '@/components/SecurityBadge'
 
 export default function Home() {
-  // Get hotels from each city to ensure variety
-  const lagosHotels = HOTELS.filter(h => h.city === 'Lagos' && h.type === 'Hotel').slice(0, 2)
+  // Get hotels from each city to ensure variety - exclude Lagos Continental and prioritize Protea Hotel Owerri
+  const lagosHotels = HOTELS.filter(h => h.city === 'Lagos' && h.type === 'Hotel' && h.id !== 'the-lagos-continental-hotel-lagos').slice(0, 2)
   const abujaHotels = HOTELS.filter(h => h.city === 'Abuja' && h.type === 'Hotel').slice(0, 2)
   const portHarcourtHotels = HOTELS.filter(h => h.city === 'Port Harcourt' && h.type === 'Hotel').slice(0, 2)
-  const owerriHotels = HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Hotel').slice(0, 2)
+  
+  // Prioritize Protea Hotel Owerri from Owerri hotels
+  const proteaHotel = HOTELS.find(h => h.id === 'protea-hotel-owerri-owerri')
+  const otherOwerriHotels = HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Hotel' && h.id !== 'protea-hotel-owerri-owerri').slice(0, 1)
+  const owerriHotels = proteaHotel ? [proteaHotel, ...otherOwerriHotels] : HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Hotel').slice(0, 2)
   
   const featuredHotels = [...lagosHotels, ...abujaHotels, ...portHarcourtHotels, ...owerriHotels]
   
@@ -80,7 +86,7 @@ export default function Home() {
       category: 'Massage',
       price: 25000,
       city: 'Abuja',
-      image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format&q=80',
       provider: 'Wellness Center'
     },
     {
@@ -104,92 +110,67 @@ export default function Home() {
   ]
 
   const trendingDestinations: Array<{ city: string; image: string }> = [
-    { city: 'Lagos', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1400&h=900&fit=crop&auto=format&q=80' },
-    { city: 'Abuja', image: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=1400&h=900&fit=crop&auto=format&q=80' },
-    { city: 'Port Harcourt', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1400&h=900&fit=crop&auto=format&q=80' },
-    { city: 'Owerri', image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1400&h=900&fit=crop&auto=format&q=80' },
-    { city: 'Calabar', image: 'https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=1400&h=900&fit=crop&auto=format&q=80' },
+    { city: 'Lagos', image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1400&h=900&fit=crop&auto=format&q=80' }, // Luxury hotel lobby interior for Lagos
+    { city: 'Abuja', image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1400&h=900&fit=crop&auto=format&q=80' }, // Modern hotel room interior for Abuja
+    { city: 'Port Harcourt', image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1400&h=900&fit=crop&auto=format&q=80' }, // Elegant hotel restaurant interior for Port Harcourt
+    { city: 'Owerri', image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1400&h=900&fit=crop&auto=format&q=80' }, // Beautiful hotel suite interior for Owerri
+    { city: 'Calabar', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&h=900&fit=crop&auto=format&q=80' }, // Luxury hotel bathroom interior for Calabar
   ]
 
-  const restaurants = (FOOD_DATA as any[]).slice(0, 3)
+  const restaurants = (FOOD_DATA as any[]).slice(0, 4)
 
   return (
-  <div className="min-h-screen relative overflow-hidden w-full pb-24">
-      {/* Hero banner (keep search box design) */}
-  <section className="relative z-20 min-h-[82vh] md:h-[78vh] w-full mb-6 md:mb-12">
-        {/* Animated Background Image */}
-        <div className="absolute inset-0 w-full">
-          <img 
-            src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-            alt="Luxury hotel"
+    <div className="min-h-screen">
+      {/* Sticky Header with Scroll Animation */}
+      <StickyHeader />
+      
+      {/* Hero Section with Background Image like Booking.com */}
+      <section className="relative pt-40 h-80 md:h-96">
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full">
+          <SafeImage 
+            src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1920&h=800&fit=crop&auto=format&q=85" 
+            alt="Luxury hotel pool and resort view in Nigeria"
             className="w-full h-full object-cover"
+            fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1920&h=800&fit=crop&auto=format&q=85"
           />
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/50 w-screen"></div>
         </div>
-
-        {/* Navigation - Floating */}
-        <div className="absolute top-0 left-0 right-0 z-50 px-4 py-3 md:px-6 md:py-6">
-          <div className="flex items-center justify-center">
-            <CategoryTabs active="hotels" />
+        
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-black/30"></div>
+        
+        {/* Hero Content */}
+        <div className="relative z-10 h-full flex items-end justify-start text-left text-white px-4 pb-16">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-2xl">
+              <h1 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-lg">
+                Luxury Hotels at low prices
+              </h1>
+              <p className="text-sm md:text-lg mb-5 text-white/90 drop-shadow">
+                Discover amazing hotels across Lagos, Abuja, Port Harcourt & more
+              </p>
+              <a href="#destinations" className="bg-brand-green hover:bg-brand-dark text-white px-4 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 text-sm">
+                Negotiate
+              </a>
+            </div>
           </div>
         </div>
-
-  {/* Hero Content */}
-  <div className="absolute inset-0 flex flex-col items-center text-center z-40 px-4 md:px-6 pt-16 md:pt-24">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-8 tracking-tight fade-in-up">
-            Save on stays across Nigeria
-          </h1>
-          <p className="text-white/90 max-w-2xl mb-6 md:mb-10 text-sm md:text-base">
-            Best prices, flexible options, and local support—find your perfect stay today.
-          </p>
-          
-          {/* Search Bar - Full Width Across Page */}
-          <div className="w-full max-w-6xl fade-in-up-delayed">
-            <SearchBar submitLabel="Search" showBrandSplashOnSubmit mobileDatePicker="custom" />
-          </div>
-
-          {/* Benefits strip - desktop only to avoid overlapping mobile content */}
-          <div className="hidden md:flex mt-6 flex-wrap items-center justify-center gap-4 text-white/90 text-sm">
-            <span className="bg-white/10 rounded-full px-3 py-1 backdrop-blur">No prepayment needed</span>
-            <span className="bg-white/10 rounded-full px-3 py-1 backdrop-blur">Free cancellation on many stays</span>
-            <span className="bg-white/10 rounded-full px-3 py-1 backdrop-blur">Trusted Nigerian support</span>
-          </div>
-        </div>
+        
+        {/* Decorative gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
-      {/* Mobile: remove benefit chips entirely to tighten layout */}
-
-  {/* Trending Destinations */}
-  <section className="relative z-0 py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Trending destinations</h2>
-          <p className="text-gray-600 mb-6 md:mb-10">Most popular choices for travellers in Nigeria</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {trendingDestinations.map((d, i) => (
-              <Link key={d.city} href={`/search?city=${encodeURIComponent(d.city)}`} className={`${i===0 ? 'md:col-span-2 lg:col-span-2' : ''} group relative rounded-2xl overflow-hidden shadow-sm border border-gray-100`}> 
-                <SafeImage src={d.image} alt={d.city} className="h-48 md:h-60 lg:h-64 w-full" fallbackSrc="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&auto=format&fit=crop&q=80" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                  <div className="text-white font-bold text-xl md:text-2xl drop-shadow">{d.city} <span className="text-white/90">🇳🇬</span></div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Hotels - First 8 Only */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
+      {/* Content Section */}
+      <section id="destinations" className="bg-white py-4 md:py-6">
+        <div className="container mx-auto px-4 md:px-6">
           {/* Desktop/Tablet heading */}
-          <h2 className="hidden md:block text-3xl font-bold text-center mb-12">Featured Hotels</h2>
+          <h2 className="hidden md:block text-xl md:text-2xl font-bold text-center mb-3 md:mb-4">Featured Hotels</h2>
 
           {/* Mobile heading */}
-          <h2 className="md:hidden text-2xl font-bold mb-6">Stay at our top properties</h2>
+          <h2 className="md:hidden text-lg font-bold mb-2">Top properties</h2>
 
           {/* Mobile list (image-left cards) */}
-          <div className="md:hidden space-y-4">
+          <div className="md:hidden space-y-3">
             {featuredHotels.map(h => {
               const discount = getDiscountFor(h.id)
               const hasNegotiation = discount > 0
@@ -198,42 +179,43 @@ export default function Home() {
               const showHighSecurity = base > 78000
               return (
                 <div key={h.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                  <div className="flex gap-3 p-3">
+                  <div className="flex gap-3 p-2">
                     <Link href={`/hotel/${h.id}`} className="shrink-0">
                       <SafeImage
-                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80'}
+                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60'}
                         alt={h.name}
-                        className="w-28 h-24 rounded-lg"
-                        fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
+                        className="w-24 h-20 rounded-lg"
+                        fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60"
+                        loading="lazy"
                       />
                     </Link>
                     <div className="flex-1 min-w-0">
                       <Link href={`/hotel/${h.id}`} className="block">
-                        <h3 className="font-semibold text-gray-900 line-clamp-2">{h.name}</h3>
+                        <h3 className="font-semibold text-gray-900 line-clamp-2 text-sm">{h.name}</h3>
                         <p className="text-gray-600 text-xs mt-0.5">{h.city} • {h.stars}⭐</p>
                       </Link>
-                      <div className="mt-2">
+                      <div className="mt-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <div className="text-base font-bold text-gray-900">
+                          <div className="text-sm font-bold text-gray-900">
                             ₦{displayPrice.toLocaleString()}
                           </div>
                           {showHighSecurity ? (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
                           ) : (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
                           )}
                         </div>
-                        <div className="mt-2 flex items-center gap-2">
+                        <div className="mt-1.5 flex items-center gap-1">
                           <Link
                             href={`/hotel/${h.id}`}
-                            className="flex-1 bg-teal-600 text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-teal-700 transition-colors text-center"
+                            className="flex-1 bg-teal-600 text-white py-1 px-2 rounded-md text-xs font-medium hover:bg-teal-700 transition-colors text-center"
                           >
                             Book
                           </Link>
                           {hasNegotiation && (
                             <Link
                               href={`/negotiate?propertyId=${h.id}`}
-                              className="flex-1 bg-brand-green text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-brand-dark transition-colors text-center"
+                              className="flex-1 bg-brand-green text-white py-1 px-2 rounded-md text-xs font-medium hover:bg-brand-dark transition-colors text-center"
                             >
                               Negotiate
                             </Link>
@@ -248,7 +230,7 @@ export default function Home() {
           </div>
 
           {/* Desktop/Tablet grid */}
-          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {featuredHotels.map(h => {
               const discount = getDiscountFor(h.id)
               const hasNegotiation = discount > 0
@@ -262,39 +244,40 @@ export default function Home() {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                     <Link href={`/hotel/${h.id}`}>
                       <SafeImage
-                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80'}
+                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&auto=format&q=75'}
                         alt={h.name}
-                        className="w-full h-48 md:h-56 lg:h-60"
-                        fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
+                        className="w-full h-44 object-cover"
+                        fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&auto=format&q=75"
+                        loading="lazy"
                       />
                     </Link>
-                    <div className="p-4 flex flex-col flex-1">
+                    <div className="p-3 flex flex-col flex-1">
                       <Link href={`/hotel/${h.id}`} className="block">
-                        <h3 className="font-bold text-gray-900 mb-1 hover:text-brand-green transition-colors line-clamp-2">{h.name}</h3>
-                        <p className="text-gray-600 text-sm mb-2">{h.city} • {h.stars}⭐</p>
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="text-lg font-bold text-gray-900">
+                        <h3 className="font-bold text-gray-900 mb-1 hover:text-brand-green transition-colors line-clamp-2 text-sm">{h.name}</h3>
+                        <p className="text-gray-600 text-xs mb-2">{h.city} • {h.stars}⭐</p>
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="text-base font-bold text-gray-900">
                             ₦{displayPrice.toLocaleString()}
                           </div>
                           {showHighSecurity ? (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
                           ) : (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
                           )}
                         </div>
-                        <div className="text-xs text-gray-500 mb-3">per night</div>
+                        <div className="text-xs text-gray-500 mb-2">per night</div>
                       </Link>
                       <div className="mt-auto flex items-center gap-2">
                         <Link 
                           href={`/hotel/${h.id}`}
-                          className="flex-1 bg-teal-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-teal-700 transition-colors text-center"
+                          className="flex-1 bg-teal-600 text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-teal-700 transition-colors text-center"
                         >
                           Book
                         </Link>
                         {hasNegotiation && (
                           <Link 
                             href={`/negotiate?propertyId=${h.id}`}
-                            className="flex-1 bg-brand-green text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-brand-dark transition-colors text-center"
+                            className="flex-1 bg-brand-green text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-brand-dark transition-colors text-center"
                           >
                             Negotiate
                           </Link>
@@ -306,18 +289,60 @@ export default function Home() {
               )
             })}
           </div>
-          <div className="text-center mt-8">
-            <Link href="/search" className="bg-brand-green text-white px-8 py-3 rounded-lg font-medium hover:bg-brand-dark transition-colors">
+          <div className="text-center mt-4">
+            <Link href="/search" className="bg-brand-green text-white px-6 py-2 rounded-lg font-medium hover:bg-brand-dark transition-colors text-sm">
               View All Hotels
             </Link>
           </div>
         </div>
       </section>
 
+      {/* Airport Taxi Promo Banner */}
+      <section className="bg-gradient-to-r from-blue-600 to-green-600 py-6">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between bg-white/10 backdrop-blur-sm rounded-xl p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-2xl">🚖</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">Airport Taxi Service</h3>
+                <p className="text-white/90 text-sm">Hassle-free transfers to and from airports</p>
+              </div>
+            </div>
+            <a 
+              href="http://localhost:3002/airport-taxi" 
+              className="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg font-medium transition-colors text-sm"
+            >
+              Book Now
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Cities - Now Second */}
+      <section className="py-6 md:py-8 bg-gray-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-1">Popular Cities</h2>
+          <p className="text-gray-600 mb-4 text-sm md:text-base">Most popular choices for travellers in Nigeria</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {trendingDestinations.map((d, i) => (
+              <Link key={d.city} href={`/search?city=${encodeURIComponent(d.city)}`} className={`${i===0 ? 'md:col-span-2 lg:col-span-2' : ''} group relative rounded-2xl overflow-hidden shadow-sm border border-gray-100`}> 
+                <SafeImage src={d.image} alt={d.city} className="h-48 md:h-60 lg:h-64 w-full" fallbackSrc="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&auto=format&fit=crop&q=80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                  <div className="text-white font-bold text-xl md:text-2xl drop-shadow">{d.city}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Food & Services */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Food & Services</h2>
+      <section className="py-6 md:py-8 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-xl md:text-2xl font-bold text-center mb-4 md:mb-6">Food & Services</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Food */}
             <div>
@@ -368,7 +393,6 @@ export default function Home() {
   <section className="py-10 bg-emerald-50">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="bg-white rounded-lg border border-emerald-100 p-4">Free cancellation on many stays</div>
             <div className="bg-white rounded-lg border border-emerald-100 p-4">Pay at property on eligible bookings</div>
             <div className="bg-white rounded-lg border border-emerald-100 p-4">24/7 local support via WhatsApp</div>
           </div>
@@ -376,13 +400,13 @@ export default function Home() {
       </section>
 
       {/* Tourism section (after Food & Services) */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-3xl font-bold">Explore Nigeria</h2>
+      <section className="py-6 md:py-8 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-xl md:text-2xl font-bold">Explore Nigeria</h2>
             <Link href="/tourism" className="text-brand-green hover:text-brand-dark text-sm">See all</Link>
           </div>
-          <p className="text-gray-600 mb-6">Stunning natural wonders and heritage sites across the country</p>
+          <p className="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">Stunning natural wonders and heritage sites across the country</p>
           {/* Hero picks: horizontal scroll */}
           <TourismScroller variant="hero" />
           {/* More places: horizontal scroll with instruction to scroll */}
@@ -392,6 +416,49 @@ export default function Home() {
               <div className="text-xs text-gray-500">Scroll right to see more →</div>
             </div>
             <TourismScroller variant="more" />
+          </div>
+        </div>
+      </section>
+
+      {/* Gift Box Section */}
+      <section className="py-8 bg-gradient-to-r from-green-50 to-emerald-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center mb-4">
+              <div className="relative">
+                {/* Gift Box with Bow */}
+                <div className="w-20 h-20 bg-brand-green rounded-lg shadow-lg relative transform hover:scale-105 transition-transform duration-300">
+                  {/* Gift box body */}
+                  <div className="absolute inset-2 bg-gradient-to-br from-green-400 to-green-600 rounded"></div>
+                  {/* Ribbon horizontal */}
+                  <div className="absolute top-1/2 left-0 right-0 h-2 bg-yellow-400 transform -translate-y-1/2"></div>
+                  {/* Ribbon vertical */}
+                  <div className="absolute top-0 bottom-0 left-1/2 w-2 bg-yellow-400 transform -translate-x-1/2"></div>
+                  {/* Bow */}
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                    <div className="w-6 h-4 bg-red-500 rounded-full relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-red-600 rounded-full"></div>
+                      <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-red-700 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Free Gift with Every Booking!</h3>
+            <p className="text-gray-600 mb-4 max-w-md mx-auto">
+              Book any hotel through HotelSaver.ng and receive a complimentary welcome gift. 
+              Experience Nigerian hospitality at its finest!
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a href="/hotel-portal" className="bg-brand-green hover:bg-brand-dark text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+                List Your Property
+              </a>
+              <a href="/search" className="bg-white hover:bg-gray-50 text-brand-green px-6 py-3 rounded-lg font-medium border-2 border-brand-green transition-all duration-300 shadow-lg hover:shadow-xl">
+                Start Booking
+              </a>
+            </div>
           </div>
         </div>
       </section>

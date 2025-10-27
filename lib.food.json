@@ -25,7 +25,7 @@
     "name": "Chukas Place",
     "city": "Owerri",
     "rating": 4.4,
-    "image": "https://images.unsplash.com/photo-1541542684-4a7c6a452c09?w=1200",
+    "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&h=800&fit=crop&auto=format&q=80",
     "priceRange": "₦₦",
     "discountPct": 10,
     "menu": [
@@ -46,7 +46,7 @@
     "name": "Chillis",
     "city": "Owerri",
     "rating": 4.3,
-    "image": "https://images.unsplash.com/photo-1551782450-17144c3a3f59?w=1200",
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&h=800&fit=crop&auto=format&q=80",
     "priceRange": "₦₦₦",
     "discountPct": 8,
     "menu": [

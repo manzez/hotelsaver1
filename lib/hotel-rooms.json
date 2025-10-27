@@ -1,0 +1,184 @@
+{
+  "protea-hotel-owerri-owerri": {
+    "lastUpdated": "2025-10-26T20:00:00Z",
+    "placeId": "ChIJXX1234567890", 
+    "roomTypes": [
+      {
+        "id": "protea-owerri-standard",
+        "name": "Standard Room",
+        "description": "Comfortable room with garden view and modern amenities",
+        "basePriceNGN": 92000,
+        "maxOccupancy": 2,
+        "size": "25 sqm",
+        "bedType": "double",
+        "amenities": [
+          "Air Conditioning", 
+          "Private Bathroom", 
+          "WiFi",
+          "LED TV",
+          "Tea/Coffee Maker",
+          "Work Desk"
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&auto=format&q=80"
+        ],
+        "available": true
+      },
+      {
+        "id": "protea-owerri-deluxe",
+        "name": "Deluxe Room",
+        "description": "Spacious room with city view and premium amenities",
+        "basePriceNGN": 128800,
+        "maxOccupancy": 3,
+        "size": "32 sqm",
+        "bedType": "king",
+        "amenities": [
+          "Air Conditioning",
+          "Private Bathroom", 
+          "WiFi",
+          "LED TV",
+          "Mini Bar",
+          "Room Service",
+          "City View",
+          "Safe",
+          "Bathrobe & Slippers"
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&auto=format&q=80"
+        ],
+        "available": true
+      },
+      {
+        "id": "protea-owerri-executive",
+        "name": "Executive Suite",
+        "description": "Premium suite with separate living area and executive lounge access",
+        "basePriceNGN": 184000,
+        "maxOccupancy": 4,
+        "size": "45 sqm",
+        "bedType": "suite",
+        "amenities": [
+          "Air Conditioning",
+          "Private Bathroom",
+          "WiFi", 
+          "LED TV",
+          "Mini Bar",
+          "Room Service",
+          "Living Area",
+          "Work Desk",
+          "Executive Lounge Access",
+          "Complimentary Breakfast",
+          "City View",
+          "Safe"
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&auto=format&q=80"
+        ],
+        "available": true
+      }
+    ],
+    "hotelAmenities": [
+      "Swimming Pool",
+      "Fitness Center", 
+      "Restaurant",
+      "Bar",
+      "Business Center",
+      "Conference Rooms",
+      "Spa",
+      "24-hour Front Desk",
+      "Concierge Service",
+      "Laundry Service",
+      "Airport Shuttle",
+      "Parking"
+    ]
+  },
+  "transcorp-hilton-abuja-abuja": {
+    "lastUpdated": "2025-10-26T20:00:00Z",
+    "roomTypes": [
+      {
+        "id": "transcorp-standard",
+        "name": "Hilton Guest Room",
+        "description": "Contemporary room with modern amenities and city views",
+        "basePriceNGN": 180000,
+        "maxOccupancy": 2,
+        "size": "28 sqm",
+        "bedType": "king",
+        "amenities": [
+          "Air Conditioning",
+          "Marble Bathroom",
+          "WiFi",
+          "55-inch TV",
+          "Mini Bar",
+          "Coffee Machine",
+          "Work Desk",
+          "City View",
+          "Safe"
+        ],
+        "available": true
+      },
+      {
+        "id": "transcorp-executive",
+        "name": "Executive Room", 
+        "description": "Premium room with executive lounge access and enhanced amenities",
+        "basePriceNGN": 216000,
+        "maxOccupancy": 2,
+        "size": "32 sqm",
+        "bedType": "king",
+        "amenities": [
+          "Air Conditioning",
+          "Marble Bathroom",
+          "WiFi",
+          "55-inch TV", 
+          "Mini Bar",
+          "Coffee Machine",
+          "Work Desk",
+          "Executive Lounge Access",
+          "Complimentary Breakfast",
+          "Evening Cocktails",
+          "City View",
+          "Safe"
+        ],
+        "available": true
+      },
+      {
+        "id": "transcorp-suite",
+        "name": "Transcorp Suite",
+        "description": "Luxury suite with separate living area and panoramic Abuja views",
+        "basePriceNGN": 630000,
+        "maxOccupancy": 4,
+        "size": "85 sqm",
+        "bedType": "suite",
+        "amenities": [
+          "Air Conditioning",
+          "Marble Bathroom",
+          "WiFi",
+          "Multiple TVs",
+          "Full Mini Bar",
+          "Coffee Machine", 
+          "Separate Living Area",
+          "Dining Area",
+          "Work Desk",
+          "Executive Lounge Access",
+          "Butler Service",
+          "Panoramic City View",
+          "Walk-in Closet",
+          "Safe"
+        ],
+        "available": true
+      }
+    ],
+    "hotelAmenities": [
+      "Outdoor Pool",
+      "Fitness Center",
+      "Multiple Restaurants",
+      "Bars & Lounges", 
+      "Spa & Wellness Center",
+      "Business Center",
+      "Meeting Rooms",
+      "Ballroom",
+      "24-hour Room Service",
+      "Concierge",
+      "Valet Parking",
+      "Airport Shuttle"
+    ]
+  }
+}

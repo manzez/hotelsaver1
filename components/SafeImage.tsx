@@ -32,8 +32,13 @@ export default function SafeImage({
       setHasError(true)
       setImgSrc(fallbackSrc)
       setIsLoading(true) // Reset loading for fallback image
+    } else if (hasError && imgSrc === fallbackSrc) {
+      // If even primary fallback fails, try a different reliable fallback
+      const secondaryFallback = 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80'
+      setImgSrc(secondaryFallback)
+      setIsLoading(true)
     } else {
-      // If even fallback fails, keep loading state false to show placeholder
+      // If all fallbacks fail, keep loading state false to show placeholder
       setIsLoading(false)
     }
   }

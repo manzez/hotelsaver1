@@ -162,7 +162,7 @@ export const TOURISM_DESTINATIONS: TourismDestination[] = [
     address: 'Kano, Nigeria',
     lat: 12.0000,
     lng: 8.5167,
-    heroImage: 'https://images.unsplash.com/photo-1547041866-5f393adfe6f7?w=1600&h=900&fit=crop&auto=format&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1600&h=900&fit=crop&auto=format&q=80',
     highlights: [
       'Ancient city walls and gates',
       'Great Mosque and Emir’s Palace',
@@ -181,7 +181,7 @@ export const TOURISM_DESTINATIONS: TourismDestination[] = [
     address: 'Badagry, Lagos, Nigeria',
     lat: 6.4150,
     lng: 2.8813,
-    heroImage: 'https://images.unsplash.com/photo-1532372320572-e4ff1c5a1c6f?w=1600&h=900&fit=crop&auto=format&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&h=900&fit=crop&auto=format&q=80',
     highlights: [
       'Slave trade route history',
       'Museums and memorial sites',
@@ -200,7 +200,7 @@ export const TOURISM_DESTINATIONS: TourismDestination[] = [
     address: 'Ogbunike, Anambra, Nigeria',
     lat: 6.1613,
     lng: 6.8993,
-    heroImage: 'https://images.unsplash.com/photo-1544552868-1f83f67a8335?w=1600&h=900&fit=crop&auto=format&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1574263867128-6b50b6ac1f4c?w=1600&h=900&fit=crop&auto=format&q=80',
     highlights: [
       'Network of caves and tunnels',
       'Lush forest setting',

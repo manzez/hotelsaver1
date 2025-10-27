@@ -23,7 +23,7 @@ function PaymentPageContent() {
   const router = useRouter()
   const hasPaystack = !!process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
   
-  const [selectedPayment, setSelectedPayment] = useState<string>('')
+  const [selectedPayment, setSelectedPayment] = useState<string>('pay-at-hotel') // Default to pay at hotel
   const [isProcessing, setIsProcessing] = useState(false)
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -39,7 +39,47 @@ function PaymentPageContent() {
   const firstName = searchParams.get('firstName') || ''
   const lastName = searchParams.get('lastName') || ''
   const phoneFromParams = searchParams.get('phone') || ''
-  const hotel = HOTELS.find(h => h.id === propertyId)
+  
+  // Find hotel in static data first, then try hybrid system for Places API hotels
+  const [hotel, setHotel] = useState<any>(null)
+  const [isLoadingHotel, setIsLoadingHotel] = useState(false)
+  
+  useEffect(() => {
+    async function loadHotel() {
+      // Try static data first
+      let foundHotel = HOTELS.find(h => h.id === propertyId)
+      
+      // If not found and it's a Places API ID, try hybrid system
+      if (!foundHotel && propertyId.startsWith('places_')) {
+        setIsLoadingHotel(true)
+        try {
+          const { getHotelById } = await import('@/lib/hybrid-hotels')
+          const hybridHotel = await getHotelById(propertyId, 'Lagos') // Default city
+          if (hybridHotel) {
+            foundHotel = {
+              id: hybridHotel.id,
+              name: hybridHotel.name,
+              city: hybridHotel.city,
+              type: hybridHotel.type,
+              basePriceNGN: hybridHotel.basePriceNGN,
+              images: hybridHotel.images || [],
+              stars: hybridHotel.stars || 4
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching Places API hotel for payment:', error)
+        } finally {
+          setIsLoadingHotel(false)
+        }
+      }
+      
+      setHotel(foundHotel)
+    }
+    
+    if (propertyId) {
+      loadHotel()
+    }
+  }, [propertyId])
   // Determine rate per night: prefer price from URL (negotiated or selected), else fall back to hotel data
   const baseRate = priceParam > 0
     ? priceParam
@@ -110,11 +150,145 @@ function PaymentPageContent() {
     return paymentMethods.filter(m => (m.id === 'paystack' ? hasPaystack : true))
   }, [hasPaystack])
 
-  if (!hotel) {
+  // Show loading state while fetching hotel details
+  if (isLoadingHotel) {
+    return (
+      <div className="container mx-auto px-4 py-20 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-green mx-auto mb-4"></div>
+        <h1 className="text-xl font-medium text-gray-900">Loading hotel details...</h1>
+      </div>
+    )
+  }
+
+  // Handle missing hotel with fallback options
+  if (!hotel && propertyId) {
+    // Try to provide a fallback experience instead of blocking the user
+    console.warn('Hotel not found, using fallback:', propertyId)
+    
+    return (
+      <div className="container mx-auto px-4 py-20">
+        <div className="max-w-2xl mx-auto">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Complete Your Booking</h1>
+          <div className="card p-6 mb-6">
+            <div className="text-amber-600 mb-4">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">Property Details Loading</span>
+              </div>
+              <p className="text-sm mt-2">We're having trouble loading the property details. You can still complete your booking.</p>
+            </div>
+            
+            <div className="bg-gray-50 p-4 rounded-lg mb-4">
+              <h3 className="font-medium text-gray-900 mb-2">Booking Summary</h3>
+              <div className="space-y-1 text-sm text-gray-600">
+                <div>Property ID: {propertyId}</div>
+                {priceParam > 0 && <div>Rate: {naira(priceParam)} per night</div>}
+                {checkIn && <div>Check-in: {new Date(checkIn).toLocaleDateString()}</div>}
+                {checkOut && <div>Check-out: {new Date(checkOut).toLocaleDateString()}</div>}
+                <div>Guests: {adults} adults{children !== '0' ? `, ${children} children` : ''}</div>
+                <div>Rooms: {rooms}</div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="font-medium text-gray-900 mb-2">Contact Information</h3>
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={customerInfo.name}
+                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, name: e.target.value }))}
+                    className="input"
+                    required
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    value={customerInfo.email}
+                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, email: e.target.value }))}
+                    className="input"
+                    required
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone Number"
+                    value={customerInfo.phone}
+                    onChange={(e) => setCustomerInfo(prev => ({ ...prev, phone: e.target.value }))}
+                    className="input"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={async () => {
+                  if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
+                    alert('Please fill in all contact details')
+                    return
+                  }
+                  
+                  try {
+                    setIsProcessing(true)
+                    
+                    // Use fallback booking API
+                    const response = await fetch('/api/payments/fallback', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        propertyId,
+                        price: priceParam,
+                        customerInfo,
+                        bookingDetails: {
+                          checkIn, checkOut, adults, children, rooms
+                        }
+                      })
+                    })
+                    
+                    const result = await response.json()
+                    
+                    if (result.bookingId) {
+                      router.push(`/confirmation?bookingId=${result.bookingId}&method=fallback`)
+                    } else {
+                      throw new Error('Booking failed')
+                    }
+                  } catch (error) {
+                    console.error('Fallback booking error:', error)
+                    alert('Booking failed. Please try again or contact support.')
+                  } finally {
+                    setIsProcessing(false)
+                  }
+                }}
+                disabled={isProcessing}
+                className="btn-primary w-full"
+              >
+                {isProcessing ? 'Processing...' : 'Complete Booking'}
+              </button>
+            </div>
+          </div>
+          
+          <div className="text-center space-x-4">
+            <Link href="/" className="btn-ghost">Back to Home</Link>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="btn-ghost"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Handle case where no propertyId at all
+  if (!propertyId) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h1 className="text-2xl font-bold text-gray-900 mb-4">Payment Error</h1>
-        <p className="text-gray-600 mb-8">Invalid booking details. Please start over.</p>
+        <p className="text-gray-600 mb-8">No property selected. Please start a new search.</p>
         <Link href="/" className="btn-primary">Back to Home</Link>
       </div>
     )
@@ -143,26 +317,53 @@ function PaymentPageContent() {
       await new Promise(resolve => setTimeout(resolve, 2000))
 
   if (selectedPayment === 'pay-at-hotel') {
-        // For pay at hotel, just create the booking
-        const bookingResponse = await fetch('/api/book', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            propertyId,
-            pricePerNight: baseRate,
-            checkIn,
-            checkOut,
-            adults,
-            children,
-            rooms,
-            paymentMethod: 'pay-at-hotel',
-            negotiationToken,
-            customerInfo: { name: nameForPayment, phone: phoneForPayment, email: emailForPayment, address: customerInfo.address },
-            total
+        // For pay at hotel, try main API first, then fallback
+        let booking
+        try {
+          const bookingResponse = await fetch('/api/book', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              propertyId,
+              pricePerNight: baseRate,
+              checkIn,
+              checkOut,
+              adults,
+              children,
+              rooms,
+              paymentMethod: 'pay-at-hotel',
+              negotiationToken,
+              customerInfo: { name: nameForPayment, phone: phoneForPayment, email: emailForPayment, address: customerInfo.address },
+              total
+            })
           })
-        })
 
-        const booking = await bookingResponse.json()
+          if (bookingResponse.ok) {
+            booking = await bookingResponse.json()
+          } else {
+            throw new Error('Primary booking API failed')
+          }
+        } catch (error) {
+          console.log('Primary booking failed, using fallback:', error)
+          // Use fallback booking API
+          const fallbackResponse = await fetch('/api/payments/fallback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              propertyId,
+              pricePerNight: baseRate,
+              checkIn,
+              checkOut,
+              adults,
+              children,
+              rooms,
+              paymentMethod: 'pay-at-hotel',
+              customerInfo: { name: nameForPayment, phone: phoneForPayment, email: emailForPayment, address: customerInfo.address },
+              total
+            })
+          })
+          booking = await fallbackResponse.json()
+        }
         
         // Redirect to confirmation page with full context and customer name
         const qp = new URLSearchParams({
@@ -338,6 +539,25 @@ function PaymentPageContent() {
                     />
                   </div>
                 </div>
+
+                {/* Payment Notice */}
+                {!hasPaystack && (
+                  <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <div className="text-blue-600 mt-0.5">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-blue-900 mb-1">Payment Options Available</h4>
+                        <p className="text-sm text-blue-800">
+                          Online card payments are currently being set up. You can secure your booking now and pay at the hotel with cash or card.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Customer details (required) */}
                 <div className="mb-8">

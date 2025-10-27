@@ -197,11 +197,96 @@ export const DEFAULT_FACILITIES: FacilityKey[] = [
 import overridesJson from './facilities-overrides.json'
 const FACILITY_OVERRIDES = overridesJson as Record<string, FacilityKey[]>
 
+// Map new hotel facilities structure to existing FacilityKey system
+function mapHotelFacilitiesToKeys(hotelFacilities: any): FacilityKey[] {
+  if (!hotelFacilities || typeof hotelFacilities !== 'object') return DEFAULT_FACILITIES
+  
+  const keys: FacilityKey[] = []
+  
+  // Check parking facilities
+  if (hotelFacilities.parking) {
+    if (hotelFacilities.parking['Free parking'] || hotelFacilities.parking['Parking garage']) {
+      keys.push('car_park')
+    }
+  }
+  
+  // Check room facilities  
+  if (hotelFacilities.rooms) {
+    if (hotelFacilities.rooms['Free WiFi']) keys.push('wifi')
+    if (hotelFacilities.rooms['Family rooms']) keys.push('family_rooms')
+    if (hotelFacilities.rooms['Flat-screen TV']) keys.push('flat_screen_tv')
+    if (hotelFacilities.rooms['Private bathroom']) keys.push('bath_or_shower')
+    if (hotelFacilities.rooms['Hairdryer']) keys.push('hairdryer')
+    if (hotelFacilities.rooms['Towels']) keys.push('towels')
+    if (hotelFacilities.rooms['Free toiletries']) keys.push('free_toiletries')
+    if (hotelFacilities.rooms['Toilet paper']) keys.push('toilet_paper')
+    if (hotelFacilities.rooms['Room service']) keys.push('room_service')
+    if (hotelFacilities.rooms['Non-smoking rooms']) keys.push('non_smoking')
+  }
+  
+  // Check dining facilities
+  if (hotelFacilities.dining) {
+    if (hotelFacilities.dining['Restaurant']) keys.push('restaurant')
+    if (hotelFacilities.dining['Bar']) keys.push('bar')
+    if (hotelFacilities.dining['Tea/Coffee maker']) keys.push('tea_coffee_maker')
+  }
+  
+  // Check kitchen facilities
+  if (hotelFacilities.kitchen) {
+    if (hotelFacilities.kitchen['Electric kettle']) keys.push('electric_kettle')
+    if (hotelFacilities.kitchen['Refrigerator']) keys.push('refrigerator')
+  }
+  
+  // Check outdoor facilities
+  if (hotelFacilities.outdoors) {
+    if (hotelFacilities.outdoors['Outdoor swimming pool']) keys.push('swimming_pool')
+    if (hotelFacilities.outdoors['Outdoor furniture']) keys.push('outdoor_furniture')
+  }
+  
+  // Check reception services
+  if (hotelFacilities.reception) {
+    if (hotelFacilities.reception['24-hour front desk']) keys.push('security')
+  }
+  
+  // Check general facilities
+  if (hotelFacilities.general) {
+    if (hotelFacilities.general['Airport shuttle']) keys.push('airport_shuttle')
+    if (hotelFacilities.general['Non-smoking throughout']) keys.push('non_smoking_throughout')
+  }
+  
+  // Check business facilities
+  if (hotelFacilities.business) {
+    if (hotelFacilities.business['Meeting/banquet facilities']) keys.push('conference_room')
+  }
+  
+  // Always include some default facilities if none were mapped
+  if (keys.length === 0) {
+    keys.push('wifi', 'restaurant', 'car_park')
+  }
+  
+  return keys
+}
+
 export function getFacilitiesFor(hotelId: string | undefined | null): FacilityKey[] {
   if (!hotelId) return DEFAULT_FACILITIES
+  
   const k = String(hotelId)
-  const list = FACILITY_OVERRIDES[k]
-  if (Array.isArray(list) && list.length > 0) return list
+  
+  // First try override system for backward compatibility
+  const overrideList = FACILITY_OVERRIDES[k]
+  if (Array.isArray(overrideList) && overrideList.length > 0) return overrideList
+  
+  // Try to get facilities from hotel data structure
+  try {
+    const { HOTELS } = require('./data')
+    const hotel = HOTELS.find((h: any) => h.id === k)
+    if (hotel && hotel.facilities) {
+      return mapHotelFacilitiesToKeys(hotel.facilities)
+    }
+  } catch (error) {
+    console.warn('Could not load hotel facilities data:', error)
+  }
+  
   return DEFAULT_FACILITIES
 }
 

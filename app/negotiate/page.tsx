@@ -20,6 +20,7 @@ function NegotiatePageContent() {
   const sp = useSearchParams()
   const router = useRouter()
   const propertyId = sp.get('propertyId') || ''
+  const roomId = sp.get('roomId') || ''
 
   const [negStatus, setNegStatus] = useState<NegStatus>(NEG_STATUS.PENDING)
   const [base, setBase] = useState<number | null>(null)
@@ -98,7 +99,7 @@ function NegotiatePageContent() {
       const res = await fetch('/api/negotiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ propertyId }),
+        body: JSON.stringify({ propertyId, roomId }),
       })
       const data = await res.json()
       if (cancelled) return

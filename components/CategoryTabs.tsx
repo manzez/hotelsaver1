@@ -5,10 +5,11 @@ import { usePathname } from 'next/navigation'
 const defaultTabs = [
   { key: 'hotels', label: 'Hotels', href: '/' },
   { key: 'services', label: 'Services', href: '/services' },
-  { key: 'food', label: 'Food', href: '/food' }
+  { key: 'food', label: 'Food', href: '/food' },
+  { key: 'airport-taxi', label: 'Airport Taxi', href: '/airport-taxi' }
 ]
 
-type Hrefs = Partial<{ hotels: string; services: string; food: string }>
+type Hrefs = Partial<{ hotels: string; services: string; food: string; 'airport-taxi': string }>
 
 export default function CategoryTabs({ active, hrefs }: { active: string; hrefs?: Hrefs }) {
   const pathname = usePathname()
