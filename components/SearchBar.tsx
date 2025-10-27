@@ -372,28 +372,32 @@ export default function SearchBar({
   }
 
   return (
-    <div className="flex items-center gap-2 w-full">
-      {/* Compact search form with joined inputs */}
-      <div className="bg-white rounded-xl shadow-md border border-brand-green/20 p-2 flex-1">
-        <div className="flex items-center gap-0 rounded-lg border border-brand-green/30">
+    <div className="w-full">
+      {/* Mobile-First Modern Search Form */}
+      <div className="bg-white rounded-2xl shadow-lg border border-brand-green/10 p-4 md:p-3">
+        {/* Mobile: Vertical Stack, Desktop: Horizontal Flex */}
+        <div className="space-y-3 md:space-y-0 md:flex md:items-center md:gap-0 md:rounded-lg md:border md:border-brand-green/30">
           {/* Destination Search */}
-          <div className="relative flex-1" ref={searchInputRef}>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => handleSearchInput(e.target.value)}
-              onFocus={() => {
-                if (searchResults.length > 0) {
-                  setShowSearchResults(true)
-                }
-              }}
-              placeholder="City or hotel..."
-              className="w-full h-10 pl-3 pr-2 bg-gray-50 text-gray-900 text-sm font-medium focus:bg-white focus:outline-none border-r border-gray-200"
-            />
+          <div className="relative md:flex-1" ref={searchInputRef}>
+            <div className="mb-2 md:mb-0">
+              <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">Where to?</label>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearchInput(e.target.value)}
+                onFocus={() => {
+                  if (searchResults.length > 0) {
+                    setShowSearchResults(true)
+                  }
+                }}
+                placeholder="City or hotel name..."
+                className="w-full h-12 md:h-10 pl-4 md:pl-3 pr-2 bg-gray-50 md:bg-gray-50 text-gray-900 text-base md:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 rounded-xl md:rounded-none md:border-r md:border-gray-200 transition-all"
+              />
+            </div>
             
             {/* Search Results Dropdown */}
             {showSearchResults && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-[60] max-h-64 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-100 z-[60] max-h-64 overflow-y-auto">
                 {searchResults.map((result, index) => (
                   <button
                     key={index}
@@ -430,7 +434,10 @@ export default function SearchBar({
           </div>
 
           {/* Check-in & Check-out */}
-          <div className="relative z-10 flex-1 border-r border-gray-200">
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
+              Check-in & Check-out
+            </label>
             <button
               type="button"
               data-date-picker-trigger
@@ -447,10 +454,10 @@ export default function SearchBar({
                 setIsDatePickerOpen(!isDatePickerOpen)
                 setShowGuestPicker(false)
               }}
-              className="w-full h-10 pl-2 pr-6 bg-gray-50 text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-100 focus:bg-white focus:outline-none"
+              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none"
             >
               <span>{formatRangeLabel()}</span>
-              <svg className="w-2 h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </button>
@@ -484,14 +491,17 @@ export default function SearchBar({
           </div>
 
           {/* Guests */}
-          <div className="relative flex-1 border-r border-gray-200" ref={guestPickerRef}>
+          <div className="w-full" ref={guestPickerRef}>
+            <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
+              Guests
+            </label>
             <button
               type="button"
               onClick={() => setShowGuestPicker(!showGuestPicker)}
-              className="w-full h-10 pl-2 pr-2 bg-gray-50 text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-100 focus:bg-white focus:outline-none"
+              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-2 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none"
             >
               <span>{guestSummary}</span>
-              <svg className={`w-2 h-2 text-gray-400 transition-transform flex-shrink-0 ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-4 h-4 md:w-2 md:h-2 text-gray-400 transition-transform flex-shrink-0 ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -589,56 +599,71 @@ export default function SearchBar({
             )}
           </div>
 
-          {/* Property Type & Budget - Combined */}
-          <div className="flex-1 p-1 space-y-1">
-            <div className="relative">
-              <select 
-                className="w-full h-8 pl-2 pr-6 bg-gray-50 text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none cursor-pointer" 
-                value={stayType} 
-                onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment')}
-                aria-label="Property type"
-              >
+          {/* Property Type & Budget - Mobile First */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-1 w-full">
+            {/* Property Type */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
+                Property Type
+              </label>
+              <div className="relative">
+                <select 
+                  className="w-full h-12 md:h-8 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
+                  value={stayType} 
+                  onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment')}
+                  aria-label="Property type"
+                >
                 <option value="any">Any Type</option>
                 <option value="hotel">Hotels</option>
                 <option value="apartment">Apartments</option>
               </select>
-              <div className="absolute right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <svg className="w-2 h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <div className="absolute right-3 md:right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
 
-            <div className="relative">
-              <select 
-                className="w-full h-6 pl-2 pr-6 bg-gray-50 text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none cursor-pointer" 
-                value={budgetKey} 
-                onChange={e => setBudgetKey(e.target.value)}
-                aria-label="Budget"
-              >
-                {budgets.map(b => (
-                  <option key={b.key} value={b.key}>{b.label}</option>
-                ))}
-              </select>
-              <div className="absolute right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <svg className="w-2 h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+            {/* Budget */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
+                Budget Range
+              </label>
+              <div className="relative">
+                <select 
+                  className="w-full h-12 md:h-6 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
+                  value={budgetKey} 
+                  onChange={e => setBudgetKey(e.target.value)}
+                  aria-label="Budget"
+                >
+                  {budgets.map(b => (
+                    <option key={b.key} value={b.key}>{b.label}</option>
+                  ))}
+                </select>
+                <div className="absolute right-3 md:right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Green Search Button on the right */}
+      {/* Search Button - Full width on mobile, compact on desktop */}
       <button 
         type="button"
         onClick={(e) => {
           e.preventDefault()
           handleSubmit(e)
         }}
-        className="h-10 px-4 bg-brand-green hover:bg-brand-dark text-white rounded-xl font-medium text-sm shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-1 flex-shrink-0"
+        className="w-full md:w-auto h-14 md:h-10 px-6 md:px-4 bg-brand-green hover:bg-brand-dark text-white rounded-xl font-semibold md:font-medium text-base md:text-sm shadow-lg md:shadow-md hover:shadow-xl md:hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 md:gap-1 flex-shrink-0"
       >
+        <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
         {submitLabel}
       </button>
     </div>
