@@ -457,7 +457,7 @@ export default function SearchBar({
         {/* Mobile: Compact Vertical Stack, Desktop: Horizontal Flex */}
         <div className="space-y-2 md:space-y-0 md:flex md:items-center md:gap-0 md:rounded-lg md:border md:border-brand-green/30">
           {/* Destination Search */}
-          <div className="relative md:flex-1" ref={searchInputRef}>
+          <div className="relative md:flex-1 z-10" ref={searchInputRef}>
             <div className="mb-0 md:mb-0">
               <input
                 type="text"
@@ -481,7 +481,7 @@ export default function SearchBar({
             
             {/* Search Results Dropdown */}
             {showSearchResults && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-100 z-[60] max-h-64 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] max-h-64 overflow-y-auto">
                 {searchResults.map((result, index) => (
                   <button
                     key={index}
@@ -601,10 +601,10 @@ export default function SearchBar({
             {isDatePickerOpen && (
               <>
                 <div 
-                  className="fixed inset-0 bg-black/20 z-[9998] md:hidden" 
+                  className="fixed inset-0 bg-black/20 z-[9997] md:hidden" 
                   onClick={() => setIsDatePickerOpen(false)}
                 />
-                <div className="fixed md:absolute inset-x-4 md:inset-x-auto top-20 md:top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
+                <div className="fixed md:absolute inset-x-4 md:inset-x-auto top-20 md:top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9998] p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
                 <DatePicker
                   selected={startDate}
                   onChange={(dates: [Date | null, Date | null] | null) => {
@@ -701,10 +701,10 @@ export default function SearchBar({
             {showGuestPicker && (
               <>
                 <div 
-                  className="fixed inset-0 bg-black/20 z-[9998] md:hidden" 
+                  className="fixed inset-0 bg-black/20 z-[9997] md:hidden" 
                   onClick={() => setShowGuestPicker(false)}
                 />
-                <div className="fixed md:absolute inset-x-4 md:inset-x-auto top-20 md:top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[9999] p-6 min-w-[320px] max-h-[calc(100vh-6rem)] overflow-y-auto">
+                <div className="fixed md:absolute inset-x-4 md:inset-x-auto top-20 md:top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[9998] p-6 min-w-[320px] max-h-[calc(100vh-6rem)] overflow-y-auto">
                 <div className="space-y-6">
                   {/* Adults */}
                   <div className="flex items-center justify-between">
@@ -864,14 +864,14 @@ export default function SearchBar({
         </div>
       </div>
 
-      {/* Search Button - Compact blue button */}
+      {/* Search Button - Blueish green button */}
       <button 
         type="button"
         onClick={(e) => {
           e.preventDefault()
           handleSubmit(e)
         }}
-        className="w-full md:w-auto h-12 md:h-10 px-6 md:px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 md:bg-brand-green md:hover:bg-brand-dark md:active:bg-brand-dark text-white rounded-lg md:rounded-xl font-bold text-lg md:text-sm shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-2 md:gap-1 flex-shrink-0 mt-3 md:mt-0 transform active:scale-[0.98] touch-manipulation"
+        className="w-full md:w-auto h-12 md:h-10 px-6 md:px-4 bg-teal-600 hover:bg-teal-700 active:bg-teal-800 md:bg-brand-green md:hover:bg-brand-dark md:active:bg-brand-dark text-white rounded-lg md:rounded-xl font-bold text-lg md:text-sm shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-2 md:gap-1 flex-shrink-0 mt-3 md:mt-0 transform active:scale-[0.98] touch-manipulation"
       >
         <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />
