@@ -452,10 +452,10 @@ export default function SearchBar({
 
   return (
     <div className="w-full">
-      {/* Booking.com Inspired Mobile Search Form */}
-      <div className="bg-gradient-to-b from-orange-400 to-yellow-500 md:bg-white rounded-2xl md:rounded-2xl shadow-lg md:shadow-lg border-0 md:border md:border-brand-green/10 p-5 md:p-3">
-        {/* Mobile: Booking.com Style Vertical Stack, Desktop: Horizontal Flex */}
-        <div className="space-y-3 md:space-y-0 md:flex md:items-center md:gap-0 md:rounded-lg md:border md:border-brand-green/30">
+      {/* Compact Mobile Search Form */}
+      <div className="bg-gradient-to-b from-orange-400 to-yellow-500 md:bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-lg border-0 md:border md:border-brand-green/10 p-3 md:p-3">
+        {/* Mobile: Compact Vertical Stack, Desktop: Horizontal Flex */}
+        <div className="space-y-2 md:space-y-0 md:flex md:items-center md:gap-0 md:rounded-lg md:border md:border-brand-green/30">
           {/* Destination Search */}
           <div className="relative md:flex-1" ref={searchInputRef}>
             <div className="mb-0 md:mb-0">
@@ -469,11 +469,11 @@ export default function SearchBar({
                   }
                 }}
                 placeholder="Where are you going?"
-                className="w-full h-14 md:h-10 pl-4 md:pl-3 pr-10 md:pr-2 bg-white text-gray-900 text-xl md:text-sm font-bold md:font-medium placeholder:text-gray-500 placeholder:font-normal md:bg-gray-50 focus:bg-white focus:outline-none focus:ring-0 md:focus:ring-2 md:focus:ring-brand-green/20 rounded-lg md:rounded-none md:border-r md:border-gray-200 transition-all border-0 md:border-gray-200 shadow-sm md:shadow-none"
+                className="w-full h-11 md:h-10 pl-3 md:pl-3 pr-8 md:pr-2 bg-white text-gray-900 text-lg md:text-sm font-bold md:font-medium placeholder:text-gray-500 placeholder:font-normal md:bg-gray-50 focus:bg-white focus:outline-none focus:ring-0 md:focus:ring-2 md:focus:ring-brand-green/20 rounded-lg md:rounded-none md:border-r md:border-gray-200 transition-all border-0 md:border-gray-200 shadow-sm md:shadow-none"
               />
               {/* Search icon for mobile */}
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 md:hidden">
-                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="absolute right-2 top-1/2 transform -translate-y-1/2 md:hidden">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />
                 </svg>
               </div>
@@ -521,7 +521,7 @@ export default function SearchBar({
           <div className="grid grid-cols-2 gap-2 md:w-full">
             {/* Check-in Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1 md:hidden">Check-in date</label>
+              <label className="block text-xs font-medium text-gray-800 mb-1 md:hidden">Check-in date</label>
               <button
                 type="button"
                 data-date-picker-trigger
@@ -538,10 +538,10 @@ export default function SearchBar({
                   setIsDatePickerOpen(!isDatePickerOpen)
                   setShowGuestPicker(false)
                 }}
-                className="w-full h-14 md:h-10 px-3 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none"
+                className="w-full h-12 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none"
               >
                 <div className="text-xs text-gray-600 md:hidden">Check-in</div>
-                <div className="font-bold text-lg md:text-sm md:font-medium">
+                <div className="font-bold text-sm md:text-sm md:font-medium">
                   {startDate ? startDate.toLocaleDateString('en-GB', { 
                     weekday: 'short', 
                     day: 'numeric', 
@@ -554,7 +554,7 @@ export default function SearchBar({
             
             {/* Check-out Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1 md:hidden">Check-out date</label>
+              <label className="block text-xs font-medium text-gray-800 mb-1 md:hidden">Check-out date</label>
               <button
                 type="button"
                 onClick={(e) => {
@@ -570,10 +570,10 @@ export default function SearchBar({
                   setIsDatePickerOpen(!isDatePickerOpen)
                   setShowGuestPicker(false)
                 }}
-                className="w-full h-14 md:h-10 px-3 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none"
+                className="w-full h-12 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none"
               >
                 <div className="text-xs text-gray-600 md:hidden">Check-out</div>
-                <div className="font-bold text-lg md:text-sm md:font-medium">
+                <div className="font-bold text-sm md:text-sm md:font-medium">
                   {endDate ? endDate.toLocaleDateString('en-GB', { 
                     weekday: 'short', 
                     day: 'numeric', 
@@ -635,14 +635,14 @@ export default function SearchBar({
           <div className="grid grid-cols-3 gap-2 md:w-full" ref={guestPickerRef}>
             {/* Adults */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1 md:hidden">Adults</label>
+              <label className="block text-xs font-medium text-gray-800 mb-1 md:hidden">Adults</label>
               <button
                 type="button"
                 onClick={() => setShowGuestPicker(!showGuestPicker)}
-                className="w-full h-14 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none flex flex-col justify-center"
+                className="w-full h-12 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none flex flex-col justify-center"
               >
                 <div className="text-xs text-gray-600 md:hidden">Adults</div>
-                <div className="font-bold text-lg md:text-sm md:font-medium flex items-center justify-between">
+                <div className="font-bold text-sm md:text-sm md:font-medium flex items-center justify-between">
                   <span>{adults}</span>
                   <svg className="w-3 h-3 text-gray-400 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -653,14 +653,14 @@ export default function SearchBar({
             
             {/* Children */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1 md:hidden">Children</label>
+              <label className="block text-xs font-medium text-gray-800 mb-1 md:hidden">Children</label>
               <button
                 type="button"
                 onClick={() => setShowGuestPicker(!showGuestPicker)}
-                className="w-full h-14 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none flex flex-col justify-center"
+                className="w-full h-12 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none flex flex-col justify-center"
               >
                 <div className="text-xs text-gray-600 md:hidden">Children</div>
-                <div className="font-bold text-lg md:text-sm md:font-medium flex items-center justify-between">
+                <div className="font-bold text-sm md:text-sm md:font-medium flex items-center justify-between">
                   <span>{children}</span>
                   <svg className="w-3 h-3 text-gray-400 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -671,14 +671,14 @@ export default function SearchBar({
             
             {/* Rooms */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1 md:hidden">Rooms</label>
+              <label className="block text-xs font-medium text-gray-800 mb-1 md:hidden">Rooms</label>
               <button
                 type="button"
                 onClick={() => setShowGuestPicker(!showGuestPicker)}
-                className="w-full h-14 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none flex flex-col justify-center"
+                className="w-full h-12 md:h-10 px-2 md:px-2 bg-white md:bg-gray-50 border-0 md:border md:border-gray-300 rounded-lg md:rounded-none text-gray-900 text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none transition-all shadow-sm md:shadow-none flex flex-col justify-center"
               >
                 <div className="text-xs text-gray-600 md:hidden">Rooms</div>
-                <div className="font-bold text-lg md:text-sm md:font-medium flex items-center justify-between">
+                <div className="font-bold text-sm md:text-sm md:font-medium flex items-center justify-between">
                   <span>{rooms}</span>
                   <svg className="w-3 h-3 text-gray-400 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -797,16 +797,13 @@ export default function SearchBar({
             )}
           </div>
 
-          {/* Property Type & Budget - Mobile First */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-1 w-full">
+          {/* Property Type & Budget - Hidden on mobile for compact design */}
+          <div className="hidden md:grid md:grid-cols-2 gap-1 w-full">
             {/* Property Type */}
             <div className="w-full">
-              <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">
-                Type
-              </label>
               <div className="relative">
                 <select 
-                  className="w-full h-10 md:h-8 px-3 md:px-2 pr-8 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-lg md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
+                  className="w-full h-8 px-2 pr-6 bg-gray-50 border-0 rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-0 cursor-pointer transition-all shadow-none" 
                   value={stayType} 
                   onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment')}
                   aria-label="Property type"
@@ -815,8 +812,8 @@ export default function SearchBar({
                 <option value="hotel">Hotels</option>
                 <option value="apartment">Apartments</option>
               </select>
-                <div className="absolute right-3 md:right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="absolute right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg className="w-2 h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -825,12 +822,9 @@ export default function SearchBar({
 
             {/* Budget */}
             <div className="w-full">
-              <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">
-                Budget
-              </label>
               <div className="relative">
                 <select 
-                  className="w-full h-10 md:h-6 px-3 md:px-2 pr-8 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-lg md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
+                  className="w-full h-6 px-2 pr-6 bg-gray-50 border-0 rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-0 cursor-pointer transition-all shadow-none" 
                   value={budgetKey} 
                   onChange={e => setBudgetKey(e.target.value)}
                   aria-label="Budget"
@@ -839,8 +833,8 @@ export default function SearchBar({
                     <option key={b.key} value={b.key}>{b.label}</option>
                   ))}
                 </select>
-                <div className="absolute right-3 md:right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="absolute right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg className="w-2 h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -850,36 +844,36 @@ export default function SearchBar({
         </div>
       </div>
 
-      {/* Work Travel Question - Booking.com style */}
-      <div className="bg-gray-50 md:bg-transparent rounded-xl md:rounded-none p-4 md:p-2 mt-3 md:mt-2">
+      {/* Work Travel Question - Compact */}
+      <div className="bg-gray-50 md:bg-transparent rounded-lg md:rounded-none p-3 md:p-2 mt-2 md:mt-2">
         <div className="flex items-center justify-between">
-          <span className="text-gray-700 font-medium text-base md:text-sm">Are you travelling for work?</span>
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="radio" name="workTravel" value="yes" className="w-4 h-4 text-blue-600" />
-              <span className="text-gray-700 font-medium">Yes</span>
+          <span className="text-gray-700 font-medium text-sm md:text-sm">Are you travelling for work?</span>
+          <div className="flex items-center gap-3">
+            <label className="flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="workTravel" value="yes" className="w-3 h-3 text-blue-600" />
+              <span className="text-gray-700 text-sm">Yes</span>
             </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="radio" name="workTravel" value="no" defaultChecked className="w-4 h-4 text-blue-600" />
-              <span className="text-gray-700 font-medium">No</span>
+            <label className="flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="workTravel" value="no" defaultChecked className="w-3 h-3 text-blue-600" />
+              <span className="text-gray-700 text-sm">No</span>
             </label>
           </div>
-          <div className="w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center">
-            <span className="text-gray-600 text-sm font-bold">?</span>
+          <div className="w-4 h-4 rounded-full bg-gray-300 flex items-center justify-center">
+            <span className="text-gray-600 text-xs font-bold">?</span>
           </div>
         </div>
       </div>
 
-      {/* Search Button - Booking.com style large blue button */}
+      {/* Search Button - Compact blue button */}
       <button 
         type="button"
         onClick={(e) => {
           e.preventDefault()
           handleSubmit(e)
         }}
-        className="w-full md:w-auto h-16 md:h-10 px-8 md:px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 md:bg-brand-green md:hover:bg-brand-dark md:active:bg-brand-dark text-white rounded-xl md:rounded-xl font-bold text-xl md:text-sm shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-3 md:gap-1 flex-shrink-0 mt-4 md:mt-0 transform active:scale-[0.98] touch-manipulation"
+        className="w-full md:w-auto h-12 md:h-10 px-6 md:px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 md:bg-brand-green md:hover:bg-brand-dark md:active:bg-brand-dark text-white rounded-lg md:rounded-xl font-bold text-lg md:text-sm shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-2 md:gap-1 flex-shrink-0 mt-3 md:mt-0 transform active:scale-[0.98] touch-manipulation"
       >
-        <svg className="w-6 h-6 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />
         </svg>
         {submitLabel}
