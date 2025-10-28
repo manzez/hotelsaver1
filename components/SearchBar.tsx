@@ -778,10 +778,9 @@ export default function SearchBar({
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Type and Budget - Hidden on desktop */}
-      <div className="md:hidden mt-2 grid grid-cols-2 gap-2">
+        {/* Mobile Type and Budget - Hidden on desktop */}
+        <div className="md:hidden mt-2 grid grid-cols-2 gap-2">
         {/* Property Type */}
         <div className="relative">
           <label className="block text-xs font-medium text-gray-700 mb-1">Type</label>
