@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { startOfDay, addDays } from 'date-fns'
 
@@ -58,6 +58,21 @@ export default function SearchBarDesktop({
   // Refs
   const searchInputRef = useRef<HTMLDivElement>(null)
   const guestPickerRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
+        setShowSearchResults(false)
+      }
+      if (guestPickerRef.current && !guestPickerRef.current.contains(event.target as Node)) {
+        setShowGuestPicker(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   // Budget options
   const budgets = [
@@ -193,10 +208,10 @@ export default function SearchBarDesktop({
             )}
           </div>
 
-          {/* Middle Row - Dates, Guests, Budget */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {/* Single Row Layout - All on one line */}
+          <div className="flex items-end gap-3">
             {/* Check In */}
-            <div>
+            <div className="flex-1">
               <label className="block text-sm font-medium text-gray-700 mb-1">Check In</label>
               <input
                 type="date"
@@ -210,12 +225,12 @@ export default function SearchBarDesktop({
                   }
                 }}
                 min={new Date().toISOString().split('T')[0]}
-                className="w-full h-11 px-3 bg-white border border-gray-300 rounded-md text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
+                className="w-full h-11 px-3 bg-white border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
               />
             </div>
 
             {/* Check Out */}
-            <div>
+            <div className="flex-1">
               <label className="block text-sm font-medium text-gray-700 mb-1">Check Out</label>
               <input
                 type="date"
@@ -226,19 +241,19 @@ export default function SearchBarDesktop({
                   setEndDate(date)
                 }}
                 min={startDate ? startDate.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
-                className="w-full h-11 px-3 bg-white border border-gray-300 rounded-md text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
+                className="w-full h-11 px-3 bg-white border border-gray-300 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all cursor-pointer"
               />
             </div>
 
             {/* Guests */}
-            <div className="relative" ref={guestPickerRef}>
+            <div className="relative flex-1" ref={guestPickerRef}>
               <label className="block text-sm font-medium text-gray-700 mb-1">Guests</label>
               <button
                 type="button"
                 onClick={() => setShowGuestPicker(!showGuestPicker)}
                 className="w-full h-11 px-3 bg-white border border-gray-300 rounded-md text-gray-900 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all flex items-center justify-between"
               >
-                <span className="truncate">{guestSummary}</span>
+                <span className="truncate text-sm">{guestSummary}</span>
                 <svg className={`w-4 h-4 text-gray-400 transition-transform ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -339,7 +354,7 @@ export default function SearchBarDesktop({
             </div>
 
             {/* Budget */}
-            <div>
+            <div className="relative flex-1">
               <label className="block text-sm font-medium text-gray-700 mb-1">Budget</label>
               <select 
                 title="Budget range"
@@ -357,19 +372,17 @@ export default function SearchBarDesktop({
                 </svg>
               </div>
             </div>
-          </div>
 
-          {/* Bottom Row - Stay Type and Search Button */}
-          <div className="flex gap-3 items-end">
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Stay Type</label>
+            {/* Stay Type */}
+            <div className="relative flex-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
               <select 
                 title="Property type"
                 className="w-full h-11 px-3 pr-8 bg-white border border-gray-300 rounded-md text-gray-900 appearance-none focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green cursor-pointer transition-all" 
                 value={stayType} 
                 onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment')}
               >
-                <option value="any">Any Type</option>
+                <option value="any">Any</option>
                 <option value="hotel">Hotels</option>
                 <option value="apartment">Apartments</option>
               </select>
@@ -380,9 +393,10 @@ export default function SearchBarDesktop({
               </div>
             </div>
 
+            {/* Search Button */}
             <button 
               type="submit"
-              className="h-11 px-8 bg-brand-green hover:bg-brand-dark text-white rounded-md font-medium transition-colors flex items-center gap-2 whitespace-nowrap"
+              className="h-11 px-6 bg-brand-green hover:bg-brand-dark text-white rounded-md font-medium transition-colors flex items-center gap-2 whitespace-nowrap"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />

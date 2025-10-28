@@ -60,6 +60,21 @@ export default function SearchBarMobile({
   const searchInputRef = useRef<HTMLDivElement>(null)
   const guestPickerRef = useRef<HTMLDivElement>(null)
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
+        setShowSearchResults(false)
+      }
+      if (guestPickerRef.current && !guestPickerRef.current.contains(event.target as Node)) {
+        setShowGuestPicker(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   // Budget options
   const budgets = [
     { key: 'u80', label: 'Under ₦80k' },
@@ -228,21 +243,39 @@ export default function SearchBarMobile({
                   onClick={() => setIsDatePickerOpen(false)}
                 />
                 <div className="fixed inset-x-4 top-20 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9998] p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
-                  <ClientDatepicker
-                    value={{
-                      startDate: startDate,
-                      endDate: endDate
-                    }}
-                    onChange={(value) => {
-                      const start = value?.startDate ? (typeof value.startDate === 'string' ? new Date(value.startDate) : value.startDate) : null
-                      const end = value?.endDate ? (typeof value.endDate === 'string' ? new Date(value.endDate) : value.endDate) : null
-                      setStartDate(start)
-                      setEndDate(end)
-                    }}
-                    displayFormat="MMM DD, YYYY"
-                    primaryColor="emerald"
-                    useRange={true}
-                  />
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-900 mb-2">Check In</label>
+                        <input
+                          type="date"
+                          value={startDate ? startDate.toISOString().split('T')[0] : ''}
+                          onChange={(e) => {
+                            const date = e.target.value ? new Date(e.target.value) : null
+                            setStartDate(date)
+                            if (!endDate && date) {
+                              setEndDate(addDays(date, 1))
+                            }
+                          }}
+                          min={new Date().toISOString().split('T')[0]}
+                          className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-900 mb-2">Check Out</label>
+                        <input
+                          type="date"
+                          value={endDate ? endDate.toISOString().split('T')[0] : ''}
+                          onChange={(e) => {
+                            const date = e.target.value ? new Date(e.target.value) : null
+                            setEndDate(date)
+                          }}
+                          min={startDate ? startDate.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
+                          className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white"
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setIsDatePickerOpen(false)}

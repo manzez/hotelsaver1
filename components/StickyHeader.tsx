@@ -123,12 +123,12 @@ export default function StickyHeader() {
           </a>
         </div>
         
-        {/* Search Bar - Full search on both mobile and desktop */}
+        {/* Search Bar - Compact mode for header */}
         <div className={`transition-all duration-300 ${
           isScrolled ? 'pt-2 pb-2 md:pt-3 md:pb-3' : 'pt-3 pb-3 md:pt-4 md:pb-4'
         }`}>
           <div className="w-full max-w-6xl mx-auto px-2">
-            <SearchBar submitLabel="Search" showBrandSplashOnSubmit={false} mobileDatePicker="custom" />
+            <SearchBar compact={true} submitLabel="Search" showBrandSplashOnSubmit={false} mobileDatePicker="custom" />
           </div>
         </div>
       </div>
