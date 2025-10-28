@@ -452,13 +452,13 @@ export default function SearchBar({
 
   return (
     <div className="w-full">
-      {/* Mobile-First Modern Search Form */}
-      <div className="bg-white rounded-2xl shadow-lg border border-brand-green/10 p-4 md:p-3">
-        {/* Mobile: Vertical Stack, Desktop: Horizontal Flex */}
-        <div className="space-y-3 md:space-y-0 md:flex md:items-center md:gap-0 md:rounded-lg md:border md:border-brand-green/30">
+      {/* Compact Mobile Search Form */}
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-md md:shadow-lg border border-brand-green/10 p-2 md:p-3">
+        {/* Mobile: Compact Vertical Stack, Desktop: Horizontal Flex */}
+        <div className="space-y-2 md:space-y-0 md:flex md:items-center md:gap-0 md:rounded-lg md:border md:border-brand-green/30">
           {/* Destination Search */}
           <div className="relative md:flex-1" ref={searchInputRef}>
-            <div className="mb-2 md:mb-0">
+            <div className="mb-1 md:mb-0">
               <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">Where to?</label>
               <input
                 type="text"
@@ -470,7 +470,7 @@ export default function SearchBar({
                   }
                 }}
                 placeholder="City or hotel name..."
-                className="w-full h-12 md:h-10 pl-4 md:pl-3 pr-2 bg-gray-50 md:bg-gray-50 text-gray-900 text-base md:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 rounded-xl md:rounded-none md:border-r md:border-gray-200 transition-all"
+                className="w-full h-10 md:h-10 pl-3 md:pl-3 pr-2 bg-gray-50 md:bg-gray-50 text-gray-900 text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 rounded-lg md:rounded-none md:border-r md:border-gray-200 transition-all"
               />
             </div>
             
@@ -514,8 +514,8 @@ export default function SearchBar({
 
           {/* Check-in & Check-out */}
           <div className="w-full">
-            <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
-              Check-in & Check-out
+            <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">
+              Dates
             </label>
             <button
               type="button"
@@ -533,7 +533,7 @@ export default function SearchBar({
                 setIsDatePickerOpen(!isDatePickerOpen)
                 setShowGuestPicker(false)
               }}
-              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none active:bg-gray-100"
+              className="w-full h-10 px-3 md:px-2 pr-8 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-lg md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none active:bg-gray-100"
             >
               <span>{formatRangeLabel()}</span>
               <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -577,13 +577,13 @@ export default function SearchBar({
 
           {/* Guests */}
           <div className="w-full" ref={guestPickerRef}>
-            <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
+            <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">
               Guests
             </label>
             <button
               type="button"
               onClick={() => setShowGuestPicker(!showGuestPicker)}
-              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-2 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none active:bg-gray-100"
+              className="w-full h-10 px-3 md:px-2 pr-8 md:pr-2 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-lg md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none active:bg-gray-100"
             >
               <span>{guestSummary}</span>
               <svg className={`w-4 h-4 md:w-2 md:h-2 text-gray-400 transition-transform flex-shrink-0 ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -691,15 +691,15 @@ export default function SearchBar({
           </div>
 
           {/* Property Type & Budget - Mobile First */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-1 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-1 w-full">
             {/* Property Type */}
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
-                Property Type
+              <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">
+                Type
               </label>
               <div className="relative">
                 <select 
-                  className="w-full h-12 md:h-8 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
+                  className="w-full h-10 md:h-8 px-3 md:px-2 pr-8 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-lg md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
                   value={stayType} 
                   onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment')}
                   aria-label="Property type"
@@ -718,12 +718,12 @@ export default function SearchBar({
 
             {/* Budget */}
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2 md:hidden">
-                Budget Range
+              <label className="block text-xs font-medium text-gray-600 mb-1 md:hidden">
+                Budget
               </label>
               <div className="relative">
                 <select 
-                  className="w-full h-12 md:h-6 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
+                  className="w-full h-10 md:h-6 px-3 md:px-2 pr-8 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-lg md:rounded-none text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 cursor-pointer transition-all shadow-sm md:shadow-none" 
                   value={budgetKey} 
                   onChange={e => setBudgetKey(e.target.value)}
                   aria-label="Budget"
@@ -743,14 +743,14 @@ export default function SearchBar({
         </div>
       </div>
 
-      {/* Search Button - Full width on mobile, compact on desktop */}
+      {/* Search Button - More compact on mobile */}
       <button 
         type="button"
         onClick={(e) => {
           e.preventDefault()
           handleSubmit(e)
         }}
-        className="w-full md:w-auto h-14 md:h-10 px-6 md:px-4 bg-brand-green hover:bg-brand-dark text-white rounded-xl font-semibold md:font-medium text-base md:text-sm shadow-lg md:shadow-md hover:shadow-xl md:hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 md:gap-1 flex-shrink-0"
+        className="w-full md:w-auto h-10 px-4 md:px-4 bg-brand-green hover:bg-brand-dark text-white rounded-lg md:rounded-xl font-medium text-sm shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 md:gap-1 flex-shrink-0 mt-1 md:mt-0"
       >
         <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
