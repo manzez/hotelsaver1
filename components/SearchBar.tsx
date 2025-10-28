@@ -32,6 +32,8 @@ interface SearchBarProps {
   showBrandSplashOnSubmit?: boolean
   // Mobile-only date picker mode: 'native' uses <input type="date">, 'custom' uses our calendar UI
   mobileDatePicker?: 'native' | 'custom'
+  // Compact mode for mobile - shows minimal search interface
+  compact?: boolean
 }
 
 interface SearchResult {
@@ -89,7 +91,8 @@ export default function SearchBar({
   submitLabel = 'Search',
   onBeforeSubmit,
   showBrandSplashOnSubmit = false,
-  mobileDatePicker = 'custom'
+  mobileDatePicker = 'custom',
+  compact = false
 }: SearchBarProps) {
   const router = useRouter()
 
@@ -200,6 +203,16 @@ export default function SearchBar({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  // Prevent body scroll on mobile when dropdowns are open
+  useEffect(() => {
+    if (isMobile && (showGuestPicker || isDatePickerOpen)) {
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = 'unset'
+      }
+    }
+  }, [isMobile, showGuestPicker, isDatePickerOpen])
 
   // Close date picker when clicking outside
   useEffect(() => {
@@ -371,6 +384,72 @@ export default function SearchBar({
     return 'Add dates'
   }
 
+  // Compact mobile search for header
+  if (compact) {
+    return (
+      <div className="w-full">
+        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-brand-green/10 p-2">
+          <div className="flex items-center gap-2">
+            {/* Compact destination input */}
+            <div className="flex-1 relative" ref={searchInputRef}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearchInput(e.target.value)}
+                onFocus={() => {
+                  if (searchResults.length > 0) {
+                    setShowSearchResults(true)
+                  }
+                }}
+                placeholder="Where to?"
+                className="w-full h-8 pl-3 pr-8 bg-gray-50 text-gray-900 text-sm placeholder:text-gray-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-brand-green/30 rounded-md transition-all"
+              />
+              <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              
+              {/* Compact Search Results */}
+              {showSearchResults && searchResults.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[60] max-h-48 overflow-y-auto">
+                  {searchResults.map((result, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => handleSearchSelect(result)}
+                      className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-sm first:rounded-t-lg last:rounded-b-lg"
+                    >
+                      <div className="w-3 h-3 text-gray-400">
+                        {result.type === 'city' ? '📍' : '🏨'}
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-900">{result.value}</div>
+                        <div className="text-xs text-gray-500">
+                          {result.type === 'city' ? 'City' : `Hotel in ${result.city}`}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Compact search button */}
+            <button 
+              type="button"
+              onClick={handleSubmit}
+              className="h-8 px-3 bg-brand-green hover:bg-brand-dark text-white rounded-md font-medium text-sm shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full">
       {/* Mobile-First Modern Search Form */}
@@ -454,7 +533,7 @@ export default function SearchBar({
                 setIsDatePickerOpen(!isDatePickerOpen)
                 setShowGuestPicker(false)
               }}
-              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none"
+              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-6 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none active:bg-gray-100"
             >
               <span>{formatRangeLabel()}</span>
               <svg className="w-4 h-4 md:w-2 md:h-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -462,9 +541,14 @@ export default function SearchBar({
               </svg>
             </button>
 
-            {/* Date Picker Portal */}
+            {/* Mobile backdrop for date picker */}
             {isDatePickerOpen && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-[70] p-4">
+              <>
+                <div 
+                  className="fixed inset-0 bg-black/20 z-[9998] md:hidden" 
+                  onClick={() => setIsDatePickerOpen(false)}
+                />
+                <div className="fixed md:absolute inset-x-4 md:inset-x-auto top-20 md:top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
                 <DatePicker
                   selected={startDate}
                   onChange={(dates: [Date | null, Date | null] | null) => {
@@ -486,7 +570,8 @@ export default function SearchBar({
                 >
                   Done
                 </button>
-              </div>
+                </div>
+              </>
             )}
           </div>
 
@@ -498,7 +583,7 @@ export default function SearchBar({
             <button
               type="button"
               onClick={() => setShowGuestPicker(!showGuestPicker)}
-              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-2 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none"
+              className="w-full h-12 md:h-10 px-4 md:px-2 pr-10 md:pr-2 bg-white md:bg-gray-50 border border-gray-300 md:border-0 rounded-xl md:rounded-none text-gray-900 text-sm font-medium flex items-center justify-between text-left hover:bg-gray-50 md:hover:bg-gray-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 md:focus:ring-0 focus:border-brand-green md:focus:border-0 transition-all shadow-sm md:shadow-none active:bg-gray-100"
             >
               <span>{guestSummary}</span>
               <svg className={`w-4 h-4 md:w-2 md:h-2 text-gray-400 transition-transform flex-shrink-0 ${showGuestPicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -507,7 +592,12 @@ export default function SearchBar({
             </button>
 
             {showGuestPicker && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[60] p-6 min-w-[320px]">
+              <>
+                <div 
+                  className="fixed inset-0 bg-black/20 z-[9998] md:hidden" 
+                  onClick={() => setShowGuestPicker(false)}
+                />
+                <div className="fixed md:absolute inset-x-4 md:inset-x-auto top-20 md:top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[9999] p-6 min-w-[320px] max-h-[calc(100vh-6rem)] overflow-y-auto">
                 <div className="space-y-6">
                   {/* Adults */}
                   <div className="flex items-center justify-between">
@@ -595,7 +685,8 @@ export default function SearchBar({
                     Done
                   </button>
                 </div>
-              </div>
+                </div>
+              </>
             )}
           </div>
 

@@ -160,6 +160,44 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
+      {/* Mobile Featured Properties - Show immediately on mobile */}
+      <section className="md:hidden bg-white py-3">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-900">Featured properties</h2>
+            <Link href="/search" className="text-brand-green text-sm font-medium">View all</Link>
+          </div>
+          
+          {/* Mobile Horizontal Scroll Properties */}
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            {featuredHotels.slice(0, 6).map(h => {
+              const discount = getDiscountFor(h.id)
+              const base = typeof (h as any).basePriceNGN === 'number' ? (h as any).basePriceNGN : (typeof (h as any).price === 'number' ? (h as any).price : 0)
+              const displayPrice = base
+              return (
+                <Link key={h.id} href={`/hotel/${h.id}`} className="flex-shrink-0 w-48 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                  <SafeImage
+                    src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60'}
+                    alt={h.name}
+                    className="w-full h-24 object-cover"
+                    fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60"
+                    loading="lazy"
+                  />
+                  <div className="p-2">
+                    <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">{h.name}</h3>
+                    <p className="text-gray-600 text-xs mt-0.5">{h.city} • {h.stars}⭐</p>
+                    <div className="mt-1">
+                      <span className="text-sm font-bold text-gray-900">₦{displayPrice.toLocaleString()}</span>
+                      <span className="text-xs text-gray-500 ml-1">per night</span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Content Section */}
       <section id="destinations" className="bg-white py-4 md:py-6">
         <div className="container mx-auto px-4 md:px-6">
@@ -167,7 +205,7 @@ export default function Home() {
           <h2 className="hidden md:block text-xl md:text-2xl font-bold text-center mb-3 md:mb-4">Featured Hotels</h2>
 
           {/* Mobile heading */}
-          <h2 className="md:hidden text-lg font-bold mb-2">Top properties</h2>
+          <h2 className="md:hidden text-lg font-bold mb-2">More properties</h2>
 
           {/* Mobile list (image-left cards) */}
           <div className="md:hidden space-y-3">
