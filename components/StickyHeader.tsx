@@ -45,7 +45,7 @@ export default function StickyHeader() {
           {/* Logo Section */}
           <div className="flex items-center">
             <h1 className={`font-bold text-white drop-shadow-lg transition-all duration-300 ${
-              isScrolled ? 'text-xl' : 'text-2xl'
+              isScrolled ? 'text-base md:text-xl' : 'text-lg md:text-2xl'
             }`}>HotelSaver.ng</h1>
           </div>
           
@@ -125,9 +125,9 @@ export default function StickyHeader() {
         
         {/* Search Bar - Full search on both mobile and desktop */}
         <div className={`transition-all duration-300 ${
-          isScrolled ? 'pt-1 pb-1 md:pt-2 md:pb-2' : 'pt-2 pb-2 md:pt-4 md:pb-4'
+          isScrolled ? 'pt-2 pb-2 md:pt-3 md:pb-3' : 'pt-3 pb-3 md:pt-4 md:pb-4'
         }`}>
-          <div className="w-full max-w-6xl mx-auto">
+          <div className="w-full max-w-6xl mx-auto px-2">
             <SearchBar submitLabel="Search" showBrandSplashOnSubmit={false} mobileDatePicker="custom" />
           </div>
         </div>

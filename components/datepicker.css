@@ -366,24 +366,10 @@
     position: relative !important;
   }
   
-  /* Android close button */
-  .is-android-mobile .react-datepicker__header::after {
-    content: '✕';
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2);
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3);
+  /* Hide any close/clear buttons - only use Done button */
+  .react-datepicker__close-icon,
+  .react-datepicker__clear-icon {
+    display: none !important;
   }
   
   /* Better navigation buttons for mobile */
