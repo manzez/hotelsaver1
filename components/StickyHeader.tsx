@@ -64,7 +64,7 @@ export default function StickyHeader() {
             >
               Help
             </a>
-            <a href="http://localhost:3002/partner" className="hidden sm:block hover:bg-white/10 px-2 md:px-3 py-1 md:py-2 rounded transition-all duration-300">
+            <a href="/partner" className="hidden sm:block hover:bg-white/10 px-2 md:px-3 py-1 md:py-2 rounded transition-all duration-300">
               List your property
             </a>
             
@@ -120,7 +120,7 @@ export default function StickyHeader() {
           <a href="/food" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
             Food
           </a>
-          <a href="http://localhost:3002/airport-taxi" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
+          <a href="/airport-taxi" className="hover:bg-green-700/30 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 whitespace-nowrap text-sm">
             Airport Taxi
           </a>
         </div>

@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { SERVICES } from '@/lib/data'
 
 export type ServiceShape = {
@@ -63,6 +62,7 @@ export async function listServices(opts: ServiceListOptions = {}): Promise<Servi
 
   if (isDbEnabled()) {
     try {
+      const { prisma } = await import('@/lib/prisma')
       const where: any = { active: true }
       if (city) {
         const c = city.toLowerCase().replace(/\s+/g, '')
@@ -102,7 +102,8 @@ export async function getServiceById(id: string): Promise<ServiceShape | null> {
 
   if (isDbEnabled()) {
     try {
-  const row = await (prisma as any).service.findUnique({ where: { id } })
+      const { prisma } = await import('@/lib/prisma')
+      const row = await (prisma as any).service.findUnique({ where: { id } })
       if (row) return normalizeFromDb(row)
     } catch (e) {
       // fall through

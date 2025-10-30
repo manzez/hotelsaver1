@@ -146,6 +146,7 @@ export default function PopularCities() {
                   <SafeImage
                     src={city.image}
                     alt={`Luxury hotels in ${city.name}`}
+                    mobileQuery={`${city.name} skyline Nigeria hotel`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&auto=format&q=60"
                   />
@@ -175,6 +176,7 @@ export default function PopularCities() {
                       <SafeImage
                         src={city.featured5StarHotel.image}
                         alt={city.featured5StarHotel.name}
+                        mobileQuery={`${city.featured5StarHotel.name} ${city.name} hotel Nigeria`}
                         className="w-full h-full object-cover"
                         fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=200&h=150&fit=crop&auto=format&q=60"
                       />
@@ -198,6 +200,7 @@ export default function PopularCities() {
                       <SafeImage
                         src={city.featured4StarHotel.image}
                         alt={city.featured4StarHotel.name}
+                        mobileQuery={`${city.featured4StarHotel.name} ${city.name} hotel Nigeria`}
                         className="w-full h-full object-cover"
                         fallbackSrc="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=200&h=150&fit=crop&auto=format&q=60"
                       />

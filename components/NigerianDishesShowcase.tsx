@@ -34,6 +34,7 @@ export default function NigerianDishesShowcase() {
                 <SafeImage
                   src={dish.image}
                   alt={dish.name}
+                  mobileQuery={`${dish.name} Nigerian food`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   fallbackSrc="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&h=400&fit=crop&auto=format&q=60"
                 />
@@ -88,6 +89,7 @@ export default function NigerianDishesShowcase() {
                   <SafeImage
                     src={dish.image}
                     alt={dish.name}
+                    mobileQuery={`${dish.name} Nigerian food`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     fallbackSrc="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=200&h=150&fit=crop&auto=format&q=60"
                   />

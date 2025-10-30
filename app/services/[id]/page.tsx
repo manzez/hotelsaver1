@@ -294,6 +294,7 @@ export default function ServiceDetail({params}:{params:{id:string}}){
                   key={i} 
                   src={src} 
                   alt={`${s.title}-${i}`} 
+                  mobileQuery={`${s.title} ${s.city} Nigeria ${s.category}`}
                   className="h-48 w-full object-cover rounded-lg" 
                   fallbackSrc={fallbackImages[i] || fallbackImages[0]}
                   loading="lazy"

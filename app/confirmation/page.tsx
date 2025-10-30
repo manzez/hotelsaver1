@@ -217,6 +217,7 @@ function ConfirmationPageContent() {
                 <SafeImage
                   src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&h=800&fit=crop&auto=format&q=80'}
                   alt={hotel.name}
+                  mobileQuery={`${hotel.name} ${hotel.city} hotel Nigeria`}
                   className="h-40 w-full object-cover"
                   fallbackSrc="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200&h=800&fit=crop&auto=format&q=80"
                 />

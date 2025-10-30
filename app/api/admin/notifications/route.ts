@@ -128,7 +128,7 @@ const SMS_TEMPLATES = {
 
 // Email transporter configuration
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
     secure: false,
@@ -386,7 +386,7 @@ export async function GET(req: NextRequest) {
 }
 
 // Utility functions for common notification scenarios
-export const NotificationService = {
+const NotificationService = {
   async sendBookingConfirmation(bookingData: {
     bookingId: string;
     guestName: string;

@@ -174,7 +174,15 @@ export default function SearchBarMobile({
       stayType
     })
 
-    router.push(`/search?${q.toString()}`)
+    const url = `/search?${q.toString()}`
+    // Close any open pickers before navigating
+    setIsDatePickerOpen(false)
+    setShowGuestPicker(false)
+    if (typeof window !== 'undefined') {
+      window.location.href = url
+    } else {
+      router.push(url)
+    }
   }
 
   return (
@@ -213,7 +221,7 @@ export default function SearchBarMobile({
               </button>
             )}
             <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
 
             {/* Search Results */}
@@ -485,8 +493,14 @@ export default function SearchBarMobile({
             className="w-full h-12 px-6 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 active:from-green-800 active:to-emerald-700 text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-2 transform active:scale-[0.98] touch-manipulation"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
             {submitLabel}
           </button>
         </div>

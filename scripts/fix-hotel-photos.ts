@@ -41,13 +41,13 @@ async function fixHotelPhotos() {
     // Step 3: Separate apartments (Places API) from corrupted hotels
     console.log('🔍 Analyzing current data...')
     
-    const apartments = currentHotels.filter(property => 
+    const apartments = currentHotels.filter((property: any) => 
       property.source === 'places_api' || 
       property.id?.startsWith('apt_') ||
       property.type === 'Apartment'
     )
 
-    const corruptedHotels = currentHotels.filter(property => 
+    const corruptedHotels = currentHotels.filter((property: any) => 
       property.source !== 'places_api' && 
       !property.id?.startsWith('apt_') &&
       property.type !== 'Apartment'
@@ -60,19 +60,19 @@ async function fixHotelPhotos() {
     console.log('🎨 Restoring hotel photos...')
     
     const cleanHotelMap = new Map()
-    cleanHotels.forEach(hotel => {
+    cleanHotels.forEach((hotel: any) => {
       cleanHotelMap.set(hotel.id, hotel)
     })
 
     let photosFixed = 0
     let photosNotFound = 0
 
-    const restoredHotels = corruptedHotels.map(hotel => {
+    const restoredHotels = corruptedHotels.map((hotel: any) => {
       const cleanVersion = cleanHotelMap.get(hotel.id)
       
       if (cleanVersion && cleanVersion.images) {
         // Check if current photos are corrupted (contain API keys or are missing)
-        const hasCorruptedPhotos = hotel.images?.some(img => 
+        const hasCorruptedPhotos = hotel.images?.some((img: string) => 
           img.includes('googleapis.com') || 
           img.includes('key=') ||
           img.includes('photo_reference=')
@@ -110,9 +110,9 @@ async function fixHotelPhotos() {
       "https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=800&h=600&fit=crop&auto=format&q=80"
     ]
 
-    const fixedApartments = apartments.map((apartment, index) => {
+    const fixedApartments = apartments.map((apartment: any, index: number) => {
       // Remove any photos with API keys or Google Places URLs
-      const safeImages = apartment.images?.filter(img => 
+      const safeImages = apartment.images?.filter((img: string) => 
         !img.includes('googleapis.com') &&
         !img.includes('key=') &&
         !img.includes('photo_reference=')

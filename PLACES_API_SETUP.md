@@ -64,6 +64,9 @@ PLACES_CACHE_DURATION=3600000
 
 # Default city for hotel searches
 DEFAULT_CITY=Owerri
+
+# Optional: Tune Places photo cache size (default 500 entries)
+PLACES_PHOTO_LRU_MAX=500
 ```
 
 ### 2.2 Vercel Deployment Environment Variables
@@ -179,6 +182,18 @@ For Owerri hotel data:
 - ~100 detail requests/day
 - ~30 photo requests/day
 - **Estimated cost**: $15-25/month
+
+## Performance
+
+To keep image delivery fast and cost‑efficient, the Places photo integration includes:
+
+- ETag support and 304 responses: Clients can send If-None-Match, and the server will return 304 when appropriate to avoid re-downloading images.
+- Strong caching headers: Cache-Control uses long max-age with s-maxage and stale-while-revalidate for CDN friendliness.
+- Per-instance in-memory LRU cache: The endpoint `/api/places/photo` maintains a tiny in-memory LRU cache (default 500 entries) to prevent unbounded growth. You can adjust via `PLACES_PHOTO_LRU_MAX` (clamped to 50–5000). Successful photo responses are cached for up to 24 hours; the Unsplash fallback image is cached for 1 hour.
+
+Notes:
+- This cache is per serverless instance/process. Cold starts won’t share entries, which is acceptable for our use.
+- You can tune the max size in code if needed for your deployment footprint.
 
 ## Step 7: Monitoring & Maintenance
 

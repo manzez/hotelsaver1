@@ -125,13 +125,14 @@ export default function Home() {
       {/* Sticky Header with Scroll Animation */}
       <StickyHeader />
       
-      {/* Hero Section with Background Image like Booking.com */}
-      <section className="relative pt-40 h-80 md:h-96">
+  {/* Hero Section with Background Image like Booking.com */}
+  <section className="relative pt-20 md:pt-40 h-80 md:h-96">
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <SafeImage 
             src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1920&h=800&fit=crop&auto=format&q=85" 
             alt="Luxury hotel pool and resort view in Nigeria"
+            mobileQuery="luxury hotel Nigeria resort"
             className="w-full h-full object-cover"
             fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1920&h=800&fit=crop&auto=format&q=85"
           />
@@ -143,17 +144,18 @@ export default function Home() {
         {/* Hero Content */}
         <div className="relative z-10 h-full flex flex-col justify-center text-left text-white px-4">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-2xl mb-8">
-              <h1 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-lg">
+            <div className="max-w-2xl mb-4">
+              <h1 className="text-2xl md:text-3xl font-bold mb-2 drop-shadow-lg leading-tight">
                 Luxury Hotels at low prices
               </h1>
-              <p className="text-sm md:text-lg mb-5 text-white/90 drop-shadow">
+              <p className="text-sm md:text-lg mb-3 text-white/90 drop-shadow">
                 Discover amazing hotels across Lagos, Abuja, Port Harcourt & more
               </p>
             </div>
             
-            {/* SearchBar on Homepage - Clean & Professional */}
-            <div className="max-w-5xl">
+            {/* SearchBar on Homepage */}
+            {/* Desktop/Tablet: keep inside hero overlay */}
+            <div className="hidden md:block max-w-6xl">
               <SearchBar 
                 defaultCity=""
                 defaultHotelQuery=""
@@ -170,11 +172,29 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Decorative gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent"></div>
+  {/* Decorative gradient fade */}
+  <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
       </section>
 
-      {/* Mobile Featured Properties - Show immediately on mobile */}
+      {/* Mobile SearchBar: render below hero to avoid overlap with hero text/header */}
+  <section className="md:hidden bg-white px-4 pt-0 pb-2 relative z-20 -mt-10">
+        <div className="container mx-auto">
+          <SearchBar 
+            defaultCity=""
+            defaultHotelQuery=""
+            defaultCheckIn=""
+            defaultCheckOut=""
+            defaultAdults={2}
+            defaultChildren={0}
+            defaultRooms={1}
+            defaultBudget="u80"
+            defaultStayType="any"
+            submitLabel="Search Hotels"
+          />
+        </div>
+      </section>
+
+      {/* Mobile Featured Properties - Show immediately after mobile search */}
       <section className="md:hidden bg-white py-3">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-3">
@@ -193,6 +213,7 @@ export default function Home() {
                   <SafeImage
                     src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60'}
                     alt={h.name}
+                    mobileQuery={`${h.name} ${h.city} hotel Nigeria`}
                     className="w-full h-24 object-cover"
                     fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60"
                     loading="lazy"
@@ -236,6 +257,7 @@ export default function Home() {
                       <SafeImage
                         src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60'}
                         alt={h.name}
+                        mobileQuery={`${h.name} ${h.city} hotel Nigeria`}
                         className="w-24 h-20 rounded-lg"
                         fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=60"
                         loading="lazy"
@@ -298,6 +320,7 @@ export default function Home() {
                       <SafeImage
                         src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&auto=format&q=75'}
                         alt={h.name}
+                        mobileQuery={`${h.name} ${h.city} hotel Nigeria`}
                         className="w-full h-44 object-cover"
                         fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&auto=format&q=75"
                         loading="lazy"
@@ -363,7 +386,7 @@ export default function Home() {
               </div>
             </div>
             <a 
-              href="http://localhost:3002/airport-taxi" 
+              href="/airport-taxi" 
               className="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg font-medium transition-colors text-sm"
             >
               Book Now
@@ -390,7 +413,7 @@ export default function Home() {
                 {restaurants.map(r => (
                   <Link key={r.id} href={`/food?city=${encodeURIComponent(r.city)}`} className="group">
                     <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition">
-                      <img src={r.image} alt={r.name} className="h-40 w-full object-cover" />
+                      <SafeImage src={r.image} alt={r.name} mobileQuery={`${r.name} ${r.city} Nigeria`} className="h-40 w-full object-cover" fallbackSrc={r.image} />
                       <div className="p-3">
                         <div className="font-semibold text-gray-900 line-clamp-1">{r.name}</div>
                         <div className="text-xs text-gray-600">{r.city} • {r.priceRange}</div>
@@ -411,7 +434,7 @@ export default function Home() {
                 {featuredServices.map(service => (
                   <Link key={service.id} href={`/services`} className="group">
                     <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition">
-                      <img src={service.image} alt={service.name} className="h-40 w-full object-cover" />
+                      <SafeImage src={service.image} alt={service.name} mobileQuery={`${service.name} ${service.city} Nigeria ${service.category}`} className="h-40 w-full object-cover" fallbackSrc={service.image} />
                       <div className="p-3">
                         <div className="font-semibold text-gray-900 line-clamp-1">{service.name}</div>
                         <div className="text-xs text-gray-600">{service.city} • {service.category}</div>

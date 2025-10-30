@@ -348,6 +348,10 @@ export default function SearchBarDesktop({
       clearTimeout(debounceRef.current)
     }
     
+    // Ensure any open overlays are closed so nothing blocks clicks
+    setShowDatePicker(false)
+    setShowGuestPicker(false)
+
     try { onBeforeSubmit && onBeforeSubmit() } catch {}
     
     // Determine search parameters efficiently
@@ -366,22 +370,27 @@ export default function SearchBarDesktop({
     searchParams.set('budget', budgetKey)
     searchParams.set('stayType', stayType)
 
-    // Navigate immediately for better UX
-    router.push(`/search?${searchParams.toString()}`)
+    // Navigate immediately for better UX and avoid dev-time RSC prefetch delays
+    const url = `/search?${searchParams.toString()}`
+    if (typeof window !== 'undefined') {
+      window.location.href = url
+    } else {
+      router.push(url)
+    }
   }
 
   return (
     <div className="w-full max-w-7xl mx-auto">
 
 
-      {/* Desktop Search Form - Two Row Layout */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <form onSubmit={handleSubmit}>
+  {/* Desktop Search Form - Two Row Layout */}
+  <div className="relative w-full bg-white rounded-lg shadow-lg overflow-visible">
+    <form onSubmit={handleSubmit} className="w-full">
           {/* Top Row - Input Fields */}
-          <div className="flex items-stretch h-16">
+          <div className="relative z-10 flex items-stretch h-16">
             
             {/* Location Input */}
-            <div className="relative w-64" ref={searchInputRef}>
+            <div className="relative w-56" ref={searchInputRef}>
               <div className="h-16 flex items-center px-4 bg-white border-r border-gray-200 rounded-tl-lg">
                 <svg className="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -416,7 +425,7 @@ export default function SearchBarDesktop({
 
               {/* Search Results */}
               {showSearchResults && searchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[100] max-h-64 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[500] max-h-64 overflow-y-auto">
                   {searchResults.map((result, index) => (
                     <button
                       key={index}
@@ -451,7 +460,7 @@ export default function SearchBarDesktop({
             </div>
 
             {/* Date Range Picker */}
-            <div className="relative flex-1 min-w-72" ref={datePickerRef}>
+            <div className="relative flex-1 min-w-64" ref={datePickerRef}>
               <div className="h-16 flex items-center px-4 bg-white border-r border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
                    onClick={(e) => {
                      e.stopPropagation();
@@ -565,7 +574,7 @@ export default function SearchBarDesktop({
 
               {/* Guest Picker Dropdown */}
               {showGuestPicker && (
-                <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[100] p-4 min-w-[280px]">
+                <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[500] p-4 min-w-[280px]">
                   <div className="space-y-4">
                     {/* Adults */}
                     <div className="flex items-center justify-between">
@@ -658,7 +667,7 @@ export default function SearchBarDesktop({
             </div>
 
             {/* Budget Selector */}
-            <div className="relative w-64">
+            <div className="relative w-56">
               <div className="h-16 flex items-center px-3 bg-white border-r border-gray-200">
                 <div className="flex items-center gap-2 w-full">
                   <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -683,7 +692,7 @@ export default function SearchBarDesktop({
             </div>
 
             {/* Stay Type Selector */}
-            <div className="relative w-64">
+            <div className="relative w-56">
               <div className="h-16 flex items-center px-3 bg-white rounded-tr-lg">
                 <div className="flex items-center gap-2 w-full">
                   <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -711,7 +720,9 @@ export default function SearchBarDesktop({
           {/* Search Button - Full Width Connected */}
           <button 
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold transition-colors flex items-center justify-center gap-2 rounded-b-lg text-lg"
+            onClick={(e) => handleSubmit(e)}
+            aria-label="Search"
+            className="relative z-[1001] block w-full py-4 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold transition-colors flex items-center justify-center gap-2 rounded-b-lg text-lg cursor-pointer pointer-events-auto"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />

@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import SearchBarMobile from './SearchBarMobile'
 import SearchBarDesktop from './SearchBarDesktop'
 
@@ -20,23 +19,20 @@ interface ResponsiveSearchBarProps {
 }
 
 export default function ResponsiveSearchBar(props: ResponsiveSearchBarProps) {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  // For compact mode (header), always show mobile version
+  // Compact mode (used in sticky header on inner pages): always render mobile variant
   if (props.compact) {
     return <SearchBarMobile {...props} />
   }
 
-  if (!mounted) {
-    // Server-side: show desktop version initially to prevent mobile flash
-    return <SearchBarDesktop {...props} />
-  }
-
-  // Client-side: determine based on window width
-  const isMobile = window.innerWidth < 768
-  return <SearchBarDesktop {...props} />
+  // Render both and control with responsive CSS to avoid hydration flicker on mobile
+  return (
+    <>
+      <div className="md:hidden">
+        <SearchBarMobile {...props} />
+      </div>
+      <div className="hidden md:block">
+        <SearchBarDesktop {...props} />
+      </div>
+    </>
+  )
 }

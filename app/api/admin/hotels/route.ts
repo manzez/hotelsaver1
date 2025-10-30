@@ -281,8 +281,8 @@ export async function GET(req: NextRequest) {
               bVal = b.stars || 0
               break
             case 'created':
-              aVal = new Date(a.createdAt || 0).getTime()
-              bVal = new Date(b.createdAt || 0).getTime()
+              aVal = (a as any)?.createdAt ? new Date((a as any).createdAt as any).getTime() : 0
+              bVal = (b as any)?.createdAt ? new Date((b as any).createdAt as any).getTime() : 0
               break
             default: // name
               aVal = a.name || ''
@@ -358,8 +358,8 @@ export async function GET(req: NextRequest) {
           bVal = b.stars || 0
           break
         case 'created':
-          aVal = new Date(a.createdAt || 0).getTime()
-          bVal = new Date(b.createdAt || 0).getTime()
+          aVal = (a as any)?.createdAt ? new Date((a as any).createdAt as any).getTime() : 0
+          bVal = (b as any)?.createdAt ? new Date((b as any).createdAt as any).getTime() : 0
           break
         default: // name
           aVal = a.name || ''

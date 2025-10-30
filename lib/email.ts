@@ -95,12 +95,17 @@ function bookingHtml(payload: BookingPayload, audience: 'user' | 'admin' | 'hote
   `
 }
 
+import fs from 'fs'
+import path from 'path'
+
 function resolveHotelEmail(propertyId?: string): string | null {
   if (!propertyId) return null
   try {
     // Optional mapping file: lib/hotel-contacts.json { "hotel-id": "email@hotel.com" }
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const mapping = require('../lib/hotel-contacts.json') as Record<string, string>
+    const filePath = path.join(process.cwd(), 'lib', 'hotel-contacts.json')
+    if (!fs.existsSync(filePath)) return null
+    const content = fs.readFileSync(filePath, 'utf-8')
+    const mapping = JSON.parse(content) as Record<string, string>
     const email = mapping[propertyId]
     return email || null
   } catch {

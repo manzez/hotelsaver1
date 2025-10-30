@@ -7,9 +7,11 @@ interface Props {
   images: string[]
   altBase: string
   heightClass?: string // e.g., 'h-64'
+  // Optional: use a Google Places mobile-only photo for all slides
+  mobileQuery?: string
 }
 
-export default function MobileImageCarousel({ images = [], altBase, heightClass = 'h-64' }: Props) {
+export default function MobileImageCarousel({ images = [], altBase, heightClass = 'h-64', mobileQuery }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [index, setIndex] = useState(0)
   const count = images.length
@@ -49,6 +51,7 @@ export default function MobileImageCarousel({ images = [], altBase, heightClass 
             <SafeImage
               src={src}
               alt={`${altBase} - Image ${i + 1}`}
+              mobileQuery={mobileQuery}
               className="w-full h-full object-cover"
               fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop&auto=format&q=80"
               loading={i === 0 ? 'eager' : 'lazy'}

@@ -253,6 +253,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                 <SafeImage
                   src={heroImg}
                   alt={h.name}
+                  mobileQuery={`${h.name} ${h.city} hotel Nigeria`}
                   className="absolute inset-0 w-full h-full object-cover"
                   fallbackSrc={(imgs.find(img => img.includes('unsplash.com')) || ((useCurated && curatedList) ? curatedList[0] : FALLBACK_MAIN))}
                   loading="lazy"

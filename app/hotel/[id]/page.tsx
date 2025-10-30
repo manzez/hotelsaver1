@@ -148,7 +148,7 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
             return (
               <>
                 {/* Mobile carousel */}
-                <MobileImageCarousel images={displayImages} altBase={h.name} heightClass="h-64" />
+                <MobileImageCarousel images={displayImages} altBase={h.name} heightClass="h-64" mobileQuery={`${h.name} ${h.city} hotel Nigeria`} />
 
                 {/* Desktop grid */}
                 <div className="hidden md:grid md:grid-cols-3 gap-1">
@@ -165,6 +165,7 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
                         key={i}
                         src={src}
                         alt={`${h.name} - Image ${i + 1}`}
+                        mobileQuery={`${h.name} ${h.city} hotel Nigeria`}
                         className={`w-full object-cover ${i === 0 ? 'md:col-span-2 h-80' : 'h-40'}`}
                         fallbackSrc={fallbackImages[i] || fallbackImages[0]}
                         loading="lazy"

@@ -461,6 +461,7 @@ function PaymentPageContent() {
                   <SafeImage 
                     src={hotel.images?.[0] || ''} 
                     alt={hotel.name}
+                    mobileQuery={`${hotel.name} ${hotel.city} hotel Nigeria`}
                     className="w-16 h-16 rounded-lg object-cover"
                     fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400"
                   />

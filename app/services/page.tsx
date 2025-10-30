@@ -339,6 +339,7 @@ function ServicesInner() {
                 <SafeImage
                   src={s.images?.[0] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&auto=format&q=80'}
                   alt={s.title}
+                  mobileQuery={`${s.title} ${s.city} Nigeria ${subcategoryInfo?.name || s.category}`}
                   className="h-48 w-full object-cover"
                   fallbackSrc="https://images.unsplash.com/photo-1560472354-b43ff0c44a43?w=800&h=600&fit=crop&auto=format&q=80"
                   loading="lazy"

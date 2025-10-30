@@ -134,7 +134,7 @@ export default function AdvancedHotelsPage() {
 
   const formatPrice = (price: number) => `₦${price.toLocaleString()}`
 
-  const getOccupancyRate = (hotel: Hotel) => {
+  const getOccupancyRate = (hotel: { totalRooms: number; availableRooms: number }) => {
     return hotel.totalRooms > 0 ? ((hotel.totalRooms - hotel.availableRooms) / hotel.totalRooms) * 100 : 0
   }
 

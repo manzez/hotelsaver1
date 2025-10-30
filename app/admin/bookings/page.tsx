@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
@@ -338,7 +338,7 @@ function BookingCard({ booking, onStatusUpdate }: {
   )
 }
 
-export default function BookingsPage() {
+function BookingsPageInner() {
   const searchParams = useSearchParams()
   const [bookings, setBookings] = useState<Booking[]>(mockBookings)
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>(mockBookings)
@@ -530,5 +530,13 @@ export default function BookingsPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function BookingsPage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading bookings…</div>}>
+      <BookingsPageInner />
+    </Suspense>
   )
 }

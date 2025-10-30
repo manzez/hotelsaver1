@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { HOTELS } from '@/lib/data'
 
 export type HotelShape = {
@@ -87,6 +86,7 @@ export async function getHotelById(id: string): Promise<HotelShape | null> {
 
   if (isDbEnabled()) {
     try {
+      const { prisma } = await import('@/lib/prisma')
       const hotel = await prisma.hotel.findUnique({
         where: { slug: id },
         include: { images: { orderBy: { sortOrder: 'asc' } } }
@@ -169,6 +169,7 @@ export async function listHotels(opts: ListOptions = {}): Promise<HotelShape[]> 
   // Fallback to existing logic
   if (isDbEnabled()) {
     try {
+      const { prisma } = await import('@/lib/prisma')
       const where: any = {}
       if (city) {
         const c = city.toLowerCase().replace(/\s+/g, '')

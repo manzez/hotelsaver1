@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 // app/api/debug-negotiate/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { HOTELS } from '@/lib/data';

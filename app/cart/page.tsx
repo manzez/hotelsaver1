@@ -155,6 +155,7 @@ export default function CartPage() {
                     <SafeImage 
                       src={item.image || ''} 
                       alt={item.title}
+                      mobileQuery={`${item.title} ${item.city} Nigeria ${item.category}`}
                       className="w-full h-full object-cover rounded-lg"
                       fallbackSrc="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&auto=format&q=80"
                     />

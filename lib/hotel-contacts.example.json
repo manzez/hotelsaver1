@@ -1,0 +1,7 @@
+{
+  "_comment": "Map hotel IDs to notification email addresses. Copy this file to lib/hotel-contacts.json in environments where you want hotels to receive booking emails directly.",
+  "_example": {
+    "the-lagos-continental-hotel-lagos": "reservations@lagoscontinental.example.com",
+    "protea-hotel-owerri-owerri": "frontdesk@proteahotelowerri.example.com"
+  }
+}

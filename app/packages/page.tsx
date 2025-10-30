@@ -130,6 +130,7 @@ export default function EventPackages() {
                           <SafeImage
                             src={service.images?.[0] || ''}
                             alt={service.title}
+                            mobileQuery={`${service.title} ${service.city} Nigeria ${service.category}`}
                             className="w-full h-full object-cover"
                             fallbackSrc="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100&h=100&fit=crop"
                           />

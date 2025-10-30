@@ -198,6 +198,36 @@ HotelSaver.ng is a Next.js 14 hotel booking platform that allows users to negoti
 ---
 
 ## 💳 Payments & Persistence
+### 🔧 Database toggles & Prisma
+
+By default, the app uses static JSON data for hotels/services. To opt into database-backed reads with Prisma:
+
+- Set environment variables:
+  - `DATA_SOURCE=db`
+  - `DATABASE_URL=<your-connection-string>`
+- This enables lazy Prisma imports in data sources and re-enables Prisma logs in development.
+- When `DATA_SOURCE` is not `db` or `DATABASE_URL` is unset, Prisma is not initialized during static generation, preventing noisy build warnings.
+
+Optional hotel contact mapping for booking emails:
+
+- Create `lib/hotel-contacts.json` locally (git-ignored) using `lib/hotel-contacts.example.json` as a template.
+- The file maps `propertyId` → `email` so hotels can receive booking notifications directly.
+
+Example (`lib/hotel-contacts.json`):
+
+```
+{
+  "the-lagos-continental-hotel-lagos": "reservations@lagoscontinental.example.com",
+  "protea-hotel-owerri-owerri": "frontdesk@proteahotelowerri.example.com"
+}
+```
+
+### 🖼️ Places photo API and caching
+
+- Mobile uses the same images as desktop by default (consistent visuals). We still provide a server-side Places photo as a fallback via `/api/places/photo`.
+- The route sets CDN-friendly caching headers (Cache-Control with `s-maxage` and `stale-while-revalidate`) and supports in-memory caching.
+- If a section should intentionally show a different mobile image, set `mobileOverride` on `SafeImage` for that instance only.
+
 
 We implemented a minimal but production-aware Paystack integration with server-side verification and a persistence layer for payment events.
 

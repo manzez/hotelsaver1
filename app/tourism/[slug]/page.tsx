@@ -30,7 +30,7 @@ export default function TourismDetail({ params }: { params: { slug: string } }) 
     <div className="min-h-screen">
       {/* Hero */}
       <div className="relative h-64 md:h-96">
-        <SafeImage src={place.heroImage} alt={place.name} className="absolute inset-0 w-full h-full object-cover" fallbackSrc="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600&auto=format&fit=crop&q=80" />
+        <SafeImage src={place.heroImage} alt={place.name} mobileQuery={`${place.name} ${place.state} Nigeria`} className="absolute inset-0 w-full h-full object-cover" fallbackSrc="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600&auto=format&fit=crop&q=80" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         <div className="absolute bottom-4 left-4 right-4 text-white">
           <div className="inline-flex items-center gap-2 text-xs mb-2">
@@ -66,7 +66,7 @@ export default function TourismDetail({ params }: { params: { slug: string } }) 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {place.gallery.map((src, idx) => (
                   <div key={idx} className="relative h-32 md:h-40 rounded-md overflow-hidden">
-                    <SafeImage src={src} alt={`${place.name} ${idx+1}`} className="absolute inset-0 w-full h-full object-cover" fallbackSrc={place.heroImage} />
+                    <SafeImage src={src} alt={`${place.name} ${idx+1}`} mobileQuery={`${place.name} ${place.state} Nigeria`} className="absolute inset-0 w-full h-full object-cover" fallbackSrc={place.heroImage} />
                   </div>
                 ))}
               </div>

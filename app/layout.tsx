@@ -2,7 +2,7 @@
 import './globals.css'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 // import Chatbot from '@/components/Chatbot'
 // import AIChatbot from '@/components/AIChatbot'
 import ClientLayout from '@/components/ClientLayout'
@@ -23,12 +23,6 @@ export const metadata: Metadata = {
   },
   description: 'Negotiate hotel prices & book local services across Nigeria.',
   keywords: ['hotels', 'Nigeria', 'Lagos', 'Abuja', 'Port Harcourt', 'Owerri', 'booking', 'negotiation', 'discount'],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   openGraph: {
     title: 'HotelSaver.ng — Save on Hotels & Services',
     description: 'Negotiate hotel prices & book local services across Nigeria.',
@@ -42,6 +36,13 @@ export const metadata: Metadata = {
     title: 'HotelSaver.ng — Save on Hotels & Services',
     description: 'Negotiate hotel prices & book local services across Nigeria.',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 }
 
 export default function RootLayout({children}:{children:React.ReactNode}){
