@@ -105,7 +105,7 @@ export type ListOptions = {
   city?: string
   limit?: number
   budgetKey?: string
-  stayType?: 'any' | 'hotel' | 'apartment'
+  stayType?: 'any' | 'hotel' | 'apartment' | 'high-security'
 }
 
 function priceInBudget(base: number, key?: string) {
@@ -199,7 +199,14 @@ export async function listHotels(opts: ListOptions = {}): Promise<HotelShape[]> 
     .filter(h => {
       if (!stayType || stayType === 'any') return true
       const t = String(h.type || 'Hotel').toLowerCase()
-      return stayType === 'apartment' ? t === 'apartment' : t === 'hotel'
+      if (stayType === 'apartment') return t === 'apartment'
+      if (stayType === 'hotel') return t === 'hotel'
+      if (stayType === 'high-security') {
+        // High security can be both hotels and apartments
+        // For now, we'll include all properties (this can be refined later with actual security data)
+        return true
+      }
+      return true
     })
     .map(normalizeFromJson)
     .filter(Boolean) as HotelShape[]

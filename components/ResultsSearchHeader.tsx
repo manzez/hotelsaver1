@@ -20,7 +20,7 @@ export default function ResultsSearchHeader({
   children?: number
   rooms?: number
   budget?: string
-  stayType?: 'any' | 'hotel' | 'apartment'
+  stayType?: 'any' | 'hotel' | 'apartment' | 'high-security'
 }) {
   const [showFull, setShowFull] = useState(false)
   const [isClient, setIsClient] = useState(false)

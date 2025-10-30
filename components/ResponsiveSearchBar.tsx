@@ -20,16 +20,10 @@ interface ResponsiveSearchBarProps {
 }
 
 export default function ResponsiveSearchBar(props: ResponsiveSearchBarProps) {
-  const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768) // md breakpoint
-    }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    setMounted(true)
   }, [])
 
   // For compact mode (header), always show mobile version
@@ -37,10 +31,12 @@ export default function ResponsiveSearchBar(props: ResponsiveSearchBarProps) {
     return <SearchBarMobile {...props} />
   }
 
-  // Show mobile/desktop based on screen size
-  return isMobile ? (
-    <SearchBarMobile {...props} />
-  ) : (
-    <SearchBarDesktop {...props} />
-  )
+  if (!mounted) {
+    // Server-side: show desktop version initially to prevent mobile flash
+    return <SearchBarDesktop {...props} />
+  }
+
+  // Client-side: determine based on window width
+  const isMobile = window.innerWidth < 768
+  return <SearchBarDesktop {...props} />
 }

@@ -332,6 +332,260 @@ export async function getHotelByPlaceId(placeId: string, city: string): Promise<
 }
 
 /**
+ * Fetch detailed place information from Google Places API
+ */
+async function fetchPlaceDetails(placeId: string, city: string, apiKey: string): Promise<PlacesHotel | null> {
+  const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?` +
+    `place_id=${placeId}&` +
+    `fields=name,formatted_address,rating,user_ratings_total,price_level,photos,types,formatted_phone_number,website,business_status,geometry&` +
+    `key=${apiKey}`;
+
+  try {
+    const detailsResponse = await fetch(detailsUrl);
+    const detailsData = await detailsResponse.json();
+
+    if (detailsData.status === 'OK' && detailsData.result) {
+      const details = detailsData.result;
+      
+      return {
+        placeId: placeId,
+        name: details.name,
+        address: details.formatted_address,
+        city: city,
+        rating: details.rating,
+        totalRatings: details.user_ratings_total,
+        priceLevel: details.price_level,
+        photos: getPhotoUrls(details.photos),
+        amenities: extractAmenities(details.types, details),
+        phoneNumber: details.formatted_phone_number,
+        website: details.website,
+        businessStatus: details.business_status,
+        coordinates: {
+          lat: details.geometry.location.lat,
+          lng: details.geometry.location.lng
+        },
+        estimatedPriceNGN: estimatePrice(details.rating, details.price_level, city, details.place_id),
+        stars: ratingToStars(details.rating),
+        roomTypes: ['Standard Room', 'Deluxe Room', 'Executive Suite'],
+        type: determineHotelType(details.types, details.name)
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error fetching hotel details:', error);
+    return null;
+  }
+}
+
+/**
+ * Search specifically for apartments and serviced accommodations
+ */
+export async function searchApartmentsInCity({
+  city,
+  radius = 30000,
+  minRating = 3.0,
+  maxResults = 15
+}: PlacesSearchParams): Promise<PlacesHotel[]> {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  
+  if (!apiKey) {
+    console.error('Google Places API key not configured');
+    return [];
+  }
+
+  const cityCoords = NIGERIAN_CITIES[city as keyof typeof NIGERIAN_CITIES];
+  if (!cityCoords) {
+    console.error(`City ${city} not found in Nigerian cities list`);
+    return [];
+  }
+
+  const apartmentTypes = [
+    'apartment',
+    'real_estate_agency',
+    'lodging',
+    'tourist_attraction'
+  ];
+
+  const apartmentKeywords = [
+    'serviced apartment',
+    'furnished apartment',
+    'short stay apartment',
+    'holiday apartment',
+    'extended stay',
+    'suites',
+    'residence',
+    'apartments'
+  ];
+
+  let allApartments: PlacesHotel[] = [];
+
+  try {
+    // Search by apartment-specific place types
+    for (const placeType of apartmentTypes) {
+      const searchUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?` +
+        `location=${cityCoords.lat},${cityCoords.lng}&` +
+        `radius=${radius}&` +
+        `type=${placeType}&` +
+        `key=${apiKey}`;
+
+      try {
+        const response = await fetch(searchUrl);
+        const data = await response.json();
+
+        if (data.status === 'OK' && data.results) {
+          const apartments = data.results.filter((place: any) => {
+            const name = place.name?.toLowerCase() || '';
+            const types = place.types || [];
+            
+            // Filter for apartment-like accommodations
+            return (
+              types.some((t: string) => ['apartment', 'lodging', 'real_estate_agency'].includes(t)) ||
+              apartmentKeywords.some(keyword => name.includes(keyword.toLowerCase())) ||
+              name.includes('apartment') ||
+              name.includes('suite') ||
+              name.includes('residence')
+            );
+          });
+
+          // Get detailed information for each apartment
+          for (const place of apartments.slice(0, Math.ceil(maxResults / apartmentTypes.length))) {
+            if (place.rating && place.rating < minRating) continue;
+            if (place.business_status !== 'OPERATIONAL') continue;
+
+            const apartment = await fetchPlaceDetails(place.place_id, city, apiKey);
+            if (apartment && apartment.type === 'Apartment') {
+              allApartments.push(apartment);
+            }
+          }
+        }
+        
+        // Rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100));
+      } catch (error) {
+        console.error(`Error searching for ${placeType} apartments in ${city}:`, error);
+      }
+    }
+
+    // Text search for apartment keywords
+    for (const keyword of apartmentKeywords) {
+      try {
+        const textSearchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?` +
+          `query=${encodeURIComponent(keyword + ' ' + city + ' Nigeria')}&` +
+          `location=${cityCoords.lat},${cityCoords.lng}&` +
+          `radius=${radius}&` +
+          `key=${apiKey}`;
+
+        const response = await fetch(textSearchUrl);
+        const data = await response.json();
+
+        if (data.status === 'OK' && data.results) {
+          const apartments = data.results.slice(0, 3); // Limit text search results
+
+          for (const place of apartments) {
+            if (place.rating && place.rating < minRating) continue;
+            if (place.business_status !== 'OPERATIONAL') continue;
+
+            // Check if we already have this place
+            const exists = allApartments.find(apt => apt.placeId === place.place_id);
+            if (!exists) {
+              const apartment = await fetchPlaceDetails(place.place_id, city, apiKey);
+              if (apartment) {
+                // Force type to apartment for text search results
+                apartment.type = 'Apartment';
+                allApartments.push(apartment);
+              }
+            }
+          }
+        }
+
+        // Rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100));
+      } catch (error) {
+        console.error(`Error text searching for "${keyword}" in ${city}:`, error);
+      }
+    }
+
+    // Remove duplicates and limit results
+    const uniqueApartments = allApartments.filter((apt, index, array) => 
+      array.findIndex(a => a.placeId === apt.placeId) === index
+    );
+
+    console.log(`Found ${uniqueApartments.length} apartments in ${city}`);
+    return uniqueApartments.slice(0, maxResults);
+
+  } catch (error) {
+    console.error(`Error searching for apartments in ${city}:`, error);
+    return [];
+  }
+}
+
+/**
+ * Download apartments for all Nigerian cities and save to JSON
+ */
+export async function downloadAllApartments(): Promise<Record<string, PlacesHotel[]>> {
+  const results: Record<string, PlacesHotel[]> = {};
+  const targetCities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri'];
+
+  console.log('Starting apartment download for Nigerian cities...');
+
+  for (const city of targetCities) {
+    try {
+      console.log(`\n🏠 Downloading apartments for ${city}...`);
+      const apartments = await searchApartmentsInCity({ 
+        city, 
+        maxResults: 20,
+        minRating: 2.5 // Lower threshold for apartments
+      });
+      
+      results[city] = apartments;
+      console.log(`✅ Found ${apartments.length} apartments in ${city}`);
+
+      // Longer delay between cities to respect API limits
+      if (city !== targetCities[targetCities.length - 1]) {
+        console.log('⏳ Waiting 2 seconds before next city...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    } catch (error) {
+      console.error(`❌ Failed to download apartments for ${city}:`, error);
+      results[city] = [];
+    }
+  }
+
+  const totalApartments = Object.values(results).reduce((sum, apts) => sum + apts.length, 0);
+  console.log(`\n🎉 Apartment download complete! Total: ${totalApartments} apartments across ${targetCities.length} cities`);
+  
+  return results;
+}
+
+/**
+ * Convert Places API apartments to hotel data format for integration
+ */
+export function convertApartmentsToHotelData(apartments: PlacesHotel[]): any[] {
+  return apartments.map(apt => ({
+    id: `apt_${apt.placeId}`,
+    slug: `apt_${apt.placeId}`,
+    name: apt.name,
+    city: apt.city,
+    type: 'Apartment',
+    stars: apt.stars,
+    basePriceNGN: apt.estimatedPriceNGN,
+    price: apt.estimatedPriceNGN,
+    images: apt.photos,
+    source: 'places_api',
+    rating: apt.rating,
+    totalRatings: apt.totalRatings,
+    address: apt.address,
+    amenities: apt.amenities,
+    phoneNumber: apt.phoneNumber,
+    website: apt.website,
+    coordinates: apt.coordinates,
+    placeId: apt.placeId,
+    lastUpdated: new Date().toISOString()
+  }));
+}
+
+/**
  * Refresh pricing for existing hotels (for periodic updates)
  */
 export function refreshHotelPricing(hotel: PlacesHotel): PlacesHotel {

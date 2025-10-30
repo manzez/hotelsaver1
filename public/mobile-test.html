@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - HotelSaver</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .test-container {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .success {
+            color: #10b981;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .links a {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="success">✅ Mobile Connection Test Successful!</div>
+        
+        <h2>HotelSaver.ng Mobile Access</h2>
+        
+        <div class="info">
+            <strong>Server Status:</strong> Running<br>
+            <strong>Network IP:</strong> 192.168.1.79:3000<br>
+            <strong>Time:</strong> <span id="time"></span>
+        </div>
+        
+        <p>If you can see this page on your mobile, the network connection is working!</p>
+        
+        <div class="links">
+            <a href="/">🏠 Home Page</a>
+            <a href="/search?city=Lagos">🔍 Search Hotels</a>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 12px; color: #666;">
+            <p>If the main app appears white/blank:</p>
+            <ol style="text-align: left;">
+                <li>Check developer tools (F12) for errors</li>
+                <li>Try hard refresh (Ctrl+Shift+R)</li>
+                <li>Clear browser cache</li>
+                <li>Try different mobile browser</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        
+        // Test if main app is loading
+        setTimeout(() => {
+            const testFrame = document.createElement('iframe');
+            testFrame.src = '/';
+            testFrame.style.display = 'none';
+            testFrame.onload = () => {
+                console.log('✅ Main app loaded successfully');
+            };
+            testFrame.onerror = () => {
+                console.log('❌ Main app failed to load');
+            };
+            document.body.appendChild(testFrame);
+        }, 1000);
+    </script>
+</body>
+</html>

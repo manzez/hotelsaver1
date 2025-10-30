@@ -48,7 +48,7 @@ export default function SearchBarMobile({
   const [children, setChildren] = useState(defaultChildren)
   const [rooms, setRooms] = useState(defaultRooms)
   const [budgetKey, setBudgetKey] = useState(defaultBudget)
-  const [stayType, setStayType] = useState<'any' | 'hotel' | 'apartment'>(defaultStayType as any)
+  const [stayType, setStayType] = useState<'any' | 'hotel' | 'apartment' | 'high-security'>(defaultStayType as any)
 
   // UI state
   const [searchResults, setSearchResults] = useState<any[]>([])
@@ -59,6 +59,7 @@ export default function SearchBarMobile({
   // Refs
   const searchInputRef = useRef<HTMLDivElement>(null)
   const guestPickerRef = useRef<HTMLDivElement>(null)
+  const datePickerRef = useRef<HTMLDivElement>(null)
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -68,6 +69,9 @@ export default function SearchBarMobile({
       }
       if (guestPickerRef.current && !guestPickerRef.current.contains(event.target as Node)) {
         setShowGuestPicker(false)
+      }
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
+        setIsDatePickerOpen(false)
       }
     }
 
@@ -136,6 +140,17 @@ export default function SearchBarMobile({
     setSearchQuery(result.value)
     setCity(result.city || result.value)
     setShowSearchResults(false)
+    
+    // Auto-open date picker after destination selection
+    setTimeout(() => {
+      if (!startDate || !endDate) {
+        const today = startOfDay(new Date())
+        const tomorrow = addDays(today, 1)
+        setStartDate(today)
+        setEndDate(tomorrow)
+      }
+      setIsDatePickerOpen(true)
+    }, 300)
   }
 
   // Submit handler
@@ -179,8 +194,24 @@ export default function SearchBarMobile({
                 }
               }}
               placeholder="Where are you going?"
-              className="w-full h-11 pl-3 pr-8 bg-white text-gray-900 text-lg font-bold placeholder:text-gray-500 placeholder:font-normal focus:bg-white focus:outline-none focus:ring-0 rounded-lg transition-all shadow-sm"
+              className="w-full h-11 pl-3 pr-16 bg-white text-gray-900 text-lg font-bold placeholder:text-gray-500 placeholder:font-normal focus:bg-white focus:outline-none focus:ring-0 rounded-lg transition-all shadow-sm"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('')
+                  setCity('')
+                  setSearchResults([])
+                  setShowSearchResults(false)
+                }}
+                className="absolute right-8 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
             <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />
             </svg>
@@ -213,7 +244,7 @@ export default function SearchBarMobile({
           </div>
 
           {/* Dates */}
-          <div>
+          <div ref={datePickerRef}>
             <label className="block text-xs font-medium text-gray-700 mb-1">Dates</label>
             <button
               type="button"
@@ -242,11 +273,11 @@ export default function SearchBarMobile({
                   className="fixed inset-0 bg-black/20 z-[9997]" 
                   onClick={() => setIsDatePickerOpen(false)}
                 />
-                <div className="fixed inset-x-4 top-20 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9998] p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3">
+                <div className="fixed inset-x-4 top-20 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[9998] p-6 min-w-[320px] max-h-[calc(100vh-6rem)] overflow-y-auto">
+                  <div className="space-y-6">
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Check In</label>
+                        <div className="font-semibold text-gray-900 mb-2">Check In</div>
                         <input
                           type="date"
                           value={startDate ? startDate.toISOString().split('T')[0] : ''}
@@ -258,11 +289,11 @@ export default function SearchBarMobile({
                             }
                           }}
                           min={new Date().toISOString().split('T')[0]}
-                          className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white"
+                          className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Check Out</label>
+                        <div className="font-semibold text-gray-900 mb-2">Check Out</div>
                         <input
                           type="date"
                           value={endDate ? endDate.toISOString().split('T')[0] : ''}
@@ -271,15 +302,16 @@ export default function SearchBarMobile({
                             setEndDate(date)
                           }}
                           min={startDate ? startDate.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
-                          className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white"
+                          className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                         />
                       </div>
                     </div>
                   </div>
+
                   <button
                     type="button"
                     onClick={() => setIsDatePickerOpen(false)}
-                    className="w-full mt-3 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                    className="w-full mt-6 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
                   >
                     Done
                   </button>
@@ -393,7 +425,7 @@ export default function SearchBarMobile({
                   <button
                     type="button"
                     onClick={() => setShowGuestPicker(false)}
-                    className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                    className="w-full mt-6 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
                   >
                     Done
                   </button>
@@ -411,11 +443,12 @@ export default function SearchBarMobile({
                 title="Property type"
                 className="w-full h-10 px-3 pr-8 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm font-medium appearance-none focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 cursor-pointer transition-all shadow-sm" 
                 value={stayType} 
-                onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment')}
+                onChange={e => setStayType(e.target.value as 'any' | 'hotel' | 'apartment' | 'high-security')}
               >
                 <option value="any">Any Type</option>
                 <option value="hotel">Hotels</option>
                 <option value="apartment">Apartments</option>
+                <option value="high-security">High Security</option>
               </select>
               <div className="absolute right-3 top-1/2 transform translate-y-1 pointer-events-none">
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -449,7 +482,7 @@ export default function SearchBarMobile({
           <button 
             type="button"
             onClick={handleSubmit}
-            className="w-full h-12 px-6 bg-teal-600 hover:bg-teal-700 active:bg-teal-800 text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-2 transform active:scale-[0.98] touch-manipulation"
+            className="w-full h-12 px-6 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 active:from-green-800 active:to-emerald-700 text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl active:shadow-md transition-all duration-150 flex items-center justify-center gap-2 transform active:scale-[0.98] touch-manipulation"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0z" />

@@ -23,6 +23,12 @@ export const metadata: Metadata = {
   },
   description: 'Negotiate hotel prices & book local services across Nigeria.',
   keywords: ['hotels', 'Nigeria', 'Lagos', 'Abuja', 'Port Harcourt', 'Owerri', 'booking', 'negotiation', 'discount'],
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   openGraph: {
     title: 'HotelSaver.ng — Save on Hotels & Services',
     description: 'Negotiate hotel prices & book local services across Nigeria.',

@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import SearchBar from './SearchBar'
 
 export default function StickyHeader() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [lastScrollY, setLastScrollY] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
@@ -31,7 +33,7 @@ export default function StickyHeader() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-green-900 via-green-800 to-green-900 text-white shadow-2xl transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-green-900 via-green-800 to-green-900 text-white shadow-2xl transition-all duration-300 pointer-events-none ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       } ${
         isScrolled ? 'backdrop-blur-md bg-green-900/95' : ''
@@ -50,7 +52,7 @@ export default function StickyHeader() {
           </div>
           
           {/* Right Side - Currency, Help, List Property, Register, Sign in */}
-          <div className="flex items-center space-x-1 md:space-x-4 text-xs md:text-sm">
+          <div className="flex items-center space-x-1 md:space-x-4 text-xs md:text-sm" style={{pointerEvents: 'auto'}}>
             <div className="hidden md:flex items-center space-x-2">
               <span className="px-2 py-1 border border-white/30 rounded bg-white/10 backdrop-blur-sm">NGN</span>
             </div>
@@ -105,7 +107,7 @@ export default function StickyHeader() {
         {/* Navigation Tabs - Hide when scrolled for compact view */}
         <div className={`flex items-center space-x-1 pb-3 border-b border-green-600/20 transition-all duration-300 overflow-x-auto scrollbar-hide ${
           isScrolled ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'
-        }`}>
+        }`} style={{pointerEvents: 'auto'}}>
           <a href="/" className="bg-green-800/50 text-white px-3 md:px-4 py-2 md:py-3 rounded-full border border-white/20 font-medium whitespace-nowrap text-sm">
             Hotels
           </a>
@@ -123,14 +125,16 @@ export default function StickyHeader() {
           </a>
         </div>
         
-        {/* Search Bar - Compact mode for header */}
-        <div className={`transition-all duration-300 ${
-          isScrolled ? 'pt-2 pb-2 md:pt-3 md:pb-3' : 'pt-3 pb-3 md:pt-4 md:pb-4'
-        }`}>
-          <div className="w-full max-w-6xl mx-auto px-2">
-            <SearchBar compact={true} submitLabel="Search" showBrandSplashOnSubmit={false} mobileDatePicker="custom" />
+        {/* Search Bar - Compact mode for header (hide on homepage since it has its own SearchBar) */}
+        {pathname !== '/' && (
+          <div className={`transition-all duration-300 ${
+            isScrolled ? 'pt-2 pb-2 md:pt-3 md:pb-3' : 'pt-3 pb-3 md:pt-4 md:pb-4'
+          }`} style={{pointerEvents: 'auto'}}>
+            <div className="w-full max-w-6xl mx-auto px-2">
+              <SearchBar compact={true} submitLabel="Search" showBrandSplashOnSubmit={false} mobileDatePicker="custom" />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
   )

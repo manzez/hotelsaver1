@@ -192,7 +192,7 @@ function NegotiatePageContent() {
   }, [remaining])
 
   return (
-    <div className="container py-10 pt-24">
+    <div className="container py-10 pt-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

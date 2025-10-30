@@ -1,5 +1,6 @@
 "use client";
 import React, { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
 
 type HotelRow = {
   id: string;
@@ -198,6 +199,7 @@ export default function AdminHotelsPage() {
               <th className="px-3 py-2 font-medium text-gray-600">Stars</th>
               <th className="px-3 py-2 font-medium text-gray-600">Type</th>
               <th className="px-3 py-2 font-medium text-gray-600">Price (₦)</th>
+              <th className="px-3 py-2 font-medium text-gray-600">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -230,6 +232,32 @@ export default function AdminHotelsPage() {
                       value={r.basePriceNGN}
                       onChange={(e) => handlePriceChange(r.id, e.target.value)}
                     />
+                  </div>
+                </td>
+                <td className="px-3 py-2">
+                  <div className="flex items-center gap-1">
+                    <Link
+                      href={`/admin/hotels/${r.id}/view`}
+                      className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                      title="View hotel details"
+                    >
+                      👁️
+                    </Link>
+                    <Link
+                      href={`/admin/hotels/${r.id}`}
+                      className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                      title="Edit hotel"
+                    >
+                      ✏️
+                    </Link>
+                    <Link
+                      href={`/hotel/${r.id}`}
+                      target="_blank"
+                      className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded hover:bg-purple-200 transition-colors"
+                      title="View public page"
+                    >
+                      🌐
+                    </Link>
                   </div>
                 </td>
               </tr>

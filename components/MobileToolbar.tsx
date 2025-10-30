@@ -21,8 +21,24 @@ export default function MobileToolbar() {
   useEffect(() => {
     if (open) {
       const prev = document.body.style.overflow
+      const prevPosition = document.body.style.position
+      const prevTop = document.body.style.top
+      const scrollTop = window.pageYOffset
+      
+      // Prevent scrolling by fixing the body position
       document.body.style.overflow = 'hidden'
-      return () => { document.body.style.overflow = prev }
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollTop}px`
+      document.body.style.width = '100%'
+      
+      return () => { 
+        document.body.style.overflow = prev
+        document.body.style.position = prevPosition
+        document.body.style.top = prevTop
+        document.body.style.width = ''
+        // Restore scroll position
+        window.scrollTo(0, scrollTop)
+      }
     }
   }, [open])
 

@@ -1,6 +1,7 @@
 import SearchBar from '@/components/SearchBar'
 import StickyHeader from '@/components/StickyHeader'
 import CategoryTabs from '@/components/CategoryTabs'
+import PopularCities from '@/components/PopularCities'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
 import { HOTELS } from '@/lib/data'
@@ -86,7 +87,7 @@ export default function Home() {
       category: 'Massage',
       price: 25000,
       city: 'Abuja',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format&q=80',
+      image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop&auto=format&q=80',
       provider: 'Wellness Center'
     },
     {
@@ -140,18 +141,31 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-black/30"></div>
         
         {/* Hero Content */}
-        <div className="relative z-10 h-full flex items-end justify-start text-left text-white px-4 pb-16">
+        <div className="relative z-10 h-full flex flex-col justify-center text-left text-white px-4">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl mb-8">
               <h1 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-lg">
                 Luxury Hotels at low prices
               </h1>
               <p className="text-sm md:text-lg mb-5 text-white/90 drop-shadow">
                 Discover amazing hotels across Lagos, Abuja, Port Harcourt & more
               </p>
-              <a href="#destinations" className="bg-brand-green hover:bg-brand-dark text-white px-4 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 text-sm">
-                Negotiate
-              </a>
+            </div>
+            
+            {/* SearchBar on Homepage - Clean & Professional */}
+            <div className="max-w-5xl">
+              <SearchBar 
+                defaultCity=""
+                defaultHotelQuery=""
+                defaultCheckIn=""
+                defaultCheckOut=""
+                defaultAdults={2}
+                defaultChildren={0}
+                defaultRooms={1}
+                defaultBudget="u80"
+                defaultStayType="any"
+                submitLabel="Search Hotels"
+              />
             </div>
           </div>
         </div>
@@ -358,24 +372,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Popular Cities - Now Second */}
-      <section className="py-6 md:py-8 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-xl md:text-2xl font-bold mb-1">Popular Cities</h2>
-          <p className="text-gray-600 mb-4 text-sm md:text-base">Most popular choices for travellers in Nigeria</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {trendingDestinations.map((d, i) => (
-              <Link key={d.city} href={`/search?city=${encodeURIComponent(d.city)}`} className={`${i===0 ? 'md:col-span-2 lg:col-span-2' : ''} group relative rounded-2xl overflow-hidden shadow-sm border border-gray-100`}> 
-                <SafeImage src={d.image} alt={d.city} className="h-48 md:h-60 lg:h-64 w-full" fallbackSrc="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&auto=format&fit=crop&q=80" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                  <div className="text-white font-bold text-xl md:text-2xl drop-shadow">{d.city}</div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Popular Cities with Featured Hotels */}
+      <PopularCities />
 
       {/* Food & Services */}
       <section className="py-6 md:py-8 bg-white">

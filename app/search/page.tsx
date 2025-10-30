@@ -50,7 +50,7 @@ async function fetchHotels(params:URLSearchParams){
   const city=params.get('city')||''
   const hotelQuery=params.get('hotelQuery')||''
   const budget=params.get('budget')||''
-  const stayType=(params.get('stayType') as 'any'|'hotel'|'apartment')||'any'
+  const stayType=(params.get('stayType') as 'any'|'hotel'|'apartment'|'high-security')||'any'
   const negotiating = params.get('negotiating') === '1'
   const minStars = Number(params.get('minStars') || '0')
 
@@ -389,7 +389,7 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
             children={Number(params.get('children')) || 0}
             rooms={Number(params.get('rooms')) || 1}
             budget={params.get('budget') || 'u80'}
-            stayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment') || 'any'}
+            stayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment' | 'high-security') || 'any'}
           />
         </div>
         <div className="hidden md:block">
@@ -402,7 +402,7 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
             defaultChildren={Number(params.get('children')) || 0}
             defaultRooms={Number(params.get('rooms')) || 1}
             defaultBudget={params.get('budget') || 'u80'}
-            defaultStayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment') || 'any'}
+            defaultStayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment' | 'high-security') || 'any'}
           />
         </div>
       </div>

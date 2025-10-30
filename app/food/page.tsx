@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import FOOD_DATA from '@/lib.food.json'
 
-type MenuItem = { name: string; priceNGN: number; category: string }
+type MenuItem = { name: string; priceNGN: number; category: string; image?: string }
 type Restaurant = {
   id: string
   name: string
@@ -213,11 +213,28 @@ function FoodInner() {
             </div>
             <div className="space-y-3">
               {currentRestaurant.menu.map(mi => (
-                <div key={mi.name} className="flex items-center justify-between border-b pb-2">
-                  <div>
+                <div key={mi.name} className="flex items-center gap-3 border-b pb-3">
+                  {/* Food Image */}
+                  {mi.image && (
+                    <div className="w-16 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                      <img 
+                        src={mi.image} 
+                        alt={mi.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Food Info */}
+                  <div className="flex-1">
                     <div className="font-medium text-gray-900">{mi.name}</div>
                     <div className="text-xs text-gray-500">{mi.category}</div>
                   </div>
+                  
+                  {/* Pricing */}
                   <div className="text-right">
                     <div className="text-gray-500 line-through text-xs">{naira(mi.priceNGN)}</div>
                     <div className="text-brand-green font-semibold">{naira(discounted(mi.priceNGN))}</div>
@@ -242,11 +259,28 @@ function FoodInner() {
                 <h4 className="font-semibold mb-2">Menu</h4>
                 <div className="space-y-3 max-h-72 overflow-y-auto pr-2">
                   {currentRestaurant.menu.map(mi => (
-                    <div key={mi.name} className="flex items-center justify-between">
-                      <div>
+                    <div key={mi.name} className="flex items-center gap-3">
+                      {/* Food Image */}
+                      {mi.image && (
+                        <div className="w-12 h-10 rounded-md overflow-hidden flex-shrink-0">
+                          <img 
+                            src={mi.image} 
+                            alt={mi.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none'
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Food Info */}
+                      <div className="flex-1">
                         <div className="text-sm font-medium text-gray-900">{mi.name}</div>
                         <div className="text-xs text-gray-500">{mi.category}</div>
                       </div>
+                      
+                      {/* Pricing & Quantity */}
                       <div className="text-right">
                         <div className="text-xs line-through text-gray-500">{naira(mi.priceNGN)}</div>
                         <div className="text-brand-green font-semibold">{naira(discounted(mi.priceNGN))}</div>

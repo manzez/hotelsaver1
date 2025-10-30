@@ -37,6 +37,25 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Mobile debugging - ensure content is visible */
+@media (max-width: 768px) {
+  body {
+    background-color: #f3f4f6 !important;
+  }
+  
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  /* Ensure main content containers are visible */
+  main, .main-content, [role="main"] {
+    min-height: 50vh;
+    background-color: #f9fafb;
+  }
 }
 
 .full-width {
