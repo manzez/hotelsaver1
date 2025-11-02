@@ -1,5 +1,6 @@
 import { listHotels } from '@/lib/hotels-source'
 import { getDiscountFor, getDiscountInfo, DiscountTier } from '@/lib/discounts'
+import { format } from 'date-fns'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
 import HotelCardSkeleton from '@/components/HotelCardSkeleton'
@@ -129,8 +130,8 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
     const s = new Date(ci)
     const e = new Date(co)
     if (isNaN(+s) || isNaN(+e)) return ''
-    const opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short' }
-    return `${nights} ${nights === 1 ? 'night' : 'nights'}, ${s.toLocaleDateString(undefined, opts)}–${e.toLocaleDateString(undefined, opts)}`
+    // Use consistent date-fns formatting to avoid hydration issues
+    return `${nights} ${nights === 1 ? 'night' : 'nights'}, ${format(s, 'dd MMM')}–${format(e, 'dd MMM')}`
   }
 
   // Note: mapEmbedSrcForCity defined at module scope and used outside this component

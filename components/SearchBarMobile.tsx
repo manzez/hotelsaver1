@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { startOfDay, addDays } from 'date-fns'
+import { startOfDay, addDays, format } from 'date-fns'
 
 import ClientDatepicker from './ClientDatepicker'
 
@@ -93,12 +93,11 @@ export default function SearchBarMobile({
   // Date range label
   const formatRangeLabel = () => {
     if (startDate && endDate) {
-      const opts: Intl.DateTimeFormatOptions = { weekday: 'short', day: 'numeric', month: 'short' }
-      return `${startDate.toLocaleDateString('en-GB', opts)} - ${endDate.toLocaleDateString('en-GB', opts)}`
+      // Use consistent date-fns formatting to avoid hydration issues
+      return `${format(startDate, 'EEE d MMM')} - ${format(endDate, 'EEE d MMM')}`
     }
     if (startDate) {
-      const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
-      return `${startDate.toLocaleDateString('en-GB', opts)} - Add checkout`
+      return `${format(startDate, 'MMM d')} - Add checkout`
     }
     return 'Add dates'
   }
@@ -495,12 +494,6 @@ export default function SearchBarMobile({
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
             {submitLabel}
           </button>
         </div>

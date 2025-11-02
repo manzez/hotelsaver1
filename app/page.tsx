@@ -126,7 +126,7 @@ export default function Home() {
       <StickyHeader />
       
   {/* Hero Section with Background Image like Booking.com */}
-  <section className="relative pt-20 md:pt-40 h-80 md:h-96">
+  <section className="relative pt-20 md:pt-40 h-80 md:h-96 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <SafeImage 
@@ -142,8 +142,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-black/30"></div>
         
         {/* Hero Content */}
-        <div className="relative z-10 h-full flex flex-col justify-center text-left text-white px-4">
-          <div className="container mx-auto px-4 md:px-6">
+        <div className="relative z-10 h-full flex flex-col justify-center text-left text-white px-4 overflow-visible">
+          <div className="container mx-auto px-4 md:px-6 overflow-visible">
             <div className="max-w-2xl mb-4">
               <h1 className="text-2xl md:text-3xl font-bold mb-2 drop-shadow-lg leading-tight">
                 Luxury Hotels at low prices
@@ -155,7 +155,7 @@ export default function Home() {
             
             {/* SearchBar on Homepage */}
             {/* Desktop/Tablet: keep inside hero overlay */}
-            <div className="hidden md:block max-w-6xl">
+            <div className="hidden md:block max-w-6xl overflow-visible">
               <SearchBar 
                 defaultCity=""
                 defaultHotelQuery=""

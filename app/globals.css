@@ -40,6 +40,17 @@ html, body {
   min-height: 100vh;
 }
 
+/* Dropdown z-index stacking */
+.dropdown-highest {
+  z-index: 2147483647; /* Maximum 32-bit integer */
+  position: fixed;
+}
+
+.search-button-lowest {
+  z-index: 0;
+  position: relative;
+}
+
 /* Mobile debugging - ensure content is visible */
 @media (max-width: 768px) {
   body {

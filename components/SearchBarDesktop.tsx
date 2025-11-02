@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { startOfDay, addDays, addMonths, subMonths, format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isAfter, isBefore, isPast } from 'date-fns'
 
@@ -12,9 +13,10 @@ interface SimpleCalendarProps {
   endDate: Date | null
   onStartDateChange: (date: Date | null) => void
   onEndDateChange: (date: Date | null) => void
+  onClose?: () => void
 }
 
-function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange }: SimpleCalendarProps) {
+function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange, onClose }: SimpleCalendarProps) {
   const today = new Date()
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(today))
   const [selecting, setSelecting] = useState<'start' | 'end'>('start')
@@ -22,6 +24,8 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
   const monthStart = startOfMonth(currentMonth)
   const monthEnd = endOfMonth(currentMonth)
   const days = eachDayOfInterval({ start: monthStart, end: monthEnd })
+
+  // Note: Auto-close removed - user should manually close with Done button
 
   const handleDateClick = (date: Date) => {
     // Don't allow selection of past dates or dates from other months
@@ -43,7 +47,6 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
         onEndDateChange(startDate)
       } else {
         onEndDateChange(date)
-        // Both dates selected - could auto-close here if needed
       }
       setSelecting('start')
     }
@@ -152,9 +155,17 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
               `}
             >
               {format(date, 'd')}
-              {/* Add connecting lines for range */}
+              {/* Visual connection line for range */}
               {inRange && (
-                <div className="absolute inset-y-0 left-0 w-full bg-brand-green/10 -z-10 rounded-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-green/20 to-brand-green/20 -z-10" />
+              )}
+              {/* Start date connector */}
+              {isStart && endDate && (
+                <div className="absolute top-1/2 right-0 w-1/2 h-0.5 bg-brand-green/40 -translate-y-1/2 -z-10" />
+              )}
+              {/* End date connector */}
+              {isEnd && startDate && (
+                <div className="absolute top-1/2 left-0 w-1/2 h-0.5 bg-brand-green/40 -translate-y-1/2 -z-10" />
               )}
             </button>
           )
@@ -201,10 +212,10 @@ export default function SearchBarDesktop({
   const [searchQuery, setSearchQuery] = useState(defaultHotelQuery || defaultCity || '')
   const [city, setCity] = useState(defaultCity)
   const [startDate, setStartDate] = useState<Date | null>(
-    defaultCheckIn ? new Date(defaultCheckIn) : null
+    defaultCheckIn ? new Date(defaultCheckIn) : new Date(2025, 10, 1) // Nov 1, 2025
   )
   const [endDate, setEndDate] = useState<Date | null>(
-    defaultCheckOut ? new Date(defaultCheckOut) : null
+    defaultCheckOut ? new Date(defaultCheckOut) : new Date(2025, 10, 3) // Nov 3, 2025
   )
   
   // Initialize search query on component mount but don't show dropdown
@@ -229,6 +240,7 @@ export default function SearchBarDesktop({
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [showGuestPicker, setShowGuestPicker] = useState(false)
   const [showDatePicker, setShowDatePicker] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   // Refs
   const searchInputRef = useRef<HTMLDivElement>(null)
@@ -237,6 +249,8 @@ export default function SearchBarDesktop({
 
   // Close dropdowns when clicking outside
   useEffect(() => {
+    setIsClient(true)
+    
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node
       
@@ -246,9 +260,8 @@ export default function SearchBarDesktop({
       if (guestPickerRef.current && !guestPickerRef.current.contains(target)) {
         setShowGuestPicker(false)
       }
-      if (datePickerRef.current && !datePickerRef.current.contains(target)) {
-        setShowDatePicker(false)
-      }
+      // Note: Date picker now uses Portal and handles its own backdrop clicks
+      // Remove automatic closing on document click for date picker
     }
 
     document.addEventListener('mousedown', handleClickOutside)
@@ -380,14 +393,12 @@ export default function SearchBarDesktop({
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
-
-
-  {/* Desktop Search Form - Two Row Layout */}
-  <div className="relative w-full bg-white rounded-lg shadow-lg overflow-visible">
-    <form onSubmit={handleSubmit} className="w-full">
+    <div className="w-full max-w-7xl mx-auto" style={{zIndex: 1000000}}>
+      {/* Desktop Search Form - Two Row Layout */}
+      <div className="relative w-full bg-white rounded-lg shadow-lg overflow-visible" style={{zIndex: 1000000}}>
+        <form onSubmit={handleSubmit} className="w-full relative">
           {/* Top Row - Input Fields */}
-          <div className="relative z-10 flex items-stretch h-16">
+          <div className="relative z-[1] flex items-stretch h-16 overflow-visible">
             
             {/* Location Input */}
             <div className="relative w-56" ref={searchInputRef}>
@@ -424,8 +435,22 @@ export default function SearchBarDesktop({
               </div>
 
               {/* Search Results */}
-              {showSearchResults && searchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[500] max-h-64 overflow-y-auto">
+              {showSearchResults && searchResults.length > 0 && isClient && (
+                <>
+                  {/* Backdrop for city search */}
+                  <div 
+                    className="fixed inset-0 bg-transparent z-[2147483645]"
+                    onClick={() => setShowSearchResults(false)}
+                  />
+                  
+                  {/* City search dropdown - positioned relative to input */}
+                  <div className="fixed bg-white rounded-lg shadow-2xl border border-gray-200 max-h-64 overflow-y-auto min-w-[300px]" style={{
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', 
+                    zIndex: 2147483646,
+                    top: searchInputRef.current ? (searchInputRef.current.getBoundingClientRect().bottom + 4) + 'px' : '200px',
+                    left: searchInputRef.current ? searchInputRef.current.getBoundingClientRect().left + 'px' : '50px',
+                    width: searchInputRef.current ? searchInputRef.current.getBoundingClientRect().width + 'px' : '300px'
+                  }}>
                   {searchResults.map((result, index) => (
                     <button
                       key={index}
@@ -456,6 +481,7 @@ export default function SearchBarDesktop({
                     </button>
                   ))}
                 </div>
+                </>
               )}
             </div>
 
@@ -472,26 +498,33 @@ export default function SearchBarDesktop({
                   </svg>
                   <span className="text-sm font-medium text-gray-900">
                     {startDate && endDate
-                      ? `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} — ${endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+                      ? `${format(startDate, 'MMM d')} — ${format(endDate, 'MMM d')}`
                       : "Check-in date — Check-out date"
                     }
                   </span>
                 </div>
               </div>
 
-              {/* Date Picker Modal */}
-              {showDatePicker && (
-                <>
-                  {/* Backdrop */}
+              {/* Date Picker Portal */}
+              {showDatePicker && isClient && typeof document !== 'undefined' && createPortal(
+                <div 
+                  className="fixed inset-0 flex items-center justify-center"
+                  style={{
+                    zIndex: 2147483647,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                  }}
+                  onClick={() => setShowDatePicker(false)}
+                >
+                  {/* Modal Content */}
                   <div 
-                    className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
-                    onClick={() => setShowDatePicker(false)}
-                  />
-                  
-                  {/* Modal */}
-                  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl border border-gray-200 z-[9999] p-6 w-[90vw] max-w-lg max-h-[80vh] overflow-y-auto">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-6">
+                    className="bg-white rounded-xl shadow-2xl border border-gray-200 w-[480px] max-w-[95vw] max-h-[90vh] flex flex-col"
+                    style={{
+                      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Fixed Header */}
+                    <div className="flex items-center justify-between p-6 border-b border-gray-100">
                       <h3 className="text-lg font-semibold text-gray-900">Select your dates</h3>
                       <button
                         type="button"
@@ -504,32 +537,62 @@ export default function SearchBarDesktop({
                       </button>
                     </div>
 
+                    {/* Scrollable Content */}
+                    <div className="flex-1 overflow-y-auto p-6 pb-2">
+
                     {/* Date Selection Summary */}
-                    <div className="grid grid-cols-2 gap-3 mb-6">
-                      <div className="text-center p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                        <div className="text-base font-semibold text-gray-900">
-                          {startDate ? format(startDate, 'MMM dd, yyyy') : '—'}
-                        </div>
-                      </div>
-                      <div className="text-center p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                        <div className="text-base font-semibold text-gray-900">
-                          {endDate ? format(endDate, 'MMM dd, yyyy') : '—'}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Calendar Component */}
                     <div className="mb-6">
-                      <SimpleCalendar
-                        startDate={startDate}
-                        endDate={endDate}
-                        onStartDateChange={setStartDate}
-                        onEndDateChange={setEndDate}
-                      />
+                      <div className="flex items-center gap-4">
+                        <div className="flex-1 text-center p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                          <div className="text-xs text-gray-500 mb-1">Check-in</div>
+                          <div className="text-base font-semibold text-gray-900">
+                            {startDate ? format(startDate, 'MMM dd, yyyy') : '—'}
+                          </div>
+                        </div>
+                        
+                        {/* Visual connection line */}
+                        <div className="flex items-center justify-center px-2">
+                          {startDate && endDate ? (
+                            <div className="flex items-center gap-1">
+                              <div className="w-4 h-0.5 bg-brand-green rounded-full"></div>
+                              <div className="w-2 h-2 bg-brand-green rounded-full"></div>
+                              <div className="w-4 h-0.5 bg-brand-green rounded-full"></div>
+                            </div>
+                          ) : (
+                            <div className="w-8 h-0.5 bg-gray-300 rounded-full"></div>
+                          )}
+                        </div>
+                        
+                        <div className="flex-1 text-center p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                          <div className="text-xs text-gray-500 mb-1">Check-out</div>
+                          <div className="text-base font-semibold text-gray-900">
+                            {endDate ? format(endDate, 'MMM dd, yyyy') : '—'}
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center justify-between">
+                    {/* Status indicator */}
+                    {startDate && endDate && (
+                      <div className="text-center mb-4 text-sm text-brand-green font-medium">
+                        ✓ Both dates selected
+                      </div>
+                    )}
+
+                      {/* Calendar Component */}
+                      <div>
+                        <SimpleCalendar
+                          startDate={startDate}
+                          endDate={endDate}
+                          onStartDateChange={setStartDate}
+                          onEndDateChange={setEndDate}
+                          onClose={() => setShowDatePicker(false)}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Fixed Footer with Action Buttons */}
+                    <div className="flex items-center justify-between p-6 border-t border-gray-100 bg-gray-50 rounded-b-xl">
                       <button
                         type="button"
                         onClick={() => {
@@ -543,13 +606,14 @@ export default function SearchBarDesktop({
                       <button
                         type="button"
                         onClick={() => setShowDatePicker(false)}
-                        className="bg-brand-green hover:bg-brand-dark text-white py-2 px-6 rounded-lg font-medium transition-colors"
+                        className="bg-brand-green hover:bg-brand-dark text-white py-3 px-8 rounded-lg font-medium transition-colors text-lg"
                       >
                         Done
                       </button>
                     </div>
                   </div>
-                </>
+                </div>, 
+                document.body
               )}
             </div>
 
@@ -573,8 +637,21 @@ export default function SearchBarDesktop({
               </div>
 
               {/* Guest Picker Dropdown */}
-              {showGuestPicker && (
-                <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-100 z-[500] p-4 min-w-[280px]">
+              {showGuestPicker && isClient && (
+                <>
+                  {/* Backdrop for guest picker */}
+                  <div 
+                    className="fixed inset-0 bg-transparent z-[2147483645]"
+                    onClick={() => setShowGuestPicker(false)}
+                  />
+                  
+                  {/* Guest picker dropdown - positioned relative to input */}
+                  <div className="fixed bg-white rounded-lg shadow-2xl border border-gray-200 p-4 min-w-[280px]" style={{
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', 
+                    zIndex: 2147483646,
+                    top: guestPickerRef.current ? (guestPickerRef.current.getBoundingClientRect().bottom + 4) + 'px' : '200px',
+                    right: guestPickerRef.current ? (window.innerWidth - guestPickerRef.current.getBoundingClientRect().right) + 'px' : '50px'
+                  }}>
                   <div className="space-y-4">
                     {/* Adults */}
                     <div className="flex items-center justify-between">
@@ -663,6 +740,7 @@ export default function SearchBarDesktop({
                     Done
                   </button>
                 </div>
+                </>
               )}
             </div>
 
@@ -722,7 +800,7 @@ export default function SearchBarDesktop({
             type="submit"
             onClick={(e) => handleSubmit(e)}
             aria-label="Search"
-            className="relative z-[1001] block w-full py-4 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold transition-colors flex items-center justify-center gap-2 rounded-b-lg text-lg cursor-pointer pointer-events-auto"
+            className="search-button-lowest block w-full py-4 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold transition-colors flex items-center justify-center gap-2 rounded-b-lg text-lg cursor-pointer pointer-events-auto"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
