@@ -155,7 +155,7 @@ export default function RoomSelection({
           <div className="text-right">
             <div className="text-sm text-gray-600">Selected Room</div>
             <div className="font-semibold text-brand-green">
-              ₦{(selectedRoom.pricePerNight || selectedRoom.basePriceNGN || 0).toLocaleString()}
+              ₦{(selectedRoom.pricePerNight || 0).toLocaleString()}
             </div>
           </div>
         )}
