@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { startOfDay, addDays, format } from 'date-fns'
 
 import ClientDatepicker from './ClientDatepicker'
+import { track } from '@/lib/analytics'
 
 interface SearchBarMobileProps {
   defaultCity?: string
@@ -28,7 +29,7 @@ export default function SearchBarMobile({
   defaultAdults = 2,
   defaultChildren = 0,
   defaultRooms = 1,
-  defaultBudget = 'u80',
+  defaultBudget = 'u40',
   defaultStayType = 'any',
   submitLabel = 'Search',
   onBeforeSubmit
@@ -81,6 +82,7 @@ export default function SearchBarMobile({
 
   // Budget options
   const budgets = [
+    { key: 'u40', label: 'Under ₦40k' },
     { key: 'u80', label: 'Under ₦80k' },
     { key: '80_130', label: '₦80k–₦130k' },
     { key: '130_200', label: '₦130k–₦200k' },
@@ -171,6 +173,19 @@ export default function SearchBarMobile({
       rooms: String(rooms),
       budget: budgetKey,
       stayType
+    })
+
+    // Track search submission (consent-gated)
+    track('search_submit', {
+      city: (searchCity || 'Lagos'),
+      hotelQuery: hotelQuery || '',
+      adults,
+      children,
+      rooms,
+      budget: budgetKey,
+      stayType,
+      hasDates: Boolean(startDate && endDate),
+      device: 'mobile'
     })
 
     const url = `/search?${q.toString()}`

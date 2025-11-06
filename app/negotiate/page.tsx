@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useRef, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { track } from '@/lib/analytics'
 
 const NEG_STATUS = {
   PENDING: 'pending',
@@ -96,6 +97,9 @@ function NegotiatePageContent() {
     }, delayForExcellent)
 
     ;(async () => {
+      // Track negotiation request
+      track('negotiate_request', { propertyId, roomId })
+
       const res = await fetch('/api/negotiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -138,14 +142,25 @@ function NegotiatePageContent() {
           }
           setNegotiationToken(String(data.negotiationToken || ''))
           setNegStatus(NEG_STATUS.SUCCESS)
+          // Track successful offer
+          track('negotiate_offer', {
+            propertyId,
+            roomId,
+            baseTotal: Number(data.baseTotal) || 0,
+            discountedTotal: Number(data.discountedTotal) || 0,
+            discountRate: Number(data.discountRate) || undefined,
+            expiresAt: data.expiresAt || undefined
+          })
         }, 7000)
       } else if (data.status === 'no-deals') {
         setMessage(data.message)
         setProperty(data.property)
         setNegStatus(NEG_STATUS.NO_DEALS)
+        track('negotiate_no_offer', { propertyId, roomId, reason: 'no-deals' })
       } else {
         setNegStatus(NEG_STATUS.NO_OFFER)
         setMessage('Sorry, no discount available for this hotel today. Please try again tomorrow or explore other properties.')
+        track('negotiate_no_offer', { propertyId, roomId, reason: data?.reason || 'no-offer' })
       }
     })()
     
@@ -175,6 +190,7 @@ function NegotiatePageContent() {
       setRemaining(Math.max(0, left))
       if (left <= 0) {
         setNegStatus(NEG_STATUS.EXPIRED)
+        track('negotiate_expired', { propertyId, roomId })
         if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
       }
     }
@@ -305,6 +321,7 @@ function NegotiatePageContent() {
                   // Scroll to top before navigation
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                   setTimeout(() => {
+                    track('negotiate_accept', { propertyId, roomId, price })
                     // Redirect to payment page with all booking details
                     const paymentParams = new URLSearchParams({
                       propertyId,

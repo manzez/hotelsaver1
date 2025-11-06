@@ -55,6 +55,7 @@ model Hotel {
   negotiationEnabled Boolean   @default(true)
   negotiationMinPct Int?       // e.g., 5 means 5%
   negotiationMaxPct Int?       // e.g., 40 means 40%
+  totalRooms       Int?        // total rooms for availability calculations
 
   images           HotelImage[]
   availability     Availability[]

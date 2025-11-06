@@ -7,7 +7,7 @@ export default function CareersPage() {
       title: "Software Engineer",
       type: "Full-time",
       location: "Abuja Office",
-      description: "Join our engineering team to build and maintain HotelSaver.ng's platform. You'll work on our Next.js application, API integrations, and help scale our negotiation algorithms. We're looking for developers passionate about creating user-friendly hotel booking experiences.",
+      description: "Join our engineering team to build and maintain Hotelsaver.ng's platform. You'll work on our Next.js application, API integrations, and help scale our negotiation algorithms. We're looking for developers passionate about creating user-friendly hotel booking experiences.",
       requirements: [
         "3+ years experience with JavaScript/TypeScript",
         "Experience with React, Next.js, or similar frameworks",
@@ -46,7 +46,7 @@ export default function CareersPage() {
       title: "Customer Service Agent",
       type: "Full-time",
       location: "Abuja Office", 
-      description: "Be the voice of HotelSaver.ng by providing exceptional customer support via WhatsApp, phone, and email. You'll help customers with bookings, resolve issues, and ensure every interaction reflects our commitment to excellent service.",
+      description: "Be the voice of Hotelsaver.ng by providing exceptional customer support via WhatsApp, phone, and email. You'll help customers with bookings, resolve issues, and ensure every interaction reflects our commitment to excellent service.",
       requirements: [
         "1+ years customer service experience",
         "Excellent English communication skills",
@@ -138,7 +138,7 @@ export default function CareersPage() {
               Contact Us About Careers
             </a>
             <a 
-              href="https://wa.me/2347077775545?text=Hello, I'm interested in career opportunities at HotelSaver.ng"
+              href="https://wa.me/2347077775545?text=Hello, I'm interested in career opportunities at Hotelsaver.ng"
               target="_blank"
               className="bg-white text-brand-green border-2 border-brand-green px-8 py-3 rounded-lg font-medium hover:bg-brand-green hover:text-white transition-colors inline-flex items-center gap-2"
             >

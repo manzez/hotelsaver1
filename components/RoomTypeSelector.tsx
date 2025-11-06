@@ -96,7 +96,7 @@ export default function RoomTypeSelector({
               <h4 className="font-semibold text-lg">{room.name}</h4>
               <div className="text-right">
                 <div className="text-xl font-bold text-brand-green">
-                  ₦{room.basePriceNGN.toLocaleString()}
+                  ₦{(room.pricePerNight || 0).toLocaleString()}
                 </div>
                 <div className="text-sm text-gray-600">per night</div>
               </div>

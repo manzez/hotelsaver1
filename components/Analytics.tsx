@@ -15,6 +15,13 @@ export default function Analytics() {
       const v = localStorage.getItem('hs_ga_consent') as 'granted' | 'denied' | null
       setConsent(v || 'unset')
     } catch {}
+    // Listen for consent changes from the banner
+    const onConsent = (e: Event) => {
+      const detail = (e as CustomEvent).detail as 'granted' | 'denied' | 'unset'
+      setConsent(detail || 'unset')
+    }
+    window.addEventListener('hs_ga_consent_changed', onConsent as EventListener)
+    return () => window.removeEventListener('hs_ga_consent_changed', onConsent as EventListener)
   }, [])
 
   if (!GA_ID) return null

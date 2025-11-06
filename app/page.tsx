@@ -1,33 +1,37 @@
 import SearchBar from '@/components/SearchBar'
 import StickyHeader from '@/components/StickyHeader'
+import NegotiateExplainer from '@/components/NegotiateExplainer'
 import CategoryTabs from '@/components/CategoryTabs'
 import PopularCities from '@/components/PopularCities'
 import Link from 'next/link'
 import SafeImage from '@/components/SafeImage'
-import { HOTELS } from '@/lib/data'
+import { getHotelsOptimized, getHotelByIdOptimized } from '@/lib/hotel-data-optimized'
 import FOOD_DATA from '@/lib.food.json'
 import { getDiscountFor } from '@/lib/discounts'
 import TourismScroller from '@/components/TourismScroller'
 import SecurityBadge from '@/components/SecurityBadge'
 
-export default function Home() {
+export default async function Home() {
+  // Use optimized data loading with limited results for homepage
+  const allHotels = await getHotelsOptimized();
+  
   // Get hotels from each city to ensure variety - exclude Lagos Continental and prioritize Protea Hotel Owerri
-  const lagosHotels = HOTELS.filter(h => h.city === 'Lagos' && h.type === 'Hotel' && h.id !== 'the-lagos-continental-hotel-lagos').slice(0, 2)
-  const abujaHotels = HOTELS.filter(h => h.city === 'Abuja' && h.type === 'Hotel').slice(0, 2)
-  const portHarcourtHotels = HOTELS.filter(h => h.city === 'Port Harcourt' && h.type === 'Hotel').slice(0, 2)
+  const lagosHotels = allHotels.filter(h => h.city === 'Lagos' && h.type === 'Hotel' && h.id !== 'the-lagos-continental-hotel-lagos').slice(0, 2)
+  const abujaHotels = allHotels.filter(h => h.city === 'Abuja' && h.type === 'Hotel').slice(0, 2)
+  const portHarcourtHotels = allHotels.filter(h => h.city === 'Port Harcourt' && h.type === 'Hotel').slice(0, 2)
   
   // Prioritize Protea Hotel Owerri from Owerri hotels
-  const proteaHotel = HOTELS.find(h => h.id === 'protea-hotel-owerri-owerri')
-  const otherOwerriHotels = HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Hotel' && h.id !== 'protea-hotel-owerri-owerri').slice(0, 1)
-  const owerriHotels = proteaHotel ? [proteaHotel, ...otherOwerriHotels] : HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Hotel').slice(0, 2)
+  const proteaHotel = await getHotelByIdOptimized('protea-hotel-owerri-owerri')
+  const otherOwerriHotels = allHotels.filter(h => h.city === 'Owerri' && h.type === 'Hotel' && h.id !== 'protea-hotel-owerri-owerri').slice(0, 1)
+  const owerriHotels = proteaHotel ? [proteaHotel, ...otherOwerriHotels] : allHotels.filter(h => h.city === 'Owerri' && h.type === 'Hotel').slice(0, 2)
   
   const featuredHotels = [...lagosHotels, ...abujaHotels, ...portHarcourtHotels, ...owerriHotels]
   
   // Get apartments from different cities for variety
-  const lagosApartments = HOTELS.filter(h => h.city === 'Lagos' && h.type === 'Apartment').slice(0, 1)
-  const abujaApartments = HOTELS.filter(h => h.city === 'Abuja' && h.type === 'Apartment').slice(0, 1)
-  const portHarcourtApartments = HOTELS.filter(h => h.city === 'Port Harcourt' && h.type === 'Apartment').slice(0, 1)
-  const owerriApartments = HOTELS.filter(h => h.city === 'Owerri' && h.type === 'Apartment').slice(0, 1)
+  const lagosApartments = allHotels.filter(h => h.city === 'Lagos' && h.type === 'Apartment').slice(0, 1)
+  const abujaApartments = allHotels.filter(h => h.city === 'Abuja' && h.type === 'Apartment').slice(0, 1)
+  const portHarcourtApartments = allHotels.filter(h => h.city === 'Port Harcourt' && h.type === 'Apartment').slice(0, 1)
+  const owerriApartments = allHotels.filter(h => h.city === 'Owerri' && h.type === 'Apartment').slice(0, 1)
   
   const featuredApartments = [...lagosApartments, ...abujaApartments, ...portHarcourtApartments, ...owerriApartments].filter(Boolean).slice(0, 4)
   
@@ -124,6 +128,7 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Sticky Header with Scroll Animation */}
       <StickyHeader />
+  {/* Negotiation explainer placed below hero for tasteful visibility */}
       
   {/* Hero Section with Background Image like Booking.com */}
   <section className="relative pt-20 md:pt-40 h-80 md:h-96 overflow-visible">
@@ -144,12 +149,12 @@ export default function Home() {
         {/* Hero Content */}
         <div className="relative z-10 h-full flex flex-col justify-center text-left text-white px-4 overflow-visible">
           <div className="container mx-auto px-4 md:px-6 overflow-visible">
-            <div className="max-w-2xl mb-4">
-              <h1 className="text-2xl md:text-3xl font-bold mb-2 drop-shadow-lg leading-tight">
-                Luxury Hotels at low prices
+            <div className="max-w-3xl mb-4">
+              <h1 className="text-3xl md:text-4xl font-extrabold mb-3 leading-tight tracking-tight drop-shadow-lg">
+                Negotiate hotel prices in real time
               </h1>
               <p className="text-sm md:text-lg mb-3 text-white/90 drop-shadow">
-                Discover amazing hotels across Lagos, Abuja, Port Harcourt & more
+                Save up to 50%+ on select stays.
               </p>
             </div>
             
@@ -194,6 +199,9 @@ export default function Home() {
         </div>
       </section>
 
+  {/* Negotiation explainer */}
+  <NegotiateExplainer />
+
       {/* Mobile Featured Properties - Show immediately after mobile search */}
       <section className="md:hidden bg-white py-3">
         <div className="container mx-auto px-4">
@@ -224,6 +232,11 @@ export default function Home() {
                     <div className="mt-1">
                       <span className="text-sm font-bold text-gray-900">₦{displayPrice.toLocaleString()}</span>
                       <span className="text-xs text-gray-500 ml-1">per night</span>
+                      {discount > 0 && (
+                        <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          Negotiable • up to {(Math.round(discount * 100))}% off
+                        </span>
+                      )}
                     </div>
                   </div>
                 </Link>
@@ -273,6 +286,9 @@ export default function Home() {
                           <div className="text-sm font-bold text-gray-900">
                             ₦{displayPrice.toLocaleString()}
                           </div>
+                          {hasNegotiation && (
+                            <span className="text-[10px] text-emerald-700 font-medium">Negotiation available</span>
+                          )}
                           {showHighSecurity ? (
                             <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
                           ) : (
@@ -354,7 +370,7 @@ export default function Home() {
                             href={`/negotiate?propertyId=${h.id}`}
                             className="flex-1 bg-brand-green text-white py-1.5 px-3 rounded-md text-xs font-medium hover:bg-brand-dark transition-colors text-center"
                           >
-                            Negotiate
+                            Negotiate price
                           </Link>
                         )}
                       </div>
@@ -506,7 +522,7 @@ export default function Home() {
             
             <h3 className="text-2xl font-bold text-gray-900 mb-2">Free Gift with Every Booking!</h3>
             <p className="text-gray-600 mb-4 max-w-md mx-auto">
-              Book any hotel through HotelSaver.ng and receive a complimentary welcome gift. 
+              Book any hotel through Hotelsaver.ng and receive a complimentary welcome gift. 
               Experience Nigerian hospitality at its finest!
             </p>
             

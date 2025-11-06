@@ -80,6 +80,7 @@ When('I set guests to {string}', async (guestInfo: string) => {
 
 When('I select budget range {string}', async (budgetRange: string) => {
   const budgetMap: Record<string, string> = {
+    'Under ₦40k': 'u40',
     'Under ₦80k': 'u80',
     '₦80k–₦130k': '80_130',
     '₦130k–₦200k': '130_200',

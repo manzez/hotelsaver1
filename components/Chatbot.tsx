@@ -91,7 +91,7 @@ export default function Chatbot() {
           <div className="bg-brand-green text-white p-4 rounded-t-xl">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-semibold">HotelSaver Support</h3>
+                <h3 className="font-semibold">Hotelsaver Support</h3>
                 <p className="text-sm opacity-90">We're here to help! 🇳🇬</p>
               </div>
               <button

@@ -44,7 +44,7 @@ export default function HowItWorksPage() {
         {/* How It Works Process */}
         <section className="mb-20">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
-            The HotelSaver.ng Process
+            The Hotelsaver.ng Process
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8 mb-16">

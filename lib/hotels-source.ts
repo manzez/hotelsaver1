@@ -1,4 +1,5 @@
-import { HOTELS } from '@/lib/data'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 export type HotelShape = {
   id: string
@@ -35,6 +36,14 @@ function isLiveDataEnabled() {
   return process.env.ENABLE_LIVE_HOTEL_DATA === 'true'
 }
 
+// Import optimized data loading (temporary - until database is set up)
+import { getHotelsOptimized } from './hotel-data-optimized'
+
+// Function to get fresh hotel data using optimized loading
+async function getHotelData() {
+  return await getHotelsOptimized()
+}
+
 function normalizeFromJson(h: any): HotelShape | null {
   if (!h) return null
   const base = typeof h.basePriceNGN === 'number' ? h.basePriceNGN : (typeof h.price === 'number' ? h.price : undefined)
@@ -47,7 +56,8 @@ function normalizeFromJson(h: any): HotelShape | null {
     stars: typeof h.stars === 'number' ? h.stars : undefined,
     basePriceNGN: base,
     price: base,
-    images: Array.isArray(h.images) ? h.images : []
+    images: Array.isArray(h.images) ? h.images : [],
+    roomTypes: h.roomTypes || [] // CRITICAL: Preserve roomTypes for room-based pricing
   }
 }
 
@@ -97,6 +107,8 @@ export async function getHotelById(id: string): Promise<HotelShape | null> {
     }
   }
 
+  // Get fresh hotel data from file system
+  const HOTELS = await getHotelData()
   const j = HOTELS.find((h: any) => h.id === id)
   return normalizeFromJson(j)
 }
@@ -111,6 +123,7 @@ export type ListOptions = {
 function priceInBudget(base: number, key?: string) {
   if (!base) return false
   if (!key) return true
+  if (key === 'u40') return base >= 0 && base < 40000
   if (key === 'u80') return base >= 0 && base < 80000
   if (key === '80_130') return base >= 80000 && base <= 130000
   if (key === '130_200') return base >= 130000 && base <= 200000
@@ -176,7 +189,8 @@ export async function listHotels(opts: ListOptions = {}): Promise<HotelShape[]> 
         const enumCity = c === 'lagos' ? 'Lagos' : c === 'abuja' ? 'Abuja' : c === 'portharcourt' || c === 'port-harcourt' ? 'PortHarcourt' : c === 'owerri' ? 'Owerri' : undefined
         if (enumCity) where.city = enumCity
       }
-      if (stayType && stayType !== 'any') {
+      if (stayType && stayType !== 'any' && stayType !== 'high-security') {
+        // For high-security, we'll filter by price after fetching
         where.type = stayType === 'apartment' ? 'Apartment' : 'Hotel'
       }
       const rows = await prisma.hotel.findMany({
@@ -188,13 +202,23 @@ export async function listHotels(opts: ListOptions = {}): Promise<HotelShape[]> 
       const normalized: HotelShape[] = rows
         .map((r: any) => normalizeFromDb(r, (r as any).images))
         .filter(Boolean) as HotelShape[]
-      const filtered = normalized.filter(h => priceInBudget(h.basePriceNGN || 0, budgetKey))
+      
+      // Apply high-security filter if needed
+      let filtered = normalized
+      if (stayType === 'high-security') {
+        filtered = filtered.filter(h => (h.basePriceNGN || 0) > 78000)
+      }
+      
+      // IMPORTANT: Do NOT apply budget filter here - room-based pricing handles that now
       return filtered.slice(0, limit)
     } catch (e) {
       // fall through to JSON
     }
   }
 
+  // Get fresh hotel data from file system
+  const HOTELS = await getHotelData()
+  
   const filteredJson = (HOTELS as any[])
     .filter(h => !city || String(h.city).toLowerCase() === String(city).toLowerCase())
     .filter(h => {
@@ -203,15 +227,16 @@ export async function listHotels(opts: ListOptions = {}): Promise<HotelShape[]> 
       if (stayType === 'apartment') return t === 'apartment'
       if (stayType === 'hotel') return t === 'hotel'
       if (stayType === 'high-security') {
-        // High security can be both hotels and apartments
-        // For now, we'll include all properties (this can be refined later with actual security data)
-        return true
+        // High security properties are those with base price > ₦78,000
+        const basePrice = typeof h.basePriceNGN === 'number' ? h.basePriceNGN : (typeof h.price === 'number' ? h.price : 0)
+        return basePrice > 78000
       }
       return true
     })
     .map(normalizeFromJson)
     .filter(Boolean) as HotelShape[]
 
-  const budgeted = filteredJson.filter(h => priceInBudget(h.basePriceNGN || 0, budgetKey))
-  return budgeted.slice(0, limit)
+  // IMPORTANT: Do NOT filter by budget here - room-based pricing handles that now
+  // Budget filtering happens in room-based-pricing.ts based on individual room prices
+  return filteredJson.slice(0, limit)
 }

@@ -3,6 +3,18 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { getDiscountFor } from '@/lib/discounts'
+
+interface RoomType {
+  id: string
+  name: string
+  basePriceNGN: number
+  discountPercent: number
+  description?: string
+  amenities?: string[]
+  maxOccupancy?: number
+  size?: string
+}
 
 interface Hotel {
   id: string
@@ -23,6 +35,7 @@ interface Hotel {
   availableRooms: number
   createdAt: string
   updatedAt: string
+  roomTypes?: RoomType[]
 }
 
 const cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Owerri'] as const
@@ -35,7 +48,7 @@ const availableAmenities = [
 
 // Mock hotel data - replace with API call
 const mockHotel: Hotel = {
-  id: 'eko-hotels-lagos',
+  id: 'eko-hotel-and-suites-lagos',
   name: 'Eko Hotels and Suites',
   city: 'Lagos',
   basePriceNGN: 185000,
@@ -55,7 +68,49 @@ const mockHotel: Hotel = {
   totalRooms: 450,
   availableRooms: 387,
   createdAt: '2024-01-15T10:00:00Z',
-  updatedAt: '2025-10-20T14:30:00Z'
+  updatedAt: '2025-10-20T14:30:00Z',
+  roomTypes: [
+    {
+      id: 'standard',
+      name: 'Standard Room',
+      basePriceNGN: 185000,
+      discountPercent: 15,
+      description: 'Comfortable accommodation with essential amenities',
+      amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV'],
+      maxOccupancy: 2,
+      size: '20 sqm'
+    },
+    {
+      id: 'deluxe',
+      name: 'Deluxe Room',
+      basePriceNGN: 240500,
+      discountPercent: 12,
+      description: 'Spacious room with premium amenities and city view',
+      amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV', 'Mini-fridge', 'Work desk'],
+      maxOccupancy: 2,
+      size: '30 sqm'
+    },
+    {
+      id: 'executive',
+      name: 'Executive Room',
+      basePriceNGN: 296000,
+      discountPercent: 10,
+      description: 'Premium accommodation with executive lounge access',
+      amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV', 'Mini-fridge', 'Work desk', 'Executive lounge access', 'Complimentary breakfast'],
+      maxOccupancy: 2,
+      size: '35 sqm'
+    },
+    {
+      id: 'presidential',
+      name: 'Presidential Suite',
+      basePriceNGN: 462500,
+      discountPercent: 8,
+      description: 'Luxurious suite with separate living area and premium services',
+      amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV', 'Mini-fridge', 'Work desk', 'Separate living area', 'Butler service', 'Premium amenities'],
+      maxOccupancy: 4,
+      size: '60 sqm'
+    }
+  ]
 }
 
 export default function EditHotelPage() {
@@ -66,6 +121,11 @@ export default function EditHotelPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [discountPercentage, setDiscountPercentage] = useState<number>(15)
+  const [savingDiscount, setSavingDiscount] = useState(false)
+
+  // Debug logging
+  console.log('Component state - Loading:', loading, 'Hotel exists:', !!hotel, 'FormData exists:', !!formData)
 
   // Load hotel data
   useEffect(() => {
@@ -75,14 +135,132 @@ export default function EditHotelPage() {
         // const response = await fetch(`/api/admin/hotels/${params.id}`)
         // const data = await response.json()
         
-        // For now, use mock data
-        setTimeout(() => {
+        // Load hotel data from API
+        const response = await fetch(`/api/admin/hotels/${params.id}`, {
+          headers: {
+            'X-Admin-Key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'dev-admin-key-2024'
+          }
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          console.log('API Response:', result)
+          
+          // Handle different response structures
+          let hotelData
+          if (result.hotel) {
+            hotelData = result.hotel
+          } else if (result.ok && result.data) {
+            hotelData = result.data
+          } else {
+            hotelData = result
+          }
+          
+          console.log('Hotel Data:', hotelData)
+          
+          if (hotelData && hotelData.name) {
+            // Ensure room types exist - if not, generate default room types
+            if (!hotelData.roomTypes || hotelData.roomTypes.length === 0) {
+              console.log('🏨 No room types found, generating and auto-saving defaults based on basePrice:', hotelData.basePriceNGN);
+              
+              const basePrice = hotelData.basePriceNGN || 100000
+              const generatedRoomTypes = [
+                {
+                  id: 'standard',
+                  name: 'Standard Room',
+                  basePriceNGN: basePrice,
+                  discountPercent: 15,
+                  description: 'Comfortable accommodation with essential amenities',
+                  amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV'],
+                  maxOccupancy: 2,
+                  size: '20 sqm'
+                },
+                {
+                  id: 'deluxe',
+                  name: 'Deluxe Room',
+                  basePriceNGN: Math.round(basePrice * 1.3),
+                  discountPercent: 12,
+                  description: 'Spacious room with premium amenities and city view',
+                  amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV', 'Mini-fridge', 'Work desk'],
+                  maxOccupancy: 2,
+                  size: '30 sqm'
+                },
+                {
+                  id: 'executive',
+                  name: 'Executive Room',
+                  basePriceNGN: Math.round(basePrice * 1.6),
+                  discountPercent: 10,
+                  description: 'Premium accommodation with executive lounge access',
+                  amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV', 'Mini-fridge', 'Work desk', 'Executive lounge access', 'Complimentary breakfast'],
+                  maxOccupancy: 2,
+                  size: '35 sqm'
+                },
+                {
+                  id: 'presidential',
+                  name: 'Presidential Suite',
+                  basePriceNGN: Math.round(basePrice * 2.5),
+                  discountPercent: 8,
+                  description: 'Luxurious suite with separate living area and premium services',
+                  amenities: ['Free WiFi', 'Air conditioning', 'Private bathroom', 'TV', 'Mini-fridge', 'Work desk', 'Separate living area', 'Butler service', 'Premium amenities'],
+                  maxOccupancy: 4,
+                  size: '60 sqm'
+                }
+              ]
+              
+              hotelData.roomTypes = generatedRoomTypes
+              
+              console.log('✅ Generated room types:', generatedRoomTypes.map(rt => `${rt.name}: ₦${rt.basePriceNGN.toLocaleString()}`));
+              console.log('💾 Auto-saving generated room types to database...');
+              
+              // Immediately save the generated room types to the database
+              fetch(`/api/admin/hotels/${params.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  ...hotelData,
+                  roomTypes: generatedRoomTypes
+                })
+              }).then(async (res) => {
+                if (res.ok) {
+                  console.log('✅ Room types auto-saved successfully to JSON file!');
+                } else {
+                  console.error('❌ Failed to auto-save room types:', await res.text());
+                }
+              }).catch(err => {
+                console.error('❌ Error auto-saving room types:', err);
+              });
+            }
+            
+            setHotel(hotelData)
+            setFormData(hotelData)
+            
+            // Load current discount percentage
+            if (params.id && typeof params.id === 'string') {
+              const currentDiscount = getDiscountFor(params.id)
+              setDiscountPercentage(Math.round(currentDiscount * 100))
+            }
+          } else {
+            console.log('Invalid hotel data received, using mock data')
+            setHotel(mockHotel)
+            setFormData(mockHotel)
+          }
+        } else {
+          console.log('API call failed, using mock data')
+          // Fallback to mock data for development
           setHotel(mockHotel)
           setFormData(mockHotel)
-          setLoading(false)
-        }, 500)
+          if (params.id && typeof params.id === 'string') {
+            const currentDiscount = getDiscountFor(params.id)
+            setDiscountPercentage(Math.round(currentDiscount * 100))
+          }
+        }
+        setLoading(false)
       } catch (error) {
         console.error('Error loading hotel:', error)
+        // Still set mock data on error for development
+        console.log('Setting mock data due to error')
+        setHotel(mockHotel)
+        setFormData(mockHotel)
         setLoading(false)
       }
     }
@@ -192,6 +370,75 @@ export default function EditHotelPage() {
     } : null)
   }
 
+  const updateDiscountPercentage = async () => {
+    if (!params.id || typeof params.id !== 'string') {
+      alert('Invalid hotel ID')
+      return
+    }
+    
+    if (discountPercentage < 0 || discountPercentage > 100) {
+      alert('Discount percentage must be between 0 and 100')
+      return
+    }
+    
+    setSavingDiscount(true)
+    try {
+      const response = await fetch(`/api/admin/discounts/${params.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'dev-admin-key-2024'
+        },
+        body: JSON.stringify({ discountPercentage })
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        alert(`Discount updated successfully to ${discountPercentage}%`)
+        console.log('Discount update result:', result)
+      } else {
+        const error = await response.json().catch(() => ({ error: 'Unknown error' }))
+        alert(`Failed to update discount: ${error.error}`)
+      }
+    } catch (error) {
+      console.error('Error updating discount:', error)
+      alert('Failed to update discount. Please try again.')
+    } finally {
+      setSavingDiscount(false)
+    }
+  }
+
+  const resetToDefaultDiscount = async () => {
+    if (!params.id || typeof params.id !== 'string') {
+      alert('Invalid hotel ID')
+      return
+    }
+    
+    setSavingDiscount(true)
+    try {
+      const response = await fetch(`/api/admin/discounts/${params.id}`, {
+        method: 'DELETE',
+        headers: {
+          'X-Admin-Key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'dev-admin-key-2024'
+        }
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        setDiscountPercentage(result.discountPercentage || 15)
+        alert(`Discount reset to default (${result.discountPercentage || 15}%)`)
+      } else {
+        const error = await response.json().catch(() => ({ error: 'Unknown error' }))
+        alert(`Failed to reset discount: ${error.error}`)
+      }
+    } catch (error) {
+      console.error('Error resetting discount:', error)
+      alert('Failed to reset discount. Please try again.')
+    } finally {
+      setSavingDiscount(false)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -210,15 +457,36 @@ export default function EditHotelPage() {
         updatedAt: new Date().toISOString()
       }
 
+      // Debug: Log what we're sending
+      console.log('=== SAVE HOTEL DEBUG ===')
+      console.log('FormData has roomTypes:', !!formData.roomTypes)
+      console.log('RoomTypes count:', formData.roomTypes?.length || 0)
+      if (formData.roomTypes && formData.roomTypes.length > 0) {
+        console.log('Room types:', formData.roomTypes.map((rt: any) => `${rt.name}: ₦${rt.basePriceNGN}`))
+      }
+      console.log('UpdatedHotel has roomTypes:', !!updatedHotel.roomTypes)
+      console.log('========================')
+
       // In production, make API call to update hotel
+      const adminKey = process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'dev-admin-key-2024'
+      console.log('Using admin key for update:', adminKey.substring(0, 10) + '...')
+      
       const response = await fetch(`/api/admin/hotels/${params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'x-admin-key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'default-key'
+          'x-admin-key': adminKey
         },
         body: JSON.stringify(updatedHotel)
       })
+      
+      console.log('Update response status:', response.status)
+      
+      if (!response.ok) {
+        const errorData = await response.text()
+        console.error('Update error response:', errorData)
+        throw new Error(`Failed to update hotel: ${response.status} ${errorData}`)
+      }
 
       if (!response.ok) {
         throw new Error('Failed to update hotel')
@@ -275,6 +543,8 @@ export default function EditHotelPage() {
       </div>
     )
   }
+
+
 
   return (
     <div className="p-6">
@@ -368,7 +638,7 @@ export default function EditHotelPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Base Price (₦) *
+                    Fallback Price (₦) * <span className="text-xs text-gray-500">(used if no room types defined)</span>
                   </label>
                   <input
                     type="number"
@@ -381,6 +651,49 @@ export default function EditHotelPage() {
                     placeholder="150000"
                   />
                   {errors.basePriceNGN && <p className="text-red-600 text-sm mt-1">{errors.basePriceNGN}</p>}
+                </div>
+
+                {/* Discount Percentage Management */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Discount Percentage (%)
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={discountPercentage}
+                      onChange={(e) => setDiscountPercentage(Number(e.target.value))}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-brand-green focus:border-brand-green"
+                      placeholder="15"
+                    />
+                    <button
+                      type="button"
+                      onClick={updateDiscountPercentage}
+                      disabled={savingDiscount}
+                      className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 text-sm"
+                    >
+                      {savingDiscount ? '...' : 'Update'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetToDefaultDiscount}
+                      disabled={savingDiscount}
+                      className="px-3 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 disabled:opacity-50 text-sm"
+                      title="Reset to default 15%"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <div className="mt-2 flex items-center space-x-4 text-sm text-gray-600">
+                    <span>
+                      Negotiated Price: ₦{formData ? (formData.basePriceNGN * (1 - discountPercentage / 100)).toLocaleString() : '0'}
+                    </span>
+                    <span className="text-green-600">
+                      Savings: ₦{formData ? (formData.basePriceNGN * (discountPercentage / 100)).toLocaleString() : '0'}
+                    </span>
+                  </div>
                 </div>
 
                 <div>
@@ -553,11 +866,138 @@ export default function EditHotelPage() {
               </div>
             </div>
 
+            {/* Room Types Management */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Room Types & Pricing</h2>
+              
+              {formData?.roomTypes?.map((roomType, index) => (
+                <div key={roomType.id} className="border border-gray-200 rounded-lg p-4 mb-4 bg-gray-50">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-lg font-medium text-gray-900">{roomType.name}</h3>
+                    <span className="px-2 py-1 bg-brand-green text-white text-xs rounded-full">
+                      {roomType.size}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Room Price per Night (₦)
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={roomType.basePriceNGN}
+                        onChange={(e) => {
+                          const updatedRoomTypes = [...(formData.roomTypes || [])]
+                          updatedRoomTypes[index] = {
+                            ...updatedRoomTypes[index],
+                            basePriceNGN: Number(e.target.value)
+                          }
+                          handleInputChange('roomTypes', updatedRoomTypes)
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-brand-green focus:border-brand-green"
+                        placeholder="50000"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Discount (%)
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={roomType.discountPercent}
+                        onChange={(e) => {
+                          const updatedRoomTypes = [...(formData.roomTypes || [])]
+                          updatedRoomTypes[index] = {
+                            ...updatedRoomTypes[index],
+                            discountPercent: Number(e.target.value)
+                          }
+                          handleInputChange('roomTypes', updatedRoomTypes)
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-brand-green focus:border-brand-green"
+                        placeholder="15"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Max Occupancy
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={roomType.maxOccupancy || 2}
+                        onChange={(e) => {
+                          const updatedRoomTypes = [...(formData.roomTypes || [])]
+                          updatedRoomTypes[index] = {
+                            ...updatedRoomTypes[index],
+                            maxOccupancy: Number(e.target.value)
+                          }
+                          handleInputChange('roomTypes', updatedRoomTypes)
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-brand-green focus:border-brand-green"
+                        placeholder="2"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Room Type Pricing Preview */}
+                  <div className="mt-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-600">Regular Price:</span>
+                      <span className="font-medium">₦{roomType.basePriceNGN?.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm mt-1">
+                      <span className="text-gray-600">Negotiated Price:</span>
+                      <span className="font-medium text-green-600">
+                        ₦{Math.round(roomType.basePriceNGN * (1 - (roomType.discountPercent || 0) / 100)).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm mt-1">
+                      <span className="text-gray-600">Savings:</span>
+                      <span className="font-medium text-green-600">
+                        ₦{Math.round(roomType.basePriceNGN * ((roomType.discountPercent || 0) / 100)).toLocaleString()} 
+                        ({roomType.discountPercent}% off)
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Room Description */}
+                  {roomType.description && (
+                    <div className="mt-3">
+                      <p className="text-sm text-gray-600">{roomType.description}</p>
+                    </div>
+                  )}
+                  
+                  {/* Room Amenities */}
+                  {roomType.amenities && roomType.amenities.length > 0 && (
+                    <div className="mt-3">
+                      <div className="flex flex-wrap gap-1">
+                        {roomType.amenities.map((amenity, amenityIndex) => (
+                          <span key={amenityIndex} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                            {amenity}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )) || (
+                <div className="text-center py-8 text-gray-500">
+                  <p>No room types available. Room types will be automatically generated.</p>
+                </div>
+              )}
+            </div>
+
             {/* Images */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Hotel Images</h2>
               
-              {formData.images.map((image, index) => (
+              {formData?.images?.map((image, index) => (
                 <div key={index} className="flex gap-2 mb-3">
                   <input
                     type="url"
@@ -566,7 +1006,7 @@ export default function EditHotelPage() {
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-brand-green focus:border-brand-green"
                     placeholder="https://images.unsplash.com/photo-..."
                   />
-                  {formData.images.length > 1 && (
+                  {formData?.images && formData.images.length > 1 && (
                     <button
                       type="button"
                       onClick={() => removeImageField(index)}
@@ -576,7 +1016,7 @@ export default function EditHotelPage() {
                     </button>
                   )}
                 </div>
-              ))}
+              )) || []}
               
               <button
                 type="button"
@@ -601,7 +1041,7 @@ export default function EditHotelPage() {
                   <label key={amenity} className="flex items-center">
                     <input
                       type="checkbox"
-                      checked={formData.amenities.includes(amenity)}
+                      checked={formData?.amenities?.includes(amenity) || false}
                       onChange={() => handleAmenityToggle(amenity)}
                       className="rounded border-gray-300 text-brand-green focus:ring-brand-green"
                     />
@@ -611,7 +1051,7 @@ export default function EditHotelPage() {
               </div>
               
               <div className="mt-3 text-sm text-gray-600">
-                Selected: {formData.amenities.length} amenities
+                Selected: {formData?.amenities?.length || 0} amenities
               </div>
             </div>
 
@@ -623,13 +1063,55 @@ export default function EditHotelPage() {
                 <label className="flex items-center">
                   <input
                     type="checkbox"
-                    checked={formData.featured}
+                    checked={formData?.featured || false}
                     onChange={(e) => handleInputChange('featured', e.target.checked)}
                     className="rounded border-gray-300 text-brand-green focus:ring-brand-green"
                   />
                   <span className="ml-2 text-sm text-gray-700">Featured Hotel</span>
                 </label>
                 <p className="text-xs text-gray-500">Featured hotels appear prominently on the homepage</p>
+              </div>
+            </div>
+
+            {/* Discount Information */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Discount Settings</h2>
+              
+              <div className="space-y-4">
+                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-green-900">Current Discount</span>
+                    <span className="text-2xl font-bold text-green-600">{discountPercentage}%</span>
+                  </div>
+                  <div className="text-xs text-green-700">
+                    {discountPercentage === 15 ? 'Using default discount' : 'Custom discount override active'}
+                  </div>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Fallback Price:</span>
+                    <span>₦{formData?.basePriceNGN?.toLocaleString() || '0'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Negotiated Price:</span>
+                    <span className="text-green-600 font-medium">
+                      ₦{formData ? (formData.basePriceNGN * (1 - discountPercentage / 100)).toLocaleString() : '0'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Customer Saves:</span>
+                    <span className="text-blue-600 font-medium">
+                      ₦{formData ? (formData.basePriceNGN * (discountPercentage / 100)).toLocaleString() : '0'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-gray-200">
+                  <div className="text-xs text-gray-500">
+                    💡 Tip: Higher discounts attract more bookings but reduce profit margins
+                  </div>
+                </div>
               </div>
             </div>
 

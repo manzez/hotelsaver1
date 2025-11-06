@@ -1,8 +1,9 @@
 // app/api/negotiate/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { HOTELS } from '@/lib/data';
-import { getDiscountFor } from '@/lib/discounts';
 import { allowIp } from '@/lib/rate-limit'
+import { signNegotiationOffer } from '@/lib/negotiation'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 type Hotel = {
   id: string;
@@ -13,6 +14,20 @@ type Hotel = {
   price?: number;
   [k: string]: unknown;
 };
+
+// Function to get fresh hotel data from the file system
+async function getHotelData() {
+  try {
+    const filePath = path.join(process.cwd(), 'lib.hotels.json')
+    const fileContent = await fs.readFile(filePath, 'utf8')
+    return JSON.parse(fileContent)
+  } catch (error) {
+    console.error('Failed to read hotel data:', error)
+    // Fallback to static import if file read fails
+    const { HOTELS } = await import('@/lib/data')
+    return HOTELS
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -35,28 +50,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Try to find property in static data first
-    let property = HOTELS.find((h: any) => h.id === propertyId);
-    
-    // If not found and it's a Places API ID, try hybrid system
-    if (!property && propertyId.startsWith('places_')) {
-      try {
-        const { getHotelById } = await import('@/lib/hybrid-hotels');
-        const hybridHotel = await getHotelById(propertyId, 'Owerri'); // Default city
-        if (hybridHotel) {
-          property = {
-            id: hybridHotel.id,
-            name: hybridHotel.name,
-            city: hybridHotel.city,
-            type: hybridHotel.type,
-            basePriceNGN: hybridHotel.basePriceNGN,
-            price: hybridHotel.basePriceNGN
-          };
-        }
-      } catch (error) {
-        console.error('Error fetching Places API hotel for negotiation:', error);
-      }
-    }
+    // Get hotel data using optimized loading (temporary - until database is set up)
+    const { getHotelByIdOptimized } = await import('@/lib/hotel-data-optimized');
+    let property = await getHotelByIdOptimized(propertyId);
     
     if (!property) {
       return NextResponse.json(
@@ -65,7 +61,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Add 1-second delay to simulate real negotiation (reduced from 7 seconds)
+  // Add 1-second delay to simulate real negotiation (reduced from 7 seconds)
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Pull base price (supports both shapes, with room-specific pricing)
@@ -76,20 +72,13 @@ export async function POST(req: NextRequest) {
         ? property.price
         : 0;
 
-    // If roomId is provided, try to get room-specific pricing
-    if (roomId && typeof roomId === 'string') {
-      try {
-        const roomResponse = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3001'}/api/hotels/${propertyId}/rooms`);
-        if (roomResponse.ok) {
-          const roomData = await roomResponse.json();
-          const selectedRoom = roomData.roomTypes?.find((room: any) => room.id === roomId);
-          if (selectedRoom && typeof selectedRoom.basePriceNGN === 'number') {
-            base = selectedRoom.basePriceNGN;
-          }
-        }
-      } catch (error) {
-        // Fallback to hotel base price if room pricing fails
-        console.warn('Failed to fetch room pricing, using hotel base price:', error);
+    // If roomId is provided, try to get room-specific pricing from hotel data
+    let selectedRoom = null;
+    if (roomId && typeof roomId === 'string' && property.roomTypes && Array.isArray(property.roomTypes)) {
+      selectedRoom = property.roomTypes.find((room: any) => room.id === roomId);
+      if (selectedRoom && typeof (selectedRoom.pricePerNight || selectedRoom.basePriceNGN) === 'number') {
+        base = selectedRoom.pricePerNight || selectedRoom.basePriceNGN;
+        console.log(`✅ Using room-specific pricing for ${roomId}: ₦${base.toLocaleString()}`);
       }
     }
 
@@ -97,8 +86,31 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: 'no-offer', reason: 'no-base-price' });
     }
 
+    // Optional city-based restrictions (e.g., Abuja deals exhausted)
+    try {
+      const restrictAbuja = String(process.env.DEALS_ABUJA_DISABLED || '').toLowerCase() === 'true'
+      const cityName = String(property.city || '').toLowerCase()
+      if (restrictAbuja && cityName === 'abuja') {
+        return NextResponse.json({
+          status: 'no-deals',
+          message: 'Deals exhausted for Abuja today. Please check back tomorrow or explore other cities.',
+          property: { id: property.id, name: property.name, city: property.city }
+        }, { status: 200 })
+      }
+    } catch {}
+
     // Get discount (0 means no negotiate option available)
-    const discount = getDiscountFor(propertyId); // 0..1
+    // Use room-specific discount if available, otherwise use hotel discount
+    let discount = 0;
+    if (selectedRoom && typeof selectedRoom.discountPercent === 'number') {
+      discount = selectedRoom.discountPercent / 100; // Convert percentage to decimal
+      console.log(`✅ Using room-specific discount for ${roomId}: ${selectedRoom.discountPercent}%`);
+    } else {
+      const { getDiscountForAsync } = await import('@/lib/discounts-server');
+      discount = await getDiscountForAsync(propertyId); // 0..1
+      console.log(`✅ Using JSON discount for ${propertyId}: ${Math.round(discount * 100)}%`);
+    }
+    
     if (discount <= 0) {
       return NextResponse.json({ 
         status: 'no-offer', 
@@ -110,9 +122,15 @@ export async function POST(req: NextRequest) {
 
     const discounted = Math.round(base * (1 - discount));
     const expiresAtMs = Date.now() + 5 * 60 * 1000
-    
-    // Simple negotiation token for now (avoiding signing issues in production)
-    const negotiationToken = `neg_${propertyId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+
+    // Signed negotiation token (HMAC) with expiry and pricing details
+    const negotiationToken = signNegotiationOffer({
+      propertyId,
+      baseTotal: base,
+      discountedTotal: discounted,
+      discountRate: discount,
+      expiresAt: expiresAtMs,
+    })
 
     return NextResponse.json({
       status: 'discount', // Changed from 'success' to match test expectations

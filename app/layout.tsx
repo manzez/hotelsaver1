@@ -18,22 +18,22 @@ const base = process.env.NEXT_PUBLIC_BASE_URL
 export const metadata: Metadata = {
   metadataBase: base ? new URL(base) : undefined,
   title: {
-    default: 'HotelSaver.ng — Save on Hotels & Services',
-    template: '%s · HotelSaver.ng'
+    default: 'Hotelsaver.ng — Save on Hotels & Services',
+    template: '%s · Hotelsaver.ng'
   },
   description: 'Negotiate hotel prices & book local services across Nigeria.',
   keywords: ['hotels', 'Nigeria', 'Lagos', 'Abuja', 'Port Harcourt', 'Owerri', 'booking', 'negotiation', 'discount'],
   openGraph: {
-    title: 'HotelSaver.ng — Save on Hotels & Services',
+    title: 'Hotelsaver.ng — Save on Hotels & Services',
     description: 'Negotiate hotel prices & book local services across Nigeria.',
     url: base || undefined,
-    siteName: 'HotelSaver.ng',
+    siteName: 'Hotelsaver.ng',
     type: 'website',
     locale: 'en_NG',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'HotelSaver.ng — Save on Hotels & Services',
+    title: 'Hotelsaver.ng — Save on Hotels & Services',
     description: 'Negotiate hotel prices & book local services across Nigeria.',
   },
 }
@@ -48,6 +48,15 @@ export const viewport: Viewport = {
 export default function RootLayout({children}:{children:React.ReactNode}){
   return(
     <html lang='en' className={inter.className}>
+      <head>
+        {/* Performance hints */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//images.unsplash.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="preconnect" href="https://maps.googleapis.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//maps.googleapis.com" />
+      </head>
       <body className='min-h-screen bg-gray-50 text-gray-900'>
         {/* Consent-aware analytics: loads only when GA configured and user consent granted */}
         <Analytics />

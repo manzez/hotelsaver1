@@ -25,14 +25,14 @@ export default function SignOut() {
         <div className="mb-8">
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-bold text-brand-green">
-              🏨 HotelSaver.ng
+              🏨 Hotelsaver.ng
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Signing you out...
           </h2>
           <p className="text-gray-600">
-            Thank you for using HotelSaver.ng
+            Thank you for using Hotelsaver.ng
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export default function SignOut() {
           {/* Thank You Message */}
           <div className="mt-8 pt-6 border-t border-gray-100">
             <h3 className="text-sm font-semibold text-gray-900 mb-3">
-              🇳🇬 Thank you for choosing HotelSaver.ng!
+              🇳🇬 Thank you for choosing Hotelsaver.ng!
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">

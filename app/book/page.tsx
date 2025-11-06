@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useMemo, useState, useEffect } from 'react'
 import { HOTELS } from '@/lib/data'
+import { track } from '@/lib/analytics'
 
 // Hotel addresses mapping
 const HOTEL_ADDRESSES: Record<string, { address: string; landmarks: string; phone: string }> = {
@@ -169,6 +170,15 @@ function BookPageContent() {
         apiEndpoint = '/api/book'
       }
 
+      // Track booking submit intent before network (beacon transport)
+      track('booking_submit', {
+        serviceType,
+        propertyId,
+        total,
+        nights,
+        paymentMethod,
+      })
+
       const resp = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -193,12 +203,22 @@ function BookPageContent() {
           rooms: sp.get('rooms') || '1'
         })
         
+        // Track booking success (non-payment) before navigating
+        track('booking_confirmed', {
+          serviceType,
+          propertyId,
+          total,
+          nights,
+          paymentMethod,
+        })
         router.push(`/confirmation?${confirmationParams.toString()}`)
       } else {
+        track('booking_failed', { serviceType, propertyId, total, nights, paymentMethod })
         alert('Booking failed. Please try again.')
       }
     } catch (error) {
       console.error('Booking error:', error)
+      track('booking_error', { serviceType, propertyId, total, nights, paymentMethod })
       alert('Booking failed. Please try again.')
     } finally {
       setSubmitting(false)
@@ -263,7 +283,9 @@ function BookPageContent() {
       <div className="container py-10">
         <div className="max-w-xl mx-auto">
           <div className="card p-6 text-center">
-            <h2 className="text-xl font-bold mb-4">Loading Hotel Details...</h2>
+            <h2 className="text-xl font-bold mb-4">
+              {serviceType === 'airport-taxi' ? 'Loading Taxi details...' : 'Loading hotel details...'}
+            </h2>
             <div className="animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
               <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>

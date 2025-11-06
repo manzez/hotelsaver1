@@ -73,23 +73,30 @@ If you're joining our development team, you're building more than just another b
 ```bash
 # 1. Get the code
 git clone <repository-url>
-cd hotelsaver-ng-v9
+cd hotelsaver1
 
-# 2. Install everything
+# 2. Set up your environment
+# Copy .env.example to .env and add your Neon connection string and Resend API key.
+cp .env.example .env
+
+# 3. Install dependencies
 npm install
 
-# 3. Start developing
+# 4. Apply database migrations
+# This will sync your Prisma schema with your Neon database.
+npx prisma migrate dev
+
+# 5. Start the development server
 npm run dev
 # Visit: http://localhost:3000
----
-
-
-# 4. Run tests to understand the codebase
-npm run test
-
-# 5. Build for production
-npm run build
 ```
+
+### ☁️ Database
+
+This project is configured to use [Neon](https://neon.tech/) for its PostgreSQL database.
+
+- **Connection String**: The `DATABASE_URL` in your `.env` file should be the pooled connection string from your Neon project dashboard.
+- **Migrations**: Use `npx prisma migrate dev` to apply schema changes to the database.
 
 ### 📚 Table of Contents
 

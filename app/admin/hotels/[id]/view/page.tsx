@@ -36,7 +36,7 @@ interface Booking {
 
 // Mock hotel data
 const mockHotel: Hotel = {
-  id: 'eko-hotels-lagos',
+  id: 'eko-hotel-and-suites-lagos',
   name: 'Eko Hotels and Suites',
   city: 'Lagos',
   basePriceNGN: 185000,
@@ -288,9 +288,9 @@ export default function HotelViewPage() {
                 <h3 className="font-medium text-gray-900 mb-3">Pricing & Availability</h3>
                 <div className="space-y-3">
                   <div>
-                    <span className="text-sm text-gray-600">Base Price</span>
+                    <span className="text-sm text-gray-600">Fallback Price</span>
                     <div className="font-bold text-xl text-gray-900">₦{hotel.basePriceNGN.toLocaleString()}</div>
-                    <div className="text-sm text-gray-500">per night</div>
+                    <div className="text-sm text-gray-500">per night (used if no room types defined)</div>
                   </div>
                   <div>
                     <span className="text-sm text-gray-600">Room Availability</span>

@@ -102,6 +102,7 @@ Then('I should see hotels in the {string} price range', async function(budget: s
   // Verify budget parameter in URL
   const url = await navigationHelper.getCurrentUrl();
   const budgetMap: Record<string, string> = {
+    'Under ₦40k': 'u40',
     'Under ₦80k': 'u80',
     '₦80k–₦130k': '80_130',
     '₦130k–₦200k': '130_200',

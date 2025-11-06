@@ -53,7 +53,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
-        <p className="text-gray-600">Welcome to HotelSaver.ng Admin Panel</p>
+        <p className="text-gray-600">Welcome to Hotelsaver.ng Admin Panel</p>
       </div>
 
       {/* Key Metrics */}
@@ -139,37 +139,210 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* Advanced Management Tools */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Hotel Management */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">🏨 Hotel Management</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Link 
+              href="/admin/hotels/create"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">➕</span>
+              <span className="text-sm font-medium">Add Hotel</span>
+            </Link>
+            <Link 
+              href="/admin/hotels/manage"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">⚙️</span>
+              <span className="text-sm font-medium">Manage Hotels</span>
+            </Link>
+            <Link 
+              href="/admin/hotels/bulk"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-brand-green/10 border-brand-green/30 transition-colors"
+            >
+              <span className="text-lg mr-2">⚡</span>
+              <span className="text-sm font-medium text-brand-green">Bulk Operations</span>
+            </Link>
+            <Link 
+              href="/admin/hotels/analytics"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">📊</span>
+              <span className="text-sm font-medium">Hotel Analytics</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Discount & Pricing */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">💰 Pricing & Discounts</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <Link 
+              href="/admin/discounts"
+              className="flex items-center p-3 border border-green-200 rounded-lg hover:bg-green-50 transition-colors"
+            >
+              <span className="text-lg mr-2">💳</span>
+              <span className="text-sm font-medium text-green-700">Hotel Discounts</span>
+            </Link>
+            <Link 
+              href="/admin/discounts/super-admin"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-orange-50 border-orange-200 transition-colors"
+            >
+              <span className="text-lg mr-2">🎯</span>
+              <span className="text-sm font-medium text-orange-700">Super Discounts</span>
+            </Link>
+            <Link 
+              href="/admin/pricing/dynamic"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">📈</span>
+              <span className="text-sm font-medium">Dynamic Pricing</span>
+            </Link>
+            <Link 
+              href="/admin/campaigns"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-purple-50 border-purple-200 transition-colors"
+            >
+              <span className="text-lg mr-2">🎪</span>
+              <span className="text-sm font-medium text-purple-700">Campaigns</span>
+            </Link>
+            <Link 
+              href="/admin/promotions"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">🏷️</span>
+              <span className="text-sm font-medium">Promotions</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Real-Time Monitoring */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        {/* Live Dashboard */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">📊 Real-Time Monitoring</h3>
+          <div className="space-y-3">
+            <Link 
+              href="/admin/dashboard/live"
+              className="flex items-center justify-between p-3 border border-green-200 rounded-lg bg-green-50 hover:bg-green-100 transition-colors"
+            >
+              <div className="flex items-center">
+                <span className="text-lg mr-2">📡</span>
+                <span className="text-sm font-medium text-green-700">Live Dashboard</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-1"></div>
+                <span className="text-xs text-green-600">LIVE</span>
+              </div>
+            </Link>
+            <Link 
+              href="/admin/bookings"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">📋</span>
+              <span className="text-sm font-medium">Booking Analytics</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Business Intelligence */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">🧠 Business Intelligence</h3>
+          <div className="space-y-3">
+            <Link 
+              href="/admin/analytics"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 border-blue-200 transition-colors"
+            >
+              <span className="text-lg mr-2">📈</span>
+              <span className="text-sm font-medium text-blue-700">Revenue Analytics</span>
+            </Link>
+            <Link 
+              href="/admin/reports"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">📊</span>
+              <span className="text-sm font-medium">Reports</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* System Status */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">⚡ System Status</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                <span className="text-sm font-medium text-green-700">All Systems Operational</span>
+              </div>
+            </div>
+            <Link 
+              href="/admin/system/health"
+              className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg mr-2">🔍</span>
+              <span className="text-sm font-medium">System Health</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Quick Actions */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">⚡ Quick Actions</h3>
+          <Link 
+            href="/admin/help" 
+            className="text-sm text-brand-green hover:text-brand-dark font-medium"
+          >
+            Need help? →
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           <Link 
             href="/admin/hotels/create"
             className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
           >
             <span className="text-2xl mb-2">🏨</span>
-            <span className="text-sm font-medium text-gray-900">Add Hotel</span>
+            <span className="text-sm font-medium text-gray-900 text-center">Add Hotel</span>
+          </Link>
+          <Link 
+            href="/admin/discounts/create"
+            className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-orange-50 border-orange-200 transition-colors"
+          >
+            <span className="text-2xl mb-2">🎯</span>
+            <span className="text-sm font-medium text-orange-700 text-center">New Discount</span>
+          </Link>
+          <Link 
+            href="/admin/hotels/bulk"
+            className="flex flex-col items-center p-4 border border-brand-green/30 bg-brand-green/5 rounded-lg hover:bg-brand-green/10 transition-colors"
+          >
+            <span className="text-2xl mb-2">⚡</span>
+            <span className="text-sm font-medium text-brand-green text-center">Bulk Update</span>
           </Link>
           <Link 
             href="/admin/bookings"
             className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
           >
-            <span className="text-2xl mb-2">📋</span>
-            <span className="text-sm font-medium text-gray-900">View Bookings</span>
+            <span className="text-2xl mb-2">�</span>
+            <span className="text-sm font-medium text-gray-900 text-center">View Bookings</span>
           </Link>
           <Link 
-            href="/admin/hotels"
-            className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            href="/admin/dashboard/live"
+            className="flex flex-col items-center p-4 border border-green-200 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
           >
-            <span className="text-2xl mb-2">🔍</span>
-            <span className="text-sm font-medium text-gray-900">Manage Hotels</span>
+            <span className="text-2xl mb-2">📡</span>
+            <span className="text-sm font-medium text-green-700 text-center">Live Monitor</span>
           </Link>
           <Link 
             href="/admin/analytics"
-            className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-blue-50 border-blue-200 transition-colors"
           >
             <span className="text-2xl mb-2">📈</span>
-            <span className="text-sm font-medium text-gray-900">Analytics</span>
+            <span className="text-sm font-medium text-blue-700 text-center">Analytics</span>
           </Link>
         </div>
       </div>

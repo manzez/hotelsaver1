@@ -28,7 +28,7 @@ interface Hotel {
 // Mock data
 const mockHotels: Hotel[] = [
   {
-    id: 'eko-hotels-lagos',
+    id: 'eko-hotel-and-suites-lagos',
     name: 'Eko Hotels and Suites',
     city: 'Lagos',
     basePriceNGN: 185000,

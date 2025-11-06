@@ -124,7 +124,7 @@ export default function RoomSelection({
     const params = new URLSearchParams({
       propertyId: hotelId,
       roomId: room.id,
-      price: String(room.basePriceNGN),
+      price: String(room.pricePerNight || 0),
       ...(searchParams.checkIn && { checkIn: searchParams.checkIn }),
       ...(searchParams.checkOut && { checkOut: searchParams.checkOut }),
       ...(searchParams.adults && { adults: searchParams.adults }),
@@ -155,7 +155,7 @@ export default function RoomSelection({
           <div className="text-right">
             <div className="text-sm text-gray-600">Selected Room</div>
             <div className="font-semibold text-brand-green">
-              ₦{selectedRoom.basePriceNGN.toLocaleString()}
+              ₦{(selectedRoom.pricePerNight || selectedRoom.basePriceNGN || 0).toLocaleString()}
             </div>
           </div>
         )}
@@ -194,7 +194,7 @@ export default function RoomSelection({
               
               <div className="text-right ml-3">
                 <div className="text-xl font-bold text-brand-green">
-                  ₦{room.basePriceNGN.toLocaleString()}
+                  ₦{(room.pricePerNight || 0).toLocaleString()}
                 </div>
                 <div className="text-xs text-gray-600">per night</div>
               </div>

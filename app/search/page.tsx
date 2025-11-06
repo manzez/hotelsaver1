@@ -14,10 +14,15 @@ import { Suspense } from 'react'
 import CategoryTabs from '@/components/CategoryTabs'
 // MobileAutoScrollToResults removed to avoid auto scrolling on load
 import MobileToolbar from '@/components/MobileToolbar'
+import AvailabilityStatus from '@/components/AvailabilityStatus'
+import { BulkAvailabilityProvider, OptimizedAvailabilityStatus } from '@/components/BulkAvailabilityProvider'
+import { getBudgetRange, getHotelsWithRoomPricing, type SearchCriteria, type RoomPriceInfo } from '@/lib/room-based-pricing'
+import SearchResultsAnalytics from '@/components/SearchResultsAnalytics'
 
 const TAX_RATE = 0.075 // 7.5% VAT (adjust if you need)
 
-function priceRange(key:string){
+function priceRange(key: string) {
+  if(key==='u40') return [0,40000]
   if(key==='u80') return [0,80000]
   if(key==='80_130') return [80000,130000]
   if(key==='130_200') return [130000,200000]
@@ -50,13 +55,13 @@ function mapEmbedSrcForCity(city?: string | null) {
 async function fetchHotels(params:URLSearchParams){
   const city=params.get('city')||''
   const hotelQuery=params.get('hotelQuery')||''
-  const budget=params.get('budget')||''
+  // Remove budget filtering at hotel level - let room-based pricing handle it
   const stayType=(params.get('stayType') as 'any'|'hotel'|'apartment'|'high-security')||'any'
   const negotiating = params.get('negotiating') === '1'
   const minStars = Number(params.get('minStars') || '0')
 
-  // Base list from source (DB or JSON)
-  let list = await listHotels({ city, budgetKey: budget || undefined, stayType })
+  // Base list from source (DB or JSON) - NO budget filtering here
+  let list = await listHotels({ city, stayType })
 
   // Filter by hotel name if specified (client-side match to preserve behavior)
   if (hotelQuery) {
@@ -75,6 +80,77 @@ async function fetchHotels(params:URLSearchParams){
   return list
 }
 
+async function fetchHotelsWithRoomPricing(params: URLSearchParams) {
+  // Get base hotels
+  const hotels = await fetchHotels(params)
+  
+  // Build search criteria from URL params
+  const adults = Number(params.get('adults') || '2')
+  const children = Number(params.get('children') || '0')
+  const rooms = Number(params.get('rooms') || '1')
+  const budgetKey = params.get('budget') || 'u40'
+  const [budgetMin, budgetMax] = getBudgetRange(budgetKey)
+
+  console.log(`🔍 [SEARCH] City: ${params.get('city')}, Budget: ${budgetKey} [₦${budgetMin.toLocaleString()} - ₦${budgetMax.toLocaleString()}]`)
+  console.log(`🔍 [SEARCH] Found ${hotels.length} hotels before filtering`)
+
+  const criteria: SearchCriteria = {
+    adults,
+    children,
+    rooms,
+    budgetMin,
+    budgetMax
+  }
+
+  // Get room-based pricing for all hotels
+  const hotelIds = hotels.map(h => h.id)
+  const roomPricingMap = await getHotelsWithRoomPricing(hotelIds, criteria)
+  
+  console.log(`🔍 [SEARCH] Room pricing map size: ${roomPricingMap.size}`)
+
+  // Enhance hotels with room pricing info and filter out those without valid room data
+  const hotelsWithRoomPricing = hotels
+    .map(hotel => {
+      const roomInfo = roomPricingMap.get(hotel.id)
+      return {
+        ...hotel,
+        roomPriceInfo: roomInfo || null
+      }
+    })
+    .filter(hotel => {
+      // CRITICAL: Only show hotels with valid room pricing data
+      if (!hotel.roomPriceInfo) {
+        console.log(`Excluding hotel ${hotel.id}: No room pricing info`)
+        return false // Skip hotels without room types
+      }
+      
+      // Skip hotels with zero price (error or no rooms)
+      if (hotel.roomPriceInfo.cheapestRoomPrice === 0) {
+        console.log(`Excluding hotel ${hotel.id}: Zero price (no suitable rooms)`)
+        return false
+      }
+      
+      // Only show hotels that have at least ONE room within budget
+      const { hasRoomInBudget, hasAvailableRooms } = hotel.roomPriceInfo
+      
+      // If we have room pricing data, only show hotels with rooms in budget
+      if (hasAvailableRooms && hasRoomInBudget !== undefined) {
+        if (!hasRoomInBudget) {
+          console.log(`Excluding hotel ${hotel.id}: No rooms in budget range`)
+        }
+        return hasRoomInBudget
+      }
+      
+      // No valid room data - exclude
+      console.log(`Excluding hotel ${hotel.id}: Invalid room data`)
+      return false
+    })
+
+  console.log(`🔍 [SEARCH] Final result: ${hotelsWithRoomPricing.length} hotels after room filtering`)
+
+  return hotelsWithRoomPricing
+}
+
 function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
   params: URLSearchParams
   hotels: any[]
@@ -84,7 +160,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
 }) {
   // Curated, realistic photo sets per city to improve authenticity in results
   // without modifying the dataset. Owerri uses curated images across budgets.
-  // Other cities use curated images for budget "u80" to keep a consistent look.
+  // Other cities use curated images for budget "u40" and "u80" to keep a consistent look.
   const curatedByCity: Record<string, string[]> = {
     'Owerri': [
       'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&h=600&fit=crop&auto=format&q=80',
@@ -139,6 +215,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
   if (hotels.length === 0) {
     const hotelQuery = params.get('hotelQuery')
     const city = params.get('city')
+    const budget = params.get('budget')
     
     return (
       <div className="card p-8 mt-6 text-center">
@@ -146,6 +223,8 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
         <p className="text-gray-600 mt-1">
           {hotelQuery 
             ? `No hotels found matching "${hotelQuery}". Try a different hotel name or search by city.`
+            : budget && budget !== 'u40'
+            ? `No properties with rooms in this price range. Try expanding your budget or selecting a different city.`
             : 'Try a different city or budget range.'
           }
         </p>
@@ -154,10 +233,15 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
     )
   }
 
-  const sortKey = params.get('sort') || 'top'
+  // Default to 'negotiating' sort when Deals filter is active and no explicit sort chosen
+  const sortKey = params.get('sort') || (params.get('negotiating') === '1' ? 'negotiating' : 'top')
   const sorted = [...hotels].sort((a, b) => {
     const ra = ratingFor(a.id), rb = ratingFor(b.id)
-    const pa = a.basePriceNGN, pb = b.basePriceNGN
+    
+    // Use room prices for sorting (cheapest available room)
+    const pa = (a as any).roomPriceInfo?.cheapestRoomPrice || 0
+    const pb = (b as any).roomPriceInfo?.cheapestRoomPrice || 0
+    
     const sa = a.stars || 0, sb = b.stars || 0
     switch (sortKey) {
       case 'price_low': return pa - pb
@@ -183,28 +267,48 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
     }
   })
 
-  return (
+  // Extract hotel IDs for bulk availability checking
+  const hotelIds = sorted.map(h => h.id)
+  const rooms = Number(params.get('rooms')) || 1
+
+  const resultsContent = (
     <div id="results-start" data-testid="results-start" className="grid grid-cols-1 gap-4 mt-4 md:mt-6">
       {sorted.map(h => {
-  // Handle mixed schema: basePriceNGN vs price
-  const base = typeof h.basePriceNGN === 'number' ? h.basePriceNGN : (typeof h.price === 'number' ? h.price : 0)
-    const subtotal = nights > 0 ? base * nights : base
+        // ONLY use room-based pricing - no more base price fallback
+        const roomPriceInfo = (h as any).roomPriceInfo as RoomPriceInfo | null
+        
+        // Get price from room pricing system (cheapest suitable room)
+        const displayPrice = roomPriceInfo?.cheapestRoomPrice || 0
+        
+        // Skip rendering if no valid price (safety check)
+        if (displayPrice === 0) {
+          console.warn(`Skipping render for hotel ${h.id}: Zero display price`)
+          return null
+        }
+        
+        // Calculate totals based on room price
+        const subtotal = nights > 0 ? displayPrice * nights : displayPrice
         const tax = nights > 0 ? Math.round(subtotal * TAX_RATE) : 0
-        const displayPrice = base
-        const totalWithTax = nights > 0 ? subtotal + tax : base
+        const totalWithTax = nights > 0 ? subtotal + tax : displayPrice
+        
+        // Rating and review calculations
         const rating = ratingFor(h.id)
         const reviews = reviewCountFor(h.id)
-  const label = rating >= 4.6 ? 'Excellent' : rating >= 4.2 ? 'Very good' : 'Good'
-  const showTopPick = rating >= 4.5
+        const label = rating >= 4.6 ? 'Excellent' : rating >= 4.2 ? 'Very good' : 'Good'
+        const showTopPick = rating >= 4.5
+        
+        // Discount calculations based on room price
         const hasDeal = getDiscountFor(h.id) > 0
-  const discountRate = hasDeal ? getDiscountFor(h.id) : 0
-  const discountedNight = hasDeal ? Math.max(1, Math.round(displayPrice * (1 - discountRate))) : displayPrice
-  const showHighSecurity = base > 78000
+        const discountRate = hasDeal ? getDiscountFor(h.id) : 0
+        const discountedNight = hasDeal ? Math.max(1, Math.round(displayPrice * (1 - discountRate))) : displayPrice
+        
+        // High security based on room price (not base price)
+        const showHighSecurity = displayPrice > 78000
   const badgeColor = rating >= 4.6 ? 'bg-emerald-700' : rating >= 4.2 ? 'bg-sky-700' : 'bg-gray-600'
         const budgetKey = params.get('budget') || ''
         const cityName = h.city
         const curatedList = curatedByCity[cityName]
-        const useCurated = cityName === 'Owerri' || (budgetKey === 'u80' && Array.isArray(curatedList))
+        const useCurated = cityName === 'Owerri' || ((budgetKey === 'u40' || budgetKey === 'u80') && Array.isArray(curatedList))
         const FALLBACK_MAIN = 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&auto=format&q=80'
         const FALLBACK_THUMB1 = 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&auto=format&q=80'
         const FALLBACK_THUMB2 = 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&auto=format&q=80'
@@ -287,6 +391,13 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                     <div className="mt-1 space-y-1.5">
                       <div className="text-green-700 font-medium text-[12px]">Free cancellation</div>
                       <SecurityBadge size="sm" variant="compact" />
+                      {checkIn && checkOut && (
+                        <OptimizedAvailabilityStatus
+                          hotelId={h.id}
+                          className="text-xs"
+                          showDetails={false}
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="text-[11px] text-gray-500 mt-2">
@@ -301,19 +412,35 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                 <div className="md:col-span-1 flex flex-col justify-between items-start md:items-end text-left md:text-right">
                   <div>
                     <div className="text-[11px] text-gray-500">{nights>0? `${nights} night${nights>1?'s':''}, ${Number(params.get('adults')||'2')} adult${Number(params.get('adults')||'2')>1?'s':''}` : '1 room'}</div>
+                    
+                    {/* Room type info if available */}
+                    {roomPriceInfo?.hasAvailableRooms && roomPriceInfo?.matchesCapacity && (
+                      <div className="text-[10px] text-blue-600 font-medium">
+                        {roomPriceInfo.cheapestRoomName} (Best match)
+                      </div>
+                    )}
+                    
                     <div className="text-base md:text-lg font-bold text-gray-900">
                       ₦{displayPrice.toLocaleString()}
-                      {showHighSecurity ? (
+                      {roomPriceInfo?.hasAvailableRooms && roomPriceInfo?.matchesCapacity ? (
+                        <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-blue-50 text-blue-700 border border-blue-200">Room match</span>
+                      ) : showHighSecurity ? (
                         <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
                       ) : (
                         <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
                       )}
                     </div>
+                    {/* Potential negotiation savings hint */}
+                    {hasDeal && (
+                      <div className="mt-0.5 text-[11px] text-emerald-700">
+                        Save up to ₦{(displayPrice - discountedNight).toLocaleString()} ({Math.round(discountRate * 100)}%) • Potential ₦{discountedNight.toLocaleString()} per night
+                      </div>
+                    )}
                     <div className="text-[11px] text-gray-500">{nights>0? 'Includes taxes and fees' : 'Taxes may apply at checkout'}</div>
                     <div className="mt-2 flex flex-col sm:flex-row items-stretch gap-2 w-full">
-                      <Link href={`/book?propertyId=${h.id}&price=${displayPrice}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-teal-600 text-white text-sm hover:bg-teal-700 no-underline">Book</Link>
+                      <Link href={`/book?propertyId=${h.id}&price=${displayPrice}&roomId=${roomPriceInfo?.roomId || ''}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-teal-600 text-white text-sm hover:bg-teal-700 no-underline">Book</Link>
                       {hasDeal && (
-                        <Link href={`/negotiate?propertyId=${h.id}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-brand-green text-white text-sm hover:bg-brand-dark no-underline">Negotiate</Link>
+                        <Link href={`/negotiate?propertyId=${h.id}&roomId=${roomPriceInfo?.roomId || ''}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-brand-green text-white text-sm hover:bg-brand-dark no-underline">Negotiate</Link>
                       )}
                     </div>
                   </div>
@@ -325,11 +452,27 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
       })}
     </div>
   )
+
+  // Only use bulk availability if we have valid search dates
+  if (checkIn && checkOut) {
+    return (
+      <BulkAvailabilityProvider
+        hotelIds={hotelIds}
+        checkIn={checkIn}
+        checkOut={checkOut}
+        rooms={rooms}
+      >
+        {resultsContent}
+      </BulkAvailabilityProvider>
+    )
+  }
+
+  return resultsContent
 }
 
 export default async function SearchPage({searchParams}:{searchParams:Record<string,string>}){
   const params=new URLSearchParams(searchParams as any)
-  const hotels=await fetchHotels(params)
+  const hotels=await fetchHotelsWithRoomPricing(params)
 
   const checkIn = params.get('checkIn')
   const checkOut = params.get('checkOut')
@@ -343,6 +486,11 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
   const negotiatingCount = hotels.filter(h => getDiscountFor(h.id) > 0).length
   const fourPlusStars = hotels.filter(h => (h.stars || 0) >= 4).length
   const apartmentsCount = hotels.filter(h => h.type === 'Apartment').length
+  const highSecurityCount = hotels.filter(h => {
+    // Use room-based pricing for high-security calculation
+    const roomPrice = (h as any).roomPriceInfo?.cheapestRoomPrice || 0
+    return roomPrice > 78000
+  }).length
 
   // Helpers to build chip hrefs while preserving other params
   const buildHref = (updates: Record<string,string|undefined>) => {
@@ -357,10 +505,26 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
   const negotiatingActive = params.get('negotiating') === '1'
   const minStarsActive = Number(params.get('minStars') || '0') >= 4
   const apartmentsActive = (params.get('stayType') || '') === 'apartment'
+  const highSecurityActive = (params.get('stayType') || '') === 'high-security'
   const view = params.get('view') || 'list'
 
   return (
     <div className="container mx-auto px-4 py-2 md:py-6 pb-24 min-h-screen">
+      {/* Analytics: emit a results event on mount/update (consent-gated) */}
+      <SearchResultsAnalytics
+        resultCount={hotels.length}
+        params={{
+          city: params.get('city') || '',
+          hotelQuery: params.get('hotelQuery') || '',
+          budget: params.get('budget') || 'u40',
+          stayType: (params.get('stayType') || 'any'),
+          adults: Number(params.get('adults') || '2'),
+          children: Number(params.get('children') || '0'),
+          rooms: Number(params.get('rooms') || '1'),
+          checkIn: params.get('checkIn') || '',
+          checkOut: params.get('checkOut') || ''
+        }}
+      />
       {/* No auto-scroll: keep user at top on first load */}
       {/* Logo removed (already present globally) */}
 
@@ -390,7 +554,7 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
             adults={Number(params.get('adults')) || 2}
             children={Number(params.get('children')) || 0}
             rooms={Number(params.get('rooms')) || 1}
-            budget={params.get('budget') || 'u80'}
+            budget={params.get('budget') || 'u40'}
             stayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment' | 'high-security') || 'any'}
           />
         </div>
@@ -403,7 +567,7 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
             defaultAdults={Number(params.get('adults')) || 2}
             defaultChildren={Number(params.get('children')) || 0}
             defaultRooms={Number(params.get('rooms')) || 1}
-            defaultBudget={params.get('budget') || 'u80'}
+            defaultBudget={params.get('budget') || 'u40'}
             defaultStayType={(params.get('stayType') as 'any' | 'hotel' | 'apartment' | 'high-security') || 'any'}
           />
         </div>
@@ -422,6 +586,7 @@ export default async function SearchPage({searchParams}:{searchParams:Record<str
           <Link href={buildHref({ negotiating: negotiatingActive ? undefined : '1' })} className={`no-underline chip whitespace-nowrap ${negotiatingActive ? 'active' : ''}`}>Deals {negotiatingCount}</Link>
           <Link href={buildHref({ minStars: minStarsActive ? undefined : '4' })} className={`no-underline chip whitespace-nowrap ${minStarsActive ? 'active' : ''}`}>4+ Stars {fourPlusStars}</Link>
           <Link href={buildHref({ stayType: apartmentsActive ? 'any' : 'apartment' })} className={`no-underline chip whitespace-nowrap ${apartmentsActive ? 'active' : ''}`}>Apartments {apartmentsCount}</Link>
+          <Link href={buildHref({ stayType: highSecurityActive ? 'any' : 'high-security' })} className={`no-underline chip whitespace-nowrap ${highSecurityActive ? 'active' : ''}`}>🔒 High Security {highSecurityCount}</Link>
         </div>
       </div>
 

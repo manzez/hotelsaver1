@@ -278,7 +278,7 @@ export default function CreateHotelPage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Base Price (₦) *
+                    Fallback Price (₦) * <span className="text-xs text-gray-500">(used if no room types defined)</span>
                   </label>
                   <input
                     type="number"

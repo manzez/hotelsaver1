@@ -108,6 +108,51 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-6 md:py-8">
+        {/* SEO: JSON-LD for Hotel + basic Offer (consent not required) */}
+        {(() => {
+          try {
+            const address = (h as any).address || `${h.city}, Nigeria`
+            const aggregateRating = (h as any).rating && (h as any).totalRatings ? {
+              "@type": "AggregateRating",
+              ratingValue: (h as any).rating,
+              reviewCount: (h as any).totalRatings
+            } : undefined
+            const offer = {
+              "@type": "Offer",
+              priceCurrency: "NGN",
+              price: String(base),
+              availability: "https://schema.org/InStock"
+            }
+            const ld = {
+              "@context": "https://schema.org",
+              "@type": "Hotel",
+              name: h.name,
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: h.city,
+                addressCountry: "NG"
+              },
+              starRating: {
+                "@type": "Rating",
+                ratingValue: String(stars)
+              },
+              image: Array.isArray(h.images) ? h.images.slice(0, 5) : [],
+              url: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/hotel/${h.id}`,
+              telephone: (h as any).phoneNumber || undefined,
+              description: (hotelDetails[h.id]?.description || hotelDetails["default"].description),
+              aggregateRating,
+              makesOffer: offer
+            }
+            return (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+              />
+            )
+          } catch {
+            return null
+          }
+        })()}
         {/* Image Gallery first (especially for mobile) */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
           {(() => {

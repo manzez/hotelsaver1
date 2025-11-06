@@ -244,7 +244,7 @@ export default function SuperAdminDiscounts() {
                 <tr>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">Hotel</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">City</th>
-                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">Base Price</th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">Fallback Price</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">Current Discount</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">Discounted Price</th>
                   <th className="text-left py-3 px-6 text-sm font-medium text-gray-500">Savings</th>

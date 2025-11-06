@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Cookies Policy',
-  description: 'How HotelSaver.ng uses cookies'
+  description: 'How Hotelsaver.ng uses cookies'
 }
 
 export default function CookiesPolicy() {

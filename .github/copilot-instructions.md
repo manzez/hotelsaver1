@@ -148,51 +148,40 @@ useEffect(() => {
   }
   const timer = setInterval(tick, 1000)
   return () => clearInterval(timer)
+# HotelSaver.ng – AI agent quickstart (Next.js 14)
 }, [expiresAt])
-```
-
 ### Data Persistence Strategies
 - **No global state**: Each page reads from URL parameters
 - **Stateless navigation**: All context passed via URL
-- **Session-less**: No localStorage or sessionStorage usage
 - **Server-side expiry**: API provides timestamp-based offer expiration
 
 ### State Validation Patterns
-- **URL parameter fallbacks**: `sp.get('propertyId') || ''`
 - **Type coercion**: `String(adults)`, `Number(data.baseTotal)`
 - **Null-safe operations**: `startDate?.toISOString() || ''`
-- **Defensive programming**: Always provide default values for missing params
 
 ## Development Workflows
 
 ### Essential Commands
 ```bash
-npm run dev          # Next.js dev server
 npm run build        # Production build
 npm start           # Production server
 ```
-
 ### File Structure Conventions
 - `/app` - Next.js App Router (not Pages Router)
 - `/components` - Reusable UI components with TypeScript
 - `/lib` - Business logic, data imports, utility functions
-- `lib.hotels.json` & `lib.services.json` - Primary data sources (not in `/lib` folder)
 
 ### Styling System
 - **Tailwind CSS** with custom brand colors: `brand-green`, `brand-dark`
-- **Utility classes**: `.card`, `.btn-primary`, `.grid-cards` defined in `globals.css`
 - **Nigerian Naira**: Always format prices as `₦{amount.toLocaleString()}`
 
 ## Styling Patterns & Design System
 
-### Brand Color Palette
 ```javascript
 // tailwind.config.js
 colors: {
   brand: {
     green: "#009739",    // Primary brand color
-    dark: "#036a2a",     // Hover states, emphasis  
-    muted: "#e8fff1"     // Light backgrounds, highlights
   }
 }
 ```

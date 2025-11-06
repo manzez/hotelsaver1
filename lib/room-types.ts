@@ -4,7 +4,7 @@ export interface RoomType {
   id: string;
   name: string;
   description: string;
-  basePriceNGN: number;
+  pricePerNight: number;
   maxOccupancy: number;
   amenities: string[];
   size?: string; // e.g., "25 sqm"
@@ -21,7 +21,7 @@ export interface HotelRoomData {
 }
 
 // Standard Nigerian hotel room types based on local market
-export const DEFAULT_ROOM_TYPES: Omit<RoomType, 'id' | 'basePriceNGN'>[] = [
+export const DEFAULT_ROOM_TYPES: Omit<RoomType, 'id' | 'pricePerNight'>[] = [
   {
     name: "Standard Room",
     description: "Comfortable room with essential amenities",
@@ -122,7 +122,7 @@ export function generateRoomTypesForHotel(
     return {
       id: `${hotelId}-${template.name.toLowerCase().replace(/\s+/g, '-')}`,
       ...template,
-      basePriceNGN: Math.round(basePrice * multiplier),
+      pricePerNight: Math.round(basePrice * multiplier),
       amenities: combinedAmenities,
       available
     };

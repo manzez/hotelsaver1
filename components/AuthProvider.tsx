@@ -8,7 +8,14 @@ interface AuthProviderProps {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  return <SessionProvider>{children}</SessionProvider>
+  return (
+    <SessionProvider
+      refetchInterval={5 * 60} // Refetch session every 5 minutes instead of default
+      refetchOnWindowFocus={false} // Don't refetch when window regains focus
+    >
+      {children}
+    </SessionProvider>
+  )
 }
 
 // Keep the old auth context for backward compatibility if needed

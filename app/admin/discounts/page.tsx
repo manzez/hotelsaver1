@@ -134,7 +134,7 @@ export default function DiscountTestingPage() {
                 <div className="text-gray-600">{testResults.propertyId}</div>
               </div>
               <div>
-                <span className="font-medium">Base Price:</span>
+                <span className="font-medium">Fallback Price:</span>
                 <div className="text-gray-600">₦{testResults.basePrice.toLocaleString()}</div>
               </div>
               <div>

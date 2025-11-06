@@ -70,7 +70,7 @@ export default function APIDocsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                HotelSaver.ng API Documentation
+                Hotelsaver.ng API Documentation
               </h1>
               <p className="text-gray-600 mt-2">
                 Interactive API documentation for hotel booking, negotiation, and administration
@@ -158,7 +158,7 @@ export default function APIDocsPage() {
               <ul className="space-y-2 text-sm text-gray-300">
                 <li><a href="/API_DOCUMENTATION.md" className="hover:text-white">Complete API Guide</a></li>
                 <li><a href="/api/openapi" className="hover:text-white">OpenAPI JSON</a></li>
-                <li><a href="/" className="hover:text-white">HotelSaver.ng Home</a></li>
+                <li><a href="/" className="hover:text-white">Hotelsaver.ng Home</a></li>
               </ul>
             </div>
             
@@ -183,7 +183,7 @@ export default function APIDocsPage() {
           </div>
           
           <div className="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
-            <p>HotelSaver.ng API Documentation • Built with OpenAPI 3.0 & Swagger UI</p>
+            <p>Hotelsaver.ng API Documentation • Built with OpenAPI 3.0 & Swagger UI</p>
           </div>
         </div>
       </div>

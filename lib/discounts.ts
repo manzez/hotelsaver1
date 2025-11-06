@@ -1,5 +1,4 @@
 // lib/discounts.ts - Tier-based discount system with testing capabilities
-import discountsData from './discounts.json';
 
 // Define the type for your discounts data
 interface DiscountsData {
@@ -24,36 +23,44 @@ export interface DiscountInfo {
   tierColor: string;
 }
 
-// Type the imported data
-const discounts = discountsData as DiscountsData;
-
 // Fallback if anything goes wrong - 15% default discount
 const DEFAULT_DISCOUNT = 0.15;
 
-export function getDiscountFor(propertyId: string): number {
+// Note: Async server-side functions moved to discounts-server.ts to avoid client-side fs imports
+
+// Async version moved to discounts-server.ts
+
+// Synchronous version for backward compatibility (falls back to static import if needed)
+export function getDiscountForSync(propertyId: string): number {
   try {
-    // Check if propertyId is valid
+    // For compatibility with components that need synchronous access
+    // Fall back to reading static discounts.json for immediate usage
+    const discountsData = require('./discounts.json') as DiscountsData;
+    
     if (!propertyId || typeof propertyId !== 'string') {
       return 0;
     }
 
     // Check if this property has a specific override
-    if (discounts.overrides && propertyId in discounts.overrides) {
-      const override = discounts.overrides[propertyId];
+    if (discountsData.overrides && propertyId in discountsData.overrides) {
+      const override = discountsData.overrides[propertyId];
       if (typeof override === 'number' && override >= 0 && override <= 1) {
         return override;
       }
     }
     
-    // Use the default from config (now 0 instead of 0.15)
-    const defaultDiscount = typeof discounts.default === 'number' ? discounts.default : DEFAULT_DISCOUNT;
+    // Use the default from config
+    const defaultDiscount = typeof discountsData.default === 'number' ? discountsData.default : DEFAULT_DISCOUNT;
     return defaultDiscount;
   } catch (error) {
-    // If anything goes wrong, return no discount
-    console.error('Error in getDiscountFor:', error);
-    return 0;
+    console.error('Error in getDiscountForSync:', error);
+    return DEFAULT_DISCOUNT;
   }
 }
+
+// Export the sync version as the main function for backward compatibility
+// The async version is available as getDiscountForAsync
+export { getDiscountForSync as getDiscountFor }
 
 export function getDiscountTier(discountRate: number): DiscountTier {
   if (discountRate === 0) return DiscountTier.NONE;
@@ -63,7 +70,7 @@ export function getDiscountTier(discountRate: number): DiscountTier {
 }
 
 export function getDiscountInfo(propertyId: string, basePrice: number): DiscountInfo {
-  const rate = getDiscountFor(propertyId);
+  const rate = getDiscountForSync(propertyId);
   const tier = getDiscountTier(rate);
   const savings = Math.round(basePrice * rate);
   
@@ -101,8 +108,9 @@ export function getDiscountInfo(propertyId: string, basePrice: number): Discount
 // Testing and verification utilities
 export function getPropertiesWithOverrides(): string[] {
   try {
-    if (discounts.overrides && typeof discounts.overrides === 'object') {
-      return Object.keys(discounts.overrides);
+    const discountsData = require('./discounts.json') as DiscountsData;
+    if (discountsData.overrides && typeof discountsData.overrides === 'object') {
+      return Object.keys(discountsData.overrides);
     }
     return [];
   } catch (error) {
@@ -112,7 +120,8 @@ export function getPropertiesWithOverrides(): string[] {
 
 export function hasDiscountOverride(propertyId: string): boolean {
   try {
-    return !!(discounts.overrides && propertyId in discounts.overrides);
+    const discountsData = require('./discounts.json') as DiscountsData;
+    return !!(discountsData.overrides && propertyId in discountsData.overrides);
   } catch (error) {
     return false;
   }
@@ -127,9 +136,10 @@ export function getPropertiesByTier(): Record<DiscountTier, string[]> {
   };
 
   try {
-    if (discounts.overrides) {
-      Object.entries(discounts.overrides).forEach(([propertyId, rate]) => {
-        const tier = getDiscountTier(rate);
+    const discountsData = require('./discounts.json') as DiscountsData;
+    if (discountsData.overrides) {
+      Object.entries(discountsData.overrides).forEach(([propertyId, rate]) => {
+        const tier = getDiscountTier(rate as number);
         result[tier].push(propertyId);
       });
     }
@@ -152,7 +162,7 @@ export function getDiscountStatistics(): {
   minDiscount: number;
 } {
   const properties = getPropertiesWithOverrides();
-  const rates = properties.map(id => getDiscountFor(id)).filter(rate => rate > 0);
+  const rates = properties.map(id => getDiscountForSync(id)).filter(rate => rate > 0);
   
   const byTier = getPropertiesByTier();
   const tierCounts: Record<DiscountTier, number> = {

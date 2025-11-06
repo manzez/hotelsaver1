@@ -47,20 +47,17 @@ export default function StickyHeader() {
           {/* Logo Section */}
           <div className="flex items-center">
             <h1 className={`font-bold text-white drop-shadow-lg transition-all duration-300 ${
-              isScrolled ? 'text-base md:text-xl' : 'text-lg md:text-2xl'
-            }`}>HotelSaver.ng</h1>
+              isScrolled ? 'text-sm md:text-lg' : 'text-base md:text-xl'
+            }`}>Hotelsaver.ng</h1>
           </div>
           
-          {/* Right Side - Currency, Help, List Property, Register, Sign in */}
-          <div className="flex items-center space-x-1 md:space-x-4 text-xs md:text-sm" style={{pointerEvents: 'auto'}}>
-            <div className="hidden md:flex items-center space-x-2">
-              <span className="px-2 py-1 border border-white/30 rounded bg-white/10 backdrop-blur-sm">NGN</span>
-            </div>
+          {/* Right Side - Help, List Property, WhatsApp, Sign in */}
+          <div className="flex items-center space-x-1 md:space-x-4 text-xs md:text-sm whitespace-nowrap overflow-x-auto scrollbar-hide" style={{pointerEvents: 'auto'}}>
             <a 
               href="https://wa.me/+2349053999263?text=Hi%20HotelSaver.ng,%20I%20need%20help%20with%20my%20booking" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:bg-white/10 px-2 md:px-3 py-1 md:py-2 rounded transition-all duration-300"
+              className="hidden sm:inline-block hover:bg-white/10 px-2 md:px-3 py-1 md:py-2 rounded transition-all duration-300"
             >
               Help
             </a>

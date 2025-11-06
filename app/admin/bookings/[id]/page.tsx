@@ -43,7 +43,7 @@ interface Booking {
 // Mock data - replace with API call
 const mockBooking: Booking = {
   id: 'BK001',
-  hotelId: 'eko-hotels-lagos',
+  hotelId: 'eko-hotel-and-suites-lagos',
   hotelName: 'Eko Hotels and Suites',
   hotelCity: 'Lagos',
   hotelAddress: '1415 Adetokunbo Ademola Street, Victoria Island, Lagos',

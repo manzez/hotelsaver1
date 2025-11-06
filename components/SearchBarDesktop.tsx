@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { startOfDay, addDays, addMonths, subMonths, format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isAfter, isBefore, isPast } from 'date-fns'
 
 import ClientDatepicker from './ClientDatepicker'
+import { track } from '@/lib/analytics'
 
 // Simple Calendar Component
 interface SimpleCalendarProps {
@@ -20,6 +21,14 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
   const today = new Date()
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(today))
   const [selecting, setSelecting] = useState<'start' | 'end'>('start')
+  const [hoveredDate, setHoveredDate] = useState<Date | null>(null)
+
+  // Ensure calendar shows the month containing the start date
+  useEffect(() => {
+    if (startDate && !isSameMonth(startDate, currentMonth)) {
+      setCurrentMonth(startOfMonth(startDate))
+    }
+  }, [startDate, currentMonth])
 
   const monthStart = startOfMonth(currentMonth)
   const monthEnd = endOfMonth(currentMonth)
@@ -37,10 +46,6 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
         onEndDateChange(null)
       }
       setSelecting('end')
-      
-      // Auto-advance calendar to show next 28 days after check-in selection
-      const nextMonth = addDays(date, 28)
-      setCurrentMonth(startOfMonth(nextMonth))
     } else {
       if (isBefore(date, startDate)) {
         onStartDateChange(date)
@@ -53,9 +58,30 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
   }
 
   const isInRange = (date: Date) => {
-    if (!startDate || !endDate) return false
-    return (isAfter(date, startDate) || isSameDay(date, startDate)) && 
-           (isBefore(date, endDate) || isSameDay(date, endDate))
+    if (!startDate) return false
+    
+    // If we have both dates, show confirmed range
+    if (endDate) {
+      return (isAfter(date, startDate) || isSameDay(date, startDate)) && 
+             (isBefore(date, endDate) || isSameDay(date, endDate))
+    }
+    
+    // If we're selecting end date and hovering, show preview range
+    if (selecting === 'end' && hoveredDate && !isBefore(hoveredDate, startDate)) {
+      return (isAfter(date, startDate) || isSameDay(date, startDate)) && 
+             (isBefore(date, hoveredDate) || isSameDay(date, hoveredDate))
+    }
+    
+    return false
+  }
+
+  const isSelectableCheckout = (date: Date) => {
+    if (!startDate || endDate || selecting !== 'end') return false
+    
+    // Show next 28 days from check-in as selectable checkout dates
+    const maxCheckout = addDays(startDate, 28)
+    return isAfter(date, startDate) && 
+           (isBefore(date, maxCheckout) || isSameDay(date, maxCheckout))
   }
 
   const isToday = (date: Date) => isSameDay(date, today)
@@ -108,6 +134,22 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
         </button>
       </div>
 
+      {/* Status Indicator */}
+      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+        <div className="text-sm text-gray-600 text-center">
+          {!startDate ? (
+            <span>Select your <strong>check-in</strong> date</span>
+          ) : !endDate ? (
+            <div>
+              <div>Now select your <strong>check-out</strong> date</div>
+              <div className="text-xs text-emerald-600 mt-1">💡 Green dates show available checkout options (up to 28 days)</div>
+            </div>
+          ) : (
+            <span>✅ Dates selected: <strong>{format(startDate, 'MMM d')} - {format(endDate, 'MMM d')}</strong></span>
+          )}
+        </div>
+      </div>
+
       {/* Day Labels */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
@@ -126,11 +168,19 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
           const isPastDate = isPast(date)
           const isTodayDate = isToday(date) && !isStart && !isEnd && !inRange
           const isCurrentMonth = isSameMonth(date, currentMonth)
+          const isSelectableForCheckout = isSelectableCheckout(date)
+          const isHoveredEnd = hoveredDate && isSameDay(date, hoveredDate) && selecting === 'end' && startDate && !endDate
           
           return (
             <button
               key={date.toISOString()}
               onClick={() => handleDateClick(date)}
+              onMouseEnter={() => {
+                if (!isPastDate && selecting === 'end' && startDate && isSelectableForCheckout) {
+                  setHoveredDate(date)
+                }
+              }}
+              onMouseLeave={() => setHoveredDate(null)}
               disabled={isPastDate}
               className={`
                 relative h-10 text-sm rounded-lg transition-all duration-200 font-medium
@@ -150,6 +200,14 @@ function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange
                 }
                 ${isTodayDate
                   ? 'bg-blue-50 font-semibold ring-2 ring-blue-200 text-blue-700'
+                  : ''
+                }
+                ${isHoveredEnd
+                  ? 'bg-brand-green/60 text-white border-2 border-brand-green shadow-lg scale-105'
+                  : ''
+                }
+                ${isSelectableForCheckout && !inRange && !isHoveredEnd
+                  ? 'bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300'
                   : ''
                 }
               `}
@@ -197,7 +255,7 @@ export default function SearchBarDesktop({
   defaultAdults = 2,
   defaultChildren = 0,
   defaultRooms = 1,
-  defaultBudget = 'u80',
+  defaultBudget = 'u40',
   defaultStayType = 'any',
   submitLabel = 'Search',
   onBeforeSubmit
@@ -276,6 +334,7 @@ export default function SearchBarDesktop({
 
   // Budget options
   const budgets = [
+    { key: 'u40', label: 'Under ₦40k' },
     { key: 'u80', label: 'Under ₦80k' },
     { key: '80_130', label: '₦80k–₦130k' },
     { key: '130_200', label: '₦130k–₦200k' },
@@ -382,6 +441,18 @@ export default function SearchBarDesktop({
     searchParams.set('rooms', String(rooms))
     searchParams.set('budget', budgetKey)
     searchParams.set('stayType', stayType)
+
+    // Track search submission (consent-gated)
+    track('search_submit', {
+      city: searchCity || '',
+      hotelQuery: hotelQuery || '',
+      adults,
+      children,
+      rooms,
+      budget: budgetKey,
+      stayType,
+      hasDates: Boolean(startDate && endDate),
+    })
 
     // Navigate immediately for better UX and avoid dev-time RSC prefetch delays
     const url = `/search?${searchParams.toString()}`

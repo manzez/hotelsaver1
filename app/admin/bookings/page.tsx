@@ -32,7 +32,7 @@ interface Booking {
 const mockBookings: Booking[] = [
   {
     id: 'BK001',
-    hotelId: 'eko-hotels-lagos',
+    hotelId: 'eko-hotel-and-suites-lagos',
     hotelName: 'Eko Hotels and Suites',
     hotelCity: 'Lagos',
     customerName: 'John Adebayo',

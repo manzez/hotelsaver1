@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import BackButton from '@/components/BackButton'
 
@@ -15,6 +15,13 @@ export default function AirportTaxiPage() {
   const [returnDate, setReturnDate] = useState('')
   const [returnTime, setReturnTime] = useState('12:00')
   const [passengers, setPassengers] = useState(2)
+  const [customerName, setCustomerName] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
+
+  // Driver offers shown when pick-up is an airport
+  const [showOffers, setShowOffers] = useState(false)
+  const [selectedDriverIdx, setSelectedDriverIdx] = useState(0)
+  const [offerDrivers, setOfferDrivers] = useState<Array<{name:string; company:string; vehicle:string; color:string}>>([])
   
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([])
   const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>([])
@@ -43,6 +50,48 @@ export default function AirportTaxiPage() {
     'New Owerri - Owerri'
   ]
 
+  const isAirportPickup = () => /airport/i.test(pickupLocation)
+
+  // Randomized driver pool (ensures Corolla, Camry, Sienna appear in results)
+  const DRIVER_POOL = useMemo(() => ([
+    { name: 'Ikenna O',  company: 'Lagos City Cabs',     vehicle: 'Toyota Corolla',             color: 'Silver' },
+    { name: 'Frank H',   company: 'Owerri Prime Taxis',  vehicle: 'Toyota Corolla',             color: 'White'  },
+    { name: 'James O',   company: 'Mainland Shuttle',    vehicle: 'Toyota Corolla',             color: 'Red'    },
+
+    { name: 'David J',   company: 'Abuja Express Rides', vehicle: 'Toyota Camry',               color: 'Black'  },
+    { name: 'Sochi O',   company: 'Green Route Taxis',   vehicle: 'Toyota Camry',               color: 'Grey'   },
+
+    { name: 'Chibueke O',company: 'PHC Transit',         vehicle: 'Toyota Sienna (7 seater)',   color: 'Blue'   },
+    { name: 'Chinedu U', company: 'Capital City Cabs',   vehicle: 'Toyota Sienna (7 seater)',   color: 'Gold'   },
+  ]), [])
+
+  function shuffle<T>(arr: T[]): T[] {
+    const a = arr.slice()
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[a[i], a[j]] = [a[j], a[i]]
+    }
+    return a
+  }
+
+  function pickDrivers(): Array<{name:string; company:string; vehicle:string; color:string}> {
+    const corollas = DRIVER_POOL.filter(d => /Corolla/i.test(d.vehicle))
+    const camrys   = DRIVER_POOL.filter(d => /Camry/i.test(d.vehicle))
+    const siennas  = DRIVER_POOL.filter(d => /Sienna/i.test(d.vehicle))
+
+    const selected: typeof DRIVER_POOL = []
+    // Ensure one from each category
+    selected.push(shuffle(corollas)[0])
+    selected.push(shuffle(camrys)[0])
+    selected.push(shuffle(siennas)[0])
+
+    // Pick one extra from remaining pool (avoid duplicates)
+    const remaining = DRIVER_POOL.filter(d => !selected.includes(d))
+    if (remaining.length > 0) selected.push(shuffle(remaining)[0])
+
+    return shuffle(selected)
+  }
+
   const handlePickupSearch = (value: string) => {
     setPickupLocation(value)
     if (value.length > 2) {
@@ -58,6 +107,12 @@ export default function AirportTaxiPage() {
 
   const handleDestinationSearch = (value: string) => {
     setDestination(value)
+    // If pickup is an airport, destination is free text (no suggestions)
+    if (isAirportPickup()) {
+      setShowDestinationSuggestions(false)
+      setDestinationSuggestions([])
+      return
+    }
     if (value.length > 2) {
       const filtered = locations.filter(loc => 
         loc.toLowerCase().includes(value.toLowerCase())
@@ -71,8 +126,15 @@ export default function AirportTaxiPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Prepare booking data
+    // If pick-up is an airport, show curated drivers and collect phone to confirm
+    if (isAirportPickup()) {
+      setOfferDrivers(pickDrivers())
+      setSelectedDriverIdx(0)
+      setShowOffers(true)
+      return
+    }
+
+    // Otherwise keep the existing flow → book page
     const bookingData = {
       tripType,
       pickupLocation,
@@ -82,15 +144,9 @@ export default function AirportTaxiPage() {
       pickupTime,
       returnDate: tripType === 'return' ? returnDate : null,
       returnTime: tripType === 'return' ? returnTime : null,
-      passengers
+      passengers,
     }
-
-    // Navigate to booking confirmation with data
-    const params = new URLSearchParams({
-      service: 'airport-taxi',
-      data: JSON.stringify(bookingData)
-    })
-    
+    const params = new URLSearchParams({ service: 'airport-taxi', data: JSON.stringify(bookingData) })
     router.push(`/book?${params.toString()}`)
   }
 
@@ -187,14 +243,14 @@ export default function AirportTaxiPage() {
               {/* Destination */}
               <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Destination *
+                  Destination * {isAirportPickup() && <span className="text-xs text-gray-500">(free text)</span>}
                 </label>
                 <input
                   type="text"
                   value={destination}
                   onChange={(e) => handleDestinationSearch(e.target.value)}
-                  onFocus={() => destination.length > 2 && setShowDestinationSuggestions(true)}
-                  placeholder="Enter destination"
+                  onFocus={() => !isAirportPickup() && destination.length > 2 && setShowDestinationSuggestions(true)}
+                  placeholder={isAirportPickup() ? 'Enter your hotel or exact address' : 'Enter destination'}
                   className="input"
                   required
                 />
@@ -342,9 +398,113 @@ export default function AirportTaxiPage() {
               type="submit"
               className="w-full btn-primary h-12 text-lg font-semibold"
             >
-              🔍 Search Available Rides
+              {isAirportPickup() ? '� See Available Drivers' : '�🔍 Search Available Rides'}
             </button>
           </form>
+
+          {showOffers && (
+            <div className="mt-8 card p-6">
+              <h3 className="text-xl font-bold mb-2">Available drivers</h3>
+              <p className="text-sm text-gray-600 mb-4">These drivers are ready for airport pick-up. Choose your driver and add your phone number to confirm.</p>
+
+              {/* Curated driver list with required vehicles and colors */}
+              {offerDrivers.map((d, idx) => (
+                <label key={idx} className="flex items-start gap-3 py-3 border-b border-gray-100 last:border-b-0 cursor-pointer">
+                  <input type="radio" name="driver" className="mt-1" checked={selectedDriverIdx===idx} onChange={() => setSelectedDriverIdx(idx)} />
+                  <div>
+                    <div className="font-semibold text-gray-900">{d.name} <span className="text-gray-500 font-normal">· {d.company}</span></div>
+                    <div className="text-sm text-gray-600">{d.vehicle} · {d.color}</div>
+                  </div>
+                </label>
+              ))}
+
+              {/* Phone number and name */}
+              <div className="mt-5 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Your full name *</label>
+                  <input
+                    type="text"
+                    placeholder="e.g., Chinedu Okafor"
+                    className="input"
+                    value={customerName}
+                    onChange={(e)=>setCustomerName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Your phone number *</label>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    placeholder="e.g., 0807 777 5545"
+                    className="input"
+                    value={customerPhone}
+                    onChange={(e)=>setCustomerPhone(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="mt-4 flex gap-3">
+                <button
+                  className="btn-primary px-5"
+                  onClick={async () => {
+                    if (!customerName.trim() || !customerPhone.trim()) {
+                      alert('Please enter your name and phone number')
+                      return
+                    }
+
+                    // Prepare booking request payload
+                    const chosen = offerDrivers[selectedDriverIdx]
+                    const payload = {
+                      tripType,
+                      pickupLocation,
+                      destination,
+                      flightNumber,
+                      pickupDate,
+                      pickupTime,
+                      returnDate: tripType === 'return' ? returnDate : null,
+                      returnTime: tripType === 'return' ? returnTime : null,
+                      passengers,
+                      name: customerName.trim(),
+                      phone: customerPhone.trim(),
+                      selectedDriver: chosen,
+                    }
+                    try {
+                      const res = await fetch('/api/airport-taxi/book', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+                      const data = await res.json()
+                      if (res.ok) {
+                        // Redirect to confirmation page
+                        const confirmParams = new URLSearchParams({
+                          service: 'airport-taxi',
+                          bookingId: data.bookingId,
+                          name: customerName.trim(),
+                          driver: chosen.name,
+                          vehicle: chosen.vehicle,
+                          pickup: pickupLocation,
+                          destination: destination,
+                          date: pickupDate,
+                          time: pickupTime
+                        })
+                        router.push(`/confirmation?${confirmParams.toString()}`)
+                      } else {
+                        alert(data?.message || 'Failed to confirm booking. Please try again.')
+                      }
+                    } catch {
+                      alert('Network error. Please try again.')
+                    }
+                  }}
+                >
+                  Confirm Booking
+                </button>
+                <button className="btn-ghost px-5" onClick={()=>setShowOffers(false)}>Back</button>
+              </div>
+
+              <p className="text-sm text-gray-600 mt-4">
+                We’ll send you a confirmation SMS. Our taxi will be ready for you on your arrival. We track your flight in real time so no need to call us. Our taxi agent will have your name on a board at the arrival door.
+              </p>
+            </div>
+          )}
 
           {/* Info Section */}
           <div className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-200">

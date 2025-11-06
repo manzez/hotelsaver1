@@ -32,6 +32,8 @@ for (const p of devPorts) {
   if (lanIp) allowedOrigins.push(`http://${lanIp}:${p}`)
 }
 
+const { withSentryConfig } = require('@sentry/nextjs')
+
 const nextConfig = {
   // Unblock production builds while we fix lint errors incrementally
   eslint: {
@@ -39,6 +41,54 @@ const nextConfig = {
   },
   // Allow loading dev assets from LAN IP without warnings (Next.js 14+ experimental)
   allowedDevOrigins: allowedOrigins,
+  
+  // Performance optimizations
+  compress: true,
+  poweredByHeader: false,
+  
+  // Image optimization
+  images: {
+    domains: [
+      'images.unsplash.com',
+      'maps.googleapis.com',
+      'lh3.googleusercontent.com'
+    ],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+  
+  // Bundle optimization
+  experimental: {
+    optimizePackageImports: ['date-fns', 'react-icons'],
+  },
+  
+  // Webpack optimizations
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      // Split chunks for better caching
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          vendor: {
+            name: 'vendor',
+            chunks: 'all',
+            test: /node_modules/,
+            priority: 20
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            priority: 10
+          }
+        }
+      };
+    }
+    return config;
+  },
   async headers() {
     const securityHeaders = [
       // Strict-Transport-Security: enforce HTTPS (only effective on HTTPS)
@@ -51,6 +101,16 @@ const nextConfig = {
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
       // Minimal Permissions-Policy (tighten as needed)
       { key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), camera=()' },
+      // Content Security Policy (relaxed to avoid blocking; tighten over time)
+      { key: 'Content-Security-Policy', value: [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: blob: https://images.unsplash.com https://maps.googleapis.com https://lh3.googleusercontent.com",
+        "connect-src 'self' https://www.google-analytics.com https://*.sentry.io https://o*.ingest.sentry.io",
+        "frame-src 'self' https://www.google.com https://js.paystack.co",
+        "object-src 'none'",
+      ].join('; ') }
     ]
 
     // In development, don't emit any headers config at all
@@ -67,5 +127,18 @@ const nextConfig = {
     ]
   },
 }
-
-module.exports = nextConfig
+// Wrap with Sentry to enable source maps and server instrumentation (no-op if DSN missing)
+module.exports = withSentryConfig(
+  nextConfig,
+  {
+    // Suppress Sentry build-time logs to keep CI clean
+    silent: true,
+    // Disable automatic release injection unless configured
+    dryRun: !process.env.SENTRY_DSN,
+  },
+  {
+    // Hide source maps from public access
+    hideSourceMaps: true,
+    widenClientFileUpload: false,
+  }
+)

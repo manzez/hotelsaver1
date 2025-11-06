@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-link { display: block; margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 5px; text-decoration: none; color: #333; }
+        .test-link:hover { background: #e0e0e0; }
+        .description { font-size: 14px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Payment Confirmation Messaging Test</h1>
+    <p>Click these links to test different payment methods in the confirmation page:</p>
+    
+    <a href="http://localhost:3001/confirmation?bookingId=BK123456789&propertyId=lagoon-vista-lekki&checkIn=2024-12-15&checkOut=2024-12-17&adults=2&children=0&rooms=1&paymentMethod=pay-at-property&customerName=John+Doe&email=john@example.com&phone=%2B2348012345678" 
+       class="test-link">
+        <strong>Test 1: Pay at Property (Default)</strong>
+        <div class="description">Should show: "Booking Confirmed!" and "Your reservation has been secured. Pay when you check in."</div>
+    </a>
+
+    <a href="http://localhost:3001/confirmation?bookingId=BK123456789&propertyId=lagoon-vista-lekki&checkIn=2024-12-15&checkOut=2024-12-17&adults=2&children=0&rooms=1&paymentMethod=paystack&customerName=John+Doe&email=john@example.com&phone=%2B2348012345678" 
+       class="test-link">
+        <strong>Test 2: Paystack Payment</strong>
+        <div class="description">Should show: "Payment Successful!" and "Payment successful! Your hotel reservation is confirmed."</div>
+    </a>
+
+    <a href="http://localhost:3001/confirmation?bookingId=BK123456789&propertyId=lagoon-vista-lekki&checkIn=2024-12-15&checkOut=2024-12-17&adults=2&children=0&rooms=1&paymentMethod=bank-transfer&customerName=John+Doe&email=john@example.com&phone=%2B2348012345678" 
+       class="test-link">
+        <strong>Test 3: Bank Transfer</strong>
+        <div class="description">Should show: "Booking Pending Payment" and "Please complete your bank transfer to confirm your reservation."</div>
+    </a>
+
+    <a href="http://localhost:3001/confirmation?bookingId=BK123456789&propertyId=lagoon-vista-lekki&checkIn=2024-12-15&checkOut=2024-12-17&adults=2&children=0&rooms=1&customerName=John+Doe&email=john@example.com&phone=%2B2348012345678" 
+       class="test-link">
+        <strong>Test 4: No Payment Method (Should Default to Pay at Property)</strong>
+        <div class="description">Should show: "Booking Confirmed!" and "Your reservation has been secured. Pay when you check in."</div>
+    </a>
+
+    <a href="http://localhost:3001/confirmation?bookingId=BK123456789&propertyId=lagoon-vista-lekki&checkIn=2024-12-15&checkOut=2024-12-17&adults=2&children=0&rooms=1&paymentMethod=&customerName=John+Doe&email=john@example.com&phone=%2B2348012345678" 
+       class="test-link">
+        <strong>Test 5: Empty Payment Method (Should Default to Pay at Property)</strong>
+        <div class="description">Should show: "Booking Confirmed!" and "Your reservation has been secured. Pay when you check in."</div>
+    </a>
+</body>
+</html>

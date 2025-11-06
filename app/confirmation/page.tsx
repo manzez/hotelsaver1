@@ -47,6 +47,10 @@ function ConfirmationPageContent() {
   const [emailSent, setEmailSent] = useState(false)
   const [emailConfigured, setEmailConfigured] = useState<boolean | null>(null)
   
+  // Check if this is an airport taxi booking
+  const serviceType = searchParams.get('service') || 'hotel'
+  const isAirportTaxi = serviceType === 'airport-taxi'
+  
   const bookingId = searchParams.get('bookingId') || ''
   const paymentMethod = searchParams.get('paymentMethod') || ''
   const status = searchParams.get('status') || ''
@@ -60,6 +64,14 @@ function ConfirmationPageContent() {
   const adults = searchParams.get('adults') || '2'
   const children = searchParams.get('children') || '0'
   const rooms = searchParams.get('rooms') || '1'
+
+  // Airport taxi specific params
+  const driverName = searchParams.get('driver') || ''
+  const vehicleType = searchParams.get('vehicle') || ''
+  const pickupLocation = searchParams.get('pickup') || ''
+  const destination = searchParams.get('destination') || ''
+  const pickupDate = searchParams.get('date') || ''
+  const pickupTime = searchParams.get('time') || ''
 
   const hotel = useMemo(() => HOTELS.find(h => h.id === propertyId), [propertyId])
   const [paidAt, setPaidAt] = useState<string | null>(null)
@@ -142,13 +154,31 @@ function ConfirmationPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 pt-8">
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           
           {/* Status Icon */}
           <div className="mb-8">
-            {paymentMethod === 'paystack' && status === 'failed' ? (
+            {isAirportTaxi ? (
+              <>
+                <div className="w-24 h-24 bg-gradient-to-br from-brand-green to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-brand-green/30 transform rotate-3">
+                  <span className="text-5xl transform -rotate-3">🚖</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3 tracking-tight">
+                  {customerName ? `Thank you, ${customerName.split(' ')[0]}!` : 'Taxi Booked!'}
+                </h1>
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-green/10 to-emerald-600/10 px-6 py-3 rounded-full border border-brand-green/20 mb-3">
+                  <div className="w-2 h-2 bg-brand-green rounded-full animate-pulse"></div>
+                  <p className="text-brand-green font-semibold text-lg">
+                    Your Airport Taxi is Confirmed
+                  </p>
+                </div>
+                <p className="text-gray-600 text-lg max-w-xl mx-auto">
+                  We'll be ready for you on arrival. Relax—we track your flight in real-time.
+                </p>
+              </>
+            ) : paymentMethod === 'paystack' && status === 'failed' ? (
               <>
                 <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-4xl text-red-600">❌</span>
@@ -170,17 +200,17 @@ function ConfirmationPageContent() {
                   Booking Confirmed!
                 </h2>
                 <p className="text-gray-600">
-                  {paymentMethod === 'pay-at-property' 
-                    ? 'Your reservation has been secured. Pay when you check in.'
+                  {paymentMethod === 'paystack' 
+                    ? 'Payment successful! Your hotel reservation is confirmed.'
                     : paymentMethod === 'bank-transfer'
                     ? 'Please complete your bank transfer to confirm your reservation.'
-                    : 'Payment successful! Your hotel reservation is confirmed.'
+                    : 'Your reservation has been secured. Pay when you check in.'
                   }
                 </p>
               </>
             )}
             {/* Polite thank you with enhanced styling and visibility */}
-            {customerName ? (
+            {customerName && !isAirportTaxi ? (
               <div className="mt-4">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 border border-green-200">
                   <span className="text-sm text-gray-700">Thank you,</span>
@@ -189,11 +219,11 @@ function ConfirmationPageContent() {
                 </div>
                 <div className="sm:hidden text-xs text-gray-600 mt-2">We truly appreciate your booking.</div>
               </div>
-            ) : (
+            ) : !isAirportTaxi ? (
               <div className="mt-3 text-sm font-medium text-gray-700">
-                Thank you for choosing HotelSaver.ng. We truly appreciate your booking.
+                Thank you for choosing Hotelsaver.ng. We truly appreciate your booking.
               </div>
-            )}
+            ) : null}
 
             {/* Email/WhatsApp Notice */}
             {emailConfigured && emailSent && (
@@ -210,7 +240,136 @@ function ConfirmationPageContent() {
             )}
           </div>
 
-          {/* Booking Details Card with image */}
+          {/* Booking Details Card */}
+          {isAirportTaxi ? (
+            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl overflow-hidden mb-8">
+              {/* Header with gradient accent */}
+              <div className="bg-gradient-to-r from-brand-green to-emerald-600 px-8 py-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-white/80 text-sm font-medium uppercase tracking-wider mb-1">Booking Confirmed</p>
+                    <p className="text-white text-2xl font-bold tracking-tight">{bookingId}</p>
+                  </div>
+                  <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <span className="text-4xl">🚖</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main content */}
+              <div className="px-8 py-8">
+                {/* Passenger & Driver Info - Two column grid */}
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  {/* Passenger */}
+                  <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+                    <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">Passenger</p>
+                    <p className="text-white text-xl font-semibold">{customerName}</p>
+                  </div>
+                  
+                  {/* Driver */}
+                  <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+                    <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">Your Driver</p>
+                    <p className="text-white text-xl font-semibold mb-1">{driverName}</p>
+                    <p className="text-gray-300 text-sm">{vehicleType}</p>
+                  </div>
+                </div>
+
+                {/* Journey Details */}
+                <div className="space-y-4 mb-8">
+                  {/* Pickup */}
+                  <div className="relative pl-8">
+                    <div className="absolute left-0 top-1.5 w-4 h-4 bg-brand-green rounded-full border-4 border-gray-800"></div>
+                    <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1">Pick-up Location</p>
+                    <p className="text-white font-medium">{pickupLocation}</p>
+                  </div>
+
+                  {/* Connection line */}
+                  <div className="relative pl-8">
+                    <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-green to-emerald-600"></div>
+                  </div>
+
+                  {/* Destination */}
+                  <div className="relative pl-8">
+                    <div className="absolute left-0 top-1.5 w-4 h-4 bg-emerald-600 rounded-full border-4 border-gray-800"></div>
+                    <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1">Destination</p>
+                    <p className="text-white font-medium">{destination}</p>
+                  </div>
+                </div>
+
+                {/* Date & Time */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10 mb-8">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1">Pickup Date & Time</p>
+                      <p className="text-white text-lg font-semibold">
+                        {new Date(pickupDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })} at {pickupTime}
+                      </p>
+                    </div>
+                    <div className="text-3xl">📅</div>
+                  </div>
+                </div>
+
+                {/* What to Expect */}
+                <div className="bg-gradient-to-br from-emerald-900/30 to-emerald-800/20 backdrop-blur-sm rounded-xl p-6 border border-emerald-500/20 mb-8">
+                  <h4 className="text-emerald-400 font-semibold mb-4 text-sm uppercase tracking-wider">Service Highlights</h4>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald-400 text-sm">✓</span>
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Real-Time Flight Tracking</p>
+                        <p className="text-gray-400 text-xs mt-0.5">We monitor your flight status</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald-400 text-sm">✓</span>
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Meet & Greet Service</p>
+                        <p className="text-gray-400 text-xs mt-0.5">Name board at arrival gate</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald-400 text-sm">✓</span>
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Professional Driver</p>
+                        <p className="text-gray-400 text-xs mt-0.5">Experienced and courteous</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald-400 text-sm">✓</span>
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">SMS Confirmation</p>
+                        <p className="text-gray-400 text-xs mt-0.5">Sent to your phone shortly</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3">
+                  <a 
+                    href="https://wa.me/2347077775545" 
+                    className="flex-1 bg-gradient-to-r from-brand-green to-emerald-600 hover:from-brand-green/90 hover:to-emerald-600/90 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 text-center shadow-lg shadow-brand-green/20"
+                  >
+                    Contact Support
+                  </a>
+                  <Link 
+                    href="/" 
+                    className="flex-1 bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 text-center border border-white/20"
+                  >
+                    Back to Home
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ) : (
           <div className="bg-white rounded-xl shadow-sm p-0 mb-8 overflow-hidden">
             {hotel && (
               <div className="relative h-40 w-full">
@@ -385,8 +544,10 @@ function ConfirmationPageContent() {
             )}
             </div>
           </div>
+          )}
 
-          {/* Important Information */}
+          {/* Important Information - Only for hotel bookings */}
+          {!isAirportTaxi && (
           <div className="bg-blue-50 rounded-xl p-6 mb-8 text-left">
             <h3 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
               <span className="text-xl">ℹ️</span>
@@ -402,9 +563,10 @@ function ConfirmationPageContent() {
               <p>• Free cancellation up to 24 hours before check-in</p>
             </div>
           </div>
+          )}
 
-          {/* Directions & Share */}
-          {hotel && (
+          {/* Directions & Share - Only for hotel bookings */}
+          {hotel && !isAirportTaxi && (
             <div className="bg-white rounded-xl shadow-sm p-6 mb-8 text-left">
               <h3 className="font-semibold text-gray-900 mb-3">Directions to {hotel.name}</h3>
               {hotelInfo.address && (

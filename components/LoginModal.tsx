@@ -23,7 +23,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">
-            Welcome to HotelSaver.ng
+            Welcome to Hotelsaver.ng
           </h2>
           <button
             onClick={onClose}

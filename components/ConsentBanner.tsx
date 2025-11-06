@@ -21,6 +21,16 @@ export default function ConsentBanner() {
   const setAndStore = (v: ConsentState) => {
     try { localStorage.setItem('hs_ga_consent', v) } catch {}
     setConsent(v)
+    // Notify interested components and update Consent Mode if GA is present
+    try {
+      window.dispatchEvent(new CustomEvent('hs_ga_consent_changed', { detail: v }))
+      const gtag = (window as any).gtag
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          analytics_storage: v === 'granted' ? 'granted' : 'denied'
+        })
+      }
+    } catch {}
   }
 
   // Only show when GA is configured and no choice recorded
@@ -32,7 +42,7 @@ export default function ConsentBanner() {
         <div className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-soft">
           <div className="flex flex-col items-start gap-3 md:flex-row md:items-center md:justify-between">
             <p className="text-sm text-gray-700">
-              We use analytics cookies to understand usage and improve HotelSaver.ng. Do you consent to anonymous usage tracking?
+              We use analytics cookies to understand usage and improve Hotelsaver.ng. Do you consent to anonymous usage tracking?
             </p>
             <div className="flex items-center gap-2">
               <button onClick={() => setAndStore('denied')} className="btn-ghost h-10 px-4 text-sm">Decline</button>

@@ -48,7 +48,7 @@ export default function AdminHotelsPage() {
         setLoading(true);
         const response = await fetch('/api/admin/hotels', {
           headers: {
-            'x-admin-key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'default-key'
+            'X-Admin-Key': process.env.NEXT_PUBLIC_ADMIN_API_KEY || 'dev-admin-key-2024'
           }
         });
         
@@ -57,8 +57,8 @@ export default function AdminHotelsPage() {
         }
         
         const data = await response.json();
-        if (data.ok && Array.isArray(data.results)) {
-          setRows(data.results);
+        if (data.success && data.data && Array.isArray(data.data.hotels)) {
+          setRows(data.data.hotels);
         } else {
           throw new Error('Invalid response format');
         }
@@ -206,7 +206,13 @@ export default function AdminHotelsPage() {
             {filtered.map((r) => (
               <tr key={r.id} className="border-t">
                 <td className="px-3 py-2 whitespace-nowrap max-w-[320px] truncate" title={r.name}>
-                  {r.name}
+                  <Link
+                    href={`/admin/hotels/${r.id}`}
+                    className="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
+                    title="Click to edit hotel"
+                  >
+                    {r.name}
+                  </Link>
                 </td>
                 <td className="px-3 py-2 text-gray-500 whitespace-nowrap max-w-[420px] truncate" title={r.id}>
                   {r.id}

@@ -5,7 +5,7 @@ export default function About() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            About HotelSaver.ng
+            About Hotelsaver.ng
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Revolutionizing Nigeria's hospitality industry by connecting travelers with incredible hotel deals 
@@ -75,7 +75,7 @@ export default function About() {
             <h2 className="text-3xl font-bold mb-6 text-center">Our Story</h2>
             <div className="prose prose-lg prose-invert max-w-none">
               <p className="text-white/90 leading-relaxed mb-6">
-                Founded in the heart of Nigeria's bustling hospitality landscape, HotelSaver.ng was born from a simple observation: 
+                Founded in the heart of Nigeria's bustling hospitality landscape, Hotelsaver.ng was born from a simple observation: 
                 countless hotel rooms remain empty each night while travelers struggle to find affordable, quality accommodations. 
                 Our founders, passionate about both technology and travel, recognized an opportunity to create a win-win solution.
               </p>

@@ -10,11 +10,11 @@ function Header() {
   return (
     <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
       <div className='container h-16 flex items-center gap-6'>
-        <Link href='/' className='flex items-center gap-2 text-2xl font-bold text-brand-green tracking-tight hover:text-brand-dark transition-colors'>
-          <div className='w-8 h-8 bg-brand-green rounded-lg flex items-center justify-center text-white font-bold text-sm'>
+        <Link href='/' className='flex items-center gap-2 text-xl font-bold text-brand-green tracking-tight hover:text-brand-dark transition-colors'>
+          <div className='w-7 h-7 bg-brand-green rounded-lg flex items-center justify-center text-white font-bold text-xs'>
             H
           </div>
-          <span>HotelSaver.ng</span>
+          <span>Hotelsaver.ng</span>
         </Link>
           <nav className='ml-auto flex items-center gap-5 text-sm'>
             {/* Desktop Navigation (show only on large screens to keep Sign In visible) */}
@@ -235,14 +235,14 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           {/* Bottom Bar */}
           <div className='border-t border-gray-200 pt-4 flex flex-col md:flex-row justify-between items-center gap-3'>
             <div className='flex items-center gap-4'>
-              <Link href='/' className='flex items-center gap-2 text-lg font-bold text-brand-green hover:text-brand-dark transition-colors'>
-                <div className='w-6 h-6 bg-brand-green rounded flex items-center justify-center text-white font-bold text-xs'>
+              <Link href='/' className='flex items-center gap-2 text-base font-bold text-brand-green hover:text-brand-dark transition-colors'>
+                <div className='w-5 h-5 bg-brand-green rounded flex items-center justify-center text-white font-bold text-xs'>
                   H
                 </div>
-                <span>HotelSaver.ng</span>
+                <span>Hotelsaver.ng</span>
               </Link>
               <span className='text-xs text-gray-500'>
-                © {new Date().getFullYear()} HotelSaver Nigeria Limited
+                © {new Date().getFullYear()} Hotelsaver Nigeria Limited
               </span>
             </div>
             
