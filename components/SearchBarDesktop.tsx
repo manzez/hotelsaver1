@@ -19,16 +19,15 @@ interface SimpleCalendarProps {
 
 function SimpleCalendar({ startDate, endDate, onStartDateChange, onEndDateChange, onClose }: SimpleCalendarProps) {
   const today = new Date()
-  const [currentMonth, setCurrentMonth] = useState(startOfMonth(today))
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    // Initialize with start date's month if available, otherwise current month
+    return startDate ? startOfMonth(startDate) : startOfMonth(today)
+  })
   const [selecting, setSelecting] = useState<'start' | 'end'>('start')
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null)
 
-  // Ensure calendar shows the month containing the start date
-  useEffect(() => {
-    if (startDate && !isSameMonth(startDate, currentMonth)) {
-      setCurrentMonth(startOfMonth(startDate))
-    }
-  }, [startDate, currentMonth])
+  // Auto-navigate removed: User can manually navigate with arrow buttons
+  // The calendar stays on the current visible month after selecting a date
 
   const monthStart = startOfMonth(currentMonth)
   const monthEnd = endOfMonth(currentMonth)
