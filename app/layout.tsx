@@ -14,9 +14,10 @@ import ConsentBanner from '@/components/ConsentBanner'
 const inter = Inter({subsets:['latin']})
 
 const base = process.env.NEXT_PUBLIC_BASE_URL
+const baseUrl = base && base.trim() !== '' ? base : undefined
 
 export const metadata: Metadata = {
-  metadataBase: base ? new URL(base) : undefined,
+  metadataBase: baseUrl ? new URL(baseUrl) : undefined,
   title: {
     default: 'Hotelsaver.ng — Save on Hotels & Services',
     template: '%s · Hotelsaver.ng'
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Hotelsaver.ng — Save on Hotels & Services',
     description: 'Negotiate hotel prices & book local services across Nigeria.',
-    url: base || undefined,
+    url: baseUrl || undefined,
     siteName: 'Hotelsaver.ng',
     type: 'website',
     locale: 'en_NG',
