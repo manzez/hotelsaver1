@@ -17,7 +17,8 @@ const base = process.env.NEXT_PUBLIC_BASE_URL
 const baseUrl = base && base.trim() !== '' ? base : undefined
 
 export const metadata: Metadata = {
-  metadataBase: baseUrl ? new URL(baseUrl) : undefined,
+  // metadataBase removed temporarily to unblock deployment
+  // metadataBase: baseUrl ? new URL(baseUrl) : undefined,
   title: {
     default: 'Hotelsaver.ng — Save on Hotels & Services',
     template: '%s · Hotelsaver.ng'
