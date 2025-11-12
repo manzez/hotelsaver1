@@ -1,6 +1,13 @@
 {
   "version": 2,
   "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "devCommand": "npm run dev",
+  "installCommand": "npm ci",
+  "env": {
+    "NEXT_PUBLIC_BASE_URL": "@next_public_base_url"
+  },
   "redirects": [
     {
       "source": "/hotels",
@@ -11,6 +18,12 @@
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30
+    }
+  },
+  "git": {
+    "deploymentEnabled": {
+      "main": false,
+      "develop": true
     }
   }
 }
