@@ -447,7 +447,7 @@ export default function SearchBarMobile({
                   <button
                     type="button"
                     onClick={() => setShowGuestPicker(false)}
-                    className="w-full mt-6 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                    className="w-full mt-6 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
                   >
                     Done
                   </button>

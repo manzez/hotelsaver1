@@ -128,10 +128,9 @@ export default async function Home() {
     <div className="min-h-screen">
       {/* Sticky Header with Scroll Animation */}
       <StickyHeader />
-  {/* Negotiation explainer placed below hero for tasteful visibility */}
       
-  {/* Hero Section with Background Image like Booking.com */}
-  <section className="relative pt-20 md:pt-40 h-80 md:h-96 overflow-visible">
+      {/* Hero Section with Background Image like Booking.com */}
+      <section className="relative pt-20 md:pt-40 h-80 md:h-96 overflow-visible">
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <SafeImage 
@@ -277,6 +276,70 @@ export default async function Home() {
                       />
                     </Link>
                     <div className="flex-1 min-w-0">
+                      <Link href={`/hotel/${h.id}`} className="block">
+                        <h3 className="font-semibold text-gray-900 line-clamp-2 text-sm">{h.name}</h3>
+                        <p className="text-gray-600 text-xs mt-0.5">{h.city} • {h.stars}⭐</p>
+                      </Link>
+                      <div className="mt-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <div className="text-sm font-bold text-gray-900">
+                            ₦{displayPrice.toLocaleString()}
+                          </div>
+                          {hasNegotiation && (
+                            <span className="text-[10px] text-emerald-700 font-medium">Negotiation available</span>
+                          )}
+                          {showHighSecurity ? (
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
+                          ) : (
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
+                          )}
+                        </div>
+                        <div className="mt-1.5 flex items-center gap-1">
+                          <Link
+                            href={`/hotel/${h.id}`}
+                            className="flex-1 bg-teal-600 text-white py-1 px-2 rounded-md text-xs font-medium hover:bg-teal-700 transition-colors text-center"
+                          >
+                            Book
+                          </Link>
+                          {hasNegotiation && (
+                            <Link
+                              href={`/negotiate?propertyId=${h.id}`}
+                              className="flex-1 bg-brand-green text-white py-1 px-2 rounded-md text-xs font-medium hover:bg-brand-dark transition-colors text-center"
+                            >
+                              Negotiate
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Mobile list (image-left cards) */}
+          <div className="md:hidden space-y-3">
+            {featuredHotels.map(h => {
+              const discount = getDiscountFor(h.id)
+              const hasNegotiation = discount > 0
+              const base = typeof (h as any).basePriceNGN === 'number' ? (h as any).basePriceNGN : (typeof (h as any).price === 'number' ? (h as any).price : 0)
+              const displayPrice = base
+              const showHighSecurity = base > 78000
+              return (
+                <div key={h.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                  <div className="flex gap-3 p-2">
+                    <Link href={`/hotel/${h.id}`} className="shrink-0">
+                      <SafeImage
+                        src={h.images?.[0] || 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=75'}
+                        alt={h.name}
+                        mobileQuery={`${h.name} ${h.city} hotel Nigeria`}
+                        className="w-20 h-20 object-cover rounded-lg"
+                        fallbackSrc="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&auto=format&q=75"
+                        loading="lazy"
+                      />
+                    </Link>
+                    <div className="flex-1 flex flex-col">
                       <Link href={`/hotel/${h.id}`} className="block">
                         <h3 className="font-semibold text-gray-900 line-clamp-2 text-sm">{h.name}</h3>
                         <p className="text-gray-600 text-xs mt-0.5">{h.city} • {h.stars}⭐</p>

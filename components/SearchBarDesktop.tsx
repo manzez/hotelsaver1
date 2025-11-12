@@ -303,6 +303,9 @@ export default function SearchBarDesktop({
   const searchInputRef = useRef<HTMLDivElement>(null)
   const guestPickerRef = useRef<HTMLDivElement>(null)
   const datePickerRef = useRef<HTMLDivElement>(null)
+  const debounceRef = useRef<NodeJS.Timeout | null>(null)
+  const hotelsDataRef = useRef<any[] | null>(null)  // Cache hotels data to avoid repeated API calls
+  const hotelsFetchRef = useRef<Promise<any> | null>(null)  // Cache the fetch promise
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -343,9 +346,6 @@ export default function SearchBarDesktop({
   // Guest summary
   const guestSummary = `${adults} adult${adults !== 1 ? 's' : ''}${children > 0 ? `, ${children} child${children !== 1 ? 'ren' : ''}` : ''}, ${rooms} room${rooms !== 1 ? 's' : ''}`
 
-  // Search functionality - simplified for debugging
-  const debounceRef = useRef<NodeJS.Timeout>()
-  
   const handleSearchInput = (value: string) => {
     setSearchQuery(value)
     
@@ -373,30 +373,44 @@ export default function SearchBarDesktop({
     setSearchResults(cityResults)
     setShowSearchResults(cityResults.length > 0)
     
-    // Also fetch hotels from API (async)
-    if (value.length >= 1) {
-      fetch('/api/hotels-index')
-        .then(response => {
-          if (!response.ok) throw new Error(`HTTP ${response.status}`)
-          return response.json()
-        })
-        .then(data => {
-          const hotelResults = (data.hotels || [])
-            .filter((hotel: any) => 
-              hotel.name.toLowerCase().includes(value.toLowerCase()) ||
-              hotel.city.toLowerCase().includes(value.toLowerCase())
-            )
-            .slice(0, 5)
-            .map((hotel: any) => ({ type: 'hotel', value: hotel.name, city: hotel.city }))
-          
-          const allResults = [...cityResults, ...hotelResults]
-          setSearchResults(allResults)
-          setShowSearchResults(allResults.length > 0)
-        })
-        .catch(error => {
-          console.error('Search API error:', error)
-        })
+    // Debounce hotel API fetch with longer delay for better performance
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
     }
+    
+    debounceRef.current = setTimeout(() => {
+      // Fetch hotels from API (async) with debounce and caching
+      if (value.length >= 1) {
+        // Use cached data if available, otherwise fetch
+        const fetchPromise = hotelsDataRef.current 
+          ? Promise.resolve({ hotels: hotelsDataRef.current })
+          : fetch('/api/hotels-index').then(response => {
+              if (!response.ok) throw new Error(`HTTP ${response.status}`)
+              return response.json()
+            }).then(data => {
+              hotelsDataRef.current = data.hotels  // Cache the data
+              return data
+            })
+        
+        fetchPromise
+          .then(data => {
+            const hotelResults = (data.hotels || [])
+              .filter((hotel: any) => 
+                hotel.name.toLowerCase().includes(value.toLowerCase()) ||
+                hotel.city.toLowerCase().includes(value.toLowerCase())
+              )
+              .slice(0, 5)
+              .map((hotel: any) => ({ type: 'hotel', value: hotel.name, city: hotel.city }))
+            
+            const allResults = [...cityResults, ...hotelResults]
+            setSearchResults(allResults)
+            setShowSearchResults(allResults.length > 0)
+          })
+          .catch(error => {
+            console.error('Search API error:', error)
+          })
+      }
+    }, 400) // Debounce delay: 400ms
   }
 
   const handleSearchSelect = (result: any) => {
@@ -868,7 +882,16 @@ export default function SearchBarDesktop({
           {/* Search Button - Full Width Connected */}
           <button 
             type="submit"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              // Close all dropdowns before submitting
+              setShowSearchResults(false)
+              setShowGuestPicker(false)
+              setShowDatePicker(false)
+              // Delay submission slightly to ensure dropdowns are closed
+              setTimeout(() => handleSubmit(e), 50)
+            }}
             aria-label="Search"
             className="search-button-lowest block w-full py-4 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold transition-colors flex items-center justify-center gap-2 rounded-b-lg text-lg cursor-pointer pointer-events-auto"
           >

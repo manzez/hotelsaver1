@@ -273,7 +273,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
 
   const resultsContent = (
     <div id="results-start" data-testid="results-start" className="grid grid-cols-1 gap-4 mt-4 md:mt-6">
-      {sorted.map(h => {
+      {sorted.map((h, index) => {
         // ONLY use room-based pricing - no more base price fallback
         const roomPriceInfo = (h as any).roomPriceInfo as RoomPriceInfo | null
         
@@ -309,9 +309,9 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
         const cityName = h.city
         const curatedList = curatedByCity[cityName]
         const useCurated = cityName === 'Owerri' || ((budgetKey === 'u40' || budgetKey === 'u80') && Array.isArray(curatedList))
-        const FALLBACK_MAIN = 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&auto=format&q=80'
-        const FALLBACK_THUMB1 = 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&auto=format&q=80'
-        const FALLBACK_THUMB2 = 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&auto=format&q=80'
+        const FALLBACK_MAIN = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&q=80'
+        const FALLBACK_THUMB1 = 'https://images.unsplash.com/photo-1544427920-c49ccfb85579?w=400&auto=format&q=80'
+        const FALLBACK_THUMB2 = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&q=80'
   const imgs = Array.isArray(h.images) ? (h.images as string[]) : []
   
   // For Places API hotels, use Google Places photos directly
@@ -347,7 +347,7 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
       ((useCurated && curatedList) ? (curatedList[2] || curatedList[0]) : (otherPhotos[2] || unsplashPhotos[0] || FALLBACK_THUMB2))
   }
         
-        return (
+        const hotelCard = (
           <div
             key={h.id}
             className="group bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all overflow-hidden"
@@ -370,37 +370,66 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                 )}
               </div>
 
-              {/* Right: Info + Price column (mobile stacks, desktop split) */}
-              <div className="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-3 gap-2">
-                {/* Middle info (md: 2/3) */}
-                <div className="md:col-span-2 min-w-0 flex flex-col justify-between">
-                  <div className="space-y-1.5 min-w-0">
+              {/* Booking.com Style Layout: Middle Info + Right Price */}
+              <div className="flex-1 min-w-0 flex flex-col md:flex-row gap-3">
+                
+                {/* Middle Section: Hotel Info (like Booking.com) */}
+                <div className="flex-1 min-w-0 space-y-2">
+                  
+                  {/* Hotel Name (Blue Link) + Location */}
+                  <div>
                     <Link href={`/hotel/${h.id}?checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="no-underline">
-                      <h3 className="font-semibold text-sky-700 hover:text-sky-800 text-[15px] leading-snug line-clamp-2">{h.name}</h3>
+                      <h3 className="font-semibold text-blue-600 hover:text-blue-800 text-lg leading-snug line-clamp-2">{h.name}</h3>
                     </Link>
-                    <div className="flex items-center gap-2 text-[11px] text-gray-600">
-                      <Link href={(() => { const p=new URLSearchParams(params); p.set('view','map'); return `/search?${p.toString()}` })()} className="hover:underline">Show on map</Link>
-                      <span className="hidden sm:inline">•</span>
-                      <span>{h.city}, Nigeria</span>
-                      {/* Rating moved to the top-right, replacing the old stars */}
-                      <span className="ml-auto inline-flex items-center gap-2">
-                        <span className={`inline-flex items-center justify-center h-6 min-w-[2rem] px-1 rounded ${badgeColor} text-white text-[10px] font-bold`}>{rating.toFixed(1)}</span>
-                        <span className="text-gray-700 font-medium">{label}</span>
-                      </span>
-                    </div>
-                    <div className="mt-1 space-y-1.5">
-                      <div className="text-green-700 font-medium text-[12px]">Free cancellation</div>
-                      <SecurityBadge size="sm" variant="compact" />
-                      {checkIn && checkOut && (
-                        <OptimizedAvailabilityStatus
-                          hotelId={h.id}
-                          className="text-xs"
-                          showDetails={false}
-                        />
-                      )}
+                    <div className="flex items-center gap-1 text-sm text-gray-600 mt-1">
+                      <Link href={(() => { const p=new URLSearchParams(params); p.set('view','map'); return `/search?${p.toString()}` })()} className="text-blue-600 hover:underline text-sm">
+                        {h.city}, Nigeria
+                      </Link>
+                      <span className="mx-1">•</span>
+                      <span className="text-sm">Show on map</span>
                     </div>
                   </div>
-                  <div className="text-[11px] text-gray-500 mt-2">
+
+                  {/* Limited-time Deal Badge (if negotiable) */}
+                  {hasDeal && (
+                    <div className="inline-flex items-center px-2 py-1 bg-green-600 text-white text-xs font-semibold rounded">
+                      Limited-time Deal
+                    </div>
+                  )}
+
+                  {/* Room Type Info */}
+                  <div className="space-y-1">
+                    {roomPriceInfo?.hasAvailableRooms && roomPriceInfo?.matchesCapacity && (
+                      <div className="text-sm font-medium text-gray-900">
+                        {roomPriceInfo.cheapestRoomName}
+                      </div>
+                    )}
+                    <div className="text-sm text-gray-600">1 room for {Number(params.get('adults')||'2')} adult{Number(params.get('adults')||'2')>1?'s':''}</div>
+                  </div>
+
+                  {/* Free Cancellation + Security Badge */}
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="text-green-600 font-medium">✓ Free cancellation</span>
+                    {roomPriceInfo?.hasAvailableRooms && roomPriceInfo?.matchesCapacity ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-200">Room match</span>
+                    ) : showHighSecurity ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-rose-50 text-rose-700 border border-rose-200">High security</span>
+                    ) : (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
+                    )}
+                  </div>
+
+                  {/* Availability Status */}
+                  {checkIn && checkOut && (
+                    <OptimizedAvailabilityStatus
+                      hotelId={h.id}
+                      className="text-sm text-red-600 font-medium"
+                      showDetails={false}
+                    />
+                  )}
+
+                  {/* Features */}
+                  <div className="text-sm text-gray-600">
                     {nights > 0 ? (
                       <>{datesSummary(checkIn, checkOut)}</>
                     ) : (
@@ -408,39 +437,46 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
                     )}
                   </div>
                 </div>
-                {/* Right price column (md: 1/3) */}
-                <div className="md:col-span-1 flex flex-col justify-between items-start md:items-end text-left md:text-right">
-                  <div>
-                    <div className="text-[11px] text-gray-500">{nights>0? `${nights} night${nights>1?'s':''}, ${Number(params.get('adults')||'2')} adult${Number(params.get('adults')||'2')>1?'s':''}` : '1 room'}</div>
-                    
-                    {/* Room type info if available */}
-                    {roomPriceInfo?.hasAvailableRooms && roomPriceInfo?.matchesCapacity && (
-                      <div className="text-[10px] text-blue-600 font-medium">
-                        {roomPriceInfo.cheapestRoomName} (Best match)
-                      </div>
-                    )}
-                    
-                    <div className="text-base md:text-lg font-bold text-gray-900">
-                      ₦{displayPrice.toLocaleString()}
-                      {roomPriceInfo?.hasAvailableRooms && roomPriceInfo?.matchesCapacity ? (
-                        <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-blue-50 text-blue-700 border border-blue-200">Room match</span>
-                      ) : showHighSecurity ? (
-                        <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-rose-50 text-rose-700 border border-rose-200">High security</span>
-                      ) : (
-                        <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">Good security</span>
-                      )}
+
+                {/* Right Section: Reviews + Price (like Booking.com) */}
+                <div className="flex flex-col justify-between items-start md:items-end text-left md:text-right md:min-w-[200px]">
+                  
+                  {/* Rating Badge + Reviews */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-gray-700">{label}</div>
+                      <div className="text-xs text-gray-500">52 reviews</div>
                     </div>
-                    {/* Potential negotiation savings hint */}
-                    {hasDeal && (
-                      <div className="mt-0.5 text-[11px] text-emerald-700">
-                        Save up to ₦{(displayPrice - discountedNight).toLocaleString()} ({Math.round(discountRate * 100)}%) • Potential ₦{discountedNight.toLocaleString()} per night
-                      </div>
-                    )}
-                    <div className="text-[11px] text-gray-500">{nights>0? 'Includes taxes and fees' : 'Taxes may apply at checkout'}</div>
-                    <div className="mt-2 flex flex-col sm:flex-row items-stretch gap-2 w-full">
-                      <Link href={`/book?propertyId=${h.id}&price=${displayPrice}&roomId=${roomPriceInfo?.roomId || ''}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-teal-600 text-white text-sm hover:bg-teal-700 no-underline">Book</Link>
+                    <div className={`inline-flex items-center justify-center h-8 min-w-[2rem] px-2 rounded ${badgeColor} text-white text-sm font-bold`}>
+                      {rating.toFixed(1)}
+                    </div>
+                  </div>
+
+                  {/* Price Section */}
+                  <div className="text-right">
+                    <div className="text-xs text-gray-500 mb-1">{nights>0? `${nights} night${nights>1?'s':''}, ${Number(params.get('adults')||'2')} adult${Number(params.get('adults')||'2')>1?'s':''}` : '1 room'}</div>
+                    
+                    {/* Main Price */}
+                    <div className="text-2xl font-bold text-gray-900 mb-1">
+                      ₦{displayPrice.toLocaleString()}
+                    </div>
+                    
+                    {/* Includes taxes text */}
+                    <div className="text-xs text-gray-500 mb-3">
+                      {nights>0? 'Includes taxes and charges' : 'Taxes may apply at checkout'}
+                    </div>
+
+                    {/* Book Button */}
+                    <div className="flex flex-col gap-2 w-full md:w-auto">
+                      <Link href={`/book?propertyId=${h.id}&price=${displayPrice}&roomId=${roomPriceInfo?.roomId || ''}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} 
+                        className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 no-underline whitespace-nowrap">
+                        Book
+                      </Link>
                       {hasDeal && (
-                        <Link href={`/negotiate?propertyId=${h.id}&roomId=${roomPriceInfo?.roomId || ''}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} className="inline-flex items-center justify-center h-9 px-4 sm:w-auto w-full rounded-md bg-brand-green text-white text-sm hover:bg-brand-dark no-underline">Negotiate</Link>
+                        <Link href={`/negotiate?propertyId=${h.id}&roomId=${roomPriceInfo?.roomId || ''}&checkIn=${checkIn||''}&checkOut=${checkOut||''}&adults=${params.get('adults')||''}&children=${params.get('children')||''}&rooms=${params.get('rooms')||''}`} 
+                          className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-green-600 text-white text-sm font-medium hover:bg-green-700 no-underline whitespace-nowrap">
+                          Negotiate price
+                        </Link>
                       )}
                     </div>
                   </div>
@@ -449,6 +485,66 @@ function SearchResults({ params, hotels, nights, checkIn, checkOut }: {
             </div>
           </div>
         )
+
+        // Insert beauty treatment banner after 3rd result
+        if (index === 2) {
+          return (
+            <>
+              {hotelCard}
+              {/* Beauty Treatment Promotional Banner */}
+              <div 
+                key="beauty-banner"
+                className="relative bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 rounded-xl overflow-hidden shadow-lg"
+                style={{
+                  background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%)'
+                }}
+              >
+                {/* Shimmer overlay using CSS class */}
+                <div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 beauty-banner-shimmer"
+                  style={{
+                    width: '50%'
+                  }}
+                />
+                
+                <div className="relative p-6 md:p-8 flex items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-white text-xl md:text-2xl font-bold mb-2">
+                      Save more by ordering your beauty treatments here
+                    </h3>
+                    <p className="text-green-100 text-sm md:text-base">
+                      Unlock exclusive discounts on hair, nails, massage and wellness services
+                    </p>
+                    
+                    <div className="flex gap-3 mt-4">
+                      <Link
+                        href="/services?category=Hair"
+                        className="bg-white text-green-600 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-50 transition-colors no-underline"
+                      >
+                        Hair Services
+                      </Link>
+                      <Link
+                        href="/services?category=Massage"
+                        className="bg-green-500/20 border border-green-300 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-green-500/30 transition-colors no-underline"
+                      >
+                        Massage
+                      </Link>
+                    </div>
+                  </div>
+                  
+                  {/* Decorative icon */}
+                  <div className="hidden md:block ml-4">
+                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center">
+                      <span className="text-3xl">💆‍♀️</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )
+        }
+
+        return hotelCard
       })}
     </div>
   )

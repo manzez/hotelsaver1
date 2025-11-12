@@ -6,8 +6,8 @@ module.exports = {
     extend: {
       colors:{
         brand: {
-          green: "#166534",    // Dark green-800 to match header
-          dark: "#14532d",     // Dark green-900 to match header  
+          green: "#166534",    // Dark green-800
+          dark: "#14532d",     // Dark green-900
           muted: "#dcfce7"     // Light emerald green
         }
       },
@@ -17,6 +17,12 @@ module.exports = {
       },
       animation: {
         'shimmer': 'shimmer 3s ease-in-out infinite',
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      animationDelay: {
+        '2000': '2s',
+        '4000': '4s',
       }
     }
   },

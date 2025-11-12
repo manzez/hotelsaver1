@@ -335,6 +335,15 @@ a.chip, a.chip:link, a.chip:visited, a.chip:hover, a.chip:focus { text-decoratio
   100% { background-position: 0% 50%; }
 }
 
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -388,4 +397,23 @@ a.chip, a.chip:link, a.chip:visited, a.chip:hover, a.chip:focus { text-decoratio
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Beauty banner shimmer animations */
+@keyframes shimmerSlide {
+  0% { 
+    transform: translateX(-100%) skewX(-12deg); 
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translateX(300%) skewX(-12deg); 
+    opacity: 0;
+  }
+}
+
+.beauty-banner-shimmer {
+  animation: shimmerSlide 3s ease-in-out infinite;
 }

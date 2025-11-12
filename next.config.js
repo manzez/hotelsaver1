@@ -58,9 +58,10 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   
-  // Bundle optimization
+  // Bundle optimization & disable prerendering for dynamic pages
   experimental: {
     optimizePackageImports: ['date-fns', 'react-icons'],
+    isrMemoryCacheSize: 0,
   },
   
   // Webpack optimizations
