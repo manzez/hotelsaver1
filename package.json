@@ -1,5 +1,7 @@
 {
   "name": "hotelsaver-ng-v9",
+  "version": "1.0.5",
+  "description": "Hotel booking platform with real-time negotiation for Nigerian markets",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
@@ -46,6 +48,10 @@
     "build:test": "npm run build && npm start & sleep 10 && npm run test:regression; kill %1",
     "deploy:staging": "vercel",
     "deploy:production": "vercel --prod",
+    "version:patch": "npm version patch && git push origin main --tags",
+    "version:minor": "npm version minor && git push origin main --tags",
+    "version:major": "npm version major && git push origin main --tags",
+    "check:version": "node -e \"console.log(require('./package.json').version)\"",
     "ci:setup": "npm ci && cd tests && npm ci && npx playwright install --with-deps",
     "ci:test:all": "npm run test:regression && npm run report:full",
     "seed:apartments": "node scripts/seed-apartments.js",
