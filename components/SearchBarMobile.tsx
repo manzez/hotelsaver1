@@ -39,12 +39,16 @@ export default function SearchBarMobile({
   // Form state
   const [searchQuery, setSearchQuery] = useState(defaultHotelQuery || defaultCity)
   const [city, setCity] = useState(defaultCity)
-  const [startDate, setStartDate] = useState<Date | null>(
-    defaultCheckIn ? new Date(defaultCheckIn) : null
-  )
-  const [endDate, setEndDate] = useState<Date | null>(
-    defaultCheckOut ? new Date(defaultCheckOut) : null
-  )
+  const [startDate, setStartDate] = useState<Date | null>(() => {
+    if (defaultCheckIn) return new Date(defaultCheckIn)
+    // Default to today
+    return startOfDay(new Date())
+  })
+  const [endDate, setEndDate] = useState<Date | null>(() => {
+    if (defaultCheckOut) return new Date(defaultCheckOut)
+    // Default to tomorrow (1 night stay)
+    return addDays(startOfDay(new Date()), 1)
+  })
   const [adults, setAdults] = useState(defaultAdults)
   const [children, setChildren] = useState(defaultChildren)
   const [rooms, setRooms] = useState(defaultRooms)

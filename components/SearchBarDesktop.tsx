@@ -268,12 +268,16 @@ export default function SearchBarDesktop({
   // Form state
   const [searchQuery, setSearchQuery] = useState(defaultHotelQuery || defaultCity || '')
   const [city, setCity] = useState(defaultCity)
-  const [startDate, setStartDate] = useState<Date | null>(
-    defaultCheckIn ? new Date(defaultCheckIn) : new Date(2025, 10, 1) // Nov 1, 2025
-  )
-  const [endDate, setEndDate] = useState<Date | null>(
-    defaultCheckOut ? new Date(defaultCheckOut) : new Date(2025, 10, 3) // Nov 3, 2025
-  )
+  const [startDate, setStartDate] = useState<Date | null>(() => {
+    if (defaultCheckIn) return new Date(defaultCheckIn)
+    // Default to today
+    return startOfDay(new Date())
+  })
+  const [endDate, setEndDate] = useState<Date | null>(() => {
+    if (defaultCheckOut) return new Date(defaultCheckOut)
+    // Default to tomorrow (1 night stay)
+    return addDays(startOfDay(new Date()), 1)
+  })
   
   // Initialize search query on component mount but don't show dropdown
   useEffect(() => {
