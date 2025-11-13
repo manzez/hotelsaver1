@@ -108,7 +108,7 @@ const nextConfig = {
         "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
         "style-src 'self' 'unsafe-inline'",
         "img-src 'self' data: blob: https://images.unsplash.com https://maps.googleapis.com https://lh3.googleusercontent.com",
-        "connect-src 'self' https://www.google-analytics.com https://*.sentry.io https://o*.ingest.sentry.io",
+        "connect-src 'self' https://www.google-analytics.com https://*.sentry.io https://o4506996918685696.ingest.us.sentry.io",
         "frame-src 'self' https://www.google.com https://js.paystack.co",
         "object-src 'none'",
       ].join('; ') }
