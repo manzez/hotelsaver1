@@ -65,12 +65,27 @@ export async function POST(req: NextRequest) {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Pull base price (supports both shapes, with room-specific pricing)
-    let base =
-      typeof property.basePriceNGN === 'number'
+    let base = 0;
+    
+    // First check roomTypes array for pricing
+    if (property.roomTypes && Array.isArray(property.roomTypes) && property.roomTypes.length > 0) {
+      const prices = property.roomTypes
+        .map((rt: any) => rt.pricePerNight || 0)
+        .filter((p: number) => p > 0);
+      if (prices.length > 0) {
+        base = Math.min(...prices); // Use lowest room price
+        console.log(`✅ Using lowest room price: ₦${base.toLocaleString()}`);
+      }
+    }
+    
+    // Fallback to old pricing structure if roomTypes not available
+    if (base <= 0) {
+      base = typeof property.basePriceNGN === 'number'
         ? property.basePriceNGN
         : typeof property.price === 'number'
         ? property.price
         : 0;
+    }
 
     // If roomId is provided, try to get room-specific pricing from hotel data
     let selectedRoom = null;
