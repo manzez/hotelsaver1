@@ -126,10 +126,16 @@ export async function POST(req: NextRequest) {
     } else {
       const { getDiscountForAsync } = await import('@/lib/discounts-server');
       discount = await getDiscountForAsync(propertyId); // 0..1
+      console.log(`🔍 DEBUG: propertyId = "${propertyId}"`);
+      console.log(`🔍 DEBUG: discount returned = ${discount}`);
+      console.log(`🔍 DEBUG: discount as percentage = ${Math.round(discount * 100)}%`);
       console.log(`✅ Using JSON discount for ${propertyId}: ${Math.round(discount * 100)}%`);
     }
     
+    console.log(`🔍 FINAL CHECK: discount value = ${discount}, is it <= 0? ${discount <= 0}`);
+    
     if (discount <= 0) {
+      console.log(`❌ REJECTING: Discount is ${discount}, returning no-offer`);
       return NextResponse.json({ 
         status: 'no-offer', 
         reason: 'no-discount',

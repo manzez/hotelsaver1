@@ -81,7 +81,23 @@ export default async function HotelDetail({params, searchParams}:{params:{id:str
   const facilityKeys: FacilityKey[] = getFacilitiesFor(h.id)
   const discount = getDiscountFor(h.id)
   const canNegotiate = discount > 0
-  const base = typeof h.basePriceNGN === 'number' ? h.basePriceNGN : (typeof h.price === 'number' ? h.price! : 0)
+  
+  // Extract price from roomTypes array (new structure) or fallback to old fields
+  function getHotelPrice(hotel: any): number {
+    // First try roomTypes array (new structure)
+    if (hotel.roomTypes && Array.isArray(hotel.roomTypes) && hotel.roomTypes.length > 0) {
+      const prices = hotel.roomTypes
+        .map((rt: any) => rt.pricePerNight || 0)
+        .filter((p: number) => p > 0);
+      if (prices.length > 0) {
+        return Math.min(...prices); // Return lowest room price
+      }
+    }
+    // Fallback to old pricing structure
+    return typeof hotel.basePriceNGN === 'number' ? hotel.basePriceNGN : (typeof hotel.price === 'number' ? hotel.price : 0);
+  }
+  
+  const base = getHotelPrice(h)
   const discountedPrice = canNegotiate ? Math.round(base * (1 - discount)) : base
   const savings = base - discountedPrice
   const stars = typeof (h as any).stars === 'number' ? (h as any).stars : 4
