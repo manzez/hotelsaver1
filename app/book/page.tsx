@@ -160,7 +160,11 @@ function BookPageContent() {
         payload = {
           propertyId,
           price,
-          form,
+          contact: {
+            name: `${form.firstName} ${form.lastName}`.trim(),
+            email: form.email,
+            phone: form.phone
+          },
           checkIn,
           checkOut,
           nights,
@@ -185,8 +189,16 @@ function BookPageContent() {
         body: JSON.stringify(payload)
       })
 
+      console.log('=== BOOKING API DEBUG ===');
+      console.log('API Endpoint:', apiEndpoint);
+      console.log('Response Status:', resp.status);
+      console.log('Response OK:', resp.ok);
+      
+      const result = await resp.json()
+      console.log('Response Data:', JSON.stringify(result, null, 2));
+      console.log('========================');
+
       if (resp.ok) {
-        const result = await resp.json()
         // Redirect to confirmation page with customer details
         const confirmationParams = new URLSearchParams({
           bookingId: result.bookingId || 'BK' + Date.now(),

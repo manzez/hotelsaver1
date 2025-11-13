@@ -55,10 +55,12 @@ function NegotiatePageContent() {
         const data = await res.json()
         
         // Debug logging
-        console.log('Negotiate API Response:', {
-          status: res.status,
-          data: data
-        })
+        console.log('=== NEGOTIATE API DEBUG ===');
+        console.log('Response Status:', res.status);
+        console.log('Response Data:', JSON.stringify(data, null, 2));
+        console.log('Data Status:', data.status);
+        console.log('Data Reason:', data.reason);
+        console.log('=========================');
 
         if (data.status === 'discount') {
           setNegStatus(NEG_STATUS.OFFER)
