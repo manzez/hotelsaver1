@@ -178,6 +178,13 @@ export async function POST(req: NextRequest) {
       }
     });
   } catch (err) {
-    return NextResponse.json({ status: 'no-offer', reason: 'bad-request' }, { status: 400 });
+    console.error('❌ NEGOTIATE API ERROR:', err);
+    console.error('Error details:', err instanceof Error ? err.message : String(err));
+    console.error('Stack trace:', err instanceof Error ? err.stack : 'No stack trace');
+    return NextResponse.json({ 
+      status: 'no-offer', 
+      reason: 'bad-request',
+      error: err instanceof Error ? err.message : String(err)
+    }, { status: 400 });
   }
 }
