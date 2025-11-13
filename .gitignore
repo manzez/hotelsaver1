@@ -37,3 +37,4 @@ public/images/
 # Local data logs (webhook events, etc.)
 data/
 !data/.gitkeep
+.env*.local

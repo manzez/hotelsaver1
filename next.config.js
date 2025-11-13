@@ -105,10 +105,10 @@ const nextConfig = {
       // Content Security Policy (relaxed to avoid blocking; tighten over time)
       { key: 'Content-Security-Policy', value: [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://vercel.live",
         "style-src 'self' 'unsafe-inline'",
         "img-src 'self' data: blob: https://images.unsplash.com https://maps.googleapis.com https://lh3.googleusercontent.com",
-        "connect-src 'self' https://www.google-analytics.com https://*.sentry.io https://o4506996918685696.ingest.us.sentry.io",
+        "connect-src 'self' https://www.google-analytics.com https://*.sentry.io https://o4506996918685696.ingest.us.sentry.io https://vercel.live",
         "frame-src 'self' https://www.google.com https://js.paystack.co",
         "object-src 'none'",
       ].join('; ') }
