@@ -11,6 +11,24 @@ import { getDiscountFor } from '@/lib/discounts'
 import TourismScroller from '@/components/TourismScroller'
 import SecurityBadge from '@/components/SecurityBadge'
 
+// Helper function to extract price from hotel data
+function getHotelPrice(hotel: any): number {
+  // First check if roomTypes exist and extract lowest price
+  if (hotel.roomTypes && Array.isArray(hotel.roomTypes) && hotel.roomTypes.length > 0) {
+    const prices = hotel.roomTypes
+      .map((rt: any) => rt.pricePerNight || 0)
+      .filter((p: number) => p > 0);
+    if (prices.length > 0) {
+      return Math.min(...prices);
+    }
+  }
+  
+  // Fallback to old pricing structure
+  return typeof hotel.basePriceNGN === 'number' 
+    ? hotel.basePriceNGN 
+    : (typeof hotel.price === 'number' ? hotel.price : 0);
+}
+
 export default async function Home() {
   // Use optimized data loading with limited results for homepage
   const allHotels = await getHotelsOptimized();
@@ -213,7 +231,7 @@ export default async function Home() {
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
             {featuredHotels.slice(0, 6).map(h => {
               const discount = getDiscountFor(h.id)
-              const base = typeof (h as any).basePriceNGN === 'number' ? (h as any).basePriceNGN : (typeof (h as any).price === 'number' ? (h as any).price : 0)
+              const base = getHotelPrice(h)
               const displayPrice = base
               return (
                 <Link key={h.id} href={`/hotel/${h.id}`} className="flex-shrink-0 w-48 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -259,7 +277,7 @@ export default async function Home() {
             {featuredHotels.map(h => {
               const discount = getDiscountFor(h.id)
               const hasNegotiation = discount > 0
-              const base = typeof (h as any).basePriceNGN === 'number' ? (h as any).basePriceNGN : (typeof (h as any).price === 'number' ? (h as any).price : 0)
+              const base = getHotelPrice(h)
               const displayPrice = base
               const showHighSecurity = base > 78000
               return (
@@ -323,7 +341,7 @@ export default async function Home() {
             {featuredHotels.map(h => {
               const discount = getDiscountFor(h.id)
               const hasNegotiation = discount > 0
-              const base = typeof (h as any).basePriceNGN === 'number' ? (h as any).basePriceNGN : (typeof (h as any).price === 'number' ? (h as any).price : 0)
+              const base = getHotelPrice(h)
               const displayPrice = base
               const showHighSecurity = base > 78000
               return (
@@ -388,7 +406,7 @@ export default async function Home() {
               const discount = getDiscountFor(h.id)
               const hasNegotiation = discount > 0
               // Show only base price - discount is revealed only after negotiate button is clicked
-              const base = typeof (h as any).basePriceNGN === 'number' ? (h as any).basePriceNGN : (typeof (h as any).price === 'number' ? (h as any).price : 0)
+              const base = getHotelPrice(h)
               const displayPrice = base
               const showHighSecurity = base > 78000
 
