@@ -107,7 +107,21 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch hotel from the database by slug (we preserved legacy JSON id as slug)
-  const hotel = await prisma.hotel.findUnique({ where: { slug: String(propertyId || '').trim() } });
+  // If database is not available, use static hotel data
+  let hotel: any = null;
+  try {
+    hotel = await prisma.hotel.findUnique({ where: { slug: String(propertyId || '').trim() } });
+  } catch (dbError) {
+    console.log('Database not available, using static hotel data');
+    // Fallback to static hotel data
+    const { HOTELS } = await import('@/lib/data');
+    hotel = HOTELS.find(h => h.id === propertyId);
+    if (hotel) {
+      // Add slug field for compatibility
+      hotel = { ...hotel, slug: hotel.id };
+    }
+  }
+  
   if (!hotel) {
     return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
   }
