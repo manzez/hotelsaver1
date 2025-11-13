@@ -53,6 +53,12 @@ function NegotiatePageContent() {
         })
 
         const data = await res.json()
+        
+        // Debug logging
+        console.log('Negotiate API Response:', {
+          status: res.status,
+          data: data
+        })
 
         if (data.status === 'discount') {
           setNegStatus(NEG_STATUS.OFFER)
@@ -64,7 +70,8 @@ function NegotiatePageContent() {
           setMessage(data.message || '')
         } else {
           setNegStatus(NEG_STATUS.NO_OFFER)
-          setError(data.message || 'No discount available at this time')
+          setError(data.message || data.reason || 'No discount available at this time')
+          console.log('No discount reason:', data.reason)
         }
       } catch (err) {
         console.error('Negotiate error:', err)

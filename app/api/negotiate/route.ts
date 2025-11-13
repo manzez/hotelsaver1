@@ -54,6 +54,9 @@ export async function POST(req: NextRequest) {
     const { getHotelByIdOptimized } = await import('@/lib/hotel-data-optimized');
     let property = await getHotelByIdOptimized(propertyId);
     
+    console.log(`🔍 Looking for property: ${propertyId}`);
+    console.log(`🔍 Property found:`, property ? 'YES' : 'NO');
+    
     if (!property) {
       return NextResponse.json(
         { status: 'no-offer', reason: 'not-found' },
