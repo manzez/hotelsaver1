@@ -5,9 +5,6 @@
   "outputDirectory": ".next",
   "devCommand": "npm run dev",
   "installCommand": "npm ci",
-  "env": {
-    "NEXT_PUBLIC_BASE_URL": "@next_public_base_url"
-  },
   "redirects": [
     {
       "source": "/hotels",
