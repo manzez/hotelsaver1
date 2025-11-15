@@ -2,8 +2,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { allowIp } from '@/lib/rate-limit'
 import { signNegotiationOffer } from '@/lib/negotiation'
-import { promises as fs } from 'fs'
-import path from 'path'
+import { getHotelByIdOptimized } from '@/lib/hotel-data-optimized'
+import { getDiscountForAsync } from '@/lib/discounts-server'
 
 type Hotel = {
   id: string;
@@ -14,20 +14,6 @@ type Hotel = {
   price?: number;
   [k: string]: unknown;
 };
-
-// Function to get fresh hotel data from the file system
-async function getHotelData() {
-  try {
-    const filePath = path.join(process.cwd(), 'lib.hotels.json')
-    const fileContent = await fs.readFile(filePath, 'utf8')
-    return JSON.parse(fileContent)
-  } catch (error) {
-    console.error('Failed to read hotel data:', error)
-    // Fallback to static import if file read fails
-    const { HOTELS } = await import('@/lib/data')
-    return HOTELS
-  }
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -50,9 +36,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Get hotel data using optimized loading (temporary - until database is set up)
-    const { getHotelByIdOptimized } = await import('@/lib/hotel-data-optimized');
-    let property = await getHotelByIdOptimized(propertyId);
+    // Get hotel data using optimized loading
+    const property = await getHotelByIdOptimized(propertyId);
     
     console.log(`🔍 Looking for property: ${propertyId}`);
     console.log(`🔍 Property found:`, property ? 'YES' : 'NO');
@@ -124,7 +109,6 @@ export async function POST(req: NextRequest) {
       discount = selectedRoom.discountPercent / 100; // Convert percentage to decimal
       console.log(`✅ Using room-specific discount for ${roomId}: ${selectedRoom.discountPercent}%`);
     } else {
-      const { getDiscountForAsync } = await import('@/lib/discounts-server');
       discount = await getDiscountForAsync(propertyId); // 0..1
       console.log(`🔍 DEBUG: propertyId = "${propertyId}"`);
       console.log(`🔍 DEBUG: discount returned = ${discount}`);
