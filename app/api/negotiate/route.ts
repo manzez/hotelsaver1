@@ -17,25 +17,32 @@ type Hotel = {
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('🚀 Negotiate API called');
+    
     // Lightweight IP-based rate limiting (5/min per IP for production safety)
     const ip = (req.ip || req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown'
     const rl = allowIp(ip, { capacity: 5, refillPerSec: 0.083 }) // ~5/min
     if (!rl.allowed) {
+      console.log('❌ Rate limited');
       return NextResponse.json(
         { status: 'no-offer', reason: 'rate-limited' },
         { status: 429, headers: { 'Retry-After': '10' } }
       )
     }
 
+    console.log('✅ Parsing request body');
     const { propertyId, roomId } = await req.json();
+    console.log(`✅ propertyId: ${propertyId}, roomId: ${roomId}`);
 
     if (!propertyId || typeof propertyId !== 'string') {
+      console.log('❌ Invalid propertyId');
       return NextResponse.json(
         { status: 'no-offer', reason: 'invalid-propertyId' },
         { status: 400 }
       );
     }
 
+    console.log('✅ Fetching hotel data');
     // Get hotel data using optimized loading
     const property = await getHotelByIdOptimized(propertyId);
     
