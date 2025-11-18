@@ -1,0 +1,9 @@
+{
+  "appId": "com.hotelsaver.app",
+  "appName": "HotelSaver",
+  "webDir": "build",
+  "server": {
+    "url": "https://hotelsaver1-r1a6078iy-amanzes-projects-2bbd5fbf.vercel.app",
+    "cleartext": false
+  }
+}
