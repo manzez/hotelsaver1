@@ -694,3 +694,4 @@ The OpenAPI specification at `/api/openapi` provides:
 - docs/ARCHITECTURE.md – Deep dive into flows, components, and state patterns
 - docs/PAYMENT_SETUP.md – Paystack setup, env, endpoints, webhook, Prisma
 - docs/PAYMENT_VALIDATION.md – Manual validation steps and hardening checklist
+\nBuild trigger
